@@ -92,31 +92,21 @@ export default class ModalButton extends Component {
           </Modal.Header>
           <Modal.Body>
             <form>
-              {this.props.mode === 'Sign Up' ? <span><label>Full Name</label><input className="form-control" onChange={this.onInputChange.bind(null, 'fullName')}/><br/></span> : null}
-              
+              {this.props.mode === 'Sign Up' ? <span><label>Full Name</label><input className="form-control" onChange={this.onInputChange.bind(null, 'fullName')}/><br/></span> : null}      
               <FormGroup validationState={!this.state.validEmail ? "error" : "success" } onChange={this.onInputChange.bind(null, 'email')}>
                 <ControlLabel>Email</ControlLabel>
                 <FormControl type="text" />
               </FormGroup>
-
               <span><label>Password</label><input type="password" className="form-control" onChange={this.onInputChange.bind(null, 'password')}/><br/></span>
               {this.props.mode === 'Sign Up' ? 
-
-              <FormGroup validationState={!this.state.validPassword ? "error" : "success" } onChange={this.onInputChange.bind(null, 'password2')}>
-                <ControlLabel>Re-enter Password</ControlLabel>
-                <FormControl type="password" />
-                {!this.state.validPassword ? <HelpBlock>Passwords must match</HelpBlock> : null }
-              </FormGroup>
-              : null}
-
-              <button type="submit">Submit</button>
-
+                <FormGroup validationState={!this.state.validPassword ? "error" : "success" } onChange={this.onInputChange.bind(null, 'password2')}>
+                  <ControlLabel>Re-enter Password</ControlLabel>
+                  <FormControl type="password" />
+                  {!this.state.validPassword ? <HelpBlock>Passwords must match</HelpBlock> : null }
+                </FormGroup>
+                : null}
+              <Button type="submit">Submit</Button>
             </form>
-
-
-
-
-
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>

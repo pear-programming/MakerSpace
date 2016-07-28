@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {Button, FormGroup, FormControl} from 'react-bootstrap';
+
 
 
 export default class SearchBar extends Component {
@@ -22,6 +24,7 @@ export default class SearchBar extends Component {
         />
         <span className='input-group-btn'><button type='submit' className='btn btn-secondary'>Search!</button></span>
       </form>
+
     )
   }
 }
