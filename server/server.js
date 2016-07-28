@@ -39,6 +39,7 @@ console.log('Listening on localhost:' + port);
 
 // new user signs up
 app.post('/signup', function(req, res) {
+  console.log('req.body: ', req.body)
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
