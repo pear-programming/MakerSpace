@@ -6,6 +6,23 @@
   </head>
   <body>
     <div id='mount'></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="/app-bundle.js"></script>
+    <script>
+    console.log('heyyy!')
+
+    $(document).ready(function() {
+
+      $.ajax({
+        method: 'POST',
+        url: 'http://localhost:4000/signup',
+        contentType: 'application/json',
+        data: JSON.stringify({name: 'Ash', email: 'ashley@gmail.com', password: 123})
+      })
+      .done(data=>console.log('cookie?????', data))
+      .fail(err=>console.log('err in index', err))
+      
+    })
+    </script>
   </body>
 </html>
