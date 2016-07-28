@@ -53,11 +53,26 @@ app.post('/signup', function(req, res) {
   .then(sessionId => {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
-    res.cookie({sessionId: sessionId})
+    res.cookie("sessionId", sessionId)
     res.send(201, user_id)
   })
 })
 
+
+
+
+
+/*login 
+ get Userid from username
+ check sessions table for userid
+ send response already logged in
+ hash password - bcrypt compare password (beer app)
+ if matches, create new session in sessions table
+ set cookie
+ res.send(200)
+ if pw is wrong 400 (check status coder)
+ check if there is a session with that userId
+*/
 
 
 
