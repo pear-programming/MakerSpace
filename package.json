@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A boiler plate with basic examples of react-router and react-redux",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./client"
   },
   "devDependencies": {
@@ -30,14 +30,16 @@
     "express": "^4.14.0",
     "jquery": "^3.1.0",
     "middleware": "^1.0.0",
+    "nodemon": "^1.10.0",
     "node-uuid": "^1.4.7",
-    "nodemon": "^1.9.2",
     "promised-mongo": "github:makersquare/promised-mongo",
     "react": "^15.1.0",
+    "react-bootstrap": "^0.30.0",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.1",
     "redux": "^3.5.2",
-    "redux-logger": "^2.6.1"
+    "redux-logger": "^2.6.1",
+    "validator": "^5.5.0"
   }
 }
