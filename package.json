@@ -26,11 +26,16 @@
     "browserify-middleware": "^7.0.0",
     "express": "^4.14.0",
     "middleware": "^1.0.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "node-uuid": "^1.4.7",
+    "nodemon": "^1.9.2",
     "react": "^15.1.0",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.1",
     "redux": "^3.5.2",
-    "redux-logger": "^2.6.1"
+    "redux-logger": "^2.6.1",
+    "promised-mongo": "github:makersquare/promised-mongo"
   }
 }
