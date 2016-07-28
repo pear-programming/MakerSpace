@@ -19,3 +19,4 @@ User.create = function(name, email, password) {
       }
     })
 }
+

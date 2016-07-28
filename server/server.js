@@ -5,6 +5,7 @@ var User = require('./models/users')
 var Admin = require('./models/admins')
 var UserSession = require('./models/userSessions')
 var AdminSession = require('./models/adminSessions')
+var Organization = require('./models/organizations.js')
 
 var app = express();
 
@@ -48,3 +49,28 @@ app.post('/signup', function(req, res) {
       res.send(201, resp)
     })
 })
+
+
+//make new organization in db
+app.post('/organization/new', function(req, res) {
+
+  console.log("got new org request:", req.body);
+
+  Organization.findByName(req.body.name)
+    .then((data) => {
+      if(data[0]) {
+        res.send(400, "organization already exists!")
+      }
+      else {
+        Organization.create(req.body)
+          .then((data) => {
+            res.send(201, data)
+          })
+      }
+    })
+  
+})
+
+
+// id, name, address, admin-id, info, rooms
+
