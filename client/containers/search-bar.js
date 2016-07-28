@@ -18,7 +18,7 @@ export default class SearchBar extends Component {
     return (
       <form className='input-group'>
         <input 
-        	placeholder='Get a room'
+        	placeholder='Search for a business...'
         	className='form-control'
         	value={this.state.term}
         />
