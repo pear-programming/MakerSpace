@@ -59,6 +59,21 @@ app.post('/signup', function(req, res) {
 })
 
 
+app.post('/login', function(req, res) {
+  console.log('login req.body: ', req.body)
+  User.login(req.body)
+  .then(userId => {
+    return Session.create(userId)
+  })
+  .then(sessionId => {
+    console.log('sending sessionId: ', sessionId)
+    //set cookie or session storage
+    res.cookie("sessionId", sessionId)
+    res.send(201, "login success")
+  })
+})
+
+
 
 
 
