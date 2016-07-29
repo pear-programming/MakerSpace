@@ -27,6 +27,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "browserify-middleware": "^7.0.0",
+    "connect-history-api-fallback": "^1.2.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "jquery": "^3.1.0",
@@ -43,6 +44,7 @@
     "react-spinjs": "^3.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
+    "redux-promise": "^0.5.3",
     "validator": "^5.5.0"
   }
 }

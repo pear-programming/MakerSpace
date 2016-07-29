@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from './nav-bar';
 import MyOrganizations from './my-organizations';
 import MyReservations from './my-reservations';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -10,7 +9,6 @@ export default class MyAccount extends Component {
   render() {
     return (
       <div> 
-        <NavBar />
         <h2>My Account</h2> 
           <Grid>    
             <Row className="show-grid">

@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import OrgsReducer from './reducer_organizations';
 
-import textField from './textField';
-
-export default combineReducers({
-  textField
+const rootReducer = combineReducers({
+  organizations: OrgsReducer
 });
+
+export default rootReducer;
