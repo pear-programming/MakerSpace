@@ -42,13 +42,17 @@ console.log('Listening on localhost:' + port);
 
 // new user signs up
 app.post('/signup', function(req, res) {
-  console.log('req.body: ', req.body)
   var user_id;
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
-    user_id = userId
-    return Session.create(userId)
+    //new user was not created
+    if(!userId){
+      res.send(400, 'account already exists')
+    } else {
+      user_id = userId
+      return Session.create(userId)
+    }
   })
   .then(sessionId => {
     console.log('sending sessionId: ', sessionId)
@@ -59,28 +63,30 @@ app.post('/signup', function(req, res) {
 })
 
 
-
-
-
-/*login 
- get Userid from username
- check sessions table for userid
- send response already logged in
- hash password - bcrypt compare password (beer app)
- if matches, create new session in sessions table
- set cookie
- res.send(200)
- if pw is wrong 400 (check status coder)
- check if there is a session with that userId
-*/
-
-
-
-
-
-
-
-
+app.post('/login', function(req, res) {
+  User.login(req.body)
+  .then(userId => {
+    // console.log('userId in server file: ', userId)
+    if(userId === undefined){
+      throw new Error("email is not in database, account not yet created")
+    }
+    if(!userId){
+      throw new Error("incorrect password")
+    }
+    else {
+      return Session.create(userId)
+    }
+  })
+  .then(sessionId => {
+    // console.log('sending sessionId: ', sessionId)
+    //set cookie or session storage
+    res.cookie("sessionId", sessionId)
+    res.send(201, "login success")
+  })
+  .catch(err => {
+    res.send(400, err.toString())
+  })
+})
 
 
 
