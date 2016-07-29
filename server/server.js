@@ -1,9 +1,10 @@
 var express = require('express');
 var browserify = require('browserify-middleware');
 var path = require('path');
+var cookieParser = require('cookie-parser');
 var User = require('./models/users')
 var Admin = require('./models/admins')
-var UserSession = require('./models/userSessions')
+var Session = require('./models/userSessions')
 var AdminSession = require('./models/adminSessions')
 var Organization = require('./models/organizations.js')
 
@@ -17,6 +18,8 @@ var assetFolder = path.join(__dirname, '..', 'client','public');
 app.use(express.static(assetFolder));
 
 app.use( require('body-parser').json() );
+
+app.use(cookieParser());
 
 // Serve JS Assets
 app.get('/app-bundle.js',
@@ -40,14 +43,20 @@ console.log('Listening on localhost:' + port);
 
 // new user signs up
 app.post('/signup', function(req, res) {
-  var name = req.body.name;
-  var email = req.body.email;
-  var password = req.body.password;
+  console.log('req.body: ', req.body)
+  var user_id;
   //now we want to add info to users db table
-  User.create(name, email, password)
-    .then((resp) => {
-      res.send(201, resp)
-    })
+  User.create(req.body)
+  .then(userId => {
+    user_id = userId
+    return Session.create(userId)
+  })
+  .then(sessionId => {
+    console.log('sending sessionId: ', sessionId)
+    //set cookie or session storage
+    res.cookie("sessionId", sessionId)
+    res.send(201, user_id)
+  })
 })
 
 
@@ -71,6 +80,20 @@ app.post('/organization/new', function(req, res) {
   
 })
 
-
 // id, name, address, admin-id, info, rooms
+
+/*login 
+ get Userid from username
+ check sessions table for userid
+ send response already logged in
+ hash password - bcrypt compare password (beer app)
+ if matches, create new session in sessions table
+ set cookie
+ res.send(200)
+ if pw is wrong 400 (check status coder)
+ check if there is a session with that userId
+*/
+
+
+
 
