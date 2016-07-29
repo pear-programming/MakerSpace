@@ -46,14 +46,19 @@ app.post('/signup', function(req, res) {
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
-    user_id = userId
-    return Session.create(userId)
+    //new user was not created
+    if(!userId){
+      res.send(400, 'account already exists')
+    } else {
+      user_id = userId
+      return Session.create(userId)
+    }
   })
   .then(sessionId => {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_ids)
+    res.send(201, user_id)
   })
 })
 
