@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavBar from './nav-bar';
 import MyOrganizations from './my-organizations';
 import MyReservations from './my-reservations';
+import {Grid, Row, Col} from 'react-bootstrap';
+
 
 
 export default class MyAccount extends Component {
@@ -10,10 +12,12 @@ export default class MyAccount extends Component {
 			<div> 
 				<NavBar />
 				<h2>My Account</h2> 
-				<div className="container-fluid">
-				<div className="row"><MyOrganizations className="col-md-6"/>
-				<MyReservations className="col-md-6"/></div>
-				</div>
+				  <Grid>	  
+					  <Row className="show-grid">
+				      <Col md={6} mdPush={6}><MyReservations /></Col>
+				      <Col md={6} mdPull={6}><MyOrganizations /></Col>
+				    </Row>
+				  </Grid>
 			</div>
 		)
 	}

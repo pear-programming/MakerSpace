@@ -8,10 +8,10 @@ export default class NavBar extends Component {
   render(){
     return (
       <Navbar inverse>
-	    <LinkContainer to={'/'}><Navbar.Header>
-	     <Navbar.Brand>Get a Room 🍐</Navbar.Brand>
+	    <Navbar.Header>
+	     <Navbar.Brand><Link to={'/'}>Get a Room 🍐</Link></Navbar.Brand>
 	      <Navbar.Toggle />
-	    </Navbar.Header></LinkContainer>
+	    </Navbar.Header>
 	    <Navbar.Collapse>
 
 	 

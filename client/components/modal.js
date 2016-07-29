@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import { signup, login } from '../models/auth';
+import ReactSpinner from 'react-spinjs';
 
 export default class ModalButton extends Component {
   
@@ -11,10 +13,12 @@ export default class ModalButton extends Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.submitForm = this.submitForm.bind(this);
 
     this.state = { 
       showModal: false,
-      user: {}
+      user: {},
+      error: false
     };
   }
 
@@ -22,7 +26,6 @@ export default class ModalButton extends Component {
     var temp = this.state.user
     temp[inputField] = e.target.value
     this.setState({ user: Object.assign(this.state.user, temp) });
-    console.log('email', this.state.validateEmail)
 
     if(inputField === 'email'){
       this.setState({validEmail: this.validateEmail()});
@@ -36,11 +39,11 @@ export default class ModalButton extends Component {
     e.preventDefault();
     // check props.mode, send POST for either log in or sign up
     this.setState({user: {}})
+
   }
 
   close() {
-    this.setState({ showModal: false, user: {} });
-
+    this.setState({ showModal: false, user: {}, error: false });
   }
 
   open() {
@@ -62,6 +65,32 @@ export default class ModalButton extends Component {
     } else {
       return false
     }
+  }
+
+  submitForm(e){
+    e.preventDefault();
+    if(this.props.mode === 'Sign Up'){
+      signup(this.state.user)
+      .then(x => {
+        console.log('response', x)
+        this.close();
+      })
+      .catch(err => {
+        this.setState({error: true})
+      })
+    }
+    
+    if(this.props.mode === 'Log In'){
+      login(this.state.user)
+      .then(x => {
+        console.log('response', x)
+        this.close();
+      })
+      .catch(err => {
+        this.setState({error: true})
+      })
+    }
+
   }
 
   render() {
@@ -91,11 +120,12 @@ export default class ModalButton extends Component {
             <Modal.Title>{this.props.mode}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form>
+            <form onSubmit={this.submitForm} id="myform">
               {this.props.mode === 'Sign Up' ? <span><label>Full Name</label><input className="form-control" onChange={this.onInputChange.bind(null, 'fullName')}/><br/></span> : null}      
-              <FormGroup validationState={!this.state.validEmail ? "error" : "success" } onChange={this.onInputChange.bind(null, 'email')}>
+              <FormGroup validationState={!this.state.validEmail || this.state.error ? "error" : "success" } onChange={this.onInputChange.bind(null, 'email')}>
                 <ControlLabel>Email</ControlLabel>
                 <FormControl type="text" />
+                {this.state.error ? <HelpBlock>{this.props.mode === "Sign Up" ? "Email is already taken": "Invalid email / password" }</HelpBlock> : null }
               </FormGroup>
               <span><label>Password</label><input type="password" className="form-control" onChange={this.onInputChange.bind(null, 'password')}/><br/></span>
               {this.props.mode === 'Sign Up' ? 
@@ -105,11 +135,10 @@ export default class ModalButton extends Component {
                   {!this.state.validPassword ? <HelpBlock>Passwords must match</HelpBlock> : null }
                 </FormGroup>
                 : null}
-              <Button type="submit">Submit</Button>
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+              <Button type="submit" form="myform">Submit</Button>
           </Modal.Footer>
         </Modal>
       </span>
