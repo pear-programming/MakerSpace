@@ -8,18 +8,17 @@ export default class NavBar extends Component {
   render(){
     return (
       <Navbar inverse>
-	    <Navbar.Header>
-	      <Navbar.Brand>Get a Room 🍐</Navbar.Brand>
+	    <LinkContainer to={'/'}><Navbar.Header>
+	     <Navbar.Brand>Get a Room 🍐</Navbar.Brand>
 	      <Navbar.Toggle />
-	    </Navbar.Header>
+	    </Navbar.Header></LinkContainer>
 	    <Navbar.Collapse>
 
 	 
 	      { document.cookie ?
 	      	 <Nav pullRight>
 	      	 <NavDropdown eventKey={3} title="Welcome" id="basic-nav-dropdown">
-	         <LinkContainer to={'organizations'}><MenuItem eventKey={3.1}>My Organizations</MenuItem></LinkContainer>
-	          <MenuItem eventKey={3.2}>My Reservations</MenuItem>
+	         <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
 	          <MenuItem divider />
 	          <MenuItem eventKey={3.3}>Log Out</MenuItem>
 	          </NavDropdown>
