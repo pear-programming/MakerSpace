@@ -26,3 +26,15 @@ Organization.create = function(organizationData, userId) {
 			return data;
 		})
 }
+
+
+Organization.findAll = function() {
+  return db.organizations.find({});
+}
+
+Organization.findByOrgName = function(name) {
+  return db.organizations.find({name : name})
+  .then(rows => {
+    return rows[0]
+  })
+}

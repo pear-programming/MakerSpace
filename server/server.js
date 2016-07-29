@@ -3,9 +3,7 @@ var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var User = require('./models/users');
-var Admin = require('./models/admins');
 var Session = require('./models/userSessions');
-var AdminSession = require('./models/adminSessions');
 var Organization = require('./models/organizations.js');
 var Room = require('./models/rooms.js');
 
@@ -29,10 +27,6 @@ app.get('/app-bundle.js',
   })
 );
 
-// Wild card route for client side routing.
-app.get('/*', function(req, res){
-  res.sendFile( assetFolder + '/index.html' );
-})
 
 // Start server
 app.listen(port);
@@ -63,7 +57,7 @@ app.post('/signup', function(req, res) {
     res.cookie("sessionId", sessionId)
     res.send(201, user_id)
   })
-})
+});
 
 
 //make new organization in db
@@ -98,21 +92,9 @@ app.post('/organization/new', function(req, res) {
       })
     })
   
-})
+});
 
 // id, name, address, admin-id, info, rooms
-
-/*login 
- get Userid from username
- check sessions table for userid
- send response already logged in
- hash password - bcrypt compare password (beer app)
- if matches, create new session in sessions table
- set cookie
- res.send(200)
- if pw is wrong 400 (check status coder)
- check if there is a session with that userId
-*/
 
 app.post('/login', function(req, res) {
   User.login(req.body)
@@ -137,8 +119,34 @@ app.post('/login', function(req, res) {
   .catch(err => {
     res.send(400, err.toString())
   })
+});
+
+
+// get all organizations in database
+app.get('/organizations', function(req, res) {
+  Organization.findAll()
+  .then(orgs => {
+    console.log('array of orgs?: ', orgs)
+    res.send(200, orgs)
+  })
+});
+
+app.get('/organizations/:organizationName', function(req, res) {
+  var org = req.params.organizationName
+  // console.log('org: ', org)
+  Organization.findByOrgName(org)
+  .then(org => {
+    console.log('org found: ', org)
+    res.send(200, org)
+  })
+});
+
+
+
+
+
+
+// Wild card route for client side routing.
+app.get('/*', function(req, res){
+  res.sendFile( assetFolder + '/index.html' );
 })
-
->>>>>>> 743a1e4c3bcad2c7bb76538cfc9d5cebd4ea5612
-
-
