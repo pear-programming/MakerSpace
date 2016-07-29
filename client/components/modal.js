@@ -121,17 +121,17 @@ export default class ModalButton extends Component {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.submitForm} id="myform">
-              {this.props.mode === 'Sign Up' ? <span><label>Full Name</label><input className="form-control" onChange={this.onInputChange.bind(null, 'fullName')}/><br/></span> : null}      
+              {this.props.mode === 'Sign Up' ? <span><label>Full Name</label><input className="form-control" onChange={this.onInputChange.bind(null, 'fullName')} required/><br/></span> : null}      
               <FormGroup validationState={!this.state.validEmail || this.state.error ? "error" : "success" } onChange={this.onInputChange.bind(null, 'email')}>
                 <ControlLabel>Email</ControlLabel>
-                <FormControl type="text" />
+                <FormControl type="text" required/>
                 {this.state.error ? <HelpBlock>{this.props.mode === "Sign Up" ? "Email is already taken": "Invalid email / password" }</HelpBlock> : null }
               </FormGroup>
-              <span><label>Password</label><input type="password" className="form-control" onChange={this.onInputChange.bind(null, 'password')}/><br/></span>
+              <span><label>Password</label><input type="password" className="form-control" onChange={this.onInputChange.bind(null, 'password')} required /><br/></span>
               {this.props.mode === 'Sign Up' ? 
                 <FormGroup validationState={!this.state.validPassword ? "error" : "success" } onChange={this.onInputChange.bind(null, 'password2')}>
                   <ControlLabel>Re-enter Password</ControlLabel>
-                  <FormControl type="password" />
+                  <FormControl type="password" required/>
                   {!this.state.validPassword ? <HelpBlock>Passwords must match</HelpBlock> : null }
                 </FormGroup>
                 : null}
