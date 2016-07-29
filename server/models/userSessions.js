@@ -33,5 +33,6 @@ Session.findById = function (sessionId) {
   }
 
 Session.destroy = function (sessionId) {
-  return db.userSessions.find({ id: sessionId }).del()
+  console.log("inside session.destory:", sessionId);
+  return db.userSessions.remove({ _id: sessionId})
 }

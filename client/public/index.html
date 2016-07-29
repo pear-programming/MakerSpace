@@ -3,7 +3,8 @@
   <head>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <title> Scheduler </title>
+    <link rel="icon" type="image/png" href="http://emojipedia-us.s3.amazonaws.com/cache/26/97/269783e692e2b6047873e88f9d90cc6e.png">
+    <title> Get a Room </title>
   </head>
   <body>
     <div id='mount'></div>
@@ -23,16 +24,27 @@
     //     {}
     // ],
 
-        $.ajax({
-        method: 'POST',
-        url: 'http://localhost:4000/signup',
-        contentType: 'application/json',
-        data: JSON.stringify({name: 'Ashford', email: 'ashley@hoail.com', password: 123})
-      })
-      .done(data=>console.log('cookie?????', data))
-      .fail(err=>console.log('err in index', err))
+      //   $.ajax({
+      //   method: 'POST',
+      //   url: 'http://localhost:4000/signup',
+      //   contentType: 'application/json',
+      //   data: JSON.stringify({name: 'Bill', email: 'bill@hoil.com', password: 123})
+      // })
+      // .done(data=>console.log('cookie?????', data))
+      // .fail(err=>console.log('err in index', err))
       
-        })
+      //   })
+
+      // $.ajax({
+      //   method: 'GET',
+      //   url: 'http://localhost:4000/logout',
+      //   contentType: 'application/json',
+  
+      // })
+      // .done(data=>console.log('cookie?????', data))
+      // .fail(err=>console.log('err in index', err))
+      
+      //   })
 
       //   var rooms = [{"roomName": "d", "projector": true, "capacity": 20}, {"roomName": "e", "projector": false, "capacity": 25}];
 
