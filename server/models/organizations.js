@@ -13,10 +13,11 @@ Organization.findByName = function(name) {
 
 }
 
-Organization.create = function(organizationData) {
+Organization.create = function(organizationData, userId) {
 	
 
-	var newOrganization = Object.assign(organizationData, {users: []}, {adminIds:[]})
+	var newOrganization = Object.assign(organizationData, {users: []}, {adminIds:[userId]})
+	console.log("inside organization.create:", newOrganization);
 
 	return db.organizations.insert(newOrganization)
 		.then((data) => {

@@ -1,4 +1,4 @@
-var db = require('../db')
+var db = require('../db.js')
 var uuid = require('node-uuid');
 
 
@@ -21,9 +21,14 @@ Session.create = function (userId) {
   }
 
 Session.findById = function (sessionId) {
-  return db.userSessions.find({ id: sessionId })
+  console.log("inside session.findById:", sessionId);
+  return db.userSessions.find({ _id: sessionId })
     .then(function (rows) {
+      console.log("found rows in session search:", rows);
       return rows[0]
+    })
+    .catch(function(err) {
+      console.log("error retrieving from sessions:", err);
     })
   }
 

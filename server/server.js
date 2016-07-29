@@ -2,11 +2,12 @@ var express = require('express');
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var User = require('./models/users')
-var Admin = require('./models/admins')
-var Session = require('./models/userSessions')
-var AdminSession = require('./models/adminSessions')
-var Organization = require('./models/organizations.js')
+var User = require('./models/users');
+var Admin = require('./models/admins');
+var Session = require('./models/userSessions');
+var AdminSession = require('./models/adminSessions');
+var Organization = require('./models/organizations.js');
+var Room = require('./models/rooms.js');
 
 var app = express();
 
@@ -48,8 +49,14 @@ app.post('/signup', function(req, res) {
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
-    user_id = userId
-    return Session.create(userId)
+    // console.log("checking userId after signup existingg user:", userId);
+    if(!userId) {
+      res.send(400, "account already exists");
+    }
+    else {   
+      user_id = userId
+      return Session.create(userId)
+    }
   })
   .then(sessionId => {
     console.log('sending sessionId: ', sessionId)
@@ -63,19 +70,33 @@ app.post('/signup', function(req, res) {
 //make new organization in db
 app.post('/organization/new', function(req, res) {
 
-  console.log("got new org request:", req.body);
+  console.log("got new org request:", req.body, req.cookies.sessionId);
+  var sessionId;
+  var userId;
+  Session.findById(req.cookies.sessionId)
+    .then((session) => {
+      userId = session.user_id;
+      console.log("got to here!!!!!!:", session);
+    Organization.findByName(req.body.name)
+      .then((data) => {
+        console.log("git data from findByName:", data);
+        if(data[0]) {
+          res.send(400, "organization already exists!");
+        }
+        else {
+          console.log("made it to else!:", req.body, userId);
+          Organization.create(req.body, userId)
+            .then((data) => {
+              Room.addRooms(data.rooms, data._id)
+                .then((data) =>{
 
-  Organization.findByName(req.body.name)
-    .then((data) => {
-      if(data[0]) {
-        res.send(400, "organization already exists!")
-      }
-      else {
-        Organization.create(req.body)
-          .then((data) => {
-            res.send(201, data)
-          })
-      }
+                  console.log("ready to send response after room insertion:", data)
+                  res.send(201, "added organization and rooms successfully!");
+                })
+              // res.send(201, data)
+            })
+        }
+      })
     })
   
 })
