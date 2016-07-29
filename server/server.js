@@ -44,16 +44,15 @@ console.log('Listening on localhost:' + port);
 
 // new user signs up
 app.post('/signup', function(req, res) {
-  console.log('req.body: ', req.body)
   var user_id;
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
-    // console.log("checking userId after signup existingg user:", userId);
-    if(!userId) {
-      res.send(400, "account already exists");
-    }
-    else {   
+
+    //new user was not created
+    if(!userId){
+      res.send(400, 'account already exists')
+    } else {
       user_id = userId
       return Session.create(userId)
     }
@@ -115,6 +114,31 @@ app.post('/organization/new', function(req, res) {
  check if there is a session with that userId
 */
 
+app.post('/login', function(req, res) {
+  User.login(req.body)
+  .then(userId => {
+    // console.log('userId in server file: ', userId)
+    if(userId === undefined){
+      throw new Error("email is not in database, account not yet created")
+    }
+    if(!userId){
+      throw new Error("incorrect password")
+    }
+    else {
+      return Session.create(userId)
+    }
+  })
+  .then(sessionId => {
+    // console.log('sending sessionId: ', sessionId)
+    //set cookie or session storage
+    res.cookie("sessionId", sessionId)
+    res.send(201, "login success")
+  })
+  .catch(err => {
+    res.send(400, err.toString())
+  })
+})
 
+>>>>>>> 743a1e4c3bcad2c7bb76538cfc9d5cebd4ea5612
 
 

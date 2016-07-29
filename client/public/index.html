@@ -34,26 +34,26 @@
       
       //   })
 
-        var rooms = [{"roomName": "d", "projector": true, "capacity": 20}, {"roomName": "e", "projector": false, "capacity": 25}];
+      //   var rooms = [{"roomName": "d", "projector": true, "capacity": 20}, {"roomName": "e", "projector": false, "capacity": 25}];
 
-        $.ajax({
-          method: 'POST', 
-          url: 'http://localhost:4000/organization/new',
-          contentType: 'application/json', 
-          data: JSON.stringify({name: "THE ORGANIZATIONSSSSSSSS", address: "321 My Street", rooms: rooms})
-        })
-        .done(function(data) { 
+      //   $.ajax({
+      //     method: 'POST', 
+      //     url: 'http://localhost:4000/organization/new',
+      //     contentType: 'application/json', 
+      //     data: JSON.stringify({name: "THE ORGANIZATIONSSSSSSSS", address: "321 My Street", rooms: rooms})
+      //   })
+      //   .done(function(data) { 
           
-          console.log("added organization:", data)
+      //     console.log("added organization:", data)
       
-        })
-        .fail(function(err) {
+      //   })
+      //   .fail(function(err) {
     
-          console.log("failed to add organization:", err);
+      //     console.log("failed to add organization:", err);
           
-        })
+      //   })
 
-      })
+      // })
 
     </script>
 
