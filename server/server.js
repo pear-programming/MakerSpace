@@ -2,10 +2,12 @@ var express = require('express');
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var User = require('./models/users')
-var Admin = require('./models/admins')
-var Session = require('./models/userSessions')
-var AdminSession = require('./models/adminSessions')
+var User = require('./models/users');
+var Admin = require('./models/admins');
+var Session = require('./models/userSessions');
+var AdminSession = require('./models/adminSessions');
+var Organization = require('./models/organizations.js');
+var Room = require('./models/rooms.js');
 
 var app = express();
 
@@ -46,6 +48,7 @@ app.post('/signup', function(req, res) {
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
+
     //new user was not created
     if(!userId){
       res.send(400, 'account already exists')
@@ -62,6 +65,54 @@ app.post('/signup', function(req, res) {
   })
 })
 
+
+//make new organization in db
+app.post('/organization/new', function(req, res) {
+
+  console.log("got new org request:", req.body, req.cookies.sessionId);
+  var sessionId;
+  var userId;
+  Session.findById(req.cookies.sessionId)
+    .then((session) => {
+      userId = session.user_id;
+      console.log("got to here!!!!!!:", session);
+    Organization.findByName(req.body.name)
+      .then((data) => {
+        console.log("git data from findByName:", data);
+        if(data[0]) {
+          res.send(400, "organization already exists!");
+        }
+        else {
+          console.log("made it to else!:", req.body, userId);
+          Organization.create(req.body, userId)
+            .then((data) => {
+              Room.addRooms(data.rooms, data._id)
+                .then((data) =>{
+
+                  console.log("ready to send response after room insertion:", data)
+                  res.send(201, "added organization and rooms successfully!");
+                })
+              // res.send(201, data)
+            })
+        }
+      })
+    })
+  
+})
+
+// id, name, address, admin-id, info, rooms
+
+/*login 
+ get Userid from username
+ check sessions table for userid
+ send response already logged in
+ hash password - bcrypt compare password (beer app)
+ if matches, create new session in sessions table
+ set cookie
+ res.send(200)
+ if pw is wrong 400 (check status coder)
+ check if there is a session with that userId
+*/
 
 app.post('/login', function(req, res) {
   User.login(req.body)
@@ -88,5 +139,6 @@ app.post('/login', function(req, res) {
   })
 })
 
+>>>>>>> 743a1e4c3bcad2c7bb76538cfc9d5cebd4ea5612
 
 
