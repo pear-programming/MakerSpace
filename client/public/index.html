@@ -2,27 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="/styles.css" />
-    <title> BoilerPlate </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <title> Scheduler </title>
   </head>
   <body>
     <div id='mount'></div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="/app-bundle.js"></script>
-    <script>
-    console.log('heyyy!')
-
-    $(document).ready(function() {
-
-      $.ajax({
-        method: 'POST',
-        url: 'http://localhost:4000/signup',
-        contentType: 'application/json',
-        data: JSON.stringify({name: 'Ash', email: 'ashley@gmail.com', password: 123})
-      })
-      .done(data=>console.log('cookie?????', data))
-      .fail(err=>console.log('err in index', err))
-      
-    })
-    </script>
+  
   </body>
 </html>
