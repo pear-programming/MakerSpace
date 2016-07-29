@@ -32,19 +32,21 @@ User.create = function(incomingAttrs) {
   .catch(err => console.log('err in create: ', err))
 }
 
-//gets userId from user's email
-// User.findByEmail = function(email) {
-//   return db.users.find({email: email})
-// }
-
 
 //existing user logs in
 User.login = function(loginInfo) {
-  console.log('loginInfo', loginInfo);
+  var attemptedPassword = loginInfo.password
   return db.users.find({email: loginInfo.email})
   .then(user => {
+    console.log('user found in db from login', user)
+    console.log('user.password ', user[0].password)
+    console.log('attemptedPassword ', attemptedPassword)
+    return comparePassword(user[0].password, attemptedPassword)
+  })
+  .then(resp => {
    // console.log('user[0]._id: ', user[0]._id)
-    return user[0]._id
+   console.log('resp', resp)
+    // return user[0]._id
   })
   .catch(err => console.log('user not found', err))
 }
@@ -53,6 +55,16 @@ User.login = function(loginInfo) {
 
 
 
+/// helper functions for this file below ///
+
+function comparePassword(hash, attemptedPassword) {
+  return new Promise(function(resolve, reject){
+    bcrypt.compare(attemptedPassword, hash, function(err, isCorrect){
+      if(err) console.log("bcrpyt error:", err);
+        resolve(isCorrect);
+    })
+  })
+}
 
 function hashPassword (password) {
   return new Promise(function (resolve, reject) {

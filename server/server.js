@@ -54,13 +54,12 @@ app.post('/signup', function(req, res) {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_id)
+    res.send(201, user_ids)
   })
 })
 
 
 app.post('/login', function(req, res) {
-  console.log('login req.body: ', req.body)
   User.login(req.body)
   .then(userId => {
     return Session.create(userId)
