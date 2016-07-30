@@ -16,6 +16,12 @@ Room.addRooms = function(rooms) {
 }
 
 
-Room.findRooms = function(){
+Room.findRooms = function() {
 	return db.rooms.find({})
+}
+
+
+Room.changeAvailability = function(room) {
+	return 
+	return db.rooms.update({isAvailable : })
 }

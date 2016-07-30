@@ -173,12 +173,22 @@ app.post('/login', function(req, res) {
   })
 })
 
+app.post('/:roomName/changeAvailability', function(req, res){
+  
+})
+
+
+
 app.get('/rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
   })  
 })
+
+
+
+
 
 
 
