@@ -16,5 +16,5 @@ Room.addRooms = function(rooms, organizationId) {
 }
 
 Room.findRooms = function(){
-	return db.collection('rooms').find({})
+	return db.rooms.find({})
 }
