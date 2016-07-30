@@ -13,6 +13,7 @@ export default function Routes() {
         <IndexRoute component={SplashPage} />
         <Route path='my-account' component={MyAccount} />
         <Route path='rooms' component={RoomsList} />
+        <Route path=':roomName/display' component={MyAccount} />
       </Route>
     </Router>
   );

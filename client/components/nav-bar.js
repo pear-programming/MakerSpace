@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory, Link } from 'react-router';
-import Modal from './modal';
+import AuthModal from './auth-modal';
 import {Button, Navbar, NavItem, MenuItem, Nav, NavDropdown} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 
@@ -26,8 +26,8 @@ export default class NavBar extends Component {
            </Nav>
 
           : <Nav pullRight>
-              <NavItem eventKey={1} href="#"><Modal mode="Log In" /></NavItem>
-              <NavItem eventKey={2} href="#"><Modal mode="Sign Up" /></NavItem>
+              <NavItem eventKey={1} href="#"><AuthModal mode="Log In" /></NavItem>
+              <NavItem eventKey={2} href="#"><AuthModal mode="Sign Up" /></NavItem>
             </Nav>
         }
        
