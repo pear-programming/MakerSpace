@@ -5,7 +5,7 @@ var Room = module.exports
 Room.addRooms = function(rooms) {
 
 	// console.log("got room info after organization insert:", rooms, organizationId);
-	var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true})); 
+	var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true}));
 	console.log("after mapping:", roomsWithAvailability);
 	return db.rooms.insert(roomsWithAvailability)
 		.then((data) => {
@@ -18,4 +18,8 @@ Room.addRooms = function(rooms) {
 
 Room.findRooms = function(){
 	return db.rooms.find({})
+}
+
+Room.roomStatus = function() {
+	// return db.rooms.find({"isAvailable": })
 }

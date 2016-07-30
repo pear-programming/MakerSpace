@@ -40,7 +40,7 @@ console.log('Listening on localhost:' + port);
 //////// ENDPOINTS //////////
 
 // new user signs up
-app.post('/signup', function(req, res) { 
+app.post('/signup', function(req, res) {
 
   var user_id;
   //now we want to add info to users db table
@@ -99,7 +99,7 @@ app.post('/signup', function(req, res) {
 // })
 
 // POST /rooms/new
-//req.body should be be an array of room objects 
+//req.body should be be an array of room objects
 // Example:
  // [
  //   {
@@ -114,7 +114,7 @@ app.post('/signup', function(req, res) {
  //    }
  //  ]
 
-app.post('/rooms/new', function(req, res) { 
+app.post('/rooms/new', function(req, res) {
 
   Room.addRooms(req.body)
     .then((roomIds) => {
@@ -122,7 +122,7 @@ app.post('/rooms/new', function(req, res) {
       console.log("ready to send response after room insertion:", roomIds)
       res.send(201, {roomIds: roomIds});
     })
-    
+
 })
 
 app.get('/logout', function(req, res) {
@@ -177,7 +177,20 @@ app.get('/rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
-  })  
+  })
+  .catch(err => {
+    res.send(400, err.toString())
+  })
+})
+
+app.get('/rooms', function(req, res){
+  Room.roomStatus()
+  .then(roomInfo => {
+    res.send(201, roomInfo)
+  })
+  .catch(err => {
+    res.send(400, err.toString())
+  })
 })
 
 
