@@ -27,7 +27,6 @@ app.get('/app-bundle.js',
   })
 );
 
-
 // Start server
 app.listen(port);
 console.log('Listening on localhost:' + port);
@@ -94,6 +93,15 @@ app.post('/organization/new', function(req, res) {
   
 });
 
+app.get('/logout', function(req, res) {
+
+  Session.destroy(req.cookies.sessionId)
+    .then(() => {
+      res.clearCookie('sessionId');
+      res.sendStatus(200);
+    })
+})
+
 // id, name, address, admin-id, info, rooms
 
 app.post('/login', function(req, res) {
@@ -140,10 +148,6 @@ app.get('/organizations/:organizationName', function(req, res) {
     res.send(200, orgs)
   })
 });
-
-
-
-
 
 
 // Wild card route for client side routing.
