@@ -40,7 +40,8 @@ console.log('Listening on localhost:' + port);
 //////// ENDPOINTS //////////
 
 // new user signs up
-app.post('/signup', function(req, res) {
+app.post('/signup', function(req, res) { 
+
   var user_id;
   //now we want to add info to users db table
   User.create(req.body)
@@ -105,15 +106,13 @@ app.post('/signup', function(req, res) {
  //      "_id": "579ba6a08b6fcb4204613360",
  //      "roomName": "d",
  //      "projector": true,
- //      "capacity": 20,
- //      "organizationId": "579ba6a08b6fcb420461335f"
+ //      "capacity": 20
  //    },
  //    {
  //      "_id": "579ba6a08b6fcb4204613361",
  //      "roomName": "e",
  //      "projector": false,
- //      "capacity": 25,
- //      "organizationId": "579ba6a08b6fcb420461335f"
+ //      "capacity": 25
  //    }
  //  ]
 
