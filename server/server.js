@@ -183,7 +183,7 @@ app.get('/rooms', function(req, res){
   })
 })
 
-app.get('/rooms', function(req, res){
+app.get('/rooms/status', function(req, res){
   Room.roomStatus()
   .then(roomInfo => {
     res.send(201, roomInfo)

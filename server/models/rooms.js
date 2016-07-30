@@ -18,8 +18,13 @@ Room.addRooms = function(rooms) {
 
 Room.findRooms = function(){
 	return db.rooms.find({})
+	.catch((err) => console.log("error no rooms:", err))
 }
 
-Room.roomStatus = function() {
-	// return db.rooms.find({"isAvailable": })
+Room.roomStatus = function(roomInfo) {
+	// var attrs = Object.assign({}, incomingAttrs);
+	return db.rooms.find({name: roomInfo.name})
+	.then(room => {
+		console.log(room)
+	})
 }
