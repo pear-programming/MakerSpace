@@ -103,13 +103,11 @@ app.post('/signup', function(req, res) {
 // Example:
  // [
  //   {
- //      "_id": "579ba6a08b6fcb4204613360",
  //      "roomName": "d",
  //      "projector": true,
  //      "capacity": 20
  //    },
  //    {
- //      "_id": "579ba6a08b6fcb4204613361",
  //      "roomName": "e",
  //      "projector": false,
  //      "capacity": 25
