@@ -18,7 +18,6 @@ export default class RoomsList extends Component {
 
   componentWillMount() {
     this.setState({ rooms: this.state.rooms.concat(roomsList) })
-    console.log(this.state, roomsList)
   }
 
   render() {

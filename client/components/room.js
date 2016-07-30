@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 
 export default class Room extends Component {
   render() {
-  	console.log('room in Room', this.props.roomInfo)
+    console.log('room in Room', this.props.roomInfo)
     return (
-      <div> 
-      	{this.props.roomInfo.name}
+      <div key={this.props.roomInfo.name}> 
+        <span>{this.props.roomInfo.name}</span>
+      
+        <span><label className="switch">
+         <input type="checkbox"/>
+          <div className="slider round"></div>
+        </label></span>
+
       </div>
+
     )
   }
 }
