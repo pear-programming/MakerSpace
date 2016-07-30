@@ -2,18 +2,19 @@ var db = require('../db.js');
 
 var Room = module.exports
 
-Room.addRooms = function(rooms, organizationId) {
+Room.addRooms = function(rooms) {
 
 	// console.log("got room info after organization insert:", rooms, organizationId);
-	var roomsWithOrgId = rooms.map((room) => Object.assign(room, {organizationId: organizationId}));
-	console.log("after mapping:", roomsWithOrgId);
-	return db.rooms.insert(roomsWithOrgId)
-		.then(() => {
-			console.log("after rooms insertion!");
-			return "done";
+	var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true})); 
+	console.log("after mapping:", roomsWithAvailability);
+	return db.rooms.insert(roomsWithAvailability)
+		.then((data) => {
+			console.log("after rooms insertion!", data);
+			return data.map((room) => room._id);
 		})
 		.catch((err) => console.log("error inserting rooms:", err))
 }
+
 
 Room.findRooms = function(){
 	return db.rooms.find({})
