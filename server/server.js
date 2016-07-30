@@ -29,10 +29,7 @@ app.get('/app-bundle.js',
   })
 );
 
-// Wild card route for client side routing.
-app.get('/*', function(req, res){
-  res.sendFile( assetFolder + '/index.html' );
-})
+
 
 // Start server
 app.listen(port);
@@ -100,6 +97,15 @@ app.post('/organization/new', function(req, res) {
   
 })
 
+app.get('/logout', function(req, res) {
+
+  Session.destroy(req.cookies.sessionId)
+    .then(() => {
+      res.clearCookie('sessionId');
+      res.sendStatus(200);
+    })
+})
+
 // id, name, address, admin-id, info, rooms
 
 /*login 
@@ -139,6 +145,9 @@ app.post('/login', function(req, res) {
   })
 })
 
->>>>>>> 743a1e4c3bcad2c7bb76538cfc9d5cebd4ea5612
 
 
+// Wild card route for client side routing.
+app.get('/*', function(req, res){
+  res.sendFile( assetFolder + '/index.html' );
+})
