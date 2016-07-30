@@ -134,10 +134,10 @@ app.get('/organizations', function(req, res) {
 app.get('/organizations/:organizationName', function(req, res) {
   var org = req.params.organizationName
   // console.log('org: ', org)
-  Organization.findByOrgName(org)
-  .then(org => {
+  Organization.findByName(org)
+  .then(orgs => {
     console.log('org found: ', org)
-    res.send(200, org)
+    res.send(200, orgs)
   })
 });
 
