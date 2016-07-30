@@ -97,6 +97,26 @@ app.post('/signup', function(req, res) {
 
 // })
 
+// POST /rooms/new
+//req.body should be be an array of room objects 
+// Example:
+ // [
+ //   {
+ //      "_id": "579ba6a08b6fcb4204613360",
+ //      "roomName": "d",
+ //      "projector": true,
+ //      "capacity": 20,
+ //      "organizationId": "579ba6a08b6fcb420461335f"
+ //    },
+ //    {
+ //      "_id": "579ba6a08b6fcb4204613361",
+ //      "roomName": "e",
+ //      "projector": false,
+ //      "capacity": 25,
+ //      "organizationId": "579ba6a08b6fcb420461335f"
+ //    }
+ //  ]
+
 app.post('/rooms/new', function(req, res) { 
 
   Room.addRooms(req.body)
