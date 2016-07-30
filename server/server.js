@@ -94,7 +94,7 @@ app.post('/organization/new', function(req, res) {
         }
       })
     })
-  
+
 })
 
 app.get('/logout', function(req, res) {
@@ -108,7 +108,7 @@ app.get('/logout', function(req, res) {
 
 // id, name, address, admin-id, info, rooms
 
-/*login 
+/*login
  get Userid from username
  check sessions table for userid
  send response already logged in
@@ -143,6 +143,13 @@ app.post('/login', function(req, res) {
   .catch(err => {
     res.send(400, err.toString())
   })
+})
+
+app.get('/rooms', function(req, res){
+  Room.findRooms()
+  .then(roomInfo => {
+    res.send(201, roomInfo)
+  })  
 })
 
 
