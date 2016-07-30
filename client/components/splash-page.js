@@ -9,7 +9,7 @@ export default function SplashPage() {
   return (
     <div>
 
-      <h1 className='title'>Get a Room</h1>
+      <h1 className='title'>MakerSpace</h1>
     </div>
   );
 }
