@@ -19,6 +19,7 @@ export default class NavBar extends Component {
            <Nav pullRight>
            <NavDropdown eventKey={3} title="Welcome" id="basic-nav-dropdown">
            <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
+           <LinkContainer to={'rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
             <MenuItem divider />
             <MenuItem eventKey={3.3}>Log Out</MenuItem>
             </NavDropdown>
