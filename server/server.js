@@ -64,37 +64,48 @@ app.post('/signup', function(req, res) {
 
 
 //make new organization in db
-app.post('/organization/new', function(req, res) {
+// app.post('/organization/new', function(req, res) {
 
-  console.log("got new org request:", req.body, req.cookies.sessionId);
-  var sessionId;
-  var userId;
-  Session.findById(req.cookies.sessionId)
-    .then((session) => {
-      userId = session.user_id;
-      console.log("got to here!!!!!!:", session);
-    Organization.findByName(req.body.name)
-      .then((data) => {
-        console.log("git data from findByName:", data);
-        if(data[0]) {
-          res.send(400, "organization already exists!");
-        }
-        else {
-          console.log("made it to else!:", req.body, userId);
-          Organization.create(req.body, userId)
-            .then((data) => {
-              Room.addRooms(data.rooms, data._id)
-                .then((data) =>{
+//   console.log("got new org request:", req.body, req.cookies.sessionId);
+//   var sessionId;
+//   var userId;
+//   Session.findById(req.cookies.sessionId)
+//     .then((session) => {
+//       userId = session.user_id;
+//       console.log("got to here!!!!!!:", session);
+//     Organization.findByName(req.body.name)
+//       .then((data) => {
+//         console.log("git data from findByName:", data);
+//         if(data[0]) {
+//           res.send(400, "organization already exists!");
+//         }
+//         else {
+//           console.log("made it to else!:", req.body, userId);
+//           Organization.create(req.body, userId)
+//             .then((data) => {
+//               Room.addRooms(data.rooms, data._id)
+//                 .then((data) =>{
 
-                  console.log("ready to send response after room insertion:", data)
-                  res.send(201, "added organization and rooms successfully!");
-                })
-              // res.send(201, data)
-            })
-        }
-      })
+//                   console.log("ready to send response after room insertion:", data)
+//                   res.send(201, "added organization and rooms successfully!");
+//                 })
+//               // res.send(201, data)
+//             })
+//         }
+//       })
+//     })
+
+// })
+
+app.post('/rooms/new', function(req, res) { 
+
+  Room.addRooms(req.body)
+    .then((roomIds) => {
+
+      console.log("ready to send response after room insertion:", roomIds)
+      res.send(201, {roomIds: roomIds});
     })
-
+    
 })
 
 app.get('/logout', function(req, res) {
