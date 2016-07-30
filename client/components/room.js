@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { browserHistory, Link } from 'react-router';
 
 export default class Room extends Component {

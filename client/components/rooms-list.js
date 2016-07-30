@@ -12,8 +12,19 @@ export default class RoomsList extends Component {
     }
   }
   changeRoomState(room) {
+    const rooms = this.state.rooms
+    const roomIndex = rooms.indexOf(rooms.find(findRoom))
     //function to change state in parent of the room selected
-    console.log('updating availability for: ', room)
+    function findRoom(findThisRoom) { 
+      return findThisRoom.name === room.name;
+    }
+
+
+    console.log('updating availability for: ', rooms.find(findRoom))
+    console.log('index: ', rooms.indexOf(rooms.find(findRoom)))
+    rooms[roomIndex].availability = !rooms[roomIndex].availability
+    this.setState({ rooms: rooms })
+    console.log(this.state)
   }
   renderRooms() {
     return this.state.rooms.map(room => <Room toggleState={this.changeRoomState.bind(this)} roomInfo={room} />)
