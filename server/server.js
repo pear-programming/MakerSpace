@@ -1,4 +1,4 @@
-var express = require('express');
+
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -8,10 +8,31 @@ var Session = require('./models/userSessions');
 var AdminSession = require('./models/adminSessions');
 var Organization = require('./models/organizations.js');
 var Room = require('./models/rooms.js');
+var app = require('express')();
+var express = require('express');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var app = express();
+
+
+io.on('connection', function (socket) {
+  socket.broadcast.emit('user connected');  
+
+  socket.on('newRooms', function (data) {
+    console.log('newRoomsdata: ', data);
+    socket.broadcast.emit('updatedRooms', { rooms: data });
+  });
+});
+
+
+
+
 
 var port = process.env.PORT || 4000;
+
+server.listen(port);
+console.log('Listening on localhost:' + port);
+
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
@@ -29,11 +50,6 @@ app.get('/app-bundle.js',
   })
 );
 
-
-
-// Start server
-app.listen(port);
-console.log('Listening on localhost:' + port);
 
 
 
@@ -179,7 +195,6 @@ app.get('/rooms', function(req, res){
     res.send(201, roomInfo)
   })  
 })
-
 
 
 // Wild card route for client side routing.
