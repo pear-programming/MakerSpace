@@ -42,7 +42,6 @@ console.log('Listening on localhost:' + port);
 // new user signs up
 app.post('/signup', function(req, res) { 
 
-  var user_id;
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -59,7 +58,7 @@ app.post('/signup', function(req, res) {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_id)
+    res.send(201, req.body.name)
   })
 })
 
