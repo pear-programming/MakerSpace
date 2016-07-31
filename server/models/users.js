@@ -35,19 +35,20 @@ User.create = function(incomingAttrs) {
 
 //existing user logs in
 User.login = function(loginInfo) {
+  console.log("inside user.login");
   var attemptedPassword = loginInfo.password
-  var userId;
+  var user;
   return db.users.find({email: loginInfo.email})
   .then(users => {
     if(users.length===0){
       throw new Error()
     }
-    userId = users[0]._id
+    user = users[0];
     return comparePassword(users[0].password, attemptedPassword)
   })
   .then(resp => {
     if(resp){
-     return userId;
+     return user;
     } else {
      return false
     };

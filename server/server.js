@@ -149,24 +149,26 @@ app.get('/logout', function(req, res) {
 */
 
 app.post('/login', function(req, res) {
+  var userName;
   User.login(req.body)
-  .then(userId => {
-    // console.log('userId in server file: ', userId)
-    if(userId === undefined){
+  .then(user => {
+    console.log('userId in server file: ', user)
+    if(user === undefined){
       throw new Error("email is not in database, account not yet created")
     }
-    if(!userId){
+    if(!user){
       throw new Error("incorrect password")
     }
     else {
-      return Session.create(userId)
+      userName = user.name
+      return Session.create(user._id)
     }
   })
   .then(sessionId => {
     // console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, "login success")
+    res.send(201, userName)
   })
   .catch(err => {
     res.send(400, err.toString())
