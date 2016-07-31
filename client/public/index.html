@@ -8,7 +8,16 @@
   </head>
   <body>
     <div id='mount'></div>
-    <script src="/app-bundle.js"></script> 
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>var socket = io();
+
+    socket.on('user connected', function (data) {
+        console.log('user connected');
+      });
+
+    </script>
+    <script src="/app-bundle.js"></script>
   
   </body>
 </html>

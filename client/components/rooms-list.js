@@ -3,6 +3,7 @@ import Room from './room';
 
 var roomsList = [{name: 'Dagobah', capacity: 10, conferenceTable: true, airPlay: true, hammock: false, availability: true}, {name: 'Lovelace', capacity: 6, conferenceTable: true, airPlay: false, hammock: true, availability: false}]
 
+
 export default class RoomsList extends Component {
   constructor(props) {
     super(props)
@@ -18,21 +19,23 @@ export default class RoomsList extends Component {
     function findRoom(findThisRoom) { 
       return findThisRoom.name === room.name;
     }
-
-
-    console.log('updating availability for: ', rooms.find(findRoom))
-    console.log('index: ', rooms.indexOf(rooms.find(findRoom)))
     rooms[roomIndex].availability = !rooms[roomIndex].availability
     this.setState({ rooms: rooms })
-    console.log(this.state)
+    socket.emit('newRooms', { rooms: this.state.rooms });
+    
   }
   renderRooms() {
-    return this.state.rooms.map(room => <Room toggleState={this.changeRoomState.bind(this)} roomInfo={room} />)
+    return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} />)
   }
-
+  updatedRooms(data) {
+    console.log('setting state to this', data)
+    this.setState({ rooms: data.rooms.rooms })
+  }
   componentWillMount() {
     //ping server for latest room info then open socket to listen for someone else changing the state
     this.setState({ rooms: this.state.rooms.concat(roomsList) })
+    socket.on('updatedRooms', this.updatedRooms.bind(this))
+
   }
 
   render() {
