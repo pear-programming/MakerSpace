@@ -35,7 +35,7 @@ User.create = function(incomingAttrs) {
 
 //existing user logs in
 User.login = function(loginInfo) {
-  console.log("inside user.login");
+ 
   var attemptedPassword = loginInfo.password
   var user;
   return db.users.find({email: loginInfo.email})

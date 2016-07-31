@@ -151,7 +151,6 @@ app.post('/login', function(req, res) {
   var userName;
   User.login(req.body)
   .then(user => {
-    console.log('userId in server file: ', user)
     if(user === undefined){
       throw new Error("email is not in database, account not yet created")
     }
@@ -164,8 +163,6 @@ app.post('/login', function(req, res) {
     }
   })
   .then(sessionId => {
-    // console.log('sending sessionId: ', sessionId)
-    //set cookie or session storage
     res.cookie("sessionId", sessionId)
     res.send(201, userName)
   })
