@@ -19,6 +19,7 @@ export default class RoomsList extends Component {
     function findRoom(findThisRoom) { 
       return findThisRoom.name === room.name;
     }
+
     rooms[roomIndex].availability = !rooms[roomIndex].availability
     this.setState({ rooms: rooms })
     socket.emit('newRooms', { rooms: this.state.rooms });
