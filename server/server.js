@@ -42,7 +42,6 @@ console.log('Listening on localhost:' + port);
 // new user signs up
 app.post('/signup', function(req, res) { 
 
-  var user_id;
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -59,7 +58,7 @@ app.post('/signup', function(req, res) {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_id)
+    res.send(201, req.body.name)
   })
 })
 
@@ -149,24 +148,23 @@ app.get('/logout', function(req, res) {
 */
 
 app.post('/login', function(req, res) {
+  var userName;
   User.login(req.body)
-  .then(userId => {
-    // console.log('userId in server file: ', userId)
-    if(userId === undefined){
+  .then(user => {
+    if(user === undefined){
       throw new Error("email is not in database, account not yet created")
     }
-    if(!userId){
+    if(!user){
       throw new Error("incorrect password")
     }
     else {
-      return Session.create(userId)
+      userName = user.name
+      return Session.create(user._id)
     }
   })
   .then(sessionId => {
-    // console.log('sending sessionId: ', sessionId)
-    //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, "login success")
+    res.send(201, userName)
   })
   .catch(err => {
     res.send(400, err.toString())
