@@ -159,9 +159,9 @@ app.get('/all-rooms', function(req, res){
   })
 })
 
-app.post('/reservations/new', function(req, res){
-  Reservation
-})
+// app.post('/reservations/new', function(req, res){
+//   Reservation
+// })
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
