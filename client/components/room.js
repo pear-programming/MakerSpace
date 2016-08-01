@@ -23,13 +23,17 @@ export default class Room extends Component {
       this.setState({ showModal: true });
     }
 
+    alerter() {
+      alert(this.props.roomInfo.name)
+    }
+
   render() {
     return (
       <div key={this.props.roomInfo.name}>
         <span onClick={this.open}>{this.props.roomInfo.name}</span>
       
         <span><label className="switch">
-         <input type="checkbox"/>
+         <input type="checkbox" onClick={this.alerter.bind(this)} />
           <div className="slider round"></div>
         </label></span>
 
