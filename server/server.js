@@ -6,7 +6,7 @@ var User = require('./models/users');
 var Admin = require('./models/admins');
 var Session = require('./models/userSessions');
 var AdminSession = require('./models/adminSessions');
-var Organization = require('./models/organizations.js');
+var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
 var app = require('express')();
 var express = require('express');
@@ -47,7 +47,7 @@ app.get('/app-bundle.js',
 //////// ENDPOINTS //////////
 
 // new user signs up
-app.post('/signup', function(req, res) { 
+app.post('/signup', function(req, res) {
 
   //now we want to add info to users db table
   User.create(req.body)
@@ -70,7 +70,7 @@ app.post('/signup', function(req, res) {
 })
 
 // POST /rooms/new
-//req.body should be be an array of room objects 
+//req.body should be be an array of room objects
 // Example:
  // [
  //   {
@@ -85,7 +85,7 @@ app.post('/signup', function(req, res) {
  //    }
  //  ]
 
-app.post('/rooms/new', function(req, res) { 
+app.post('/rooms/new', function(req, res) {
 
   Room.addRooms(req.body)
     .then((roomIds) => {
@@ -93,7 +93,7 @@ app.post('/rooms/new', function(req, res) {
       console.log("ready to send response after room insertion:", roomIds)
       res.send(201, {roomIds: roomIds});
     })
-    
+
 })
 
 app.get('/logout', function(req, res) {
@@ -156,8 +156,12 @@ app.get('/all-rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
-  })  
+  })
 })
+
+// app.post('/reservations/new', function(req, res){
+//   Reservation
+// })
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
