@@ -44,6 +44,8 @@
     "react-spinjs": "^3.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
+    "socket.io": "^1.4.8",
+    "url-parse": "^1.1.1",
     "validator": "^5.5.0"
   }
 }

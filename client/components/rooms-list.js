@@ -1,7 +1,6 @@
-
-
 import React, { Component } from 'react';
 import Room from './room';
+import {fetchRooms, changeStatus} from '../models/rooms';
 
 var roomsList = [{name: 'Dagobah', capacity: 10, conferenceTable: true, airPlay: true, hammock: false, availability: true}, {name: 'Lovelace', capacity: 6, conferenceTable: true, airPlay: false, hammock: true, availability: false}]
 
@@ -19,9 +18,14 @@ export default class RoomsList extends Component {
     const roomIndex = rooms.indexOf(rooms.find(findRoom))
     //function to change state in parent of the room selected
     function findRoom(findThisRoom) { 
-      return findThisRoom.name === room.name;
+      return findThisRoom.roomName === room.roomName;
     }
-    rooms[roomIndex].availability = !rooms[roomIndex].availability
+    console.log('changing state for ', room)
+
+    changeStatus(room.roomName)
+    .then(x=> console.log('changed status', x))
+
+    rooms[roomIndex].isAvailable = !rooms[roomIndex].isAvailable
     this.setState({ rooms: rooms })
     socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
@@ -33,9 +37,17 @@ export default class RoomsList extends Component {
   }
   componentWillMount() {
     //ping server for latest room info then open socket to listen for someone else changing the state
-    this.setState({ rooms: this.state.rooms.concat(roomsList) })
     socket.on('updatedRooms', this.updatedRooms.bind(this))
+    
+    fetchRooms().then( room => {
+      this.setState({ rooms: this.state.rooms.concat(room.data) })
 
+    })
+
+  }
+
+  componentWillUnmount(){
+    socket.close('updatedRooms')
   }
 
   render() {

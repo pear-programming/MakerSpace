@@ -8,15 +8,27 @@ import TabletDisplay from './components/tablet-display';
 import Room from './components/room';
 
 
-export default function Routes() {
-  return (
-    <Router history={browserHistory}>
-      <Route path='/' component={App}>
-        <IndexRoute component={SplashPage} />
-        <Route path='my-account' component={MyAccount} />
-        <Route path='rooms' component={RoomsList} />
-        <Route path=':roomName/display' component={TabletDisplay} />
-      </Route>
-    </Router>
-  );
+export default class Routes extends React.Component {
+
+  constructor(){
+    super();
+  }
+
+  componentWillMount() {
+    console.log('component mounting')
+  }
+
+  render(){
+
+    return (
+      <Router history={browserHistory}>
+        <Route path='/' component={App}>
+          <IndexRoute component={SplashPage} />
+          <Route path='my-account' component={MyAccount} />
+          <Route path='rooms' component={RoomsList} />
+          <Route path=':roomName/display' component={TabletDisplay} />
+        </Route>
+      </Router>
+    )
+  }
 }

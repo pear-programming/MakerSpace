@@ -18,6 +18,8 @@ var io = require('socket.io')(server);
 io.on('connection', function (socket) {
   socket.broadcast.emit('user connected');  
 
+  socket.emit('test')
+
   socket.on('newRoomStatus', function (data) {
     socket.broadcast.emit('updatedRooms', { rooms: data });
   });

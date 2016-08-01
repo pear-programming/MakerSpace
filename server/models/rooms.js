@@ -23,7 +23,7 @@ Room.findRooms = function() {
 
 Room.changeAvailability = function(roomName) {
   console.log('room parameter: ', roomName)
-  return db.rooms.find({name: roomName})
+  return db.rooms.find({roomName: roomName})
   .then(rooms => {
     console.log('rooms in changeAvailability: ', rooms)
     if(rooms[0].isAvailable === true) {
@@ -31,13 +31,13 @@ Room.changeAvailability = function(roomName) {
       var updatedObj = rooms[0]
       updatedObj.isAvailable = false
       console.log('updatedObj: ', updatedObj)
-      db.rooms.update({name: roomName}, updatedObj)
+      db.rooms.update({roomName: roomName}, updatedObj)
       return 'availability updated to false'
     } else {
       console.log('should change to true')
       var updatedObj = rooms[0]
       updatedObj.isAvailable = true
-      db.rooms.update({name: roomName}, updatedObj)
+      db.rooms.update({roomName: roomName}, updatedObj)
       return 'availability updated to true'
     }
   })
