@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import Room from './room';
 import {fetchRooms} from '../models/rooms';
-
-
+import ReactDOM from 'react-dom';
 
 
 export default class TabletDisplay extends Component {
@@ -49,13 +48,14 @@ export default class TabletDisplay extends Component {
       this.setState({currentRoom: room})
     })  
   }
-
   componentWillUnmount() {
      socket.off('updatedRooms');
   }
 
   render() {
-  
+  var background = document.getElementById('mount')
+
+  console.log('background element', background)
 
   var open = { backgroundColor: "green"}
   var closed = { backgroundColor: "red"}
@@ -64,15 +64,13 @@ export default class TabletDisplay extends Component {
       this.state.currentRoom.isAvailable ? // dummy for testing
         <div className="fullscreen" style={open}>
           {this.props.room}
-          <h1>OPEN</h1>
-          
+          <h1>OPEN</h1>    
         </div>
-        : <div className="fullscreen" style={closed}>
+        : 
+        <div className="fullscreen" style={closed}>
           {this.props.room}
           <h1>CLOSED</h1>
-
-        </div>
-      
+        </div> 
     )
   }
 }

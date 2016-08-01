@@ -32,7 +32,6 @@ var port = process.env.PORT || 4000;
 server.listen(port);
 console.log('Listening on localhost:' + port);
 
-
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
 // Serve Static Assets

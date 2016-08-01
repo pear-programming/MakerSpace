@@ -40,7 +40,6 @@ export default class RoomsList extends Component {
       this.setState({ rooms: this.state.rooms.concat(room.data) })
     })
   }
-
   componentWillUnmount(){
     socket.off('updatedRooms');
   }

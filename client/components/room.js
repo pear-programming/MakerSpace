@@ -10,7 +10,6 @@ export default class Room extends Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-
     this.state = { 
       showModal: false
     };
@@ -28,9 +27,7 @@ export default class Room extends Component {
     return (
       <div>
         <span onClick={this.open}>{room.roomName}</span>
-      
         <div className={room.isAvailable ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
-        {room.isAvailable ? 'Open' : 'Closed'}
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
@@ -47,7 +44,6 @@ export default class Room extends Component {
           </Modal.Footer>
         </Modal>
       </div>
-
     )
   }
 }

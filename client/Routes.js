@@ -9,15 +9,6 @@ import Room from './components/room';
 
 
 export default class Routes extends React.Component {
-
-  constructor(){
-    super();
-  }
-
-  componentWillMount() {
-    console.log('component mounting')
-  }
-
   render(){
 
     return (
