@@ -12,7 +12,7 @@ User.create = function(incomingAttrs) {
   var attrs = Object.assign({}, incomingAttrs);
   //check if user already exists
   //if exists throw error, if not hash password
-  return db.users.find({email: attrs.email})
+  return db.collection('users').find({email: attrs.email})
   .then(users => {
     if(users[0]){
       throw new Error('account already exists');
@@ -22,11 +22,9 @@ User.create = function(incomingAttrs) {
   })
   .then(passwordHash => {
     attrs.password = passwordHash;
-    // console.log('attrs in create user', attrs)
-    return db.users.insert(attrs)
+    return db.collection('users').insert(attrs)
   })
   .then(resp => {
-    // console.log('userobj with _id and password ', resp)
     return resp._id
   })
   .catch(err => console.log('err in create: ', err))
@@ -38,7 +36,7 @@ User.login = function(loginInfo) {
  
   var attemptedPassword = loginInfo.password
   var user;
-  return db.users.find({email: loginInfo.email})
+  return db.collection('users').find({email: loginInfo.email})
   .then(users => {
     if(users.length===0){
       throw new Error()

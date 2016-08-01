@@ -17,21 +17,29 @@ export default class TabletDisplay extends Component {
       }
 
     }
+    updateState(room) {
+      var url = window.location.href.split('/');
+      var currentRoom = url[url.length-2];
+      const roomz = room.rooms.rooms.find(findRoom)
+      
+      function findRoom(findThisRoom) { 
+        return findThisRoom.roomName === currentRoom;
+      }
+      this.setState({currentRoom: roomz})
+    }
 
   componentWillMount(){
     // we get the availablity, set as state for the current room
     // we also need to start the socket listen event for room status change
-  
-    socket.on('test', function (data) {
-      console.log('socket data', data)
-    });
 
-    const url = window.location.href.split('/');
-    const currentRoom = url[url.length-2];
+    var url = window.location.href.split('/');
+    var currentRoom = url[url.length-2];
 
-
+    socket.emit('tabletDisplay', 'xD')
+    socket.on('updatedRooms', this.updateState.bind(this))
     fetchRooms() 
     .then(rooms=>{
+      console.log(rooms.data)
       const room = rooms.data.find(findRoom)
       
       function findRoom(findThisRoom) { 
@@ -40,6 +48,10 @@ export default class TabletDisplay extends Component {
 
       this.setState({currentRoom: room})
     })  
+  }
+
+  componentWillUnmount() {
+     socket.off('updatedRooms');
   }
 
   render() {

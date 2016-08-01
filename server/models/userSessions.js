@@ -10,7 +10,7 @@ Session.create = function (userId) {
 
   console.log("showing new session info:", newSession);
 
-  return db.userSessions.insert(newSession)
+  return db.collection('userSessions').insert(newSession)
     .then(session => {
       console.log('session inserted', session)
       return session._id
@@ -22,7 +22,7 @@ Session.create = function (userId) {
 
 Session.findById = function (sessionId) {
   console.log("inside session.findById:", sessionId);
-  return db.userSessions.find({ _id: sessionId })
+  return db.collection('userSessions').find({ _id: sessionId })
     .then(function (rows) {
       console.log("found rows in session search:", rows);
       return rows[0]
@@ -34,5 +34,5 @@ Session.findById = function (sessionId) {
 
 Session.destroy = function (sessionId) {
   console.log("inside session.destory:", sessionId);
-  return db.userSessions.remove({ _id: sessionId})
+  return db.collection('userSessions').remove({ _id: sessionId})
 }

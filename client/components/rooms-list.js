@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Room from './room';
 import {fetchRooms, changeStatus} from '../models/rooms';
 
-var roomsList = [{name: 'Dagobah', capacity: 10, conferenceTable: true, airPlay: true, hammock: false, availability: true}, {name: 'Lovelace', capacity: 6, conferenceTable: true, airPlay: false, hammock: true, availability: false}]
-
 
 export default class RoomsList extends Component {
   constructor(props) {
@@ -20,10 +18,9 @@ export default class RoomsList extends Component {
     function findRoom(findThisRoom) { 
       return findThisRoom.roomName === room.roomName;
     }
-    console.log('changing state for ', room)
 
     changeStatus(room.roomName)
-    .then(x=> console.log('changed status', x))
+    .then(x => x)
 
     rooms[roomIndex].isAvailable = !rooms[roomIndex].isAvailable
     this.setState({ rooms: rooms })
@@ -41,13 +38,11 @@ export default class RoomsList extends Component {
     
     fetchRooms().then( room => {
       this.setState({ rooms: this.state.rooms.concat(room.data) })
-
     })
-
   }
 
   componentWillUnmount(){
-    socket.close('updatedRooms')
+    socket.off('updatedRooms');
   }
 
   render() {
