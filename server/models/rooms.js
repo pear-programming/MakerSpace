@@ -3,7 +3,6 @@ var db = require('../db.js');
 var Room = module.exports
 
 Room.addRooms = function(rooms) {
-
 	// console.log("got room info after organization insert:", rooms, organizationId);
 	var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true})); 
 	console.log("after mapping:", roomsWithAvailability);

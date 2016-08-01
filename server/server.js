@@ -29,15 +29,13 @@ app.get('/app-bundle.js',
   })
 );
 
-
-
 // Start server
 app.listen(port);
 console.log('Listening on localhost:' + port);
 
 
 
-//////// ENDPOINTS //////////
+////???//// ENDPOINTS /???/////////
 
 // new user signs up
 app.post('/signup', function(req, res) { 
@@ -64,89 +62,7 @@ app.post('/signup', function(req, res) {
 })
 
 
-//make new organization in db
-// app.post('/organization/new', function(req, res) {
 
-//   console.log("got new org request:", req.body, req.cookies.sessionId);
-//   var sessionId;
-//   var userId;
-//   Session.findById(req.cookies.sessionId)
-//     .then((session) => {
-//       userId = session.user_id;
-//       console.log("got to here!!!!!!:", session);
-//     Organization.findByName(req.body.name)
-//       .then((data) => {
-//         console.log("git data from findByName:", data);
-//         if(data[0]) {
-//           res.send(400, "organization already exists!");
-//         }
-//         else {
-//           console.log("made it to else!:", req.body, userId);
-//           Organization.create(req.body, userId)
-//             .then((data) => {
-//               Room.addRooms(data.rooms, data._id)
-//                 .then((data) =>{
-
-//                   console.log("ready to send response after room insertion:", data)
-//                   res.send(201, "added organization and rooms successfully!");
-//                 })
-//               // res.send(201, data)
-//             })
-//         }
-//       })
-//     })
-
-// })
-
-// POST /rooms/new
-//req.body should be be an array of room objects 
-// Example:
- // [
- //   {
- //      "roomName": "d",
- //      "projector": true,
- //      "capacity": 20
- //    },
- //    {
- //      "roomName": "e",
- //      "projector": false,
- //      "capacity": 25
- //    }
- //  ]
-
-app.post('/rooms/new', function(req, res) { 
-
-  Room.addRooms(req.body)
-    .then((roomIds) => {
-
-      console.log("ready to send response after room insertion:", roomIds)
-      res.send(201, {roomIds: roomIds});
-    })
-    
-})
-
-app.get('/logout', function(req, res) {
-
-  Session.destroy(req.cookies.sessionId)
-    .then(() => {
-      res.clearCookie('sessionId');
-      res.sendStatus(200);
-    })
-})
-
-// id, name, address, admin-id, info, rooms
-
-/*login
- get Userid from username
- check sessions table for userid
- send response already logged in
- hash password - bcrypt compare password (beer app)
- if matches, create new session in sessions table
- set cookie
- res.send(200)
- if pw is wrong 400 (check status coder)
- check if there is a session with that userId
-*/
 
 app.post('/login', function(req, res) {
   User.login(req.body)
@@ -163,7 +79,6 @@ app.post('/login', function(req, res) {
     }
   })
   .then(sessionId => {
-    // console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
     res.send(201, "login success")
@@ -173,11 +88,45 @@ app.post('/login', function(req, res) {
   })
 })
 
+
+
+app.get('/logout', function(req, res) {
+  Session.destroy(req.cookies.sessionId)
+  .then(() => {
+    res.clearCookie('sessionId');
+    res.sendStatus(200);
+  })
+})
+
+
+
 app.get('/rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
   })  
+})
+
+
+/*
+  example room data: 
+  [{
+    roomName: 'name',
+    capacity: 5,
+    whiteboard: true,
+    hammock: true,
+    projector: false,
+    isAvailable: true
+  }]
+*/
+
+// Add a new room to database
+app.post('/rooms/new', function(req, res) { 
+  Room.addRooms(req.body)
+  .then((roomIds) => {
+    console.log("ready to send response after room insertion:", roomIds)
+    res.send(201, {roomIds: roomIds});
+  })
 })
 
 
