@@ -29,10 +29,7 @@ export default class Room extends Component {
       <div key={room.name}>
         <span onClick={this.open}>{room.name}</span>
       
-        <span><label className="switch">
-         {room.availability ? <input type="checkbox" onChange={() => this.props.toggleState(room)} defaultChecked /> : <input type="checkbox" onChange={() => this.props.toggleState(room)}  /> }
-          <div className="slider round"></div>
-        </label></span>
+        <div className={room.availability ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
         {room.availability ? 'Open' : 'Closed'}
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
