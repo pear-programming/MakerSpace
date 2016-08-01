@@ -1,48 +1,50 @@
 import React, { Component } from 'react';
-import {Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { browserHistory, Link } from 'react-router';
 
 export default class Room extends Component {
 
-    constructor(props){  
-      super(props)
+  constructor(props){  
+    super(props)
 
-      this.close = this.close.bind(this);
-      this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
 
-      this.state = { 
-        showModal: false
-      };
-    }
 
-    close() {
-      this.setState({ showModal: false });
-    }
+    this.state = { 
+      showModal: false
+    };
+  }
 
-    open() {
-      this.setState({ showModal: true });
-    }
+  close() {
+    this.setState({ showModal: false });
+  }
+  open() {
+    this.setState({ showModal: true });
+  }
 
     alerter() {
       alert(this.props.roomInfo.name)
     }
 
   render() {
+    const room = this.props.roomInfo
     return (
-      <div key={this.props.roomInfo.name}>
-        <span onClick={this.open}>{this.props.roomInfo.name}</span>
+      <div key={room.name}>
+        <span onClick={this.open}>{room.name}</span>
       
-        <span><label className="switch">
-         <input type="checkbox" onClick={this.alerter.bind(this)} />
-          <div className="slider round"></div>
-        </label></span>
-
+        <div className={room.availability ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
+        {room.availability ? 'Open' : 'Closed'}
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4> {this.props.roomInfo.name} </h4>
+            <h4> {room.name} </h4>
+            <p> Capacity: {room.capacity} </p>
+            <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
+            <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
+            <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
           </Modal.Body>
           <Modal.Footer>
             <Link to={`${this.props.roomInfo.name}/display`} ><Button>Display</Button></Link>
