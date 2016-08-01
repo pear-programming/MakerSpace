@@ -159,6 +159,30 @@ app.get('/all-rooms', function(req, res){
   })  
 })
 
+
+app.post('/reservations/new', function(req, res){
+  //user can add new reservation
+  //start time - end time - userId - roomId
+})
+
+app.get('/reservations', function(req, res){
+//get all reservations
+
+})
+
+
+app.get('reservations/:roomName', function(req, res){
+  //gets monthly? availability for a specific room
+  //array of day objects
+  //[August1: {start: 123, end: 123:, roomId:, userId}]
+})
+
+
+//send back an array of day objects with all the reservations for that day
+//each day should have sequential
+
+
+
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );

@@ -43,3 +43,8 @@ Room.changeAvailability = function(roomName) {
   })
 }
 
+
+Room.getReservations = function() {
+  //returns current availability of all rooms
+}
+
