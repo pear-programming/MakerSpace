@@ -1,11 +1,11 @@
-var db = require('../db.js'); 
+var db = require('../db.js');
 
-var Organization = module.exports 
+var Reservation = module.exports
 
-Organization.findByName = function(name) {
+Reservation.findByRoomId = function(Id) {
 
-	console.log("inside organ findbyname:", name);
-	return db.organizations.find({name: name})
+	console.log("inside reservations findbyid:", id);
+	return db.reservations.find({id: id})
 		.then((organizations) => {
 			return organizations
 
@@ -13,8 +13,8 @@ Organization.findByName = function(name) {
 
 }
 
-Organization.create = function(organizationData, userId) {
-	
+Reservation.create = function(organizationData, userId) {
+
 
 	var newOrganization = Object.assign(organizationData, {users: []}, {adminIds:[userId]})
 	console.log("inside organization.create:", newOrganization);
