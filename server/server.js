@@ -58,7 +58,6 @@ app.get('/app-bundle.js',
 // new user signs up
 app.post('/signup', function(req, res) { 
 
-  var user_id;
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -75,7 +74,7 @@ app.post('/signup', function(req, res) {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_id)
+    res.send(201, req.body.name)
   })
 })
 
@@ -165,37 +164,47 @@ app.get('/logout', function(req, res) {
 */
 
 app.post('/login', function(req, res) {
+  var userName;
   User.login(req.body)
-  .then(userId => {
-    // console.log('userId in server file: ', userId)
-    if(userId === undefined){
+  .then(user => {
+    if(user === undefined){
       throw new Error("email is not in database, account not yet created")
     }
-    if(!userId){
+    if(!user){
       throw new Error("incorrect password")
     }
     else {
-      return Session.create(userId)
+      userName = user.name
+      return Session.create(user._id)
     }
   })
   .then(sessionId => {
-    // console.log('sending sessionId: ', sessionId)
-    //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, "login success")
+    res.send(201, userName)
   })
   .catch(err => {
     res.send(400, err.toString())
   })
 })
 
-app.get('/rooms', function(req, res){
+
+app.post('/:roomName/changeAvailability', function(req, res){
+  console.log('req.params.roomName: ', req.params.roomName)
+  Room.changeAvailability(req.params.roomName)
+  .then(resp => {
+    console.log('resp in changeAvailability endpoint: ', resp)
+    res.send(201, resp)
+  })
+})
+
+
+
+app.get('/all-rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
   })  
 })
-
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
