@@ -9,7 +9,7 @@ export default class NavBar extends Component {
     return (
       <Navbar inverse>
       <Navbar.Header>
-       <Navbar.Brand><Link to={'/'}>Get a Room 🍐</Link></Navbar.Brand>
+       <Navbar.Brand><Link to={'/'}>MakerSpace</Link></Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
