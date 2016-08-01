@@ -40,7 +40,6 @@ Reservation.findByName = function(name) {
     return room[0]._id
   })
   .then(id => {
-    //
     return db.reservations.find({roomId: id})
   })
   .then(roomReservationData => {
