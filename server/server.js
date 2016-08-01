@@ -166,15 +166,22 @@ app.post('/reservations/new', function(req, res){
 })
 
 app.get('/reservations', function(req, res){
-//get all reservations
-
+  Reservation.findAllReservations()
+  .then(reservationsData => {
+    console.log('reservationsData: ', reservationsData)
+    res.send(200, reservationsData)
+  })
 })
 
 
-app.get('reservations/:roomName', function(req, res){
-  //gets monthly? availability for a specific room
-  //array of day objects
-  //[August1: {start: 123, end: 123:, roomId:, userId}]
+app.get('/reservations/:roomName', function(req, res){
+  var name = req.params.roomName;
+  console.log('name from params: ', name)
+  Reservation.findByName(name)
+  .then(reservations => {
+    console.log('reservations: ', reservations)
+    res.send(200, reservations)
+  })
 })
 
 
