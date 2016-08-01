@@ -56,8 +56,8 @@ app.get('/app-bundle.js',
 //////// ENDPOINTS //////////
 
 // new user signs up
-app.post('/signup', function(req, res) {
-  var user_id;
+app.post('/signup', function(req, res) { 
+
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -74,43 +74,70 @@ app.post('/signup', function(req, res) {
     console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, user_id)
+    res.send(201, req.body.name)
   })
 })
 
 
 //make new organization in db
-app.post('/organization/new', function(req, res) {
+// app.post('/organization/new', function(req, res) {
 
-  console.log("got new org request:", req.body, req.cookies.sessionId);
-  var sessionId;
-  var userId;
-  Session.findById(req.cookies.sessionId)
-    .then((session) => {
-      userId = session.user_id;
-      console.log("got to here!!!!!!:", session);
-    Organization.findByName(req.body.name)
-      .then((data) => {
-        console.log("git data from findByName:", data);
-        if(data[0]) {
-          res.send(400, "organization already exists!");
-        }
-        else {
-          console.log("made it to else!:", req.body, userId);
-          Organization.create(req.body, userId)
-            .then((data) => {
-              Room.addRooms(data.rooms, data._id)
-                .then((data) =>{
+//   console.log("got new org request:", req.body, req.cookies.sessionId);
+//   var sessionId;
+//   var userId;
+//   Session.findById(req.cookies.sessionId)
+//     .then((session) => {
+//       userId = session.user_id;
+//       console.log("got to here!!!!!!:", session);
+//     Organization.findByName(req.body.name)
+//       .then((data) => {
+//         console.log("git data from findByName:", data);
+//         if(data[0]) {
+//           res.send(400, "organization already exists!");
+//         }
+//         else {
+//           console.log("made it to else!:", req.body, userId);
+//           Organization.create(req.body, userId)
+//             .then((data) => {
+//               Room.addRooms(data.rooms, data._id)
+//                 .then((data) =>{
 
-                  console.log("ready to send response after room insertion:", data)
-                  res.send(201, "added organization and rooms successfully!");
-                })
-              // res.send(201, data)
-            })
-        }
-      })
+//                   console.log("ready to send response after room insertion:", data)
+//                   res.send(201, "added organization and rooms successfully!");
+//                 })
+//               // res.send(201, data)
+//             })
+//         }
+//       })
+//     })
+
+// })
+
+// POST /rooms/new
+//req.body should be be an array of room objects 
+// Example:
+ // [
+ //   {
+ //      "roomName": "d",
+ //      "projector": true,
+ //      "capacity": 20
+ //    },
+ //    {
+ //      "roomName": "e",
+ //      "projector": false,
+ //      "capacity": 25
+ //    }
+ //  ]
+
+app.post('/rooms/new', function(req, res) { 
+
+  Room.addRooms(req.body)
+    .then((roomIds) => {
+
+      console.log("ready to send response after room insertion:", roomIds)
+      res.send(201, {roomIds: roomIds});
     })
-  
+    
 })
 
 app.get('/logout', function(req, res) {
@@ -124,7 +151,7 @@ app.get('/logout', function(req, res) {
 
 // id, name, address, admin-id, info, rooms
 
-/*login 
+/*login
  get Userid from username
  check sessions table for userid
  send response already logged in
@@ -137,29 +164,51 @@ app.get('/logout', function(req, res) {
 */
 
 app.post('/login', function(req, res) {
+  var userName;
   User.login(req.body)
-  .then(userId => {
-    // console.log('userId in server file: ', userId)
-    if(userId === undefined){
+  .then(user => {
+    if(user === undefined){
       throw new Error("email is not in database, account not yet created")
     }
-    if(!userId){
+    if(!user){
       throw new Error("incorrect password")
     }
     else {
-      return Session.create(userId)
+      userName = user.name
+      return Session.create(user._id)
     }
   })
   .then(sessionId => {
-    // console.log('sending sessionId: ', sessionId)
-    //set cookie or session storage
     res.cookie("sessionId", sessionId)
-    res.send(201, "login success")
+    res.send(201, userName)
   })
   .catch(err => {
     res.send(400, err.toString())
   })
 })
+
+
+app.post('/:roomName/changeAvailability', function(req, res){
+  console.log('req.params.roomName: ', req.params.roomName)
+  Room.changeAvailability(req.params.roomName)
+  .then(resp => {
+    console.log('resp in changeAvailability endpoint: ', resp)
+    res.send(201, resp)
+  })
+})
+
+
+
+app.get('/all-rooms', function(req, res){
+  Room.findRooms()
+  .then(roomInfo => {
+    res.send(201, roomInfo)
+  })  
+})
+
+
+
+
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
