@@ -1,4 +1,4 @@
-var express = require('express');
+
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -8,10 +8,26 @@ var Session = require('./models/userSessions');
 var AdminSession = require('./models/adminSessions');
 var Organization = require('./models/organizations.js');
 var Room = require('./models/rooms.js');
+var app = require('express')();
+var express = require('express');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var app = express();
+
+
+io.on('connection', function (socket) {
+  socket.broadcast.emit('user connected');  
+
+  socket.on('newRoomStatus', function (data) {
+    socket.broadcast.emit('updatedRooms', { rooms: data });
+  });
+});
 
 var port = process.env.PORT || 4000;
+
+server.listen(port);
+console.log('Listening on localhost:' + port);
+
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
@@ -28,15 +44,6 @@ app.get('/app-bundle.js',
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
 );
-
-
-
-// Start server
-app.listen(port);
-console.log('Listening on localhost:' + port);
-
-
-
 //////// ENDPOINTS //////////
 
 // new user signs up
@@ -61,41 +68,6 @@ app.post('/signup', function(req, res) {
     res.send(201, req.body.name)
   })
 })
-
-
-//make new organization in db
-// app.post('/organization/new', function(req, res) {
-
-//   console.log("got new org request:", req.body, req.cookies.sessionId);
-//   var sessionId;
-//   var userId;
-//   Session.findById(req.cookies.sessionId)
-//     .then((session) => {
-//       userId = session.user_id;
-//       console.log("got to here!!!!!!:", session);
-//     Organization.findByName(req.body.name)
-//       .then((data) => {
-//         console.log("git data from findByName:", data);
-//         if(data[0]) {
-//           res.send(400, "organization already exists!");
-//         }
-//         else {
-//           console.log("made it to else!:", req.body, userId);
-//           Organization.create(req.body, userId)
-//             .then((data) => {
-//               Room.addRooms(data.rooms, data._id)
-//                 .then((data) =>{
-
-//                   console.log("ready to send response after room insertion:", data)
-//                   res.send(201, "added organization and rooms successfully!");
-//                 })
-//               // res.send(201, data)
-//             })
-//         }
-//       })
-//     })
-
-// })
 
 // POST /rooms/new
 //req.body should be be an array of room objects 
@@ -180,20 +152,12 @@ app.post('/:roomName/changeAvailability', function(req, res){
   })
 })
 
-
-
-app.get('/rooms', function(req, res){
+app.get('/all-rooms', function(req, res){
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
   })  
 })
-
-
-
-
-
-
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
