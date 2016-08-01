@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import Room from './room';
 
@@ -21,14 +23,12 @@ export default class RoomsList extends Component {
     }
     rooms[roomIndex].availability = !rooms[roomIndex].availability
     this.setState({ rooms: rooms })
-    socket.emit('newRooms', { rooms: this.state.rooms });
-    
+    socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
   renderRooms() {
     return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} />)
   }
   updatedRooms(data) {
-    console.log('setting state to this', data)
     this.setState({ rooms: data.rooms.rooms })
   }
   componentWillMount() {
