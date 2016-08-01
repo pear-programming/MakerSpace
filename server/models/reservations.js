@@ -6,20 +6,21 @@ Reservation.findByRoomId = function(Id) {
 
   console.log("inside reservations findbyid:", id);
   return db.reservations.find({id: id})
-    .then((organizations) => {
-    return organizations
+    .then((reservations) => {
+    return reservations
     })
 }
 
-Reservation.create = function(organizationData, userId) {
+Reservation.create = function(reservationData) {
 
+  var start = Date.UTC(2016, 7, 1, 16, 0, 0)
+  var end = Date.UTC(2016, 7, 1, 16, 30, 0)
+  reservationData.startTime = start;
+  reservationData.endTime = end;
 
-  var newOrganization = Object.assign(organizationData, {users: []}, {adminIds:[userId]})
-  console.log("inside organization.create:", newOrganization);
-
-  return db.organizations.insert(newOrganization)
+  return db.reservations.insert(reservationData)
     .then((data) => {
-      console.log("successfully inserted organization!:", data)
+      console.log("successfully inserted reservation!:", data)
       return data;
     })
 }
