@@ -47,7 +47,7 @@ Reservation.findByName = function(name) {
     return db.reservations.find({roomId: id})
   })
   .then(roomReservationData => {
-    if(roomReservationData.length > 0) {
+    if(roomReservationData[0]) {
       return roomReservationData;
     } else {
       return 'no reservations currently exist for this room'
