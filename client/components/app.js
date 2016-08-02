@@ -3,10 +3,9 @@ import NavBar from './nav-bar';
 
 export default class App extends Component{
   render(){
-    return(
-
+    return (
       <div>
-      <NavBar />
+      	<NavBar />
         {this.props.children}
       </div>
     )
