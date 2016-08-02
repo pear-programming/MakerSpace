@@ -1,15 +1,7 @@
-html, body {
-  /* Your css here */
-}
-
 #home {
-  /* Your css here */
   background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;
-  /*opacity: .75;*/
   background-size: cover;
   background-repeat: no-repeat;
-
-
   border: .1px solid white;
   margin-top: -20px;
   width: 100%;
@@ -44,7 +36,6 @@ html, body {
   background-color: #0073b7;
   border-color: #0073b7;
 }
-
 
 .foo {
   display: inline-flex;

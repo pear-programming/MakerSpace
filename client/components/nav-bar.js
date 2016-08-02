@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory, Link } from 'react-router';
 import AuthModal from './auth-modal';
-
 import { Button, Navbar, NavItem, MenuItem, Nav, NavDropdown, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import { checkStatus } from '../models/auth';
