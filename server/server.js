@@ -102,7 +102,6 @@ app.get('/app-bundle.js',
 
 // new user signs up
 app.post('/signup', function(req, res) {
-
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -120,6 +119,30 @@ app.post('/signup', function(req, res) {
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
     res.send(201, req.body.name)
+  })
+})
+
+app.post('/login', function(req, res) {
+  var userName;
+  User.login(req.body)
+  .then(user => {
+    if(user === undefined){
+      throw new Error("email is not in database, account not yet created")
+    }
+    if(!user){
+      throw new Error("incorrect password")
+    }
+    else {
+      userName = user.name
+      return Session.create(user._id)
+    }
+  })
+  .then(sessionId => {
+    res.cookie("sessionId", sessionId)
+    res.send(201, userName)
+  })
+  .catch(err => {
+    res.send(400, err.toString())
   })
 })
 
@@ -162,6 +185,17 @@ app.get('/logout', function(req, res) {
     })
 })
 
+///////// ROOMS ENDPOINTS /////////
+
+app.post('/rooms/new', function(req, res) {
+  Room.addRooms(req.body)
+  .then((roomIds) => {
+    console.log("ready to send response after room insertion:", roomIds)
+    res.send(201, {roomIds: roomIds});
+  })
+})
+
+
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   console.log('req.params.roomName: ', req.params.roomName)
   Room.changeAvailability(req.params.roomName)
@@ -179,6 +213,33 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
     res.send(201, roomInfo)
   })
 })
+
+
+///////// RESERVATIONS ENDPOINTS /////////
+
+app.get('/reservations', function(req, res){
+  Reservation.findAllReservations()
+  .then(reservationsData => {
+    console.log('reservationsData: ', reservationsData)
+    res.send(200, reservationsData)
+  })
+})
+
+
+app.get('/reservations/:roomName', function(req, res){
+  var name = req.params.roomName;
+  console.log('name from params: ', name)
+  Reservation.findByName(name)
+  .then(reservations => {
+    if(!reservations) {
+      res.send(400, 'bad request')
+    }
+    console.log('reservations: ', reservations)
+    res.send(200, reservations)
+  })
+})
+
+
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){
   Reservation.create(req.body)
@@ -187,6 +248,8 @@ app.post('/reservations/new', function(req, res){
     res.send(201, reservationInfo)
   })
 })
+
+
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
