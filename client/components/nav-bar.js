@@ -22,9 +22,6 @@ export default class NavBar extends Component {
     })
   }
   logout() {
-    document.cookie = 'my-app:session' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    document.cookie = 'my-app:session.sig' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    
     this.setState({ user: null })
   }
   render() {
