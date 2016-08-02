@@ -53,3 +53,19 @@ Reservation.findByName = function(name) {
 }
 
 
+Reservation.updateReservation = function(resId, newInfo) {
+  if(typeof resId==='string'){
+    resId = db.ObjectId(resId)
+  }
+
+  return db.reservations.update(
+    {"_id" : resId },
+    { "$set" : newInfo }
+  )
+  .then(updatedRes => {
+    // console.log('updatedRes:', updatedRes)
+    return db.reservations.find({"_id":resId})
+  })
+  .catch(err => console.log('err in updateExisting: ', err))
+}
+

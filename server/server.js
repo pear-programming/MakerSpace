@@ -166,10 +166,15 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
-
-
-app.patch('/reservations/:id/update', function(req, res){
-  
+//update reservation
+app.put('/reservations/:id', function(req, res){
+  var resId = req.params.id 
+  //req.body should be new reservation info
+  Reservation.updateReservation(resId, req.body)
+  .then(updatedRes => {
+    console.log('result from update: ', updatedRes)
+    res.send(200, updatedRes)
+  })
 })
 
 
