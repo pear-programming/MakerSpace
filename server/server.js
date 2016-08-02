@@ -160,10 +160,6 @@ app.get('/all-rooms', function(req, res){
 })
 
 
-app.post('/reservations/new', function(req, res){
-  //user can add new reservation
-  //start time - end time - userId - roomId
-})
 
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
@@ -179,6 +175,9 @@ app.get('/reservations/:roomName', function(req, res){
   console.log('name from params: ', name)
   Reservation.findByName(name)
   .then(reservations => {
+    if(!reservations) {
+      res.send(400, 'bad request')
+    }
     console.log('reservations: ', reservations)
     res.send(200, reservations)
   })

@@ -36,16 +36,25 @@ Reservation.findAllReservations = function() {
 Reservation.findByName = function(name) {
   return db.rooms.find({roomName: name})
   .then(room => {
-    console.log('room[0]._id: ', room[0]._id)
-    return room[0]._id
+    if(room[0]){
+      console.log('room[0]._id: ', room[0]._id)
+      return room[0]._id
+    } else {
+      throw new Error('room name does not exist')
+    }
   })
   .then(id => {
     return db.reservations.find({roomId: id})
   })
   .then(roomReservationData => {
+    if(roomReservationData.length > 0) {
+      return roomReservationData;
+    } else {
+      return 'no reservations currently exist for this room'
+    }
     console.log('roomReservationData: ', roomReservationData)
-    return roomReservationData;
   })
+  .catch(err => console.log('error in findByName: ',err))
 }
 
 
