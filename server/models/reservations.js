@@ -13,14 +13,11 @@ Reservation.findByRoomId = function(Id) {
 
 Reservation.create = function(reservationData) {
 
-  var start = Date.UTC(2016, 7, 1, 16, 0, 0)
-  var end = Date.UTC(2016, 7, 1, 16, 30, 0)
-  reservationData.startTime = start;
-  reservationData.endTime = end;
+
 
   return db.reservations.insert(reservationData)
     .then((data) => {
-      console.log("successfully inserted reservation!:", data)
-      return data;
+      console.log("successfully inserted reservation!:", data._id)
+      return data._id;
     })
 }

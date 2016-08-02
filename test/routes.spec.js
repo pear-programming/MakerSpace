@@ -1,39 +1,39 @@
-// var expect = require('chai').expect;
-// var request = require('supertest-as-promised');
+var expect = require('chai').expect;
+var request = require('supertest-as-promised');
 
-// var db   = require('../server/db');
-// var util = require('../lib/utility');
+var db   = require('../server/db');
+var util = require('../lib/utility');
 
-// var User = require('../server/models/user');
-// var Link = require('../server/models/link');
+var User = require('../server/models/user');
+var Link = require('../server/models/link');
 
 
 // var app = require('../shortly.js')
 
-// describe('', function() {
+describe('', function() {
 
-//   before(db.ensureSchema)
+  before(db.ensureSchema)
 
-//   beforeEach(function() {
-//     return db.deleteEverything()
-//   });
+  beforeEach(function() {
+    return db.deleteEverything()
+  });
 
-//   describe('Link creation:', function(){
+  describe('Link creation:', function(){
 
-//     var client = null
+    var client = null
 
-//     beforeEach(function(){      // create a user that we can then log-in
-//       client = request.agent(app)
+    beforeEach(function(){      // create a user that we can then log-in
+      client = request.agent(app)
 
-//       return createUserAndSignIn(client);
-//     });
+      return createUserAndSignIn(client);
+    });
 
-//     it('Only shortens valid links, returning a 404 - Not found for invalid links', function() {
-//       return client
-//         .post('/links')
-//         .send({ url: 'definitely not a valid url' })
-//         .expect(404)
-//     });
+    it('Only shortens valid links, returning a 404 - Not found for invalid links', function() {
+      return client
+        .post('/links')
+        .send({ url: 'definitely not a valid url' })
+        .expect(404)
+    });
 
 //     describe('Shortening links:', function(){
 
