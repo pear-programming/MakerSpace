@@ -171,15 +171,6 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
-
-app.post('/rooms/new', function(req, res) {
-  Room.addRooms(req.body)
-  .then((roomIds) => {
-    console.log("ready to send response after room insertion:", roomIds)
-    res.send(201, {roomIds: roomIds});
-  })
-})
-
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
