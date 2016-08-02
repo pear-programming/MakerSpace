@@ -27,9 +27,9 @@ export default class NavBar extends Component {
   }
   render() {
     return (
-      <Navbar inverse>
+      <Navbar>
       <Navbar.Header>
-       <Navbar.Brand><Link to={'/'}>MakerSpace</Link></Navbar.Brand>
+       <Navbar.Brand><Link to={'/'}>M A K E R<strong> S P A C E </strong></Link></Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
@@ -46,9 +46,7 @@ export default class NavBar extends Component {
             </NavDropdown>
           </Nav>
           : 
-          <Nav pullRight>
-            <NavItem href="/auth/makerpass" eventKey={1} ><Button  bsStyle="primary" bsSize="small">Login with Makerpass</Button></NavItem>
-          </Nav>
+          null
         }
       </Navbar.Collapse>
     </Navbar>
