@@ -17,6 +17,7 @@ Reservation.create = function(reservationData) {
     return data._id;
   })
 }
+//this is for changing reservation 
 
 // Reservation.changeReservation = function(reservationInfo) {
 //   console.log("in changeReservation function ", reservationInfo)
@@ -33,13 +34,15 @@ Reservation.create = function(reservationData) {
 
 Reservation.delete = function(reservationId){
   console.log(reservationId, " reservationId")
+  // use this to make the string into an object if not working!!!!!
   reservationId._id = db.ObjectId(reservationId._id)
   return db.reservations.remove(reservationId)
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
-  })
+  }) .catch(err => console.log('error in reservation: ', err))
 }
+
 
 Reservation.findAllReservations = function() {
   return db.reservations.find({})

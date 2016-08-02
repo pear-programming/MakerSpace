@@ -249,6 +249,7 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
+// delete this block of code when ashlee is done with change reservations!
 // app.post('/reservations/changeReservation', function(req, res){
 //   Reservation.changeReservation(req.body)
 //   console.log("req.body: ", req.body)
@@ -261,15 +262,14 @@ app.delete('/reservations/delete', function(req, res){
   Reservation.delete(req.body)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)
-    res.send(201, reservationInfo)
+    if(reservationInfo.n === 0){
+      res.send(400, "reservations does not exist")
+    }
+    else{
+      res.send(201, reservationInfo)
+    }
   })
 })
- 
-  // Reservation.delete(req.body)
-  // .then(reservationInfo => {
-  //   res.send(201, reservationInfo)
-  // })
-// })
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
