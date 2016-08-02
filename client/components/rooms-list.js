@@ -11,6 +11,7 @@ export default class RoomsList extends Component {
       rooms: []
     }
   }
+  
   changeRoomState(room) {
     const rooms = this.state.rooms
     const roomIndex = rooms.indexOf(rooms.find(findRoom))
@@ -34,10 +35,15 @@ export default class RoomsList extends Component {
   }
   componentWillMount() {
     //ping server for latest room info then open socket to listen for someone else changing the state
-    socket.on('updatedRooms', this.updatedRooms.bind(this))
-    
-    fetchRooms().then( room => {
+    fetchRooms()
+    .then( room => {
+      console.log('room data', room)
+      socket.on('updatedRooms', this.updatedRooms.bind(this))
       this.setState({ rooms: this.state.rooms.concat(room.data) })
+    })
+    .catch( err => {
+      console.log('error', err)
+      this.setState({ rooms: null })
     })
   }
   componentWillUnmount(){
@@ -49,7 +55,7 @@ export default class RoomsList extends Component {
       <div> 
         <h2>Rooms</h2> 
         <p>Today, right now</p>
-        {this.renderRooms.call(this)}
+        {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
       </div>
     )
   }
