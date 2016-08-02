@@ -158,10 +158,14 @@ app.get('/all-rooms', function(req, res){
     res.send(201, roomInfo)
   })
 })
-
-// app.post('/reservations/new', function(req, res){
-//   Reservation
-// })
+// putting new reservations to the database
+app.post('/reservations/new', function(req, res){
+  Reservation.create(req.body)
+  .then(reservationInfo => {
+    console.log("reservationInfo: ", reservationInfo)
+    res.send(201, reservationInfo)
+  })
+})
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
