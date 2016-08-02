@@ -17,20 +17,7 @@ Reservation.create = function(reservationData) {
     return data._id;
   })
 }
-//this is for changing reservation 
 
-// Reservation.changeReservation = function(reservationInfo) {
-//   console.log("in changeReservation function ", reservationInfo)
-//   return db.reservations.update(
-//     {_id: reservationInfo._id},
-//     {$set: {startTime: reservationInfo.startTime} },
-//     {multi: false}
-//     )
-//   .then(reservation => {
-//     console.log("successfully changed your reservation!:", reservation)
-//     return reservation
-//   })
-// }
 
 Reservation.delete = function(reservationId){
   console.log(reservationId, " reservationId")
@@ -91,4 +78,22 @@ Reservation.findByName = function(name) {
   })
   .catch(err => console.log('error in findByName: ',err))
 }
+
+
+Reservation.updateReservation = function(resId, newInfo) {
+  if(typeof resId==='string'){
+    resId = db.ObjectId(resId)
+  }
+
+  return db.reservations.update(
+    {"_id" : resId },
+    { "$set" : newInfo }
+  )
+  .then(updatedRes => {
+    // console.log('updatedRes:', updatedRes)
+    return db.reservations.find({"_id":resId})
+  })
+  .catch(err => console.log('err in updateExisting: ', err))
+}
+
 
