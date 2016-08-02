@@ -48,7 +48,6 @@ app.get('/app-bundle.js',
 
 // new user signs up
 app.post('/signup', function(req, res) {
-
   //now we want to add info to users db table
   User.create(req.body)
   .then(userId => {
@@ -69,55 +68,6 @@ app.post('/signup', function(req, res) {
   })
 })
 
-// POST /rooms/new
-//req.body should be be an array of room objects
-// Example:
- // [
- //   {
- //      "roomName": "d",
- //      "projector": true,
- //      "capacity": 20
- //    },
- //    {
- //      "roomName": "e",
- //      "projector": false,
- //      "capacity": 25
- //    }
- //  ]
-
-app.post('/rooms/new', function(req, res) {
-
-  Room.addRooms(req.body)
-    .then((roomIds) => {
-
-      console.log("ready to send response after room insertion:", roomIds)
-      res.send(201, {roomIds: roomIds});
-    })
-
-})
-
-app.get('/logout', function(req, res) {
-
-  Session.destroy(req.cookies.sessionId)
-    .then(() => {
-      res.clearCookie('sessionId');
-      res.sendStatus(200);
-    })
-})
-
-// id, name, address, admin-id, info, rooms
-
-/*login
- get Userid from username
- check sessions table for userid
- send response already logged in
- hash password - bcrypt compare password (beer app)
- if matches, create new session in sessions table
- set cookie
- res.send(200)
- if pw is wrong 400 (check status coder)
- check if there is a session with that userId
-*/
 
 app.post('/login', function(req, res) {
   var userName;
@@ -143,6 +93,43 @@ app.post('/login', function(req, res) {
   })
 })
 
+
+app.get('/logout', function(req, res) {
+  Session.destroy(req.cookies.sessionId)
+  .then(() => {
+    res.clearCookie('sessionId');
+    res.sendStatus(200);
+  })
+})
+
+
+// POST /rooms/new
+//req.body should be be an array of room objects
+// Example:
+ // [
+ //   {
+ //      "roomName": "d",
+ //      "projector": true,
+ //      "capacity": 20
+ //    },
+ //    {
+ //      "roomName": "e",
+ //      "projector": false,
+ //      "capacity": 25
+ //    }
+ //  ]
+
+///////// ROOMS ENDPOINTS /////////
+
+app.post('/rooms/new', function(req, res) {
+  Room.addRooms(req.body)
+  .then((roomIds) => {
+    console.log("ready to send response after room insertion:", roomIds)
+    res.send(201, {roomIds: roomIds});
+  })
+})
+
+
 app.post('/:roomName/changeAvailability', function(req, res){
   console.log('req.params.roomName: ', req.params.roomName)
   Room.changeAvailability(req.params.roomName)
@@ -160,6 +147,7 @@ app.get('/all-rooms', function(req, res){
 })
 
 
+///////// RESERVATIONS ENDPOINTS /////////
 
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
@@ -184,10 +172,16 @@ app.get('/reservations/:roomName', function(req, res){
 })
 
 
+// putting new reservations to the database
+app.post('/reservations/new', function(req, res){
+  Reservation.create(req.body)
+  .then(reservationInfo => {
+    console.log("reservationInfo: ", reservationInfo)
+    res.send(201, reservationInfo)
+  })
+})
 
-// app.post('/reservations/new', function(req, res){
-//   Reservation
-// })
+
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
