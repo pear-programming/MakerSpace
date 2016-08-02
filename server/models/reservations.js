@@ -35,7 +35,9 @@ Reservation.create = function(reservationData) {
 Reservation.delete = function(reservationId){
   console.log(reservationId, " reservationId")
   // use this to make the string into an object if not working!!!!!
-  reservationId._id = db.ObjectId(reservationId._id)
+  if(typeof reservationId._id === "string"){
+    reservationId._id = db.ObjectId(reservationId._id)
+  }
   return db.reservations.remove(reservationId)
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
