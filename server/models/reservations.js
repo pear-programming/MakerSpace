@@ -32,13 +32,10 @@ Reservation.findAllReservations = function() {
         return accum;
       } 
       else {
-        return accum.concat({roomName: reservation.roomName, roomId: reservation.roomId.toString(), reservations: [reservation]})
+        return accum.concat({roomName: reservation.roomName, roomId: reservation.roomId, reservations: [reservation]})
       }
     }, []).sort((a, b) => a.roomName.toLowerCase().charCodeAt(0) - b.roomName.toLowerCase().charCodeAt(0))
 
-      
-    console.log("showing test:", roomReservations);
-    // return reservationsData;
     return roomReservations;
   })
 }
