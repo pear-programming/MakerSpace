@@ -26,12 +26,13 @@ export default class NavBar extends Component {
   }
   render() {
     return (
-      <Navbar inverse>
+      <Navbar>
       <Navbar.Header>
-       <Navbar.Brand><Link to={'/'}>Get a Room 🍐</Link></Navbar.Brand>
+       <Navbar.Brand><Link to={'/'}>M A K E R<strong> S P A C E </strong></Link></Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
+
         { this.state.user ?
           <Nav pullRight>
             <Image className="profilePicture" src={this.state.user.avatar_url} />
@@ -40,12 +41,11 @@ export default class NavBar extends Component {
               <LinkContainer to={'/rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
               <MenuItem divider />
               <MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem>
+
             </NavDropdown>
           </Nav>
           : 
-          <Nav pullRight>
-            <NavItem href="/auth/makerpass" eventKey={1} ><Button  bsStyle="primary" bsSize="small">Login with Makerpass</Button></NavItem>
-          </Nav>
+          null
         }
       </Navbar.Collapse>
     </Navbar>

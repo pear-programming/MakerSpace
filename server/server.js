@@ -195,6 +195,7 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
+// should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   console.log('req.params.roomName: ', req.params.roomName)
@@ -211,6 +212,20 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
     console.log(req.user)
     console.log(roomInfo)
     res.send(201, roomInfo)
+  })
+})
+
+// Update roomn -- post or put
+
+// Delete room *********************************************
+
+app.delete('/:roomName', function(req, res){
+  // console.log('DELETE req.params.roomName: ', req.params.roomName)
+  Room.deleteRoom(req.params.roomName)
+  .then(resp => {
+    console.log('Successfully deleted', req.params.roomName);
+    res.send('Successfully deleted room')
+    // res.send(201, resp)
   })
 })
 

@@ -15,6 +15,11 @@ Room.addRooms = function(rooms) {
 }
 
 
+Room.deleteRoom = function(room) {
+  return db.rooms.remove( { roomName: room } )
+}
+
+
 Room.findRooms = function() {
   return db.rooms.find({})
 }

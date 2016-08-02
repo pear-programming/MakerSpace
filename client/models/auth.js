@@ -9,11 +9,15 @@ export function signup(user){
 export function login(user){
   const request = axios.post('/login', user)
 
-  return request
+  return request  
+}
+
+export function logout(){
+  return axios.get('/logout')
 }
 
 export function checkStatus() {
   const request = axios.get('/check')
-
+  
   return request
 }
