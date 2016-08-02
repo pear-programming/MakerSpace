@@ -10,7 +10,6 @@ export default class Room extends Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-
     this.state = { 
       showModal: false
     };
@@ -26,28 +25,25 @@ export default class Room extends Component {
   render() {
     const room = this.props.roomInfo
     return (
-      <div key={room.name}>
-        <span onClick={this.open}>{room.name}</span>
-      
-        <div className={room.availability ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
-        {room.availability ? 'Open' : 'Closed'}
+      <div>
+        <span onClick={this.open}>{room.roomName}</span>
+        <div className={room.isAvailable ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4> {room.name} </h4>
+            <h4> {room.roomName} </h4>
             <p> Capacity: {room.capacity} </p>
             <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
             <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
             <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
           </Modal.Body>
           <Modal.Footer>
-            <Link to={`${this.props.roomInfo.name}/display`} ><Button>Display</Button></Link>
+            <Link to={`${this.props.roomInfo.roomName}/display`} ><Button>Display</Button></Link>
           </Modal.Footer>
         </Modal>
       </div>
-
     )
   }
 }
