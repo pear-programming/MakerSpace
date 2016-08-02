@@ -5,7 +5,7 @@ var User = require('./models/users');
 var Admin = require('./models/admins');
 var Session = require('./models/userSessions');
 var AdminSession = require('./models/adminSessions');
-var Organization = require('./models/organizations.js');
+var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
 var app = require('express')();
 var express = require('express');
@@ -99,8 +99,31 @@ app.get('/app-bundle.js',
 );
 //////// ENDPOINTS //////////
 
+// new user signs up
+app.post('/signup', function(req, res) {
+
+  //now we want to add info to users db table
+  User.create(req.body)
+  .then(userId => {
+
+    //new user was not created
+    if(!userId){
+      res.send(400, 'account already exists')
+    } else {
+      user_id = userId
+      return Session.create(userId)
+    }
+  })
+  .then(sessionId => {
+    console.log('sending sessionId: ', sessionId)
+    //set cookie or session storage
+    res.cookie("sessionId", sessionId)
+    res.send(201, req.body.name)
+  })
+})
+
 // POST /rooms/new
-//req.body should be be an array of room objects 
+//req.body should be be an array of room objects
 // Example:
  // [
  //   {
@@ -119,7 +142,7 @@ app.get('/app-bundle.js',
   res.status(200).send(req.user)
  })
 
-app.post('/rooms/new', function(req, res) { 
+app.post('/rooms/new', function(req, res) {
 
   Room.addRooms(req.body)
     .then((roomIds) => {
@@ -127,7 +150,7 @@ app.post('/rooms/new', function(req, res) {
       console.log("ready to send response after room insertion:", roomIds)
       res.send(201, {roomIds: roomIds});
     })
-    
+
 })
 
 app.get('/logout', function(req, res) {
@@ -153,7 +176,15 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
     console.log(req.user)
     console.log(roomInfo)
     res.send(201, roomInfo)
-  })  
+  })
+})
+// putting new reservations to the database
+app.post('/reservations/new', function(req, res){
+  Reservation.create(req.body)
+  .then(reservationInfo => {
+    console.log("reservationInfo: ", reservationInfo)
+    res.send(201, reservationInfo)
+  })
 })
 
 // Wild card route for client side routing.

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A boiler plate with basic examples of react-router and react-redux",
   "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --bail --reporter nyan test/ServerSpec.js",
     "start": "nodemon server/server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./client"
   },
@@ -13,12 +14,16 @@
     "babel-preset-es2015": "^6.0.15",
     "babel-preset-react": "^6.0.15",
     "babel-preset-stage-0": "^6.0.15",
+    "chai": "^3.5.0",
     "eslint": "^2.10.2",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
+    "mocha": "^2.5.3",
     "react-tap-event-plugin": "^1.0.0",
+    "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.0.0",
     "webpack": "^1.13.1"
   },
   "dependencies": {
@@ -33,6 +38,7 @@
     "jquery": "^3.1.0",
     "middleware": "^1.0.0",
     "node-makerpass": "^1.1.0",
+    "mocha": "^2.5.3",
     "node-uuid": "^1.4.7",
     "nodemon": "^1.10.0",
     "passport": "^0.3.2",
@@ -49,7 +55,6 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "socket.io": "^1.4.8",
-    "url-parse": "^1.1.1",
     "validator": "^5.5.0"
   }
 }
