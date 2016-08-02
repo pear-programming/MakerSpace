@@ -44,7 +44,8 @@ app.get('/app-bundle.js',
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
 );
-//////// ENDPOINTS //////////
+
+//<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
 // new user signs up
 app.post('/signup', function(req, res) {
@@ -103,23 +104,7 @@ app.get('/logout', function(req, res) {
 })
 
 
-// POST /rooms/new
-//req.body should be be an array of room objects
-// Example:
- // [
- //   {
- //      "roomName": "d",
- //      "projector": true,
- //      "capacity": 20
- //    },
- //    {
- //      "roomName": "e",
- //      "projector": false,
- //      "capacity": 25
- //    }
- //  ]
-
-///////// ROOMS ENDPOINTS /////////
+//<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
@@ -147,7 +132,7 @@ app.get('/all-rooms', function(req, res){
 })
 
 
-///////// RESERVATIONS ENDPOINTS /////////
+//<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
@@ -181,6 +166,11 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
+
+
+app.patch('/reservations/:id/update', function(req, res){
+  
+})
 
 
 // Wild card route for client side routing.
