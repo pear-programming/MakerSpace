@@ -1,39 +1,54 @@
 import React, {Component} from 'react';
 import { browserHistory, Link } from 'react-router';
 import AuthModal from './auth-modal';
-import {Button, Navbar, NavItem, MenuItem, Nav, NavDropdown} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap'
+import { Button, Navbar, NavItem, MenuItem, Nav, NavDropdown, Image } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'
+import { checkStatus } from '../models/auth';
 
 export default class NavBar extends Component {
-  render(){
+  constructor() {
+    super()
+
+    this.state = {
+      user: null
+    }
+  }
+
+  componentWillMount() {
+    checkStatus()
+    .then(userData => {
+      console.log('userData', userData)
+      this.setState({ user: userData.data })
+    })
+  }
+  logout() {
+    this.setState({ user: null })
+  }
+  render() {
     return (
-      <Navbar inverse>
+      <Navbar>
       <Navbar.Header>
-       <Navbar.Brand><Link to={'/'}>Get a Room 🍐</Link></Navbar.Brand>
+       <Navbar.Brand><Link to={'/'}>M A K E R<strong> S P A C E </strong></Link></Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
 
-   
-        { document.cookie ?
-           <Nav pullRight>
-           <NavDropdown eventKey={3} title="Welcome" id="basic-nav-dropdown">
-           <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
-           <LinkContainer to={'rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
-            <MenuItem divider />
-            <MenuItem eventKey={3.3}>Log Out</MenuItem>
-            </NavDropdown>
-           </Nav>
+        { this.state.user ?
+          <Nav pullRight>
+            <Image className="profilePicture" src={this.state.user.avatar_url} />
+            <NavDropdown eventKey={3} title={`Welcome ${this.state.user.name}`} id="basic-nav-dropdown">
+              <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
+              <LinkContainer to={'/rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
+              <MenuItem divider />
+              <MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem>
 
-          : <Nav pullRight>
-              <NavItem eventKey={1} href="#"><AuthModal mode="Log In" /></NavItem>
-              <NavItem eventKey={2} href="#"><AuthModal mode="Sign Up" /></NavItem>
-            </Nav>
+            </NavDropdown>
+          </Nav>
+          : 
+          null
         }
-       
       </Navbar.Collapse>
     </Navbar>
     );
   }
-
 }

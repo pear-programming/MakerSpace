@@ -34,22 +34,17 @@ export default class ModalButton extends Component {
       this.setState({validPassword: this.validatePassword()});
     }
   }
-
   onFormSubmit(e){
     e.preventDefault();
     // check props.mode, send POST for either log in or sign up
     this.setState({user: {}})
-
   }
-
   close() {
     this.setState({ showModal: false, user: {}, error: false });
   }
-
   open() {
     this.setState({ showModal: true });
   }
-
   validateEmail() {
     var x = this.state.user.email;
     var atpos = x.indexOf("@");
@@ -66,7 +61,6 @@ export default class ModalButton extends Component {
       return false
     }
   }
-
   submitForm(e){
     e.preventDefault();
     if(this.props.mode === 'Sign Up'){
@@ -78,8 +72,7 @@ export default class ModalButton extends Component {
       .catch(err => {
         this.setState({error: true})
       })
-    }
-    
+    } 
     if(this.props.mode === 'Log In'){
       login(this.state.user)
       .then(x => {
@@ -90,7 +83,6 @@ export default class ModalButton extends Component {
         this.setState({error: true})
       })
     }
-
   }
 
   render() {

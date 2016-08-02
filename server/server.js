@@ -1,4 +1,3 @@
-
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -12,8 +11,65 @@ var app = require('express')();
 var express = require('express');
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var session = require('cookie-session');
+var MP = require('node-makerpass');
+var client = require('./client_credentials');
 
 
+app.use(session({
+  name: 'my-app:session',
+  secret: process.env.SESSION_SECRET || 'development',
+  secure: (!! process.env.SESSION_SECRET),
+  signed: true
+}));
+//
+// Now set up passport.
+// Authenticate with MakerPass, and attach accessToken to session.
+//
+var passport = require('passport');
+var MakerpassStrategy = require('passport-makerpass').Strategy;
+
+passport.use(new MakerpassStrategy({
+    clientID: client.ID,
+    clientSecret: client.secret,
+    callbackURL: "http://localhost:4000/auth/makerpass/callback",
+    passReqToCallback: true
+  },
+  function(req, accessToken, refreshToken, profile, done) {
+
+    req.session.accessToken  = accessToken
+    req.session.refreshToken = refreshToken
+    done(null, 1) // Necessary only for serializeUser (see below)
+  }
+));
+
+//
+// Attach Passport to the app
+//
+app.use(passport.initialize())
+
+//
+// We don't need serializeUser/deserializeUser,
+// but passport will break if we don't write this.
+//
+passport.serializeUser(function(_, done) { done(null, 1) })
+
+//
+// Direct your browser to this route to start the OAuth dance
+//
+app.get('/auth/makerpass',
+  passport.authenticate('makerpass'));
+
+//
+// During the OAuth dance, MakerPass will redirect your user to this route,
+// of which passport will mostly handle.
+//
+app.get('/auth/makerpass/callback',
+  passport.authenticate('makerpass', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, do what you like at this point :)
+    res.redirect('/rooms');
+  });
 
 io.on('connection', function (socket) {
   socket.broadcast.emit('user connected');  
@@ -21,13 +77,11 @@ io.on('connection', function (socket) {
   socket.on('newRoomStatus', function (data) {
     socket.broadcast.emit('updatedRooms', { rooms: data });
   });
+
+  socket.on('tabletDisplay', function(data) {
+    console.log('data should be ex dee', data)
+  })
 });
-
-var port = process.env.PORT || 4000;
-
-server.listen(port);
-console.log('Listening on localhost:' + port);
-
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
@@ -69,7 +123,6 @@ app.post('/signup', function(req, res) {
   })
 })
 
-
 app.post('/login', function(req, res) {
   var userName;
   User.login(req.body)
@@ -106,6 +159,10 @@ app.get('/logout', function(req, res) {
 
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
+ app.get('/check', MP.authWithSession(), function(req, res) {
+  res.status(200).send(req.user)
+ })
+
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
   .then((roomIds) => {
@@ -115,7 +172,17 @@ app.post('/rooms/new', function(req, res) {
 })
 
 
-app.post('/:roomName/changeAvailability', function(req, res){
+app.post('/rooms/new', function(req, res) {
+  Room.addRooms(req.body)
+  .then((roomIds) => {
+    console.log("ready to send response after room insertion:", roomIds)
+    res.send(201, {roomIds: roomIds});
+  })
+})
+
+// should be a PUT
+
+app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   console.log('req.params.roomName: ', req.params.roomName)
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
@@ -124,10 +191,25 @@ app.post('/:roomName/changeAvailability', function(req, res){
   })
 })
 
-app.get('/all-rooms', function(req, res){
+app.get('/all-rooms', MP.authWithSession(), function(req, res){
   Room.findRooms()
   .then(roomInfo => {
+    console.log(req.user)
+    console.log(roomInfo)
     res.send(201, roomInfo)
+  })
+})
+
+
+// Delete room 
+
+app.delete('/:roomName', function(req, res){
+  // console.log('DELETE req.params.roomName: ', req.params.roomName)
+  Room.deleteRoom(req.params.roomName)
+  .then(resp => {
+    console.log('Successfully deleted', req.params.roomName);
+    res.send('Successfully deleted room')
+    // res.send(201, resp)
   })
 })
 
@@ -166,7 +248,8 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
-//update reservation
+
+//update existing reservation
 app.put('/reservations/:id', function(req, res){
   var resId = req.params.id 
   //req.body should be new reservation info
@@ -178,7 +261,26 @@ app.put('/reservations/:id', function(req, res){
 })
 
 
+app.delete('/reservations/delete', function(req, res){
+  Reservation.delete(req.body)
+  .then(reservationInfo => {
+  console.log("reservationInfo: ", reservationInfo)
+    if(reservationInfo.n === 0){
+      res.send(400, "reservations does not exist")
+    }
+    else{
+      res.send(201, reservationInfo)
+    }
+  })
+})
+
+
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
 })
+
+var port = process.env.PORT || 4000;
+
+server.listen(port);
+console.log('Listening on localhost:' + port);

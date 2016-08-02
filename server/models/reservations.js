@@ -3,7 +3,6 @@ var db = require('../db.js');
 var Reservation = module.exports
 
 Reservation.findByRoomId = function(Id) {
-
   console.log("inside reservations findbyid:", id);
   return db.reservations.find({id: id})
   .then((reservations) => {
@@ -20,13 +19,41 @@ Reservation.create = function(reservationData) {
 }
 
 
+Reservation.delete = function(reservationId){
+  console.log(reservationId, " reservationId")
+  // use this to make the string into an object if not working!!!!!
+  if(typeof reservationId._id === "string"){
+    reservationId._id = db.ObjectId(reservationId._id)
+  }
+  return db.reservations.remove(reservationId)
+    .then((data) => {
+      console.log("successfully canceled reservation!:", data)
+      return data;
+  }) .catch(err => console.log('error in reservation: ', err))
+}
+
+
 Reservation.findAllReservations = function() {
   return db.reservations.find({})
   .then(reservationsData => {
-    return reservationsData;
+
+    var roomReservations = reservationsData.reduce((accum, reservation) => {
+      var roomIds = accum.map((el) => el.roomId.toString())
+
+      var index = roomIds.indexOf(reservation.roomId.toString())
+      if(index !== -1) {
+        accum[index].reservations.push(reservation)
+        accum[index].reservations = accum[index].reservations.sort((a,b) => a.startTime - b.startTime);
+        return accum;
+      } 
+      else {
+        return accum.concat({roomName: reservation.roomName, roomId: reservation.roomId, reservations: [reservation]})
+      }
+    }, []).sort((a, b) => a.roomName.toLowerCase().charCodeAt(0) - b.roomName.toLowerCase().charCodeAt(0))
+
+    return roomReservations;
   })
 }
-
 
 Reservation.findByName = function(name) {
   return db.rooms.find({roomName: name})
@@ -68,4 +95,5 @@ Reservation.updateReservation = function(resId, newInfo) {
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }
+
 
