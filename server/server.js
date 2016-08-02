@@ -167,6 +167,28 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
+// app.post('/reservations/changeReservation', function(req, res){
+//   Reservation.changeReservation(req.body)
+//   console.log("req.body: ", req.body)
+//   .then(reservationInfo => {
+//     res.send(201, reservationInfo)
+//   })
+// })
+ 
+app.delete('/reservations/delete', function(req, res){
+  Reservation.delete(req.body)
+  .then(reservationInfo => {
+  console.log("reservationInfo: ", reservationInfo)
+    res.send(201, reservationInfo)
+  })
+})
+ 
+  // Reservation.delete(req.body)
+  // .then(reservationInfo => {
+  //   res.send(201, reservationInfo)
+  // })
+// })
+
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
