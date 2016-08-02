@@ -1,9 +1,6 @@
-
-
 import React, { Component } from 'react';
 import Room from './room';
-
-var roomsList = [{name: 'Dagobah', capacity: 10, conferenceTable: true, airPlay: true, hammock: false, availability: true}, {name: 'Lovelace', capacity: 6, conferenceTable: true, airPlay: false, hammock: true, availability: false}]
+import {fetchRooms, changeStatus} from '../models/rooms';
 
 
 export default class RoomsList extends Component {
@@ -14,14 +11,19 @@ export default class RoomsList extends Component {
       rooms: []
     }
   }
+  
   changeRoomState(room) {
     const rooms = this.state.rooms
     const roomIndex = rooms.indexOf(rooms.find(findRoom))
     //function to change state in parent of the room selected
     function findRoom(findThisRoom) { 
-      return findThisRoom.name === room.name;
+      return findThisRoom.roomName === room.roomName;
     }
-    rooms[roomIndex].availability = !rooms[roomIndex].availability
+
+    changeStatus(room.roomName)
+    .then(x => x)
+
+    rooms[roomIndex].isAvailable = !rooms[roomIndex].isAvailable
     this.setState({ rooms: rooms })
     socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
@@ -33,9 +35,19 @@ export default class RoomsList extends Component {
   }
   componentWillMount() {
     //ping server for latest room info then open socket to listen for someone else changing the state
-    this.setState({ rooms: this.state.rooms.concat(roomsList) })
-    socket.on('updatedRooms', this.updatedRooms.bind(this))
-
+    fetchRooms()
+    .then( room => {
+      console.log('room data', room)
+      socket.on('updatedRooms', this.updatedRooms.bind(this))
+      this.setState({ rooms: this.state.rooms.concat(room.data) })
+    })
+    .catch( err => {
+      console.log('error', err)
+      this.setState({ rooms: null })
+    })
+  }
+  componentWillUnmount(){
+    socket.off('updatedRooms');
   }
 
   render() {
@@ -43,7 +55,7 @@ export default class RoomsList extends Component {
       <div> 
         <h2>Rooms</h2> 
         <p>Today, right now</p>
-        {this.renderRooms.call(this)}
+        {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
       </div>
     )
   }

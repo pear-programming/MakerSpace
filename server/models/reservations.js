@@ -3,7 +3,6 @@ var db = require('../db.js');
 var Reservation = module.exports
 
 Reservation.findByRoomId = function(Id) {
-
   console.log("inside reservations findbyid:", id);
   return db.reservations.find({id: id})
   .then((reservations) => {
@@ -19,14 +18,12 @@ Reservation.create = function(reservationData) {
   })
 }
 
-
 Reservation.findAllReservations = function() {
   return db.reservations.find({})
   .then(reservationsData => {
     return reservationsData;
   })
 }
-
 
 Reservation.findByName = function(name) {
   return db.rooms.find({roomName: name})

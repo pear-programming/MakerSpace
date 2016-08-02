@@ -9,7 +9,6 @@ Room.addRooms = function(rooms) {
   console.log("after mapping:", roomsWithAvailability);
   return db.rooms.insert(roomsWithAvailability)
   .then(data => {
-    console.log("after rooms insertion!", data);
     return data.map((room) => room._id);
   })
   .catch(err => console.log("error inserting rooms:", err))
@@ -22,22 +21,17 @@ Room.findRooms = function() {
 
 
 Room.changeAvailability = function(roomName) {
-  console.log('room parameter: ', roomName)
-  return db.rooms.find({name: roomName})
+  return db.rooms.find({roomName: roomName})
   .then(rooms => {
-    console.log('rooms in changeAvailability: ', rooms)
     if(rooms[0].isAvailable === true) {
-      console.log('should change to false~~~', rooms[0])
       var updatedObj = rooms[0]
       updatedObj.isAvailable = false
-      console.log('updatedObj: ', updatedObj)
-      db.rooms.update({name: roomName}, updatedObj)
+      db.rooms.update({roomName: roomName}, updatedObj)
       return 'availability updated to false'
     } else {
-      console.log('should change to true')
       var updatedObj = rooms[0]
       updatedObj.isAvailable = true
-      db.rooms.update({name: roomName}, updatedObj)
+      db.rooms.update({roomName: roomName}, updatedObj)
       return 'availability updated to true'
     }
   })

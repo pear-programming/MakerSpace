@@ -22,11 +22,9 @@ User.create = function(incomingAttrs) {
   })
   .then(passwordHash => {
     attrs.password = passwordHash;
-    // console.log('attrs in create user', attrs)
     return db.users.insert(attrs)
   })
   .then(resp => {
-    // console.log('userobj with _id and password ', resp)
     return resp._id
   })
   .catch(err => console.log('err in create: ', err))

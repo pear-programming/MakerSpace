@@ -7,8 +7,16 @@ html, body {
   margin-top: 10%;
 }
 
+.fullscreen {
+  max-height: 5000px;
+  min-height: 1500px;
+  text-align: center;
+
+}
+
 
 .foo {
+  display: inline-flex;
   width: 20px;
   height: 20px;
   margin: 5px;
@@ -25,4 +33,9 @@ html, body {
 
 .wine {
   background: #ae163e;
+}
+
+.profilePicture {
+  max-width: 50px;
+  max-height: 50px;
 }
