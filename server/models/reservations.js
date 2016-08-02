@@ -32,8 +32,9 @@ Reservation.create = function(reservationData) {
 // }
 
 Reservation.delete = function(reservationId){
-  console.log(reservationId._id, " reservationId")
-  return db.reservations.remove(_id:reservationId._id)
+  console.log(reservationId, " reservationId")
+  reservationId._id = db.ObjectId(reservationId._id)
+  return db.reservations.remove(reservationId)
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
