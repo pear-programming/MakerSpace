@@ -13,6 +13,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
+var client = require('./client_credentials');
 
 
 app.use(session({
@@ -29,8 +30,8 @@ var passport = require('passport');
 var MakerpassStrategy = require('passport-makerpass').Strategy;
 
 passport.use(new MakerpassStrategy({
-    clientID: 'eae6795ed5d6fe1fb29497641a083edb2c4fe242a233fc98138f7224177581e9',
-    clientSecret: 'c92309a053636df7b24e1672ce6190ef9c76bca9e5aebf1cb8847e70607b534f',
+    clientID: client.ID,
+    clientSecret: client.secret,
     callbackURL: "http://localhost:4000/auth/makerpass/callback",
     passReqToCallback: true
   },
