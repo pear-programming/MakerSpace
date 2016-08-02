@@ -3,13 +3,37 @@ import { browserHistory, Link } from 'react-router';
 import AuthModal from './auth-modal';
 import {Button, Navbar, NavItem, MenuItem, Nav, NavDropdown} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
+import { logout } from '../models/auth';
+
 
 export default class NavBar extends Component {
+
+  constructor(props){  
+    super(props)
+
+    this.state = { 
+      loggedIn: true
+    };
+  }
+  
+  logout(e) {
+    e.preventDefault();
+    
+    logout()
+    .then(x => {
+      console.log('logout success', x)
+    })
+    .catch(err => {
+      console.log('logout err', err)
+    })
+    
+  }
+
   render(){
     return (
       <Navbar inverse>
       <Navbar.Header>
-       <Navbar.Brand><Link to={'/'}>Get a Room 🍐</Link></Navbar.Brand>
+       <Navbar.Brand><Link to={'/'}>MakerSpace</Link></Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
@@ -21,7 +45,7 @@ export default class NavBar extends Component {
            <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
            <LinkContainer to={'rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
             <MenuItem divider />
-            <MenuItem eventKey={3.3}>Log Out</MenuItem>
+            <LinkContainer to={'logout'}><MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem></LinkContainer>
             </NavDropdown>
            </Nav>
 

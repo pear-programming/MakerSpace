@@ -13,3 +13,7 @@ export function login(user){
   return request
   
 }
+
+export function logout(){
+  return axios.get('/logout')
+}
