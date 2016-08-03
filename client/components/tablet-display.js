@@ -65,12 +65,12 @@ export default class TabletDisplay extends Component {
     return (
       this.state.currentRoom.isAvailable ? // dummy for testing
         <div className="fullscreen" style={open}>
-          {this.props.room}
+          <h2>{this.state.currentRoom.roomName}</h2>
           <h1>OPEN</h1>    
         </div>
         : 
         <div className="fullscreen" style={closed}>
-          {this.props.room}
+          <h2>{this.state.currentRoom.roomName}</h2>
           <h1>CLOSED</h1>
         </div> 
     )
