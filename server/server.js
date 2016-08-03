@@ -191,10 +191,11 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
   })
 })
 
-app.put('/room/edit', function(req, res){
-  var roomId = req.params.id 
+app.put('/room/edit/:id', function(req, res){
+  var roomId = req.params.id
+  // console.log("req ", req.body._id)
   //req.body should be new reservation info
-  Reservation.updateReservation(roomId, req.body)
+  Room.updateRoom(roomId, req.body)
   .then(updatedRoom => {
     console.log('result from update: ', updatedRoom)
     res.send(200, updatedRoom)
