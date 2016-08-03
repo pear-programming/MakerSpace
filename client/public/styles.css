@@ -47,8 +47,14 @@
   text-align: center;
 }
 
+img.roomImage {
+  height: 160px;
+  float: right;
+}
 
-
+.roomDetails {
+  display: inline-block;
+}
 
 
 
