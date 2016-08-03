@@ -37,8 +37,8 @@
     "express": "^4.14.0",
     "jquery": "^3.1.0",
     "middleware": "^1.0.0",
-    "node-makerpass": "^1.1.0",
     "mocha": "^2.5.3",
+    "node-makerpass": "^1.1.0",
     "node-uuid": "^1.4.7",
     "nodemon": "^1.10.0",
     "passport": "^0.3.2",
@@ -54,6 +54,7 @@
     "react-spinjs": "^3.0.0",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
+    "sass.js": "^0.9.11",
     "socket.io": "^1.4.8",
     "validator": "^5.5.0"
   }

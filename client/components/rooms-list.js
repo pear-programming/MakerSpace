@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Room from './room';
 import {fetchRooms, changeStatus} from '../models/rooms';
+import Room from './room';
+import NavBar from './nav-bar';
 
 
 export default class RoomsList extends Component {
@@ -52,10 +53,13 @@ export default class RoomsList extends Component {
 
   render() {
     return (
-      <div> 
-        <h2>Rooms</h2> 
-        <p>Today, right now</p>
-        {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
+      <div>
+        <NavBar />
+        <div> 
+          <h2>Rooms</h2> 
+          <p>Today, right now</p>
+          {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
+        </div>
       </div>
     )
   }

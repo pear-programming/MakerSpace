@@ -68,7 +68,7 @@ app.get('/auth/makerpass/callback',
   passport.authenticate('makerpass', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, do what you like at this point :)
-    res.redirect('/rooms');
+    res.redirect('/');
   });
 
 io.on('connection', function (socket) {
