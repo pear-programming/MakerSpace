@@ -61,6 +61,18 @@ img.roomImage {
   width: 50%;
 }
 
+.floorPlan {
+  float: right;
+  margin-right: 300px;
+
+}
+
+.RoomsList {
+  display: inline-block;
+  margin-left: 20px;
+  min-width: 300px;
+}
+
 /*=======================================*/
 
 .switch {

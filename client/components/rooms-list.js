@@ -55,12 +55,12 @@ export default class RoomsList extends Component {
     return (
       <div>
         <NavBar />
-        <div> 
+        <div className="RoomsList"> 
           <h2>Rooms</h2> 
           {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
         </div>
-        <div>       
-          <img className="floorPlan" src="https://s32.postimg.org/e5a41xdzp/floorplan.jpg"/>
+        <div className="floorPlan">       
+          <img src="https://s32.postimg.org/e5a41xdzp/floorplan.jpg"/>
         </div>
       </div>
     )
