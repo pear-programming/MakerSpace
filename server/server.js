@@ -81,6 +81,10 @@ io.on('connection', function (socket) {
   socket.on('tabletDisplay', function(data) {
     console.log('data should be ex dee', data)
   })
+
+  socket.on('bookNow', function(roomId) {
+    socket.broadcast.emit('instaBooked', roomId);   
+  })
 });
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
