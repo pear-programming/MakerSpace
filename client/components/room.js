@@ -32,7 +32,7 @@ export default class Room extends Component {
     const room = this.props.roomInfo
 
     return (
-      <div>
+      <div id="eachRoom">
         <span onClick={this.open}>{room.roomName}</span>
 
         <label className="switch">

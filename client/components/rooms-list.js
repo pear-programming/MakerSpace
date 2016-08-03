@@ -57,7 +57,6 @@ export default class RoomsList extends Component {
         <NavBar />
         <div> 
           <h2>Rooms</h2> 
-          <p>Today, right now</p>
           {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
         </div>
       </div>
