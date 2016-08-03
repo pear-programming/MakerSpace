@@ -47,6 +47,7 @@
   text-align: center;
 }
 
+
 img.roomImage {
   height: 160px;
   float: right;
@@ -56,10 +57,11 @@ img.roomImage {
   display: inline-block;
 }
 
+#eachRoom {
+  width: 50%;
+}
 
-
-
-/*============== SLIDER BUTTON ================*/
+/*=======================================*/
 
 .switch {
   position: relative;
@@ -108,10 +110,11 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-.slider {
+/* Rounded sliders */
+.slider.round {
   border-radius: 34px;
 }
 
-.slider:before {
+.slider.round:before {
   border-radius: 50%;
 }

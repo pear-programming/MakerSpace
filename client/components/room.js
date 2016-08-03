@@ -30,6 +30,10 @@ export default class Room extends Component {
 
   render() {
     const room = this.props.roomInfo
+    console.log('room info', room)
+
+    var title = {float: 'left'}
+    var info = {float: 'right'}
 
     return (
       <div id="eachRoom">
