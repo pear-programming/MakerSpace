@@ -191,6 +191,16 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
   })
 })
 
+app.put('/room/edit', function(req, res){
+  var resId = req.params.id 
+  //req.body should be new reservation info
+  Reservation.updateReservation(resId, req.body)
+  .then(updatedRes => {
+    console.log('result from update: ', updatedRes)
+    res.send(200, updatedRes)
+  })
+})
+
 
 // Delete room 
 
