@@ -98,7 +98,8 @@ app.get('/app-bundle.js',
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
 );
-//////// ENDPOINTS //////////
+
+//<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
 // new user signs up
 app.post('/signup', function(req, res) {
@@ -146,46 +147,21 @@ app.post('/login', function(req, res) {
   })
 })
 
-// POST /rooms/new
-//req.body should be be an array of room objects
-// Example:
- // [
- //   {
- //      "roomName": "d",
- //      "projector": true,
- //      "capacity": 20
- //    },
- //    {
- //      "roomName": "e",
- //      "projector": false,
- //      "capacity": 25
- //    }
- //  ]
+
+app.get('/logout', function(req, res) {
+  Session.destroy(req.cookies.sessionId)
+  .then(() => {
+    res.clearCookie('sessionId');
+    res.sendStatus(200);
+  })
+})
+
+
+//<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
  app.get('/check', MP.authWithSession(), function(req, res) {
   res.status(200).send(req.user)
  })
-
-app.post('/rooms/new', function(req, res) {
-
-  Room.addRooms(req.body)
-    .then((roomIds) => {
-
-      console.log("ready to send response after room insertion:", roomIds)
-      res.send(201, {roomIds: roomIds});
-    })
-
-})
-
-app.get('/logout', function(req, res) {
-  Session.destroy(req.cookies.sessionId)
-    .then(() => {
-      res.clearCookie('sessionId');
-      res.sendStatus(200);
-    })
-})
-
-///////// ROOMS ENDPOINTS /////////
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
@@ -215,9 +191,19 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
   })
 })
 
-// Update roomn -- post or put
+app.put('/room/edit/:id', function(req, res){
+  var roomId = req.params.id
+  // console.log("req ", req.body._id)
+  //req.body should be new reservation info
+  Room.updateRoom(roomId, req.body)
+  .then(updatedRoom => {
+    console.log('result from update: ', updatedRoom)
+    res.send(200, updatedRoom)
+  })
+})
 
-// Delete room *********************************************
+
+// Delete room 
 
 app.delete('/:roomName', function(req, res){
   // console.log('DELETE req.params.roomName: ', req.params.roomName)
@@ -230,7 +216,7 @@ app.delete('/:roomName', function(req, res){
 })
 
 
-///////// RESERVATIONS ENDPOINTS /////////
+//<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
@@ -264,15 +250,19 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
-// delete this block of code when ashlee is done with change reservations!
-// app.post('/reservations/changeReservation', function(req, res){
-//   Reservation.changeReservation(req.body)
-//   console.log("req.body: ", req.body)
-//   .then(reservationInfo => {
-//     res.send(201, reservationInfo)
-//   })
-// })
- 
+
+//update existing reservation
+app.put('/reservations/:id', function(req, res){
+  var resId = req.params.id 
+  //req.body should be new reservation info
+  Reservation.updateReservation(resId, req.body)
+  .then(updatedRes => {
+    console.log('result from update: ', updatedRes)
+    res.send(200, updatedRes)
+  })
+})
+
+
 app.delete('/reservations/delete', function(req, res){
   Reservation.delete(req.body)
   .then(reservationInfo => {
@@ -285,6 +275,7 @@ app.delete('/reservations/delete', function(req, res){
     }
   })
 })
+
 
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
