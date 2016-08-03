@@ -38,6 +38,7 @@ export default class Room extends Component {
             <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
             <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
             <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+            <img className="roomImage" src={room.image}/>
           </Modal.Body>
           <Modal.Footer>
             <Link to={`${this.props.roomInfo.roomName}/display`} ><Button>Display</Button></Link>
