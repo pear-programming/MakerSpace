@@ -68,7 +68,7 @@ app.get('/auth/makerpass/callback',
   passport.authenticate('makerpass', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, do what you like at this point :)
-    res.redirect('/rooms');
+    res.redirect('/');
   });
 
 io.on('connection', function (socket) {
@@ -171,15 +171,6 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
-
-app.post('/rooms/new', function(req, res) {
-  Room.addRooms(req.body)
-  .then((roomIds) => {
-    console.log("ready to send response after room insertion:", roomIds)
-    res.send(201, {roomIds: roomIds});
-  })
-})
-
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
@@ -197,6 +188,17 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
     console.log(req.user)
     console.log(roomInfo)
     res.send(201, roomInfo)
+  })
+})
+
+app.put('/room/edit/:id', function(req, res){
+  var roomId = req.params.id
+  // console.log("req ", req.body._id)
+  //req.body should be new reservation info
+  Room.updateRoom(roomId, req.body)
+  .then(updatedRoom => {
+    console.log('result from update: ', updatedRoom)
+    res.send(200, updatedRoom)
   })
 })
 

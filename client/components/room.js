@@ -22,12 +22,24 @@ export default class Room extends Component {
     this.setState({ showModal: true });
   }
 
+  // componentWillMount(){
+  //    window.addEventListener('load', function() {
+  //       FastClick.attach(document.body);
+  //   }, false);
+  // }
+
   render() {
     const room = this.props.roomInfo
+
     return (
-      <div>
+      <div id="eachRoom">
         <span onClick={this.open}>{room.roomName}</span>
-        <div className={room.isAvailable ? "foo blue" : "foo wine"} onClick={() => this.props.toggleState(room)} />
+
+        <label className="switch">
+          { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
+          <div className="slider round"></div>
+        </label>
+        
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
