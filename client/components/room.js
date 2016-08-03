@@ -45,11 +45,13 @@ export default class Room extends Component {
             <Modal.Title>{this.props.mode}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4> {room.roomName} </h4>
-            <p> Capacity: {room.capacity} </p>
-            <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
-            <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
-            <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+            <div className="roomDetails">
+              <h4> {room.roomName} </h4>
+              <p> Capacity: {room.capacity} </p>
+              <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
+              <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
+              <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+            </div>
             <img className="roomImage" src={room.image}/>
           </Modal.Body>
           <Modal.Footer>
