@@ -164,6 +164,7 @@ app.get('/logout', function(req, res) {
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
  app.get('/check', MP.authWithSession(), function(req, res) {
+  console.log('scopes', req.scopes)
   res.status(200).send(req.user)
  })
 
@@ -189,8 +190,6 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
   Room.findRooms()
   .then(roomInfo => {
-    console.log(req.user)
-    console.log(roomInfo)
     res.send(201, roomInfo)
   })
 })
@@ -210,12 +209,10 @@ app.put('/room/edit/:id', function(req, res){
 // Delete room 
 
 app.delete('/:roomName', function(req, res){
-  // console.log('DELETE req.params.roomName: ', req.params.roomName)
   Room.deleteRoom(req.params.roomName)
   .then(resp => {
     console.log('Successfully deleted', req.params.roomName);
     res.send('Successfully deleted room')
-    // res.send(201, resp)
   })
 })
 
@@ -280,7 +277,22 @@ app.delete('/reservations/delete', function(req, res){
   })
 })
 
+//endpoints for calendar asset-serving
+app.get('/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
+})
 
+app.get('/lib/moment.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+})
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
