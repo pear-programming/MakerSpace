@@ -4,7 +4,7 @@ import NavBar from './nav-bar';
 import RoomsList from './rooms-list';
 import { Button } from 'react-bootstrap';
 import { checkStatus } from '../models/auth';
-import Calendar from './calendar';
+
 
 export default class SplashPage extends React.Component {
   constructor(){ 
