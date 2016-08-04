@@ -28,14 +28,14 @@ export default class SplashPage extends React.Component {
       this.state.user ?
       <div>
        <RoomsList /> 
-
       </div>
-      : <div>
+      : 
+      <div>
         <NavBar />
         <div id="home">
           <h3 className="loginButton" ><a href="/auth/makerpass" className="loginButton"><span id="fakeButton">Login with Maker<strong>Pass</strong></span></a></h3>
         </div>
-        </div>
+      </div>
     )
   }
 }
