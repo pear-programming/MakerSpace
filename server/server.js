@@ -280,7 +280,22 @@ app.delete('/reservations/delete', function(req, res){
   })
 })
 
+//endpoints for calendar asset-serving
+app.get('/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
+})
 
+app.get('/lib/moment.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+})
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
