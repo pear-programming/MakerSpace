@@ -82,9 +82,9 @@ describe('', function() {
         .expect(200)
     })
 
-    it('deletes a project', function(){
+    it('deletes a room', function(){
       return client
-        .delete('/api/projects/2')
+        .delete('/:roomName')
         .expect(200)
     })
 
