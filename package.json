@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A boiler plate with basic examples of react-router and react-redux",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --bail --reporter nyan test/ServerSpec.js",
+    "test": "mocha --recursive --reporter=nyan ./test/.setup.js ./test",
     "start": "nodemon server/server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./client"
   },
