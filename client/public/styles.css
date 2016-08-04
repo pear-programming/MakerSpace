@@ -57,20 +57,25 @@ img.roomImage {
   display: inline-block;
 }
 
-#eachRoom {
-  width: 50%;
-}
+/*#eachRoom {
+ display: inline-block;
+}*/
 
-.floorPlan {
+/*.floorPlan {
   float: right;
   margin-right: 300px;
+}*/
 
-}
-
-.RoomsList {
+/*.RoomsList {
   display: inline-block;
   margin-left: 20px;
   min-width: 300px;
+}
+*/
+
+#filter {
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
 }
 
 /*=======================================*/

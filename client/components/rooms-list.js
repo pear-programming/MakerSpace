@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
 import {fetchRooms, changeStatus} from '../models/rooms';
 import Room from './room';
 import NavBar from './nav-bar';
+
 
 
 export default class RoomsList extends Component {
@@ -55,13 +57,18 @@ export default class RoomsList extends Component {
     return (
       <div>
         <NavBar />
-        <div className="RoomsList"> 
+        <Grid>
+        <Row className="show-grid">
+        
+        <Col lg={6} lgPush={6}><div className="floorPlan">       
+          <img src="https://s32.postimg.org/e5a41xdzp/floorplan.jpg"/>
+        </div></Col>
+        
+        <Col lg={6} lgPull={6}><div className="RoomsList"> 
           <h2>Rooms</h2> 
           {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
-        </div>
-        <div className="floorPlan">       
-          <img src="https://s32.postimg.org/e5a41xdzp/floorplan.jpg"/>
-        </div>
+
+        </div></Col></Row></Grid>
       </div>
     )
   }

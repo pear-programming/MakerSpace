@@ -25,18 +25,18 @@ export default class Room extends Component {
   render() {
     const room = this.props.roomInfo
 
-    var title = {float: 'left'}
-    var info = {float: 'right'}
+    const color = { color: room.roomColor }
 
     return (
       <div id="eachRoom">
-        <span onClick={this.open}>{room.roomName}</span>
+        {console.log(room.roomName, color)}
+        <span onClick={this.open}><h2 style={color}>{room.roomName}</h2></span>
 
         <label className="switch">
           { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
           <div className="slider round"></div>
-        </label>
-        
+        </label>           
+
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
@@ -49,7 +49,7 @@ export default class Room extends Component {
               <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
               <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
             </div>
-            <img className="roomImage" src={room.image}/>
+            {room.isAvailable ? <img className="roomImage" src={room.image} /> : <img className="roomImage" src={room.image} id="filter" /> }
           </Modal.Body>
           <Modal.Footer>
             <Link to={`${this.props.roomInfo.roomName}/display`} ><Button>Display</Button></Link>
