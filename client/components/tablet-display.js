@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import Room from './room';
-import { fetchRooms } from '../models/rooms';
+import {fetchRooms, changeStatus} from '../models/rooms';
 import ReactDOM from 'react-dom';
 
 
@@ -37,6 +37,15 @@ export default class TabletDisplay extends Component {
       this.setState({currentRoom: room})
     })  
   }
+
+  bookNow() {
+    changeStatus(this.state.currentRoom.roomName)
+    .then((x) => x)
+
+    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
+    socket.emit('bookNow', this.state.currentRoom._id)  
+  }
+
   updateState(room) {
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
@@ -66,7 +75,8 @@ export default class TabletDisplay extends Component {
       this.state.currentRoom.isAvailable ? // dummy for testing
         <div className="fullscreen" style={open}>
           <h2>{this.state.currentRoom.roomName}</h2>
-          <h1>OPEN</h1>    
+          <h1>OPEN</h1> 
+          <button onClick={this.bookNow.bind(this)}>Book Now!</button>     
         </div>
         : 
         <div className="fullscreen" style={closed}>
