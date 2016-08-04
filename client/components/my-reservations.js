@@ -5,7 +5,6 @@ export default class MyReservations extends Component {
     return (
       <div> 
         <h2>My Reservations</h2> 
-
       </div>
     )
   }

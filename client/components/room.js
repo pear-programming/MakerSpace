@@ -22,15 +22,8 @@ export default class Room extends Component {
     this.setState({ showModal: true });
   }
 
-  // componentWillMount(){
-  //    window.addEventListener('load', function() {
-  //       FastClick.attach(document.body);
-  //   }, false);
-  // }
-
   render() {
     const room = this.props.roomInfo
-    console.log('room info', room)
 
     var title = {float: 'left'}
     var info = {float: 'right'}
