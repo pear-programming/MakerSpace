@@ -18,7 +18,6 @@ export default class SplashPage extends React.Component {
   componentWillMount() {
     checkStatus()
     .then(userData => {
-      console.log('userData', userData)
       this.setState({ user: userData.data })
     })
   }

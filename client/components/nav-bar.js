@@ -17,7 +17,6 @@ export default class NavBar extends Component {
   componentWillMount() {
     checkStatus()
     .then(userData => {
-      console.log('userData', userData)
       this.setState({ user: userData.data })
     })
   }

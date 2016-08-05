@@ -24,9 +24,8 @@ export default class Room extends Component {
 
   render() {
     const room = this.props.roomInfo
-
-    var title = {float: 'left'}
-    var info = {float: 'right'}
+    const title = { float: 'left' }
+    const info = { float: 'right' }
 
     return (
       <div id="eachRoom clearfix">
