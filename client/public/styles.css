@@ -1,3 +1,9 @@
+/*
+colors:
+blue: #0073b7;
+*/
+
+
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
   background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo*/
@@ -47,16 +53,72 @@
   text-align: center;
 }
 
+/*==== room modal ====*/
 
 img.roomImage {
-  height: 160px;
-  float: right;
+/*  height: 160px;
+  float: right;*/
+  width: 100%;
+  border-right: 5px;
+}
+
+.roomImageContainer {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+
+.roomTitleContainer {
+  text-align: center;
+}
+
+.roomTitle {
+  text-transform: uppercase;
+  color: #0073b7;
+  font-size: 2em;
+  letter-spacing: 0.05em;
 }
 
 .roomDetails {
   display: inline-block;
+  border: 3px solid #808080;
+  margin-top: 10px;
+  padding: 20px;
+  width: 36%;
+  float: left;
 }
 
+.roomAvailability {
+  width: 64%;
+  float: left;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.scheduleBtn {
+  margin-top: 10px;
+  -webkit-border-radius: 11;
+  -moz-border-radius: 11;
+  border-radius: 11px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: lighter;
+  letter-spacing: .06em;
+  background: #0073b7;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.scheduleBtn:hover {
+  background: #208ac7;
+  text-decoration: none;
+}
+
+
+
+
+
+/*==============*/
 #eachRoom {
   width: 50%;
 }
@@ -130,3 +192,19 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
