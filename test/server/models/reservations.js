@@ -86,12 +86,12 @@ describe('', function() {
     //     .expect(404)
     // })
     //
-    // it('Test delete a reservation', function(){//this works
-    //   return client
-    //     .delete('/reservations/delete')
-    //     .send({'57a4c24decafef3608011c52'})
-    //     .expect(201)
-    // })
+    it('Test delete a reservation', function(){//this works
+      return client
+        .delete('/reservations/delete')
+        .send({"_id": "57a4c24decafef3608011c52"})
+        .expect(201)
+    })
 
 
   })

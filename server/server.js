@@ -266,6 +266,10 @@ app.put('/reservations/:id', function(req, res){
 
 
 app.delete('/reservations/delete', function(req, res){
+  console.log("outside")
+  if(Object.keys(req.body).length > 0){
+    console.log(req.body, 'from server file')
+    console.log("inside")
   Reservation.delete(req.body)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)
@@ -273,9 +277,10 @@ app.delete('/reservations/delete', function(req, res){
       res.send(400, "reservations does not exist")
     }
     else{
-      res.send(201, reservationInfo)
+      res.send(200, reservationInfo)
     }
   })
+}
 })
 
 
