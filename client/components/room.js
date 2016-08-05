@@ -55,7 +55,7 @@ export default class Room extends Component {
             </div>
             <div className="roomAvailability">
               <h3>currently <span>available</span></h3>
-              <button className="scheduleBtn">TODAY'S SCHEDULE</button>
+              <button className="scheduleBtn">Today's Schedule</button>
             </div>
           </Modal.Body>
           <Modal.Footer className="clearfix">

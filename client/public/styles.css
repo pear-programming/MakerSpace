@@ -81,7 +81,6 @@ img.roomImage {
   color: #0073b7;
   font-size: 2em;
   letter-spacing: 0.05em;
-  font-weight: lighter;
 }
 
 .roomDetails {
@@ -97,7 +96,16 @@ img.roomImage {
   width: 64%;
   float: left;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 10px;  
+}
+
+.roomAvailability h3 {
+  font-weight: lighter;
+}
+
+.roomAvailability span {
+  font-size: 2em;
+  color: green;
 }
 
 .scheduleBtn {
