@@ -10,6 +10,7 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
+
 Reservation.create = function(reservationData) {
   return db.reservations.insert(reservationData)
   .then((data) => {
@@ -45,7 +46,7 @@ Reservation.findAllReservations = function() {
         accum[index].reservations.push(reservation)
         accum[index].reservations = accum[index].reservations.sort((a,b) => a.startTime - b.startTime);
         return accum;
-      } 
+      }
       else {
         return accum.concat({roomName: reservation.roomName, roomId: reservation.roomId, reservations: [reservation]})
       }
@@ -95,5 +96,3 @@ Reservation.updateReservation = function(resId, newInfo) {
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }
-
-

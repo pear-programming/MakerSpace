@@ -242,6 +242,7 @@ app.get('/reservations/:roomName', function(req, res){
 })
 
 
+
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){
   Reservation.create(req.body)
