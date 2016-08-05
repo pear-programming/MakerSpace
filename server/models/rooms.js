@@ -5,7 +5,7 @@ var Room = module.exports
 Room.addRooms = function(rooms) {
 
   // console.log("got room info after organization insert:", rooms, organizationId);
-  var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true})); 
+  var roomsWithAvailability = rooms.map((room) => Object.assign(room, {isAvailable: true}));
   console.log("after mapping:", roomsWithAvailability);
   return db.rooms.insert(roomsWithAvailability)
   .then(data => {
@@ -57,25 +57,3 @@ Room.updateRoom = function(roomId, newInfo) {
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }
-
-
-// Room.getReservations = function() {
-//   //returns current availability of all rooms
-// }
-
-// Reservation.updateReservation = function(resId, newInfo) {
-//   if(typeof resId==='string'){
-//     resId = db.ObjectId(resId)
-//   }
-
-//   return db.reservations.update(
-//     {"_id" : resId },
-//     { "$set" : newInfo }
-//   )
-//   .then(updatedRes => {
-//     // console.log('updatedRes:', updatedRes)
-//     return db.reservations.find({"_id":resId})
-//   })
-//   .catch(err => console.log('err in updateExisting: ', err))
-// }
-

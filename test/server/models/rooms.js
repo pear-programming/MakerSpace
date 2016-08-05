@@ -5,9 +5,9 @@ import db from '../../../server/db';
 console.log(  "************************************\n"
             + "************************************\n"
             + "**                                **\n"
-            + "**      BEFORE RUNNING TESTS      **\n"
-            + "** MAKE SURE TO DO THE FOLLOWING  **\n"
-            + "**    1) knex migrate:rollback    **\n"
+            + "**  Running Room's endpoint test  **\n"
+            + "**   HAVING ISSUES WITH LOGIN     **\n"
+            + "**    1) MakerPass Issus          **\n"
             + "**    2) knex migrate:latest      **\n"
             + "**                                **\n"
             + "************************************\n"
@@ -27,12 +27,12 @@ describe('', function() {
       client = request.agent(app)
     });
 
-    it('adds a room', function() {
+    it('Test 1 adds a room', function() {//this works
       return client
         .post('/rooms/new')
         .send(
-        {
-          "roomName": "Lecture hall",
+        [{
+          "roomName": "Lecture",
           "projector": true,
           "whiteBoard": true,
           "airPlay": true,
@@ -41,51 +41,49 @@ describe('', function() {
           "tv": false,
           "isAvailable": true,
           "roomColor": "#66CCCC"
-        }
-        ).expect(201)
+        }]
+      ).expect(201)
     });
+    //
+    // it('gets all the rooms in the db', function(){
+    //   return client
+    //     .get('/all-rooms')
+    //     .expect(500)
+    //     // .expect(function(res){
+    //     //   expect(res.body[0].resources).to.not.be.undefined;
+    //     //   expect(Array.isArray(res.body[0].resources)).to.be.true;
+    //     // })
+    // })
 
-    it('gets meta information about a project by username', function(){
+    it('Test 2 updates a room', function(){//this works
       return client
-        .put('/api/projects/mikemfleming')
-        .expect(200)
-        .expect(function(res){
-          expect(res.body[0].resources).to.not.be.undefined;
-          expect(Array.isArray(res.body[0].resources)).to.be.true;
-        })
-    })
-
-    it('updates a project status', function(){
-      return client
-        .patch('/api/projects/status/1')
+        .put('/room/edit/579ba6a08b6fcb4204613360')
         .send({
           status: 'complete'
         })
         .expect(200)
     })
 
-    it('updates a project start date', function(){
-      return client
-        .patch('/api/projects/start/1')
-        .send({
-          start: "2016-10-31"
-        })
-        .expect(200)
-    })
+    // it('Change Availability of room', function(){
+    //   return client
+    //     .post('/Lecture/changeAvailability')
+    //     .expect(201)
+    // })
 
-    it('updates a project due date', function(){
-      return client
-        .patch('/api/projects/due/1')
-        .send({
-          due: "2016-11-17"
-        })
-        .expect(200)
-    })
+    // it('updates a project due date', function(){
+    //   return client
+    //     .patch('/api/projects/due/1')
+    //     .send({
+    //       due: "2016-11-17"
+    //     })
+    //     .expect(404)
+    // })
 
-    it('deletes a room', function(){
+    it('Test 3 deletes a room', function(){//this works
       return client
-        .delete('/:roomName')
+        .delete('/Lecture')
         .expect(200)
+
     })
 
 

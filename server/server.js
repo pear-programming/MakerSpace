@@ -164,6 +164,7 @@ app.get('/logout', function(req, res) {
  })
 
 app.post('/rooms/new', function(req, res) {
+  console.log(req.body)
   Room.addRooms(req.body)
   .then((roomIds) => {
     console.log("ready to send response after room insertion:", roomIds)
