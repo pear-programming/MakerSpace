@@ -65,6 +65,10 @@ img.roomImage {
 .roomImageContainer {
   border-radius: 20px;
   overflow: hidden;
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  margin: auto;
 }
 
 
@@ -77,6 +81,7 @@ img.roomImage {
   color: #0073b7;
   font-size: 2em;
   letter-spacing: 0.05em;
+  font-weight: lighter;
 }
 
 .roomDetails {

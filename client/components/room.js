@@ -54,7 +54,7 @@ export default class Room extends Component {
               <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
             </div>
             <div className="roomAvailability">
-              <h3>{room.roomName} is currently <span>OPEN</span></h3>
+              <h3>currently <span>available</span></h3>
               <button className="scheduleBtn">TODAY'S SCHEDULE</button>
             </div>
           </Modal.Body>
