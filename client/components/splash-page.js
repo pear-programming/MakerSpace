@@ -5,6 +5,7 @@ import RoomsList from './rooms-list';
 import { Button } from 'react-bootstrap';
 import { checkStatus } from '../models/auth';
 
+
 export default class SplashPage extends React.Component {
   constructor(){ 
     super()
@@ -25,13 +26,16 @@ export default class SplashPage extends React.Component {
   render(){
     return (
       this.state.user ?
+      <div>
        <RoomsList /> 
-      : <div>
+      </div>
+      : 
+      <div>
         <NavBar />
         <div id="home">
           <h3 className="loginButton" ><a href="/auth/makerpass" className="loginButton"><span id="fakeButton">Login with Maker<strong>Pass</strong></span></a></h3>
         </div>
-        </div>
+      </div>
     )
   }
 }
