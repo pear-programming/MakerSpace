@@ -58,11 +58,7 @@ export default class Room extends Component {
               <button className="scheduleBtn">Today's Schedule</button>
             </div>
           </Modal.Body>
-          <Modal.Footer className="clearfix">
-          <div >
-            <Link to={`${this.props.roomInfo.roomName}/display`} ><Button>Display</Button></Link>
-          </div>
-          </Modal.Footer>
+
         </Modal>
       </div>
     )
