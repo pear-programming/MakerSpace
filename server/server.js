@@ -81,6 +81,10 @@ io.on('connection', function (socket) {
   socket.on('tabletDisplay', function(data) {
     console.log('data should be ex dee', data)
   })
+
+  socket.on('bookNow', function(roomId) {
+    socket.broadcast.emit('instaBooked', roomId);
+  })
 });
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
@@ -160,11 +164,11 @@ app.get('/logout', function(req, res) {
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
  app.get('/check', MP.authWithSession(), function(req, res) {
+  console.log('scopes', req.scopes)
   res.status(200).send(req.user)
  })
 
 app.post('/rooms/new', function(req, res) {
-  console.log(req.body)
   Room.addRooms(req.body)
   .then((roomIds) => {
     console.log("ready to send response after room insertion:", roomIds)
@@ -186,8 +190,6 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
   Room.findRooms()
   .then(roomInfo => {
-    console.log(req.user)
-    console.log(roomInfo)
     res.send(201, roomInfo)
   })
 })
@@ -207,12 +209,10 @@ app.put('/room/edit/:id', function(req, res){
 // Delete room
 
 app.delete('/:roomName', function(req, res){
-  // console.log('DELETE req.params.roomName: ', req.params.roomName)
   Room.deleteRoom(req.params.roomName)
   .then(resp => {
     console.log('Successfully deleted', req.params.roomName);
     res.send('Successfully deleted room')
-    // res.send(201, resp)
   })
 })
 
@@ -242,7 +242,6 @@ app.get('/reservations/:roomName', function(req, res){
 })
 
 
-
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){
   Reservation.create(req.body)
@@ -266,10 +265,6 @@ app.put('/reservations/:id', function(req, res){
 
 
 app.delete('/reservations/delete', function(req, res){
-  console.log("outside")
-  if(Object.keys(req.body).length > 0){
-    console.log(req.body, 'from server file')
-    console.log("inside")
   Reservation.delete(req.body)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)
@@ -277,13 +272,27 @@ app.delete('/reservations/delete', function(req, res){
       res.send(400, "reservations does not exist")
     }
     else{
-      res.send(200, reservationInfo)
+      res.send(201, reservationInfo)
     }
   })
-}
 })
 
+//endpoints for calendar asset-serving
+app.get('/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
+})
 
+app.get('/lib/moment.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+})
+
+app.get('/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+})
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
@@ -293,5 +302,3 @@ var port = process.env.PORT || 4000;
 
 server.listen(port);
 console.log('Listening on localhost:' + port);
-
-module.exports = server
