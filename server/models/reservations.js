@@ -20,20 +20,25 @@ Reservation.create = function(reservationData) {
 }
 
 Reservation.delete = function(reservationId){
-
-  console.log(reservationId, " ~~~~~~~~~~~~~~~~~~~~~~~~~~reservationId")
-  // use this to make the string into an object if not working!!!!!
-  // console.log(:reservationId._id)
-    if(typeof reservationId._id === "string" ){
-
-      reservationId._id = db.ObjectId(reservationId._id)
-      console.log(typeof reservationId._id, "hihihihihihihihhihhihihihd")
-    }
+  console.log(reservationId, " reservationId")
+  if( Object.keys(reservationId).length === 0 ){
+    return null;
+  }
+  else if (typeof reservationId._id === "string"){
+    reservationId._id = db.ObjectId(reservationId._id)
+      return db.testcollection.remove(reservationId)
+      .then((data) => {
+        console.log("successfully canceled reservation!:", data)
+        return data;
+    }) .catch(err => console.log('error in reservation: ', err))
+}
+  else{
   return db.testcollection.remove(reservationId)
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
   }) .catch(err => console.log('error in reservation: ', err))
+}
 }
 
 
