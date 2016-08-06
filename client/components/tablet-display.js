@@ -3,6 +3,7 @@ import { browserHistory, Link } from 'react-router';
 import Room from './room';
 import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
 import ReactDOM from 'react-dom';
+import _ from 'lodash'
 
 export default class TabletDisplay extends Component {
   constructor(props){  
@@ -11,7 +12,8 @@ export default class TabletDisplay extends Component {
     // dummy data for testing
     this.state = { 
       currentRoom: {},
-      reservations: [{}]
+      reservations: [{}],
+      nextAvail: {}
     }
 
   }
@@ -40,9 +42,24 @@ export default class TabletDisplay extends Component {
       return getRoomReservations(room.roomName)
     })
     .then(reservations => {
-      console.log('reservations.data: ', reservations.data)
-      this.setState({reservations: reservations.data})
-      console.log('this.state: ', this.state)
+      let timeDiffs = []
+
+      reservations.data.forEach(reservation => {
+        let now = new Date()
+        let startTime = new Date(reservation.startTime)
+
+        timeDiffs.push({difference : now - startTime, startTime: startTime})
+      })
+      //finds largest negative number which is the next reservation start time
+
+      let nextAvail = _.sortBy(timeDiffs, 'difference').reverse()
+      let future = nextAvail.filter(timeObject => timeObject.difference < 0)[0]
+      console.log('timeDiffs ', timeDiffs)
+      console.log('nextAvail ', nextAvail)
+      console.log('future ', future)
+      this.setState({reservations: reservations.data, nextAvail: new Date(future.startTime) })
+
+      //console.log('this.state: ', this.state)
     })
   }
 
@@ -74,21 +91,22 @@ export default class TabletDisplay extends Component {
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-
-    console.log('ROOM!!! ', room)
+    console.log('this.state.nextAvail', this.state.nextAvail)
     // console.log('background element', background)
+    let nextReservation = this.state.nextAvail.toString()
 
+    console.log('nextReservation ', nextReservation)
     return (
       room.isAvailable ? // dummy for testing
         <div className="tabletDisplayOpen">
           <h2>{room.roomName}<i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
           <h1>available</h1>
-          <p>Next reservation at {this.state.reservations[0].startTime}</p>
+          <p>Next reservation at {nextReservation}</p>
           <div>
             <p>Hope to have daily schedule for this room show here</p>
           </div>
           <div className="tabletFooter">
-           <button onClick={this.bookNow.bind(this)}>Book Now!</button>     
+           <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
           </div>
         </div>
         : 
