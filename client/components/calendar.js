@@ -19,11 +19,25 @@ export default class Calendar extends React.Component {
 
     
     $(calendar).fullCalendar({
-      events: this.props.events
-      // views: {name: 'agendaWeek'}
+      events: this.props.events,
+      eventClick: function(event) {
+
+        console.log("showing event:", event);
+        alert("clicked event!")
+       
+      },
+
+      dayClick: function(date, jsEvent, view) {
+
+          console.log("showing date:", date);
+          alert('Clicked empty space!', date);
+      }
+
     });
+    
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' );
-  }
+   
+}
 
   componentWillUnmount() {
     const { calendar} = this.refs
@@ -38,3 +52,27 @@ export default class Calendar extends React.Component {
     );
   }
 }
+
+
+
+
+
+// {
+//     "_id": {
+//         "$oid": "57a0c5589f8823db03aa04eb"
+//     },
+//     "roomId": {
+//         "$oid": "579ba6a08b6fcb4204613361"
+//     },
+//     "roomName": "Death Star",
+//     "userId": {
+//         "$oid": "579cdfea3527752704977a2e"
+//     },
+//     "userName": "Carlo's first POST request",
+//     "startTime": {
+//         "$date": "2016-08-12T16:00:00.000Z"
+//     },
+//     "endTime": {
+//         "$date": "2016-08-12T17:30:00.000Z"
+//     }
+// }

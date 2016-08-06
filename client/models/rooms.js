@@ -17,3 +17,9 @@ export function fetchReservations(){
 
   return request
 }
+
+export function fetchTimeSlots(){
+  const request = axios.get('/timeSlots')
+
+  return request
+}
