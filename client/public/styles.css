@@ -106,10 +106,18 @@ img.roomImage {
 
 }
 
-.roomAvailability span {
+span.open {
   font-size: 2em;
   color: green;
 }
+
+span.closed {
+  font-size: 2em;
+  color: red; 
+}
+
+
+
 
 .scheduleBtn {
   margin-top: 10px;

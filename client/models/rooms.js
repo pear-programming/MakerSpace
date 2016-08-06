@@ -11,3 +11,10 @@ export function changeStatus(roomName){
 
 	return request
 }
+
+
+export function getRoomReservations(roomName) {
+  const request = axios.get(`/reservations/${roomName}`)
+  return request
+
+}
