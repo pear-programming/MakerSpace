@@ -83,11 +83,8 @@ io.on('connection', function (socket) {
   })
 
   socket.on('bookNow', function(roomId) {
-<<<<<<< HEAD
     socket.broadcast.emit('instaBooked', roomId);
-=======
-    socket.broadcast.emit('instaBooked', roomId);   
->>>>>>> 5b6e915e6a9600b66c1bcae5ba084a3789d9bd23
+
   })
 });
 
