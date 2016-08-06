@@ -18,64 +18,31 @@ export default class Dashboard extends React.Component {
     checkStatus()
     .then(userData => {
       fetchTimeSlots()
-      .then(reservationData => {
-        console.log('userData:', userData)
-        var mappedData = this.mapReservations(reservationData)
-        // console.log('reservations in Dashboard.js:', reservationData);
+      .then(timeSlotData => {
+        // console.log('userData:', userData)
+        var mappedData = this.mapTimeSlots(timeSlotData);
         this.setState({ user: userData.data, events: mappedData});
       })
     })
   }
 
-  mapReservations(reservationData) {
+  mapTimeSlots(timeSlotData) {
 
-    console.log("got data in mapReservations:", reservationData.data); 
+    console.log("got data in mapTimeSlots:", timeSlotData.data); 
 
-    var mappedData =reservationData.data.filter((reserv) => !reserv.isAvailable)
-    .map((reservation) => {
-
-      console.log("shwing reserve starttime:", typeof reservation.startTime)
-      var availablility;
-      var color;
-      var borderColor; 
-      if(reservation.isAvailable) {
-        availablility = "-"
-        color = 'whit'
-        borderColor = 'lightgrey'
-
-      }
-      else {
-        availablility = "NOT AVAILABLE!"
-        color = 'red'
-        borderColor = 'red'
-      }
-      // return {title: reservation.roomName, date: Date.parse(reservation.startTime), allDay: false}
-      return {title: availablility, start: Date.parse(reservation.startTime), end: Date.parse(reservation.endTime), allDay: false, color: color, borderColor: borderColor}
-
-      // return {title: reservation.roomName, start: Date.parse(reservation.startTime), end: Date.parse(reservation.endTime), allDay: false}
+    return timeSlotData.data.filter((timeSlot) => !timeSlot.isAvailable)
+    .map((fullRes) => {
+      return {title: 'FULLY BOOKED', start: Date.parse(fullRes.startTime), end: Date.parse(fullRes.endTime), allDay: false, color: 'red'}
     })
-    // this.setState({events: mappedData})
-    return mappedData;
   }
-
-  // calendarDisplay() {
-  //   background-color:　'red';
-  //   opacity: 0
-    
-  // }
-
-
 
   render(){
     console.log("shwing reservation in render in dashboard:", this.state.events);
     return (
-
-
       <div>
         <NavBar />
        {this.state.events ?  <Calendar events={this.state.events}/>  : null   }
-        
-       
+               
       </div>
     )
   }

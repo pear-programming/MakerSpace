@@ -165,18 +165,13 @@ Reservation.updateReservation = function(resId, newInfo) {
 
 Reservation.makeSlots = function(reservationData) {
 
-  console.log("in make slots:", reservationData); 
   var timeSlots = [];
   var start = new Date(2016, 6, 31, 19, 0)
   var end = new Date(2016, 7, 31, 19, 0)
 
   var thirtyMin = 1800000 
-  console.log("here")
   var startTime = Object.assign(start);
-  console.log("here here:", startTime.getTime() + thirtyMin)
   var endTime = new Date(startTime.getTime() + thirtyMin);
-  console.log("showing newTime:", startTime); 
-  console.log("test boolean:", startTime.toUTCString())
 
   while(startTime.getTime() < end.getTime()) {
 
@@ -185,20 +180,15 @@ Reservation.makeSlots = function(reservationData) {
     endTime = new Date(endTime.getTime() + thirtyMin)
   }
 
-
-  // console.log("showing timeslots:");
-
-
   return Room.findRooms()
     .then((rooms) => {
 
       console.log("showing number of rooms:", rooms.length);
       
     reservationData.forEach((reservation) => {
-      // console.log("showing typeof:", reservation.startTime.getTime())
 
       timeSlots.forEach((timeSlot) => {
-        // console.log("in here")
+       
         if(reservation.startTime.getTime() == timeSlot.startTime.getTime() || 
           (reservation.startTime.getTime() < timeSlot.startTime.getTime() && 
             reservation.endTime.getTime() >= timeSlot.endTime.getTime())) {
@@ -210,20 +200,9 @@ Reservation.makeSlots = function(reservationData) {
       })
     })
 
-
     return timeSlots;
 
   })
-
-
-  // console.log("got timeslots with res:", timeSlots);
-
-  // return Room.findRooms
-  //   .then((rooms) => {
-
-  //     timeSlots
-  //   })
-
 }
 
 
