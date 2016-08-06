@@ -12,7 +12,7 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.create = function(reservationData) {
-  return db.reservations.insert(reservationData)
+  return db.reservation.insert(reservationData)
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -26,14 +26,14 @@ Reservation.delete = function(reservationId){
   }
   else if (typeof reservationId._id === "string"){
     reservationId._id = db.ObjectId(reservationId._id)
-      return db.testcollection.remove(reservationId)
+      return db.reservation.remove(reservationId)
       .then((data) => {
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
 }
   else{
-  return db.testcollection.remove(reservationId)
+  return db.reservation.remove(reservationId)
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;

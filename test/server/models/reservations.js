@@ -27,45 +27,17 @@ describe('', function() {
       client = request.agent(app)
     });
 
-    // it('Test 1 get all reservation', function() {
-    //   return client
-    //     .get('/reservations')
-    //     .expect(201)
-    // });
 
-    // it('gets all the rooms in the db', function(){
-    //   return client
-    //     .get('/all-rooms')
-    //     .expect(500)
-    //     // .expect(function(res){
-    //     //   expect(res.body[0].resources).to.not.be.undefined;
-    //     //   expect(Array.isArray(res.body[0].resources)).to.be.true;
-    //     // })
-    // })
-    //
     it('Test 1 make a reservation', function(){
       return client
         .post('/reservations/new')
         .send({
-        "_id": {
-        "oid": "57a4c24decafef3608011c52"
-        },
-        "roomId": {
-            "oid": "579e56213dd4c18f03f52a0e"
-        },
-        "roomName": "Ellis",
-        "userId": {
-            "oid": "579e1e8e81e91777028c2df5"
-        },
-        "userName": "Mary Crandel",
-        "startTime": {
-            "date": "2016-08-06T20:00:30.000Z"
-        },
-        "endTime": {
-            "date": "2016-08-06T21:00:45.000Z"
-        }
+        "_id": "57a4c24decafef3608011c52",
+        "new": "reservation"
         })
+        .expect("57a4c24decafef3608011c52")
         .expect(201)
+        .done()
     })
     //
     // it('Test 2 ', function(){
@@ -89,8 +61,8 @@ describe('', function() {
     it('Test delete a reservation', function(){//this works
       return client
         .delete('/reservations/delete')
-        .send({"_id": "57a4c24decafef3608011c52"})
-        .expect(201)
+        .send({"new": "reservation"})
+        .expect(400)
     })
 
 
