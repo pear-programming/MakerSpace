@@ -303,3 +303,4 @@ var port = process.env.PORT || 4000;
 
 server.listen(port);
 console.log('Listening on localhost:' + port);
+module.exports = server
