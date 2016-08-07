@@ -21,6 +21,7 @@ Room.deleteRoom = function(room) {
 
 
 Room.findRooms = function() {
+  console.log("got into find rooms")
   return db.rooms.find({})
 }
 
