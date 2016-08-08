@@ -6,25 +6,22 @@ export default class Calendar extends React.Component {
 	componentDidMount() {
     const { calendar } = this.refs;
 
-    var getTimeSlotInfo = this.props.getTimeSlotInfo;
+    var open = this.props.open;
+
+   
+    // var view = this.props.view
   
     $(calendar).fullCalendar({
       events: this.props.events,
       eventClick: function(event) {
 
-        console.log("showing event:", event);
-        alert("clicked event!")
+        // console.log("showing event:", event);
+        // alert("clicked event!")
        
       },
       dayClick: function(date, jsEvent, view) {
         console.log("showing date:", date._d);
-
-
-        console.log("showing jsEvent:", jsEvent);
-        console.log("showing view:", view);
-        // alert('Clicked empty space!', date);
-        console.log("showign this:", )
-        getTimeSlotInfo(date._d);
+        open(date._d);
       }
     });
     
