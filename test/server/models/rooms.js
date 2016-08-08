@@ -7,8 +7,8 @@ console.log(  "************************************\n"
             + "**                                **\n"
             + "**  Running Room's endpoint test  **\n"
             + "**   HAVING ISSUES WITH LOGIN     **\n"
-            + "**    1) MakerPass Issus          **\n"
-            + "**    2) knex migrate:latest      **\n"
+            + "**       MakerPass Issus          **\n"
+            + "**   Brought to you by broCoder   **\n"
             + "**                                **\n"
             + "************************************\n"
             + "************************************\n" )
@@ -20,7 +20,7 @@ var app = require('../../../server/server.js')
 describe('', function() {
 
   describe('Rooms:', function(){
-
+    this.timeout(15000);
     var client = null
 
     beforeEach(function(){

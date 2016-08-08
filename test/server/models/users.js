@@ -8,7 +8,7 @@ console.log(  "************************************\n"
             + "**   Running Users's endpoint     **\n"
             + "**                                **\n"
             + "**                                **\n"
-            + "**                                **\n"
+            + "**   Brought to you by broCoder   **\n"
             + "**                                **\n"
             + "************************************\n"
             + "************************************\n" )
@@ -27,20 +27,6 @@ describe('', function() {
       client = request.agent(app)
     });
 
-
-    // it('Test 1 make a reservation', function(){
-    //    this.timeout(15000);
-    //   return client
-    //     .post('/reservations/new')
-    //     .send({
-    //     "_id": "57a4c24decafef3608011c52",
-    //     "new": "reservation"
-    //     })
-    //     .expect("57a4c24decafef3608011c52")
-    //     .expect(201)
-    //     setTimeout(done, 15000);
-    // })
-    //
     //check if user already exists
     //if exists throw error, if not hash password
     it('Test 1 signup endpoint', function(){
@@ -70,26 +56,6 @@ describe('', function() {
         })
         .expect(200)//found!! Yay!
     })
-    // //
-    // it('Test 3 Serve JS Assets', function(){
-    //   return client
-    //     .get('/app-bundle.js')
-    //     .expect(200)
-    // })
-    // //
-    // it('Test 4 get reservations by name', function(){
-    //   return client
-    //     .get('/reservations/Dijkstra')
-    //     .expect(200)
-    // })
-    //
-    // it('Test 5 delete a reservation', function(){//this works
-    //   return client
-    //     .delete('/reservations/delete')
-    //     .send({"new": "reservation"})
-    //     .expect(201)
-    // })
-
 
   })
 

@@ -8,7 +8,7 @@ console.log(  "************************************\n"
             + "** Running Reservation's endpoint **\n"
             + "**   HAVING ISSUES WITH LOGIN     **\n"
             + "**    1) MakerPass Issus          **\n"
-            + "**    2) knex migrate:latest      **\n"
+            + "**  Brought to you by broCoder    **\n"
             + "**                                **\n"
             + "************************************\n"
             + "************************************\n" )
