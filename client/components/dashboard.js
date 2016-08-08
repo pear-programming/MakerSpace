@@ -9,7 +9,10 @@ export default class Dashboard extends React.Component {
     super()
 
     this.state = {
-      user: null
+      user: null,
+      events: null,
+      timeSlots: null,
+      timeSlot: null
     }
   }
 
@@ -21,9 +24,27 @@ export default class Dashboard extends React.Component {
       .then(timeSlotData => {
         // console.log('userData:', userData)
         var mappedData = this.mapTimeSlots(timeSlotData);
-        this.setState({ user: userData.data, events: mappedData});
+        this.setState({ user: userData.data, events: mappedData, timeSlots: timeSlotData.data});
       })
     })
+  }
+
+  getTimeSlotInfo(time) {
+
+    console.log("got time in dashboard.js:", time);
+    var nextFourTimeSlots = this.state.timeSlots.filter((timeSlot) => {
+      var thirtyMin = 1800000;
+      var startTime = Date.parse(timeSlot.startTime); 
+
+      return startTime === time.getTime() || 
+            (startTime === time.getTime() + thirtyMin) || 
+            (startTime === time.getTime() + thirtyMin * 2) ||
+            (startTime === time.getTime() + thirtyMin * 3)
+    }) 
+
+    console.log("got nextFourTimeSlots:", nextFourTimeSlots);
+    // this.setState({timeSlot: timeSlot});
+
   }
 
   mapTimeSlots(timeSlotData) {
@@ -37,11 +58,16 @@ export default class Dashboard extends React.Component {
   }
 
   render(){
-    console.log("shwing reservation in render in dashboard:", this.state.events);
+
+    console.log("shwing timeSlots in render in dashboard:", this.state.timeSlots);
     return (
       <div>
         <NavBar />
-       {this.state.events ?  <Calendar events={this.state.events}/>  : null   }
+       {this.state.events ?  <Calendar 
+        events={this.state.events}
+        getTimeSlotInfo={this.getTimeSlotInfo.bind(this)}
+        />  
+        : null   }
                
       </div>
     )
