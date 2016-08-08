@@ -222,7 +222,7 @@ app.delete('/:roomName', function(req, res){
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
   .then(reservationsData => {
-    console.log('reservationsData: ', reservationsData)
+    // console.log('reservationsData: ', reservationsData)
     res.send(200, reservationsData)
   })
 })
@@ -277,20 +277,35 @@ app.delete('/reservations/delete', function(req, res){
   })
 })
 
+app.get('/timeSlots', function(req, res) {
+
+  Reservation.findAllReservations()
+  .then((reservationData) => {
+
+    Reservation.makeSlots(reservationData)
+    .then((timeSlots) => {
+
+      res.send(200, timeSlots)
+    })
+
+  })
+  
+})
+
 //endpoints for calendar asset-serving
-app.get('/lib/jquery.min.js', function(req, res){
+app.get('*/lib/jquery.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
-app.get('/lib/moment.min.js', function(req, res){
+app.get('*/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.js', function(req, res){
+app.get('*/fullcalendar/fullcalendar.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.css', function(req, res){
+app.get('*/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
 // Wild card route for client side routing.

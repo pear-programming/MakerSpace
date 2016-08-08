@@ -1,9 +1,11 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
 import NavBar from './nav-bar';
-import RoomsList from './rooms-list';
+import RoomsList from './rooms-list'; 
 import { Button } from 'react-bootstrap';
 import { checkStatus } from '../models/auth';
+
+
 
 
 export default class SplashPage extends React.Component {
@@ -19,15 +21,20 @@ export default class SplashPage extends React.Component {
     checkStatus()
     .then(userData => {
       console.log('userData', userData)
-      this.setState({ user: userData.data })
+      this.setState({ user: userData.data});
     })
   }
 
+  
+
+  
+
   render(){
+    console.log("showing reservations in render:", this.state.reservations)
     return (
       this.state.user ?
       <div>
-       <RoomsList /> 
+        <RoomsList />  
       </div>
       : 
       <div>
@@ -39,3 +46,7 @@ export default class SplashPage extends React.Component {
     )
   }
 }
+
+
+
+ // <button onClick={this.getReservations.bind(this)}>SEE RESERVATIONS</button>

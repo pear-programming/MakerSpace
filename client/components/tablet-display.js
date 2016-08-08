@@ -4,6 +4,8 @@ import Room from './room';
 import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
 import ReactDOM from 'react-dom';
 import _ from 'lodash'
+import Calendar from './calendar';
+
 
 export default class TabletDisplay extends Component {
   constructor(props){  
@@ -24,8 +26,8 @@ export default class TabletDisplay extends Component {
 
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
+    currentRoom = decodeURIComponent(currentRoom)
 
-    socket.emit('tabletDisplay', 'xD')
     socket.on('updatedRooms', this.updateState.bind(this))
     fetchRooms() 
     .then(rooms=>{
@@ -36,6 +38,7 @@ export default class TabletDisplay extends Component {
         return findThisRoom.roomName === currentRoom;
       }
       this.setState({currentRoom: room})
+
       return room
     })
     .then(room => {
@@ -61,6 +64,7 @@ export default class TabletDisplay extends Component {
 
       //console.log('this.state: ', this.state)
     })
+
   }
 
   bookNow() {
@@ -88,6 +92,7 @@ export default class TabletDisplay extends Component {
   //   $('body').css('background-color', 'green')
   // }
 
+
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
@@ -97,7 +102,8 @@ export default class TabletDisplay extends Component {
 
     console.log('nextReservation ', nextReservation)
     return (
-      room.isAvailable ? // dummy for testing
+      <div>
+     { room.isAvailable ? 
         <div className="tabletDisplayOpen">
           <h2>{room.roomName}<i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
           <h1>available</h1>
@@ -116,6 +122,9 @@ export default class TabletDisplay extends Component {
           <div className="tabletFooter">
           </div>
         </div> 
+      }
+       <Calendar view="agendaDay" events={[]} />
+      </div>
     )
   }
 }
