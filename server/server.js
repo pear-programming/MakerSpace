@@ -223,7 +223,7 @@ app.delete('/:roomName', function(req, res){
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
   .then(reservationsData => {
-    console.log('reservationsData: ', reservationsData)
+    // console.log('reservationsData: ', reservationsData)
     res.send(200, reservationsData)
   })
 })
@@ -276,6 +276,21 @@ app.delete('/reservations/delete', function(req, res){
       res.send(201, reservationInfo)
     }
   })
+})
+
+app.get('/timeSlots', function(req, res) {
+
+  Reservation.findAllReservations()
+  .then((reservationData) => {
+
+    Reservation.makeSlots(reservationData)
+    .then((timeSlots) => {
+
+      res.send(200, timeSlots)
+    })
+
+  })
+  
 })
 
 //endpoints for calendar asset-serving
