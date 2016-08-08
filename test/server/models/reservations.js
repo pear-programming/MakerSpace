@@ -40,19 +40,7 @@ describe('', function() {
         .expect(201)
         setTimeout(done, 15000);
     })
-    // it('Test 1 make a reservation', function(){
-    //   //  this.timeout(15000);
-    //   return client
-    //     .post('/reservations/new')
-    //     .send({
-    //     "_id": "57a4c24decafef3608011c52",
-    //     "new": "reservation"
-    //     })
-    //     .expect("57a4c24decafef3608011c")
-    //     .expect(201)
-    //     // setTimeout(done, 15000);
-    // })
-    //
+  
     it('Test 2  find by id', function(){
       return client
         .put('/reservations/57a4c24decafef3608011c52')

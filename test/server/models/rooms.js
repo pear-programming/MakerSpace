@@ -45,15 +45,7 @@ describe('', function() {
       ).expect(201)
     });
 
-    // it('gets all the rooms in the db', function(){
-    //   return client
-    //     .get('/all-rooms')
-    //     .expect(200)
-    //     // .expect(function(res){
-    //     //   expect(res.body[0].resources).to.not.be.undefined;
-    //     //   expect(Array.isArray(res.body[0].resources)).to.be.true;
-    //     // })
-    // })
+
 
     it('Test 2 updates a room', function(){//this works
       return client
@@ -64,20 +56,6 @@ describe('', function() {
         .expect(200)
     })
 
-    // it('Change Availability of room', function(){
-    //   return client
-    //     .post('/Lecture/changeAvailability')
-    //     .expect(201)
-    // })
-
-    // it('updates a project due date', function(){
-    //   return client
-    //     .patch('/api/projects/due/1')
-    //     .send({
-    //       due: "2016-11-17"
-    //     })
-    //     .expect(404)
-    // })
 
     it('Test 3 deletes a room', function(){//this works
       return client
