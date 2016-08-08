@@ -5,10 +5,10 @@ import db from '../../../server/db';
 console.log(  "************************************\n"
             + "************************************\n"
             + "**                                **\n"
-            + "** Running Reservation's endpoint **\n"
-            + "**   HAVING ISSUES WITH LOGIN     **\n"
-            + "**    1) MakerPass Issus          **\n"
-            + "**    2) knex migrate:latest      **\n"
+            + "**  Running Calendar's endpoint   **\n"
+            + "**                                **\n"
+            + "**                                **\n"
+            + "**                                **\n"
             + "**                                **\n"
             + "************************************\n"
             + "************************************\n" )
@@ -28,42 +28,36 @@ describe('', function() {
     });
 
 
-    it('Test 1 make a reservation', function(){
+    it('Test 1 Calendar', function(){
        this.timeout(15000);
       return client
-        .post('/reservations/new')
-        .send({
-        "_id": "57a4c24decafef3608011c52",
-        "new": "reservation"
-        })
-        .expect("57a4c24decafef3608011c52")
-        .expect(201)
+        .get('/lib/jquery.min.js')
+        .expect(404)
         setTimeout(done, 15000);
     })
     //
-    it('Test 2  find by id', function(){
+    it('Test 2 Calendar', function(){
       return client
-        .put('/reservations/57a4c24decafef3608011c52')
-        .expect(200)
+        .get('/lib/moment.min.js')
+        .expect(404)
     })
     //
-    it('Test 3 get all reservations', function(){
+    it('Test 3 Calendar', function(){
       return client
-        .get('/reservations')
-        .expect(200)
-    })
-    //
-    it('Test 4 get reservations by name', function(){
-      return client
-        .get('/reservations/Dijkstra')
-        .expect(200)
+        .get('/fullcalendar/fullcalendar.js')
+        .expect(404)
     })
 
-    it('Test 5 delete a reservation', function(){//this works
+    it('Test 4 Calendar'  , function(){
       return client
-        .delete('/reservations/delete')
-        .send({"new": "reservation"})
-        .expect(201)
+        .get('/fullcalendar/fullcalendar.css')
+        .expect(404)
+    })
+
+    it('Test 5 Calendar', function(){//this works
+      return client
+        .get('/*')
+        .expect(200)
     })
 
 
