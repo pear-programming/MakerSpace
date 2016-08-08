@@ -19,7 +19,7 @@ var app = require('../../../server/server.js')
 
 describe('', function() {
 
-  describe('Reservations:', function(){
+  describe('Calendar:', function(){
     this.timeout(15000);
     var client = null
 

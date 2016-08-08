@@ -44,11 +44,11 @@ describe('', function() {
         }]
       ).expect(201)
     });
-    //
+
     // it('gets all the rooms in the db', function(){
     //   return client
     //     .get('/all-rooms')
-    //     .expect(500)
+    //     .expect(200)
     //     // .expect(function(res){
     //     //   expect(res.body[0].resources).to.not.be.undefined;
     //     //   expect(Array.isArray(res.body[0].resources)).to.be.true;

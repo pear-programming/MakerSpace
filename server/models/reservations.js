@@ -1,10 +1,11 @@
 var db = require('../db.js');
 
 var Reservation = module.exports
+//reservations
 
 Reservation.findByRoomId = function(Id) {
   console.log("inside reservations findbyid:", id);
-  return db.reservations.find({id: id})
+  return db.testcollection.find({id: id}) //reservations
   .then((reservations) => {
   return reservations
   })
@@ -12,7 +13,7 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.create = function(reservationData) {
-  return db.reservation.insert(reservationData)
+  return db.testcollection.insert(reservationData)//reservations
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -26,14 +27,14 @@ Reservation.delete = function(reservationId){
   }
   else if (typeof reservationId._id === "string"){
     reservationId._id = db.ObjectId(reservationId._id)
-      return db.reservation.remove(reservationId)
+      return db.testcollection.remove(reservationId)//reservations
       .then((data) => {
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
 }
   else{
-  return db.reservation.remove(reservationId)
+  return db.testcollection.remove(reservationId)//reservations
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
@@ -44,7 +45,7 @@ Reservation.delete = function(reservationId){
 
 
 Reservation.findAllReservations = function() {
-  return db.reservations.find({})
+  return db.reservations.find({})//reservations
   .then(reservationsData => {
 
     var roomReservations = reservationsData.reduce((accum, reservation) => {
