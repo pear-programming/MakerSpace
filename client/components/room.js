@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col } from 'react-bootstrap';
 import { browserHistory, Link } from 'react-router';
 
 export default class Room extends Component {
@@ -30,15 +30,18 @@ export default class Room extends Component {
 
   render() {
     const room = this.props.roomInfo
+    const color = { display: "inherit", verticalAlign: "top", paddingBottom: 50 }
+    const switchColor = { backgroundColor: room.roomColor }
 
     return (
-      <div>
-        <span onClick={this.open}>{room.roomName}</span>
-
-        <label className="switch">
+      <div id="eachRoom">
+      <Row>
+        <Col md={6} mdPush={6}><label className="switch">
           { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
           <div className="slider round"></div>
-        </label>
+        </label></Col>
+          <Col md={6} mdPull={6}><div className="foo" style={switchColor}/><span onClick={this.open}><h4 style={color}>{room.roomName}</h4></span></Col>
+         </Row> 
         
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>

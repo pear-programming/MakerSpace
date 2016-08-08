@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {fetchRooms, changeStatus} from '../models/rooms';
+import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
 import NavBar from './nav-bar';
 
@@ -52,14 +53,26 @@ export default class RoomsList extends Component {
   }
 
   render() {
+
+    var style = { position: "absolute" }
+    var border = { border: "5px solid red", position: "relative" }
+    var border1 = { border: "5px solid blue", position: "relative" }
+
+    var coords = "66, 198, 114, 249"
+
     return (
-      <div>
+      <div >
         <NavBar />
-        <div> 
+        <Grid>
+        <Row>
+        <Col md={6} mdPush={6}>
+        <img src="https://s32.postimg.org/8xaedmqf9/floorplan.jpg" className="floorPlan" />
+       </Col>
+
+        <Col md={6} mdPull={6}><div className="RoomsList"> 
           <h2>Rooms</h2> 
-          <p>Today, right now</p>
-          {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
-        </div>
+         {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
+        </div></Col></Row></Grid>
       </div>
     )
   }

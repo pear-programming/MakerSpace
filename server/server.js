@@ -79,7 +79,6 @@ io.on('connection', function (socket) {
   });
 
   socket.on('tabletDisplay', function(data) {
-    console.log('data should be ex dee', data)
   })
 });
 
@@ -115,7 +114,6 @@ app.post('/signup', function(req, res) {
     }
   })
   .then(sessionId => {
-    console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
     res.send(201, req.body.name)
@@ -185,12 +183,15 @@ app.get('/logout', function(req, res) {
     })
 })
 
-///////// ROOMS ENDPOINTS /////////
+//<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
+
+ app.get('/check', MP.authWithSession(), function(req, res) {
+  res.status(200).send(req.user)
+ })
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
   .then((roomIds) => {
-    console.log("ready to send response after room insertion:", roomIds)
     res.send(201, {roomIds: roomIds});
   })
 })
@@ -198,7 +199,6 @@ app.post('/rooms/new', function(req, res) {
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
-  console.log('req.params.roomName: ', req.params.roomName)
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
     console.log('resp in changeAvailability endpoint: ', resp)
@@ -215,7 +215,14 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
   })
 })
 
-// Update roomn -- post or put
+app.put('/room/edit/:id', function(req, res){
+  var roomId = req.params.id
+  //req.body should be new reservation info
+  Room.updateRoom(roomId, req.body)
+  .then(updatedRoom => {
+    res.send(200, updatedRoom)
+  })
+})
 
 // Delete room *********************************************
 
