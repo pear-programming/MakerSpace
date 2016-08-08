@@ -21,7 +21,7 @@ export default class Calendar extends React.Component {
       }
     });
     
-    $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 
+    $(calendar).fullCalendar( 'changeView', this.props.view ); 
 }
 
   componentWillUnmount() {

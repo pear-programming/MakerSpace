@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import Room from './room';
-import {fetchRooms, changeStatus} from '../models/rooms';
+import { fetchRooms, changeStatus } from '../models/rooms';
 import ReactDOM from 'react-dom';
+import Calendar from './calendar';
 
 
 export default class TabletDisplay extends Component {
@@ -35,7 +36,8 @@ export default class TabletDisplay extends Component {
       }
 
       this.setState({currentRoom: room})
-    })  
+    })
+    .then() 
   }
 
   bookNow() {
@@ -63,6 +65,7 @@ export default class TabletDisplay extends Component {
     $('body').css('background-color', 'green')
   }
 
+
   render() {
     var background = document.querySelector('body')
 
@@ -72,7 +75,8 @@ export default class TabletDisplay extends Component {
     var closed = { backgroundColor: "red"}
 
     return (
-      this.state.currentRoom.isAvailable ? // dummy for testing
+      <div>
+      {this.state.currentRoom.isAvailable ?
         <div className="fullscreen" style={open}>
           <h2>{this.state.currentRoom.roomName}</h2>
           <h1>OPEN</h1> 
@@ -82,7 +86,9 @@ export default class TabletDisplay extends Component {
         <div className="fullscreen" style={closed}>
           <h2>{this.state.currentRoom.roomName}</h2>
           <h1>CLOSED</h1>
-        </div> 
+        </div>}
+        <Calendar view="agendaDay" events={[]} />
+      </div>
     )
   }
 }

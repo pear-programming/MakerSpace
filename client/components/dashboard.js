@@ -41,7 +41,7 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
-       {this.state.events ?  <Calendar events={this.state.events}/>  : null   }
+       {this.state.events ?  <Calendar events={this.state.events} view="agendaWeek" />  : null   }
                
       </div>
     )
