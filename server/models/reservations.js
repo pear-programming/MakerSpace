@@ -5,7 +5,7 @@ var Reservation = module.exports
 
 Reservation.findByRoomId = function(Id) {
   console.log("inside reservations findbyid:", id);
-  return db.testcollection.find({id: id}) //reservations
+  return db.reservations.find({id: id}) //reservations
   .then((reservations) => {
   return reservations
   })
@@ -13,7 +13,7 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.create = function(reservationData) {
-  return db.testcollection.insert(reservationData)//reservations
+  return db.reservations.insert(reservationData)//reservations
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -27,14 +27,14 @@ Reservation.delete = function(reservationId){
   }
   else if (typeof reservationId._id === "string"){
     reservationId._id = db.ObjectId(reservationId._id)
-      return db.testcollection.remove(reservationId)//reservations
+      return db.reservations.remove(reservationId)//reservations
       .then((data) => {
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
 }
   else{
-  return db.testcollection.remove(reservationId)//reservations
+  return db.reservations.remove(reservationId)//reservations
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
