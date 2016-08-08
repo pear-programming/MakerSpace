@@ -22,8 +22,8 @@ export default class TabletDisplay extends Component {
 
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
+    currentRoom = decodeURIComponent(currentRoom)
 
-    socket.emit('tabletDisplay', 'xD')
     socket.on('updatedRooms', this.updateState.bind(this))
     fetchRooms() 
     .then(rooms=>{
