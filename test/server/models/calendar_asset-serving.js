@@ -60,6 +60,12 @@ describe('', function() {
         .expect(200)
     })
 
+    // it('Test 6 Calendar get timeSlots', function(){//this works
+    //   return client
+    //     .get('/timeSlots')
+    //     .expect(200)
+    // })
+
 
   })
 
