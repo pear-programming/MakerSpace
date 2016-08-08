@@ -7,6 +7,21 @@ import _ from 'lodash'
 import Calendar from './calendar';
 
 
+function formatEvents(resArray) {
+  return resArray.map(res => {
+    var start = new Date(res.startTime).getTime()
+    var end = new Date(res.endTime).getTime()
+    return {
+      title: res.userName,
+      start: start,
+      end: end,
+      allDay: false
+    }
+  })
+}
+
+
+
 export default class TabletDisplay extends Component {
   constructor(props){  
     super(props)
@@ -15,7 +30,8 @@ export default class TabletDisplay extends Component {
     this.state = { 
       currentRoom: {},
       reservations: [{}],
-      nextAvail: {}
+      nextAvail: {},
+      events: null
     }
 
   }
@@ -45,6 +61,7 @@ export default class TabletDisplay extends Component {
       return getRoomReservations(room.roomName)
     })
     .then(reservations => {
+
       let timeDiffs = []
 
       reservations.data.forEach(reservation => {
@@ -57,15 +74,15 @@ export default class TabletDisplay extends Component {
 
       let nextAvail = _.sortBy(timeDiffs, 'difference').reverse()
       let future = nextAvail.filter(timeObject => timeObject.difference < 0)[0]
-      console.log('timeDiffs ', timeDiffs)
-      console.log('nextAvail ', nextAvail)
-      console.log('future ', future)
-      this.setState({reservations: reservations.data, nextAvail: new Date(future.startTime) })
+      let events = formatEvents(reservations.data)
+      console.log('events: ', events)
+      this.setState({reservations: reservations.data, nextAvail: new Date(future.startTime), events: events })
 
-      //console.log('this.state: ', this.state)
+      console.log('this.state: ', this.state)
     })
 
   }
+
 
   bookNow() {
     changeStatus(this.state.currentRoom.roomName)
@@ -88,9 +105,6 @@ export default class TabletDisplay extends Component {
   componentWillUnmount() {
      socket.off('updatedRooms');
   }
-  // changeColor(mode) {
-  //   $('body').css('background-color', 'green')
-  // }
 
 
   render() {
@@ -123,7 +137,12 @@ export default class TabletDisplay extends Component {
           </div>
         </div> 
       }
-       <Calendar view="agendaDay" events={[]} />
+
+      { this.state.events ? 
+       <Calendar view="agendaDay" events={this.state.events} /> : null
+      }
+
+  
       </div>
     )
   }
