@@ -65,6 +65,25 @@ describe('', function() {
         .send({"new": "reservation"})
         .expect(201)
     })
+    it('Test 6 delete a reservation with {}', function(){//this works
+      return client
+        .delete('/reservations/delete')
+        .send({})
+        .expect(500)
+    })
+    it('Test 7 delete a reservation with nothing', function(){//this works
+      return client
+        .delete('/reservations/delete')
+        .send()
+        .expect(500)
+    })
+    it('Test 8 delete a reservation with nothing', function(){//this works
+      return client
+        .delete('/reservations/delete')
+        .send('')
+        .expect(500)
+    })
+
 
 
   })
