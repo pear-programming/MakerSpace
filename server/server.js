@@ -290,7 +290,7 @@ app.get('/timeSlots', function(req, res) {
     })
 
   })
-  
+
 })
 
 //endpoints for calendar asset-serving

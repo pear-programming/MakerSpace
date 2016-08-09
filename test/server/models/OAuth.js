@@ -44,6 +44,358 @@ describe('', function() {
         .get('/app-bundle.js')
         .expect(200)
     })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+    // it('Test 3 Serve JS Assets', function(){
+    //   return client
+    //     .get('/app-bundle.js')
+    //     .expect(200)
+    // })
+
+
 
   })
 
