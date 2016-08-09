@@ -6,4 +6,4 @@
 > npm run lint
 
 ## To start tests
-> npm tests
+> npm test
