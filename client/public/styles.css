@@ -107,13 +107,17 @@ img.roomImage {
 }
 
 span.open {
-  font-size: 2em;
+  font-size: 2.5em;
   color: green;
 }
 
 span.closed {
-  font-size: 2em;
+  font-size: 2.5em;
   color: red; 
+}
+
+.infoCircle {
+  font-size: 20px;
 }
 
 
@@ -167,6 +171,11 @@ span.closed {
 .tabletDisplayContainer {
   width: 90%;
   margin: auto;
+}
+
+.tabletDisplayContainer h1 {
+  color: #0073b7;
+  font-size: 3.25em;
 }
 
 .roomCalendar {

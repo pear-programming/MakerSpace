@@ -127,8 +127,8 @@ export default class TabletDisplay extends Component {
       <div className = "tabletDisplayContainer">
      { room.isAvailable ? 
         <div className="tabletDisplayOpen">
-          <h2>{room.roomName} <i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
-          <h1>available</h1>
+          <h1>{room.roomName}  <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1>
+          <span className="open">available</span>
           <p>{nextReservation}</p>
       
           <div className="tabletFooter">
@@ -137,8 +137,8 @@ export default class TabletDisplay extends Component {
         </div>
         : 
         <div className="tabletDisplayClosed">
-          <h2>{room.roomName} <i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
-          <h2>In use</h2>
+          <h1>{room.roomName} <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1> 
+          <span className="closed">In use</span>
           <div className="tabletFooter">
           </div>
         </div> 
