@@ -4,14 +4,19 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
 import Plan from './Plan';
 import NavBar from './nav-bar';
+import RoomWindow from './room-window';
 
 
 export default class RoomsList extends Component {
   constructor(props) {
     super(props)
 
+    this.showWindow = this.showWindow.bind(this);
+    this.updateWindow = this.updateWindow.bind(this);
+
     this.state = {
-      rooms: []
+      rooms: [],
+      window: null,
     }
   }
   
@@ -53,27 +58,36 @@ export default class RoomsList extends Component {
     socket.off('updatedRooms');
   }
 
+  showWindow (named) {
+    this.setState({ window: named })
+  }
+
+  updateWindow(name) {
+    this.showWindow(name)
+  }
+
   render() {
 
-    var style = { position: "absolute" }
-    var border = { border: "5px solid red", position: "relative" }
-    var border1 = { border: "5px solid blue", position: "relative" }
-
-    var coords = "66, 198, 114, 249"
+    console.log("parent", this.state.window)
 
     return (
       <div >
         <NavBar />
         <Grid>
         <Row>
-        <Col md={8} mdPush={6}>
-        <Plan />
-        </Col>
 
-        <Col md={4} mdPull={6}><div className="RoomsList"> 
+        <Col md={4} ><div className="RoomsList"> 
           <h2>Rooms</h2> 
          {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
-        </div></Col></Row></Grid>
+        </div></Col>
+        
+        <Col md={8} >
+        <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
+        <div className="roomWindow">
+          { this.state.window ? <RoomWindow /> : null }
+        </div>
+        </Col>
+      </Row></Grid>
       </div>
     )
   }

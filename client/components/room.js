@@ -30,7 +30,7 @@ export default class Room extends Component {
 
   render() {
     const room = this.props.roomInfo
-    const color = { display: "inherit", verticalAlign: "top", paddingBottom: 50 }
+    const color = { display: "inherit", verticalAlign: "top" }
     const switchColor = { backgroundColor: room.roomColor }
 
     return (

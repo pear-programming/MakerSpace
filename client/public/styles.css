@@ -64,11 +64,9 @@ img.floorPlan {
 
 .RoomsList {
   display: inline-block;
-  /*margin-left: 20px;
-  min-width: 300px;*/
   width: 100%;
   border: 2px solid darkgrey;
-  padding: 50px 0px 50px 100px;
+  /*padding: 50px 0px 50px 100px;*/
 }
 
 .foo {
@@ -79,11 +77,9 @@ img.floorPlan {
   display: inline-flex;
 }
 
-
-
-#hopper:hover {
-/*  fill: red;*/
-  opacity: 1;
+.room:hover{
+  fill: yellow;
+  box-shadow: 10px 10px;
 }
 
 /*==========================================================================================*/
