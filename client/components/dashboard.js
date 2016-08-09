@@ -17,6 +17,7 @@ export default class Dashboard extends React.Component {
       timeSlots: null,
       roomsWithTimeSlotInfo: [],
       rooms: null,
+      currentRoom: null,
       showModal: false
     }
   }
@@ -26,8 +27,12 @@ export default class Dashboard extends React.Component {
   }
 
   open(time) {
-    console.log("inside open:", this.getTimeSlotInfo(time));
-    this.setState({ showModal: true, roomsWithTimeSlotInfo: this.getTimeSlotInfo(time) });
+    // console.log("inside open:", this.getTimeSlotInfo(time)); 
+    var roomsWithTimeSlotInfo = this.getTimeSlotInfo(time) 
+    console.log("showing roomsWithTimeSlotInfo:", roomsWithTimeSlotInfo);
+    var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
+    console.log("got currentRoom in open:", currentRoom);
+    this.setState({ showModal: true, roomsWithTimeSlotInfo: roomsWithTimeSlotInfo, currentRoom: currentRoom });
   }
 
   componentWillMount() {
@@ -38,18 +43,37 @@ export default class Dashboard extends React.Component {
       .then(rooms => {
         fetchTimeSlots()
         .then(timeSlots => {
+          fetchReservations()
+          .then(reservations => {
 
-          var mappedData = this.mapTimeSlots(timeSlots);
-          this.setState({ 
-            user: user.data, 
-            events: mappedData, 
-            timeSlots: timeSlots.data, 
-            rooms: rooms.data
-          });
+            var mappedData = this.mapTimeSlots(reservations);
+            console.log("got mappedData:", mappedData)
+            this.setState({ 
+              user: user.data, 
+              events: mappedData, 
+              timeSlots: timeSlots.data, 
+              rooms: rooms.data,
+              currentRoom: rooms.data[0]
+            
+            })
+
+          })
         })
       })
     })    
   }
+
+  // componentDidMount() {
+
+  //   $( document ).ready(function() { 
+
+  //     $('.fc-day fc-widget-content fc-sun fc-past').on('click', function() {
+
+  //       console.log("clicked!", $(this));
+  //     })
+
+  //   })
+  // }
 
   getTimeSlotInfo(time) {
 
@@ -81,20 +105,36 @@ export default class Dashboard extends React.Component {
     // console.log("showing open room slots:", test);
   }
 
-  mapTimeSlots(timeSlots) {
+  mapTimeSlots(reservations) {
 
-    console.log("got data in mapTimeSlots:", timeSlots.data); 
-
-    return timeSlots.data.filter((timeSlot) => !timeSlot.isAvailable)
-    .map((fullRes) => {
+    return reservations.data.map(reservation => {
       return {
-        title: 'FULLY BOOKED', 
-        start: Date.parse(fullRes.startTime), 
-        end: Date.parse(fullRes.endTime), 
+        title: reservation.roomName, 
+        start: Date.parse(reservation.startTime), 
+        end: Date.parse(reservation.endTime), 
         allDay: false, 
         color: 'red'
       };
     })
+
+    // console.log("got data in mapTimeSlots:", timeSlots.data); 
+
+    // return timeSlots.data.filter((timeSlot) => !timeSlot.isAvailable)
+    // .map((fullRes) => {
+    //   return {
+    //     title: 'FULLY BOOKED', 
+    //     start: Date.parse(fullRes.startTime), 
+    //     end: Date.parse(fullRes.endTime), 
+    //     allDay: false, 
+    //     color: 'red'
+    //   };
+    // })
+  }
+
+  changeModalView(event) {
+
+    console.log("got event from select:", typeof event.target.value);
+    this.setState({currentRoom: this.state.roomsWithTimeSlotInfo.filter(room => room._id == event.target.value)[0]})
   }
 
   render(){
@@ -114,30 +154,31 @@ export default class Dashboard extends React.Component {
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
             <div className="roomTitleContainer">
-              <Modal.Title>My Modal<span className="roomTitle">{this.state.rooms[0].roomName}</span></Modal.Title>
+              <Modal.Title>My Modal<span className="roomTitle">{this.state.currentRoom.roomName}</span></Modal.Title>
             </div>
             </Modal.Header>
             <Modal.Body className="clearfix">
               <div className="roomImageContainer">
-                <img className="roomImage" src={this.state.rooms[0].image}/>
+                <img className="roomImage" src={this.state.currentRoom.image}/>
               </div>
               <div className="roomDetails">
-                <p> Capacity: {this.state.rooms[0].capacity} </p>
-                <p> Conference Table: {this.state.rooms[0].conferenceTable ? "Yes" : "No"} </p>
-                <p> Air-play: {this.state.rooms[0].airPlay ? "Yes" : "No"} </p>
-                <p> Hammock: {this.state.rooms[0].hammock ? "Yes" : "No"} </p>
+                <p> Capacity: {this.state.currentRoom.capacity} </p>
+                <p> Conference Table: {this.state.currentRoom.conferenceTable ? "Yes" : "No"} </p>
+                <p> Air-play: {this.state.currentRoom.airPlay ? "Yes" : "No"} </p>
+                <p> Hammock: {this.state.currentRoom.hammock ? "Yes" : "No"} </p>
               </div>
               <div className="roomAvailability">
                 <h3>currently <span>available</span></h3>
                 <button className="scheduleBtn">Today's Schedule</button>
               </div>
 
-              <select name="select" >
-                {this.state.roomsWithTimeSlotInfo.map(room => {
-                  return(
-                    <option value={room._id}>{room.roomName}</option> 
-                    ); 
-                  })
+              <select name="select" onChange={this.changeModalView.bind(this)}>
+                { this.state.roomsWithTimeSlotInfo.filter(room => room.openSlots.length)
+                    .map(room => {
+                      return(
+                        <option value={room._id}>{room.roomName}</option> 
+                      ); 
+                    })
                 }
               </select>
 

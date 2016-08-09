@@ -15,17 +15,66 @@ export default class Calendar extends React.Component {
       events: this.props.events,
       eventClick: function(event) {
 
-        // console.log("showing event:", event);
+        console.log("showing event:", event);
         // alert("clicked event!")
        
       },
       dayClick: function(date, jsEvent, view) {
         console.log("showing date:", date._d);
         open(date._d);
+      },
+      dayMouseover: function(date, jsEvent, view) {
+        console.log("showing date:", date._d);
+        // open(date._d);
       }
+      // eventMouseover: function(event) {
+      //  console.log("hovering over event!")
+      // },
+      // eventMouseout: function(event) {
+
+      //   console.log("hovering over empty space!")
+      // }
     });
     
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 
+
+
+
+      $('.fc-day fc-widget-content fc-sun fc-past').on('click', function() {
+
+        console.log("clicked!", $(this));
+      })
+
+      // $('#mount').on('click', function() {
+
+      //   console.log("clicked!", $(this));
+      // })s
+
+
+      // $('.fc-minor').on('click', function() {
+
+      //   console.log("clicked!", $(this));
+      // })
+
+      // $('td').on('click', function() {
+
+      //   console.log("clicked!", $(this));
+      // })
+
+      $('tr').on('click', function() {
+
+        console.log("clicked!", $(this));
+
+        // console.log("got data", $(this).data())
+      })
+
+       $('.fc-minor').on('click', function() {
+
+        console.log("clicked!", $(this));
+
+        // console.log("got data", $(this).data())
+      })
+   
 }
 
   componentWillUnmount() {
