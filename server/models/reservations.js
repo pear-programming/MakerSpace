@@ -13,7 +13,6 @@ Reservation.findByRoomId = function(Id) {
 
 Reservation.create = function(reservationData) {
   return db.collection('reservations').insert(reservationData)
-  .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
   })
