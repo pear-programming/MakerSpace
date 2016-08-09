@@ -13,12 +13,12 @@ export default class RoomWindow extends Component {
   render() {
     
     const room = this.props.room
-    var style = { height: "200px", float: "right" }
+
 
     return (
       <div className="window" >
         <h1>{room.roomName}</h1>
-        <img src={room.image} style={style} />
+        <img src={room.image} />
         <h3>{ room.isAvailable ? "Open" : "Closed" }</h3>
         <p>Capacity: {room.capacity ? room.capacity : null }</p>
         <p>Projector: { room.projector ? "Yes" : "No" }</p>

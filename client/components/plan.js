@@ -15,7 +15,6 @@ export default class Plan extends Component {
         
     <svg width="800" height="260">
      <g transform="scale(1.25)">
-      <title>MakerSquare</title>
       
       <rect 
         className="room" id="Dijkstra" 
@@ -82,7 +81,8 @@ export default class Plan extends Component {
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
         fillOpacity=".5" stroke="#7c7c7c" transform="rotate(45.09850311279297 182.18260192871094,30.97190475463868) "  d="m162.891259,50.058811l0,-38.173809l38.582686,38.173809l-38.582686,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" fill="#5db89d"/>
       
-
+      <line id="svg_15" y2="107.634206" x2="314.148217" y1="125.887607" x1="314.327172" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="0.5" stroke="#7f7f7f" fill="none"/>
+      <line id="svg_14" y2="107.554098" x2="401.10869" y1="132.469923" x1="401.10869" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#7f7f7f" fill="none"/>
       <path id="svg_277" d="m268.433763,166.6475l33.749997,-33.749997l33.749997,33.749997l-33.749997,33.749997l-33.749997,-33.749997z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#7c7c7c" fill="#b2b2b2"/>
       <rect stroke="none" transform="rotate(45.33577346801758 446.2554626464844,172.20556640625) " id="svg_248" height="23.576087" width="25.829978" y="160.417532" x="433.340474" strokeOpacity="0" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" fill="#e5e5e5"/>
       <rect stroke="none" strokeOpacity="0" id="svg_246" height="23.584906" width="30.09434" y="132.264151" x="401.320755" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" fill="#e5e5e5"/>

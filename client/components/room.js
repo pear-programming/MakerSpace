@@ -29,19 +29,25 @@ export default class Room extends Component {
   // }
 
   render() {
+    
     const room = this.props.roomInfo
-    const color = { display: "inherit", verticalAlign: "top" }
-    const switchColor = { backgroundColor: room.roomColor }
+    var selected;
+
+    if(this.props.current) selected = { display: "inherit", color: this.props.current.roomColor }
 
     return (
       <div id="eachRoom">
-      <Row>
-        <Col md={6} mdPush={6} className="roomCol" ><label className="switch">
-          { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
-          <div className="slider round"></div>
-        </label></Col>
-        <Col md={6} mdPull={6} className="roomCol">{/*<div className="foo" style={switchColor}/>*/}<span onClick={this.open}><h3 style={color}>{room.roomName}</h3></span></Col>
-      </Row> 
+        <Row>
+          <Col md={6} mdPush={6} className="roomCol" ><label className="switch">
+            { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
+            <div className="slider round"></div>
+          </label></Col>
+          <Col md={6} mdPull={6} className="roomCol"><span onClick={this.open}>
+          
+          { room.roomName === this.props.current.roomName ? <h3 className="inherit" style={selected}> {room.roomName}</h3> : <h3 className="inherit"> {room.roomName}</h3> }
+          
+          </span></Col>
+        </Row> 
         
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>

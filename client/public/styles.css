@@ -59,7 +59,7 @@ img.floorPlan {
 }
 
 .roomCol {
-  padding-top: 17px;
+  padding-top: 5px;
 }
 
 .roomDetails {
@@ -70,7 +70,7 @@ img.floorPlan {
   display: inline-block;
   width: 100%;
   border: 2px solid darkgrey;
-  padding: 24px 0px 50px 60px;
+  padding: 0px 0px 21px 60px;
 }
 
 .foo {
@@ -90,14 +90,24 @@ img.floorPlan {
   padding: 0px 20px 21px 20px;
 }
 
+.window img { 
+  margin-top: -55px;
+  height: 285px;
+  float: right; 
+}
+
+.inherit { 
+  display: inherit;
+}
+
 /*==========================================================================================*/
 
 /* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
-  width: 30px;
-  height: 17px;
+  width: 60px;
+  height: 34px;
 }
 
 /* Hide default HTML checkbox */
@@ -119,10 +129,10 @@ img.floorPlan {
 .slider:before {
   position: absolute;
   content: "";
-  height: 13px;
-  width: 13px;
-  left: 2px;
-  bottom: 2px;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -137,9 +147,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(13px);
-  -ms-transform: translateX(13px);
-  transform: translateX(13px);
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 /* Rounded sliders */
