@@ -32,26 +32,26 @@ describe('', function() {
        this.timeout(15000);
       return client
         .get('/lib/jquery.min.js')
-        .expect(404)
+        .expect(200)
         setTimeout(done, 15000);
     })
     //
     it('Test 2 Calendar', function(){
       return client
         .get('/lib/moment.min.js')
-        .expect(404)
+        .expect(200)
     })
     //
     it('Test 3 Calendar', function(){
       return client
         .get('/fullcalendar/fullcalendar.js')
-        .expect(404)
+        .expect(200)
     })
 
     it('Test 4 Calendar'  , function(){
       return client
         .get('/fullcalendar/fullcalendar.css')
-        .expect(404)
+        .expect(200)
     })
 
     it('Test 5 Calendar', function(){//this works
