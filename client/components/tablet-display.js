@@ -30,7 +30,7 @@ export default class TabletDisplay extends Component {
     this.state = { 
       currentRoom: {},
       reservations: [{}],
-      nextAvail: {},
+      nextRes: {},
       events: null
     }
 
@@ -63,22 +63,30 @@ export default class TabletDisplay extends Component {
     .then(reservations => {
 
       let timeDiffs = []
+      console.log('reservations.data: ', reservations.data)
+      if(reservations.data !== "no reservations currently exist for this room") {
+        //if there are reservations do this....
+        reservations.data.forEach(reservation => {
+          let now = new Date()
+          let startTime = new Date(reservation.startTime)
 
-      reservations.data.forEach(reservation => {
-        let now = new Date()
-        let startTime = new Date(reservation.startTime)
+          timeDiffs.push({difference : now - startTime, startTime: startTime})
+        })
+        //finds largest negative number which is the next reservation start time
 
-        timeDiffs.push({difference : now - startTime, startTime: startTime})
-      })
-      //finds largest negative number which is the next reservation start time
+        let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
+        let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
+        let events = formatEvents(reservations.data)
+        console.log('events: ', events)
+        this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
+        console.log('this.state IF: ', this.state)
+      } else {  //no current reservations
+     
+        this.setState({reservations: null, nextRes: null, events: null})
+        console.log('this.state ELSE: ', this.state)
 
-      let nextAvail = _.sortBy(timeDiffs, 'difference').reverse()
-      let future = nextAvail.filter(timeObject => timeObject.difference < 0)[0]
-      let events = formatEvents(reservations.data)
-      console.log('events: ', events)
-      this.setState({reservations: reservations.data, nextAvail: new Date(future.startTime), events: events })
+      }
 
-      console.log('this.state: ', this.state)
     })
 
   }
@@ -110,29 +118,31 @@ export default class TabletDisplay extends Component {
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-    console.log('this.state.nextAvail', this.state.nextAvail)
+    console.log('this.state.nextRes', this.state.nextRes)
     // console.log('background element', background)
-    let nextReservation = this.state.nextAvail.toString()
+    let nextReservation = "no current reservations"
 
-    console.log('nextReservation ', nextReservation)
+    if(this.state.nextRes !== null){
+      let nextReservation = this.state.nextRes.toString()
+    } 
+      console.log('nextReservation:', nextReservation)
+    
     return (
       <div>
      { room.isAvailable ? 
         <div className="tabletDisplayOpen">
-          <h2>{room.roomName}<i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
+          <h2>{room.roomName} <i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
           <h1>available</h1>
           <p>Next reservation at {nextReservation}</p>
-          <div>
-            <p>Hope to have daily schedule for this room show here</p>
-          </div>
+      
           <div className="tabletFooter">
            <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
           </div>
         </div>
         : 
         <div className="tabletDisplayClosed">
-          <h2>{room.roomName} is <span>closed</span> until 2:00pm</h2>
-          <p>Hope to have daily schedule for this room show here</p>
+          <h2>{room.roomName} <i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
+          <h2>In use</h2>
           <div className="tabletFooter">
           </div>
         </div> 
