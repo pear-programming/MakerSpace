@@ -7,10 +7,20 @@ export default class RoomWindow extends Component {
 
   }
 
+
+
+
   render() {
+    
+    const room = this.props.room
+    var style={width: "100px"}
 
     return (
-    	<h1>Hi Caleb</h1>
+      <div>
+      <h1>Hi Caleb</h1>
+      <h2>{room.roomName}</h2>
+      <img src={room.image} style={style} />
+      </div>
      ) 
   }
 

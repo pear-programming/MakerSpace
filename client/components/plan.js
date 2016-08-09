@@ -35,8 +35,8 @@ export default class Plan extends Component {
         stroke="#7f7f7f" transform="rotate(134.31851196289062 56.4438591003418,156.76611328125) "  d="m36.749135,176.419003l0,-39.305785l39.38945,39.305785l-39.38945,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" fill="#b296c7"/>
       
       <path 
-        className="room" id="Tattooine" 
-        onClick={()=>alert("Tattooine")} 
+        className="room" id="Tatooine" 
+        onClick={()=>alert("Tatooine")} 
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
         stroke="#7f7f7f" d="m548.620592,181.792932l0,-50.993266l51.009373,50.993266l-51.009373,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" fill="#9fff7f"/>
       

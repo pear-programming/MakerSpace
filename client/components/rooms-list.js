@@ -58,12 +58,21 @@ export default class RoomsList extends Component {
     socket.off('updatedRooms');
   }
 
-  showWindow (named) {
-    this.setState({ window: named })
+  showWindow (bool) {
+    this.setState({ window: bool })
   }
 
   updateWindow(name) {
-    this.showWindow(name)
+
+    const room = this.state.rooms.find(findRoom)
+      
+    function findRoom(findThisRoom) { 
+      return findThisRoom.roomName === name;
+    }
+
+    this.setState({room})
+
+    this.showWindow(true)
   }
 
   render() {
@@ -84,7 +93,7 @@ export default class RoomsList extends Component {
         <Col md={8} >
         <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
         <div className="roomWindow">
-          { this.state.window ? <RoomWindow /> : null }
+          { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} /> : null }
         </div>
         </Col>
       </Row></Grid>
