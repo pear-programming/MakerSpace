@@ -36,12 +36,12 @@ export default class Room extends Component {
     return (
       <div id="eachRoom">
       <Row>
-        <Col md={6} mdPush={6}><label className="switch">
+        <Col md={6} mdPush={6} className="roomCol" ><label className="switch">
           { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
           <div className="slider round"></div>
         </label></Col>
-          <Col md={6} mdPull={6}><div className="foo" style={switchColor}/><span onClick={this.open}><h4 style={color}>{room.roomName}</h4></span></Col>
-         </Row> 
+        <Col md={6} mdPull={6} className="roomCol">{/*<div className="foo" style={switchColor}/>*/}<span onClick={this.open}><h3 style={color}>{room.roomName}</h3></span></Col>
+      </Row> 
         
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>

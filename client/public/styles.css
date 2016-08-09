@@ -58,6 +58,10 @@ img.floorPlan {
   margin-left: 25%;
 }
 
+.roomCol {
+  padding-top: 17px;
+}
+
 .roomDetails {
   display: inline-block;
 }
@@ -66,7 +70,7 @@ img.floorPlan {
   display: inline-block;
   width: 100%;
   border: 2px solid darkgrey;
-  /*padding: 50px 0px 50px 100px;*/
+  padding: 24px 0px 50px 60px;
 }
 
 .foo {
@@ -78,8 +82,12 @@ img.floorPlan {
 }
 
 .room:hover{
-  fill: yellow;
-  box-shadow: 10px 10px;
+  fill-opacity: 1;
+}
+
+.window {
+  border: 2px solid darkgrey;
+  padding: 0px 20px 21px 20px;
 }
 
 /*==========================================================================================*/

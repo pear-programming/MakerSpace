@@ -64,14 +64,11 @@ export default class RoomsList extends Component {
 
   updateWindow(name) {
 
-    const room = this.state.rooms.find(findRoom)
-      
+    const room = this.state.rooms.find(findRoom)  
     function findRoom(findThisRoom) { 
       return findThisRoom.roomName === name;
     }
-
     this.setState({room})
-
     this.showWindow(true)
   }
 
@@ -86,7 +83,7 @@ export default class RoomsList extends Component {
         <Row>
 
         <Col md={4} ><div className="RoomsList"> 
-          <h2>Rooms</h2> 
+          <h1>Rooms</h1> 
          {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
         </div></Col>
         
