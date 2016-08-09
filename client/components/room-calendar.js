@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Calendar extends React.Component {
+export default class RoomCalendar extends React.Component {
 
-	componentDidMount() {
+  componentDidMount() {
     const { calendar } = this.refs;
   
     $(calendar).fullCalendar({
@@ -21,7 +21,7 @@ export default class Calendar extends React.Component {
       },
       minTime: "08:00:00",
       maxTime: "22:00:00",
-      weekends: false
+      height: "auto"
     });
     
     $(calendar).fullCalendar( 'changeView', this.props.view ); 

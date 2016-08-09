@@ -4,7 +4,7 @@ import Room from './room';
 import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
 import ReactDOM from 'react-dom';
 import _ from 'lodash'
-import Calendar from './calendar';
+import RoomCalendar from './room-calendar';
 
 
 function formatEvents(resArray) {
@@ -47,14 +47,8 @@ export default class TabletDisplay extends Component {
     socket.on('updatedRooms', this.updateState.bind(this))
     fetchRooms() 
     .then(rooms=>{
-      
-      const room = rooms.data.find(findRoom)
-      
-      function findRoom(findThisRoom) { 
-        return findThisRoom.roomName === currentRoom;
-      }
+      let room = rooms.data.find((room)=>room.roomName === currentRoom)
       this.setState({currentRoom: room})
-
       return room
     })
     .then(room => {
@@ -119,21 +113,23 @@ export default class TabletDisplay extends Component {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
     console.log('this.state.nextRes', this.state.nextRes)
+    console.log('room in tablet display: ', room)
     // console.log('background element', background)
     let nextReservation = "no current reservations"
 
     if(this.state.nextRes !== null){
       let nextReservation = this.state.nextRes.toString()
+      nextReservation = "Next reservation is at " + nextReservation;
     } 
       console.log('nextReservation:', nextReservation)
     
     return (
-      <div>
+      <div className = "tabletDisplayContainer">
      { room.isAvailable ? 
         <div className="tabletDisplayOpen">
           <h2>{room.roomName} <i className="fa fa-info-circle" aria-hidden="true"></i> </h2>
           <h1>available</h1>
-          <p>Next reservation at {nextReservation}</p>
+          <p>{nextReservation}</p>
       
           <div className="tabletFooter">
            <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
@@ -149,7 +145,13 @@ export default class TabletDisplay extends Component {
       }
 
       { this.state.events ? 
-       <Calendar view="agendaDay" events={this.state.events} /> : null
+      <div className="roomCalendar" >
+         <RoomCalendar view="agendaDay" events={this.state.events} /> 
+      </div> 
+      : 
+      <div className="roomCalendar" >
+        <RoomCalendar view="agendaDay"/>
+      </div> 
       }
 
   

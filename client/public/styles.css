@@ -143,6 +143,7 @@ span.closed {
 
 
 /*==============*/
+
 #eachRoom {
   width: 50%;
 }
@@ -158,6 +159,33 @@ span.closed {
   margin-left: 20px;
   min-width: 300px;
 }
+
+
+
+
+/*=========== Tablet Display ========*/
+.tabletDisplayContainer {
+  width: 90%;
+  margin: auto;
+}
+
+.roomCalendar {
+  width: 50%;
+  float: right; 
+  margin-top: 20px;
+ }
+
+
+.tabletDisplayOpen  {
+  /*width: 50%;*/
+  float: left;
+}
+
+.tabletDisplayClosed {
+  float: left;
+}
+
+
 
 /*=======================================*/
 
