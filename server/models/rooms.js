@@ -7,7 +7,7 @@ Room.addRooms = function(rooms) {
   // console.log("got room info after organization insert:", rooms, organizationId);
   var roomsWithAvailability= rooms.map((room) => Object.assign(room, {isAvailable: true})); 
   console.log("after mapping:", roomsWithAvailability);
-  return db.rooms.insert(roomsWithAvailability)
+  return db.collection('rooms').insert(roomsWithAvailability)
   .then(data => {
     return data.map((room) => room._id);
   })
@@ -16,28 +16,28 @@ Room.addRooms = function(rooms) {
 
 
 Room.deleteRoom = function(room) {
-  return db.rooms.remove( { roomName: room } )
+  return db.collection('rooms').remove( { roomName: room } )
 }
 
 
 Room.findRooms = function() {
   console.log("got into find rooms")
-  return db.rooms.find({})
+  return db.collection('rooms').find({})
 }
 
 
 Room.changeAvailability = function(roomName) {
-  return db.rooms.find({roomName: roomName})
+  return db.collection('rooms').find({roomName: roomName})
   .then(rooms => {
     if(rooms[0].isAvailable === true) {
       var updatedObj = rooms[0]
       updatedObj.isAvailable = false
-      db.rooms.update({roomName: roomName}, updatedObj)
+      db.collection('rooms').update({roomName: roomName}, updatedObj)
       return 'availability updated to false'
     } else {
       var updatedObj = rooms[0]
       updatedObj.isAvailable = true
-      db.rooms.update({roomName: roomName}, updatedObj)
+      db.collection('rooms').update({roomName: roomName}, updatedObj)
       return 'availability updated to true'
     }
   })
@@ -48,13 +48,13 @@ Room.updateRoom = function(roomId, newInfo) {
     roomId = db.ObjectId(roomId)
   }
 
-  return db.rooms.update(
+  return db.collection('rooms').update(
     {"_id" : roomId },
     { "$set" : newInfo }
   )
   .then(updatedRoom => {
     console.log('updatedRoom confermation: ', updatedRoom)
-    return db.rooms.find({"_id":roomId})
+    return db.collection('rooms').find({"_id":roomId})
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }
