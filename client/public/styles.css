@@ -79,6 +79,13 @@ img.floorPlan {
   display: inline-flex;
 }
 
+
+
+#hopper:hover {
+/*  fill: red;*/
+  opacity: 1;
+}
+
 /*==========================================================================================*/
 
 /* The switch - the box around the slider */
