@@ -12,7 +12,6 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
-
 Reservation.create = function(reservationData) {
   return db.reservations.insert(reservationData)//reservations
   .then((data) => {

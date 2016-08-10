@@ -15,13 +15,16 @@ export default class Calendar extends React.Component {
       events: this.props.events,
       eventClick: function(event) {
 
-        console.log("showing event:", event);
+        // open(event.start._d)
+        open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0));
+
         // alert("clicked event!")
        
       },
       dayClick: function(date, jsEvent, view) {
         console.log("showing date:", date._d);
-        open(date._d);
+        // open(date._d);
+        open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
       },
       dayMouseover: function(date, jsEvent, view) {
         console.log("showing date:", date._d);
@@ -84,7 +87,7 @@ export default class Calendar extends React.Component {
   }
 
   render() {
-    console.log("showing reservations in calendar.js:", this.props.events);
+    // console.log("showing reservations in calendar.js:", this.props.events);
     return (
       <div ref="calendar"></div>
     );

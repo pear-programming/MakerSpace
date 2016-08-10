@@ -10,6 +10,7 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 export default class Dashboard extends React.Component {
   constructor(){ 
     super()
+    
 
     this.state = {
       user: null,
@@ -18,7 +19,8 @@ export default class Dashboard extends React.Component {
       roomsWithTimeSlotInfo: [],
       rooms: null,
       currentRoom: null,
-      showModal: false
+      showModal: false,
+      startTime: new Date(2016, 0, 1, 9, 10)
     }
   }
 
@@ -27,12 +29,16 @@ export default class Dashboard extends React.Component {
   }
 
   open(time) {
+    console.log("got time:", time);
+
     // console.log("inside open:", this.getTimeSlotInfo(time)); 
-    var roomsWithTimeSlotInfo = this.getTimeSlotInfo(time) 
+    // var roomsWithTimeSlotInfo = this.getTimeSlotInfo(time) 
+    var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
     console.log("showing roomsWithTimeSlotInfo:", roomsWithTimeSlotInfo);
     var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
     console.log("got currentRoom in open:", currentRoom);
-    this.setState({ showModal: true, roomsWithTimeSlotInfo: roomsWithTimeSlotInfo, currentRoom: currentRoom });
+
+    this.setState({ showModal: true, roomsWithTimeSlotInfo: roomsWithTimeSlotInfo, currentRoom: currentRoom, startTime: time });
   }
 
   componentWillMount() {
@@ -45,16 +51,16 @@ export default class Dashboard extends React.Component {
         .then(timeSlots => {
           fetchReservations()
           .then(reservations => {
-
+            // var mappedRooms = this.mapRooms(rooms.data, timeSlots.data);
             var mappedData = this.mapTimeSlots(reservations);
             console.log("got mappedData:", mappedData)
+            // console.log("got mappedRooms:", mappedRooms);
             this.setState({ 
               user: user.data, 
               events: mappedData, 
               timeSlots: timeSlots.data, 
               rooms: rooms.data,
-              currentRoom: rooms.data[0]
-            
+              currentRoom: Object.assign(rooms.data[0], {openSlots: []})     
             })
 
           })
@@ -77,7 +83,7 @@ export default class Dashboard extends React.Component {
 
   getTimeSlotInfo(time) {
 
-    console.log("got time in dashboard.js:", time);
+    // console.log("got time in dashboard.js:", time);
     var nextFourTimeSlots = this.state.timeSlots.filter((timeSlot) => {
       var thirtyMin = 1800000;
       var startTime = Date.parse(timeSlot.startTime); 
@@ -131,15 +137,38 @@ export default class Dashboard extends React.Component {
     // })
   }
 
+  mapTimeSlotsByDay(time) {
+    console.log("in mapTimeSlotsByDay:", this.state.timeSlots);
+
+    var timeSlotsForDay = this.state.timeSlots.filter((timeSlot) => {
+  
+      var startTime = Date.parse(timeSlot.startTime); 
+      return startTime >= time.getTime() && startTime < (time.getTime() + 43200000)
+    }) 
+    console.log("got timeSlotsForDay:", timeSlotsForDay);
+
+    return this.state.rooms.map(room => { 
+      var openSlots = timeSlotsForDay.filter(slot => !slot.reservations.filter(res => res.roomId === room._id).length )
+      return Object.assign(room, {openSlots: openSlots})
+    })
+  }
+
   changeModalView(event) {
 
     console.log("got event from select:", typeof event.target.value);
     this.setState({currentRoom: this.state.roomsWithTimeSlotInfo.filter(room => room._id == event.target.value)[0]})
   }
 
+  changeStartTime(event) {
+
+
+  }
+
   render(){
 
-    console.log("shwing rooms in render in dashboard:", this.state.rooms);
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    console.log("showing currentRoom in render in dashboard:", this.state.currentRoom);
     return (
       <div>
         <NavBar />
@@ -168,19 +197,56 @@ export default class Dashboard extends React.Component {
                 <p> Hammock: {this.state.currentRoom.hammock ? "Yes" : "No"} </p>
               </div>
               <div className="roomAvailability">
-                <h3>currently <span>available</span></h3>
-                <button className="scheduleBtn">Today's Schedule</button>
+                <h3>{MONTHS[this.state.startTime.getMonth()]} <span>{this.state.startTime.getDate()}</span></h3>
+                
+              </div>
+              <div className="selectRoom">
+                <label>Select a Room</label>
+                <select name="select" onChange={this.changeModalView.bind(this)}>
+                  { this.state.roomsWithTimeSlotInfo.filter(room => room.openSlots.length)
+                      .map(room => {
+                        return(
+                          <option value={room._id}>{room.roomName}</option> 
+                        ); 
+                      })
+                  }
+                </select>
               </div>
 
-              <select name="select" onChange={this.changeModalView.bind(this)}>
-                { this.state.roomsWithTimeSlotInfo.filter(room => room.openSlots.length)
-                    .map(room => {
-                      return(
-                        <option value={room._id}>{room.roomName}</option> 
-                      ); 
-                    })
-                }
-              </select>
+              <div className="selectStartTime">
+                <label>Select a Start Time</label>
+                <select name="select" onChange={this.changeStartTime.bind(this)}>
+                 { this.state.currentRoom.openSlots.map(slot => {
+                        var hours = new Date(Date.parse(slot.startTime) + 18000000).getHours() 
+                        var amPm;
+                        if(hours > 12) {
+                          hours = hours - 12
+                          amPm = 'pm'
+                        }
+                        else {
+                          amPm = 'am'
+                        }
+                        var time = hours.toString() + ":" + (new Date(slot.startTime).getMinutes().toString() + "0").slice(0,2) + amPm;
+                        return(    
+                          <option value={slot._id}>{time}</option> 
+                        ); 
+                      })
+                  }
+                </select>
+              </div>
+
+              <div className="selectEndTime">
+                <label>Select an End Time</label>
+                <select name="select" onChange={this.changeModalView.bind(this)}>
+                  { this.state.roomsWithTimeSlotInfo.filter(room => room.openSlots.length)
+                      .map(room => {
+                        return(
+                          <option value={room._id}>{room.roomName}</option> 
+                        ); 
+                      })
+                  }
+                </select>
+              </div>
 
             </Modal.Body>
 
@@ -188,16 +254,15 @@ export default class Dashboard extends React.Component {
         </div>
 
         : null   }
-
-
-
-        
-               
+           
       </div>
 
     )
   }
 }
+
+
+
 
 // onchange={this.changeModalView.bind(this)}
 // <select name="select" onchange={this.changeModalView.bind(this)}>
@@ -241,6 +306,7 @@ export default class Dashboard extends React.Component {
 
 //         </Modal>
 //       </div>
+
 
 
 
