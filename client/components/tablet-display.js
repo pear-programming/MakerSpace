@@ -3,6 +3,7 @@ import { browserHistory, Link } from 'react-router';
 import Room from './room';
 import {fetchRooms, changeStatus} from '../models/rooms';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 
 
 export default class TabletDisplay extends Component {
@@ -35,7 +36,29 @@ export default class TabletDisplay extends Component {
       }
 
       this.setState({currentRoom: room})
-    })  
+    }) 
+
+    //start timer that checks room status 10 seconds
+    this.checkForChanges.call(this)
+
+  }
+
+  checkForChanges() {
+    var url = window.location.href.split('/');
+    var currentRoom = url[url.length-2];
+    currentRoom = decodeURIComponent(currentRoom)
+    setInterval(() => {
+      fetchRooms() 
+      .then(rooms=>{
+        const room = rooms.data.find(findRoom)
+        
+        function findRoom(findThisRoom) { 
+          return findThisRoom.roomName === currentRoom;
+        }
+
+        this.setState({currentRoom: room})
+      }) 
+    }, 10000)
   }
 
   bookNow() {
@@ -64,10 +87,6 @@ export default class TabletDisplay extends Component {
   }
 
   render() {
-    var background = document.querySelector('body')
-
-    console.log('background element', background)
-
     var open = { backgroundColor: "green"}
     var closed = { backgroundColor: "red"}
 

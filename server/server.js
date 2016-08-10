@@ -72,7 +72,7 @@ app.get('/auth/makerpass/callback',
   });
 
 io.on('connection', function (socket) {
-  socket.broadcast.emit('user connected');  
+  socket.broadcast.emit('user connected');
 
   socket.on('newRoomStatus', function (data) {
     socket.broadcast.emit('updatedRooms', { rooms: data });
@@ -83,7 +83,8 @@ io.on('connection', function (socket) {
   })
 
   socket.on('bookNow', function(roomId) {
-    socket.broadcast.emit('instaBooked', roomId);   
+    socket.broadcast.emit('instaBooked', roomId);
+
   })
 });
 
@@ -206,7 +207,7 @@ app.put('/room/edit/:id', function(req, res){
 })
 
 
-// Delete room 
+// Delete room
 
 app.delete('/:roomName', function(req, res){
   Room.deleteRoom(req.params.roomName)
@@ -254,7 +255,7 @@ app.post('/reservations/new', function(req, res){
 
 //update existing reservation
 app.put('/reservations/:id', function(req, res){
-  var resId = req.params.id 
+  var resId = req.params.id
   //req.body should be new reservation info
   Reservation.updateReservation(resId, req.body)
   .then(updatedRes => {
@@ -293,19 +294,19 @@ app.get('/timeSlots', function(req, res) {
 })
 
 //endpoints for calendar asset-serving
-app.get('/lib/jquery.min.js', function(req, res){
+app.get('*/lib/jquery.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
-app.get('/lib/moment.min.js', function(req, res){
+app.get('*/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.js', function(req, res){
+app.get('*/fullcalendar/fullcalendar.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.css', function(req, res){
+app.get('*/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
 // Wild card route for client side routing.
@@ -317,3 +318,4 @@ var port = process.env.PORT || 4000;
 
 server.listen(port);
 console.log('Listening on localhost:' + port);
+module.exports = server
