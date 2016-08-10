@@ -19,13 +19,6 @@ export default class RoomCalendar extends React.Component {
           console.log("showing date:", date);
           alert('Clicked empty space!', date);
       },
-
-      eventDragStart: function(event, jsEvent, ui, view){
-        console.log('event:', event)
-        console.log('event:', jsEvent)
-        console.log('view:', ui)
-        console.log('event:', view)
-      },
       allDay: false,
       minTime: "09:00:00",
       maxTime: "21:00:00",

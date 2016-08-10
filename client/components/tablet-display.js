@@ -151,7 +151,7 @@ export default class TabletDisplay extends Component {
         null
         }
 
-        </div>
+      </div>
     )
   }
 }
