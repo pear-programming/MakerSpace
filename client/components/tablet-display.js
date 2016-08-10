@@ -90,9 +90,20 @@ export default class TabletDisplay extends Component {
     changeStatus(this.state.currentRoom.roomName)
     .then((x) => x)
 
+    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
+    socket.emit('unBook', this.state.currentRoom._id)  
+  }
+
+
+  unBook() {
+    console.log('in unbook')
+    changeStatus(this.state.currentRoom.roomName)
+    .then((x) => console.log('what is x?????', x))
+
     this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
     socket.emit('bookNow', this.state.currentRoom._id)  
   }
+
 
   updateState(room) {
     var url = window.location.href.split('/');
@@ -139,7 +150,10 @@ export default class TabletDisplay extends Component {
           <div className="tabletDisplayClosed tabletBlock">
             <h1>{room.roomName} </h1> 
             <span className="closed">In use</span>
-            <div className="tabletFooter"></div>
+            <div className="tabletFooter">
+            <p>Please mark room as available below if you are no longer using it.</p>
+              <button className="bookBtn" onClick={this.unBook.bind(this)}>All Done!</button> 
+            </div>
           </div> 
         }
 

@@ -199,7 +199,9 @@ span.closed {
   margin-top: 20px;
  }
 
-
+.tabletFooter {
+  margin-top: 20px;
+}
 
 .bookBtn {
   border: 3px solid white;
@@ -209,7 +211,6 @@ span.closed {
   padding: 15px;
   text-transform: uppercase;
   font-size: 1.25em;
-  margin-top: 30px;
 }
 
 .bookBtn:hover {
@@ -228,7 +229,7 @@ span.closed {
 
 .fc-toolbar h2 {
   color:  #49c633;
-  font-weight: lighter;
+  /*font-weight: lighter;*/
     /*font-family: 'Open Sans', sans-serif;*/
 
 }
