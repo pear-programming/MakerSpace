@@ -83,6 +83,7 @@ export default class TabletDisplay extends Component {
           <h2>{this.state.currentRoom.roomName}</h2>
           <h1>CLOSED</h1>
         </div> 
+        
     )
   }
 }

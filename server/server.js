@@ -189,8 +189,10 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 })
 
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
+  console.log("got request")
   Room.findRooms()
   .then(roomInfo => {
+    console.log("about to send roominfo:", roomInfo)
     res.send(201, roomInfo)
   })
 })
