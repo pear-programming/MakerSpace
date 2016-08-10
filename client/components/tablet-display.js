@@ -122,39 +122,38 @@ export default class TabletDisplay extends Component {
       nextReservation = "Next reservation is at " + nextReservation;
     } 
       console.log('nextReservation:', nextReservation)
+      console.log('this.state.events:', this.state.events)
     
     return (
-      <div className = "tabletDisplayContainer">
-     { room.isAvailable ? 
-        <div className="tabletDisplayOpen">
-          <h1>{room.roomName}  <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1>
-          <span className="open">available</span>
-          <p>{nextReservation}</p>
-      
-          <div className="tabletFooter">
-           <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
+      <div>
+        <div className = "tabletDisplayContainer">
+       { room.isAvailable ? 
+          <div className="tabletDisplayOpen">
+            <h1>{room.roomName}  <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1>
+            <span className="open">available</span>
+        
+            <div className="tabletFooter">
+             <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
+            </div>
           </div>
-        </div>
-        : 
-        <div className="tabletDisplayClosed">
-          <h1>{room.roomName} <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1> 
-          <span className="closed">In use</span>
-          <div className="tabletFooter">
-          </div>
+          : 
+          <div className="tabletDisplayClosed">
+            <h1>{room.roomName} <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1> 
+            <span className="closed">In use</span>
+            <div className="tabletFooter">
+            </div>
+          </div> 
+        }
+
+        { this.state.events ? 
+        <div className="roomCalendar" >
+           <RoomCalendar events={this.state.events} view="agendaDay"  /> 
         </div> 
-      }
+        : 
+        null
+        }
 
-      { this.state.events ? 
-      <div className="roomCalendar" >
-         <RoomCalendar view="agendaDay" events={this.state.events} /> 
-      </div> 
-      : 
-      <div className="roomCalendar" >
-        <RoomCalendar view="agendaDay"/>
-      </div> 
-      }
-
-  
+        </div>
       </div>
     )
   }
