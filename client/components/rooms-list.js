@@ -72,8 +72,6 @@ export default class RoomsList extends Component {
 
   render() {
 
-    console.log("parent", this.state.window)
-
     return (
       <div >
         <NavBar />

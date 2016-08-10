@@ -31,33 +31,21 @@ export default class Room extends Component {
   render() {
     
     const room = this.props.roomInfo;
-    const color = { background: room.roomColor, borderColor: room.roomColor }
-    const colorless = { borderColor: room.roomColor }
-
+    const style = { display: "inline-flex"}
 
     return (
+     
+
       <div id="eachRoom">
-        <Row>
-          <Col md={6} mdPush={6} className="roomCol" >
+        <Row style={style} >
+          <Col><h3>{room.roomName}</h3></Col>
 
-            { room.isAvailable 
+          <Col><label className="switch">
+            { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
+            <div className="slider"></div>
+          </label></Col>
+        </Row>
 
-              ? <label className="circle" style={colorless}>
-                <input onClick={() => this.props.toggleState(room)} /> 
-                </label>
-
-              : <label className="circle" style={color}>
-                <input onClick={() => this.props.toggleState(room)} /> 
-                </label> }
-
-          </Col>
-          <Col md={6} mdPull={6} className="roomCol"><span onClick={this.open}>
-          
-          <h3 className="inherit"> {room.roomName}</h3>
-          
-          </span></Col>
-        </Row> 
-        
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.mode}</Modal.Title>
