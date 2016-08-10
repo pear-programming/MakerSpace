@@ -25,11 +25,8 @@ export default class Calendar extends React.Component {
         console.log("showing date:", date._d);
         // open(date._d);
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
-      },
-      dayMouseover: function(date, jsEvent, view) {
-        console.log("showing date:", date._d);
-        // open(date._d);
       }
+      
       // eventMouseover: function(event) {
       //  console.log("hovering over event!")
       // },
@@ -43,10 +40,10 @@ export default class Calendar extends React.Component {
 
 
 
-      $('.fc-day fc-widget-content fc-sun fc-past').on('click', function() {
+    //   $('.fc-day fc-widget-content fc-sun fc-past').on('click', function() {
 
-        console.log("clicked!", $(this));
-      })
+    //     console.log("clicked!", $(this));
+    //   })
 
       // $('#mount').on('click', function() {
 
@@ -64,19 +61,19 @@ export default class Calendar extends React.Component {
       //   console.log("clicked!", $(this));
       // })
 
-      $('tr').on('click', function() {
+      // $('tr').on('click', function() {
 
-        console.log("clicked!", $(this));
+      //   console.log("clicked!", $(this));
 
-        // console.log("got data", $(this).data())
-      })
+      //   // console.log("got data", $(this).data())
+      // })
 
-       $('.fc-minor').on('click', function() {
+      //  $('.fc-minor').on('click', function() {
 
-        console.log("clicked!", $(this));
+      //   console.log("clicked!", $(this));
 
-        // console.log("got data", $(this).data())
-      })
+      //   // console.log("got data", $(this).data())
+      // })
    
 }
 

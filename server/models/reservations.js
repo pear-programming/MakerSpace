@@ -191,7 +191,7 @@ Reservation.makeSlots = function(reservationData) {
 
   var timeSlots = [];
   var start = new Date(2016, 6, 31, 19, 0)
-  var end = new Date(2016, 7, 31, 19, 0)
+  var end = new Date(2016, 10, 31, 19, 0)
 
   var thirtyMin = 1800000
   var startTime = Object.assign(start);
