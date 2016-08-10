@@ -7,74 +7,22 @@ export default class Calendar extends React.Component {
     const { calendar } = this.refs;
 
     var open = this.props.open;
-
-   
-    // var view = this.props.view
   
     $(calendar).fullCalendar({
       events: this.props.events,
       eventClick: function(event) {
-
-        // open(event.start._d)
-        open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0));
-
-        // alert("clicked event!")
-       
+        open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0)); 
       },
       dayClick: function(date, jsEvent, view) {
-        console.log("showing date:", date._d);
-        // open(date._d);
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
-      }
-      
-      // eventMouseover: function(event) {
-      //  console.log("hovering over event!")
-      // },
-      // eventMouseout: function(event) {
-
-      //   console.log("hovering over empty space!")
-      // }
+      },
+      allDay: false,
+      minTime: "09:00:00",
+      maxTime: "21:00:00",
+      height: "auto"  
     });
     
-    $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 
-
-
-
-    //   $('.fc-day fc-widget-content fc-sun fc-past').on('click', function() {
-
-    //     console.log("clicked!", $(this));
-    //   })
-
-      // $('#mount').on('click', function() {
-
-      //   console.log("clicked!", $(this));
-      // })s
-
-
-      // $('.fc-minor').on('click', function() {
-
-      //   console.log("clicked!", $(this));
-      // })
-
-      // $('td').on('click', function() {
-
-      //   console.log("clicked!", $(this));
-      // })
-
-      // $('tr').on('click', function() {
-
-      //   console.log("clicked!", $(this));
-
-      //   // console.log("got data", $(this).data())
-      // })
-
-      //  $('.fc-minor').on('click', function() {
-
-      //   console.log("clicked!", $(this));
-
-      //   // console.log("got data", $(this).data())
-      // })
-   
+    $(calendar).fullCalendar( 'changeView', 'agendaWeek' );  
 }
 
   componentWillUnmount() {
@@ -84,7 +32,6 @@ export default class Calendar extends React.Component {
   }
 
   render() {
-    // console.log("showing reservations in calendar.js:", this.props.events);
     return (
       <div ref="calendar"></div>
     );

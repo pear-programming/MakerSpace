@@ -28,14 +28,9 @@ export default class Dashboard extends React.Component {
   }
 
   open(time) {
-    console.log("got time:", time);
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
-    console.log("showing roomsWithTimeSlotInfo:", roomsWithTimeSlotInfo);
     var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0] 
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
-
-    console.log("got currentRoom in open:", currentRoom);
-    console.log("got nextFourSlots in open:", nextFourSlots);
 
     this.setState({
       showModal: true, 
@@ -56,10 +51,8 @@ export default class Dashboard extends React.Component {
         .then(timeSlots => {
           fetchReservations()
           .then(reservations => {
-            // var mappedRooms = this.mapRooms(rooms.data, timeSlots.data);
+           
             var mappedData = this.mapTimeSlots(reservations);
-            console.log("got mappedData:", mappedData)
-            // console.log("got mappedRooms:", mappedRooms);
             this.setState({ 
               user: user.data, 
               events: mappedData, 
@@ -67,7 +60,6 @@ export default class Dashboard extends React.Component {
               rooms: rooms.data,
               currentRoom: Object.assign(rooms.data[0], {openSlots: []})     
             })
-
           })
         })
       })
@@ -76,14 +68,10 @@ export default class Dashboard extends React.Component {
 
   getTimeSlotInfo(time, room) {
 
-    console.log("showing currentRoom info in getTimeSlotInfo:", this.state.currentRoom)
-
     var slots = room.openSlots
     var thirtyMin = 1800000;
     var nextSlots = [];
-    var index = slots.indexOf(slots.filter(slot => Date.parse(slot.endTime) === Date.parse(time) + thirtyMin)[0])
-
-    console.log("showing index:", index);
+    var index = slots.indexOf(slots.filter(slot => Date.parse(slot.endTime) === Date.parse(time) + thirtyMin)[0]);
     
     nextSlots.push(new Date(Date.parse(time) + thirtyMin).toUTCString());
 
@@ -129,7 +117,6 @@ export default class Dashboard extends React.Component {
 
   changeModalView(event) {
 
-    console.log("got event from select:", event.target.value);
     var currentRoom = this.state.roomsWithTimeSlotInfo.filter(room => room._id == event.target.value)[0] 
 
     $('.selectStartTime option').prop('selected', function() {
@@ -141,7 +128,6 @@ export default class Dashboard extends React.Component {
     });
 
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom); 
-
     this.setState({currentRoom: currentRoom, nextFourSlots: nextFourSlots});
   }
 
@@ -176,12 +162,9 @@ export default class Dashboard extends React.Component {
     return hours.toString() + ":" + (new Date(time).getMinutes().toString() + "0").slice(0,2) + amPm;
   }
 
-
   render(){
 
     const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    // console.log("showing currentRoom in render in dashboard:", this.state.currentRoom);
     return (
       <div>
         <NavBar />
