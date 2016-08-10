@@ -1,6 +1,7 @@
 /*
 colors:
 blue: #0073b7;
+bright green: #49c633;
 */
 
 
@@ -108,7 +109,7 @@ img.roomImage {
 
 span.open {
   font-size: 2.5em;
-  color: green;
+  color: #49c633;
 }
 
 span.closed {
@@ -174,29 +175,62 @@ span.closed {
 }
 
 .tabletDisplayContainer h1 {
-  color: #0073b7;
+  /*color: #0073b7;*/
   font-size: 3.25em;
 }
 
 .roomCalendar {
-  width: 50%;
+  width:44%;
+  padding-right: 3%;
   float: right; 
   margin-top: 20px;
  }
 
 
 .tabletDisplayOpen  {
-  /*width: 50%;*/
+  width: 46%;
+  padding-left: 3%;
   float: left;
+  background-color: #0073b7;
+  height: 1500px;
+  color: white;
 }
 
 .tabletDisplayClosed {
+  width: 46%;
+  padding-left: 3%;
   float: left;
+  background-color: #0073b7;
+  height: 100%;
+  color: white;
 }
 
 .bookBtn {
-  
+  border: 3px solid white;
+  background-color: #0073b7;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  text-transform: uppercase;
+  font-size: 1.25em;
 }
+
+.bookBtn:hover {
+  border: 3px solid  #49c633;
+  background-color: white;
+  color:  #49c633;
+  border-radius: 15px;
+  padding: 15px;
+  text-transform: uppercase;
+  font-size: 1.25em;
+}
+
+
+.fc-today {
+  background: rgba(99,159,222,.1) !important;
+} 
+
+
 
 /*=======================================*/
 

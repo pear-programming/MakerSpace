@@ -126,7 +126,6 @@ export default class TabletDisplay extends Component {
     
     return (
       <div>
-        <div className = "tabletDisplayContainer">
        { room.isAvailable ? 
           <div className="tabletDisplayOpen">
             <h1>{room.roomName} </h1>
@@ -138,10 +137,9 @@ export default class TabletDisplay extends Component {
           </div>
           : 
           <div className="tabletDisplayClosed">
-            <h1>{room.roomName} <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1> 
+            <h1>{room.roomName} </h1> 
             <span className="closed">In use</span>
-            <div className="tabletFooter">
-            </div>
+            <div className="tabletFooter"></div>
           </div> 
         }
 
@@ -154,7 +152,6 @@ export default class TabletDisplay extends Component {
         }
 
         </div>
-      </div>
     )
   }
 }
