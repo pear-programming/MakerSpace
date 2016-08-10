@@ -127,7 +127,7 @@ export default class TabletDisplay extends Component {
     return (
       <div>
        { room.isAvailable ? 
-          <div className="tabletDisplayOpen">
+          <div className="tabletDisplayOpen tabletBlock">
             <h1>{room.roomName} </h1>
             <span className="open">available</span>
         
@@ -136,7 +136,7 @@ export default class TabletDisplay extends Component {
             </div>
           </div>
           : 
-          <div className="tabletDisplayClosed">
+          <div className="tabletDisplayClosed tabletBlock">
             <h1>{room.roomName} </h1> 
             <span className="closed">In use</span>
             <div className="tabletFooter"></div>

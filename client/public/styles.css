@@ -169,14 +169,27 @@ span.closed {
 
 
 /*=========== Tablet Display ========*/
-.tabletDisplayContainer {
-  width: 90%;
-  margin: auto;
+
+.tabletDisplayOpen h1  {
+  font-size: 5em;
+  margin-top: 35px;
+  font-weight: lighter;
 }
 
-.tabletDisplayContainer h1 {
-  /*color: #0073b7;*/
-  font-size: 3.25em;
+.tabletDisplayClosed h1  {
+  font-size: 5em;
+  margin-top: 35px;
+  font-weight: lighter;
+}
+
+.tabletBlock {
+  text-align: center;
+  width: 46%;
+  padding-left: 3%;
+  float: left;
+  background-color: #0073b7;
+  height: 100vh;
+  color: white;
 }
 
 .roomCalendar {
@@ -187,23 +200,6 @@ span.closed {
  }
 
 
-.tabletDisplayOpen  {
-  width: 46%;
-  padding-left: 3%;
-  float: left;
-  background-color: #0073b7;
-  height: 1500px;
-  color: white;
-}
-
-.tabletDisplayClosed {
-  width: 46%;
-  padding-left: 3%;
-  float: left;
-  background-color: #0073b7;
-  height: 100%;
-  color: white;
-}
 
 .bookBtn {
   border: 3px solid white;
@@ -213,11 +209,11 @@ span.closed {
   padding: 15px;
   text-transform: uppercase;
   font-size: 1.25em;
+  margin-top: 30px;
 }
 
 .bookBtn:hover {
   border: 3px solid  #49c633;
-  background-color: white;
   color:  #49c633;
   border-radius: 15px;
   padding: 15px;
@@ -230,7 +226,20 @@ span.closed {
   background: rgba(99,159,222,.1) !important;
 } 
 
+.fc-toolbar h2 {
+  color:  #49c633;
+  font-weight: lighter;
+    /*font-family: 'Open Sans', sans-serif;*/
 
+}
+
+/*div.fc-content {
+  background: #0073b7;
+}*/
+.fc-time-grid-event {
+    background: #0073b7;
+
+}
 
 /*=======================================*/
 
