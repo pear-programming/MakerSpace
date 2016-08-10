@@ -129,11 +129,11 @@ export default class TabletDisplay extends Component {
         <div className = "tabletDisplayContainer">
        { room.isAvailable ? 
           <div className="tabletDisplayOpen">
-            <h1>{room.roomName}  <sup className="infoCircle"> <i className="fa fa-info-circle" aria-hidden="true"></i> </sup></h1>
+            <h1>{room.roomName} </h1>
             <span className="open">available</span>
         
             <div className="tabletFooter">
-             <button onClick={this.bookNow.bind(this)}>Book Now!</button> 
+             <button className="bookBtn" onClick={this.bookNow.bind(this)}>Book Now!</button> 
             </div>
           </div>
           : 
@@ -158,3 +158,6 @@ export default class TabletDisplay extends Component {
     )
   }
 }
+
+
+

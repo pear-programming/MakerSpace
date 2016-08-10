@@ -26,9 +26,9 @@ export default class RoomCalendar extends React.Component {
         console.log('view:', ui)
         console.log('event:', view)
       },
-
-      minTime: "08:00:00",
-      maxTime: "22:00:00",
+      allDay: false,
+      minTime: "09:00:00",
+      maxTime: "21:00:00",
       height: "auto"
     });
     
@@ -46,10 +46,6 @@ export default class RoomCalendar extends React.Component {
   render() {
     console.log("showing reservations in calendar.js:", this.props.events);
 
-    if(this.props.view.name === "agendaDay"){
-        $('.fc-view-container').css('overflow-x','auto');
-        $("#fullcalendar_container").css('min-width',$('.fc-resource-cell').length*slot_width_resource);
-    }
     return (
       <div ref="calendar"></div>
     );
