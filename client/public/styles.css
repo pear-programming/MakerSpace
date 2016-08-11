@@ -257,7 +257,7 @@ span.closed {
 
 /*=============================================================*/
 
-.open {
+.opened {
     background-color: white; 
     border-radius: 20px;
     color: #0073B7;
@@ -271,7 +271,7 @@ span.closed {
     border: 1px solid #0073B7;
 }
 
-.open:hover {
+.opened:hover {
   background-color: #0073B7;
   color: white;
 }

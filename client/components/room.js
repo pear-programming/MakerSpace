@@ -38,7 +38,7 @@ export default class Room extends Component {
           <Col md={6} className="eachRoom"><div>{room.roomName}</div></Col>
 
           <Col md={6}>
-            { room.isAvailable ? <div className="open" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
+            { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
           </Col>
         </Row>
 
