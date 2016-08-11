@@ -7,6 +7,7 @@ export default class Calendar extends React.Component {
     const { calendar } = this.refs;
 
     var open = this.props.open;
+<<<<<<< Updated upstream
     var events = this.props.events
     events.forEach(event => {
       if(event.title === "Turing"){
@@ -33,6 +34,34 @@ export default class Calendar extends React.Component {
     })
     console.log('updated turing to 5DB89D: ', events)
 
+=======
+    console.log('this.props.events as is', this.props.events)
+    // var events = this.props.events
+    // events.forEach(event => {
+    //   if(event.title === "Turing"){
+    //     event.color = "#5DB89D"
+    //   } else if (event.title === "Ellis"){
+    //     event.color = "#7FBFFF"
+    //   } else if (event.title === "Lovelace"){
+    //     event.color = "#0066CC"
+    //   } else if (event.title === "Hopper"){
+    //     event.color = "#BDD7EB"
+    //   } else if (event.title === "Dijkstra"){
+    //     event.color = "#186652"
+    //   } else if (event.title === "Tatooine"){
+    //     event.color = "#9FFF7F"
+    //   } else if (event.title === "Death Star"){
+    //     event.color = "#B266CC"
+    //   } else if (event.title === "Dagobah"){
+    //     event.color = "#DFFF7F"
+    //   } else if (event.title === "Naboo"){
+    //     event.color = "#B296C7"
+    //   } else if (event.title === "Lecture hall"){
+    //     event.color = "#66CCCC"
+    //   }
+    // })
+  
+>>>>>>> Stashed changes
     $(calendar).fullCalendar({
       events: this.props.events,
       eventClick: function(event) {

@@ -51,8 +51,13 @@ export default class Dashboard extends React.Component {
         .then(timeSlots => {
           fetchReservations()
           .then(reservations => {
-           
+            console.log('reservations', reservations.data)
+            console.log('do i have rooms? ', rooms.data) ///array of room objects
             var mappedData = this.mapTimeSlots(reservations);
+            // var addColor = mappedData.map(reservation => {
+            //   reservation.color = 
+            // });
+            console.log('mappedData:~~~ ', mappedData)
             this.setState({ 
               user: user.data, 
               events: mappedData, 
@@ -88,7 +93,7 @@ export default class Dashboard extends React.Component {
   }
 
   mapTimeSlots(reservations) {
-
+    console.log('reservations!!!', reservations)
     return reservations.data.map(reservation => {
       return {
         title: reservation.roomName, 
