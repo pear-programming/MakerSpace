@@ -17,7 +17,8 @@ export default class RoomDisplays extends Component {
       pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
       data: [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],
       roomOccurences: {Room: 15},
-      barData: []
+      barData: [],
+      barLabel: []
     }
   }
 	componentWillMount() {
@@ -47,6 +48,7 @@ export default class RoomDisplays extends Component {
         ];
       let users = {};
       let jen = [];
+      let caleb = [];
 
       resArray.forEach(reservation => {
         let time = moment(reservation.startTime)
@@ -68,8 +70,13 @@ export default class RoomDisplays extends Component {
         }       
 
         days[dayIndex].y += 1
+
       })
 
+
+      for (let key in users){
+        caleb.push(key)
+      }
 
       let rooms = Object.keys(resOccurences)
       rooms.forEach( room => {      
@@ -78,14 +85,18 @@ export default class RoomDisplays extends Component {
         for (let key in users){
           if(users[key][room]){
             data.push({ x: x, y: users[key][room] })
-            x++
+          } else {
+            data.push({ x: x, y: 0 })
           }
+          x++
         }
 
         jen.push(data)
       })
 
-      this.setState({ pieData: days, barData: jen })
+      console.log('jen', jen)
+
+      this.setState({ pieData: days, barData: jen, barLabel: caleb })
       
       let x = 1
       let data = []
@@ -100,9 +111,7 @@ export default class RoomDisplays extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
       this.setState({data: this.getGraphData()});
-    }, 2000);
   }
 
   renderRooms() {
@@ -183,14 +192,13 @@ export default class RoomDisplays extends Component {
                   </VictoryChart> 
 
                   <VictoryStack horizontal
-                    height={500}
-                    padding={75}
+                    padding={15}
                     style={{
-                      data: {width: 30},
-                      labels: {fontSize: 24}
+                      data: {width: 10},
+                      labels: {fontSize: 12}
 
                     }}
-                    labels={["one", "two", "three"]}
+                    labels={this.state.barLabel}
                     animate={{
                       duration: 1000,
                       onEnter: {
