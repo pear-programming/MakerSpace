@@ -35,10 +35,28 @@ export default class RoomsList extends Component {
     this.setState({ rooms: data.rooms.rooms })
   }
 
-  instaBookedRoom(roomId) {
-    console.log("reached instaBookedRoom:", roomId);
-    console.log("showing rooms:", this.state.rooms);
+  roomUnBooked(roomId) {
+    console.log('in roomUnbooked in rooms-list client')
+    console.log("current rooms in state: ", this.state.rooms);
+    var roomIndex; 
+    var unBookedRoom = this.state.rooms.filter((room, index) => {
+      if(room._id.toString() === roomId.toString()) {
+        roomIndex = index;
+        return true;
+      }    
+      else {
+        return false
+      }
+    })[0] 
 
+    unbookedRoom.isAvailable = true;
+    var roomsCopy = this.state.rooms.slice();
+    roomsCopy[roomIndex] = unBookedRoom; 
+    console.log("showing rooms copy:", roomsCopy);
+    this.setState({rooms: roomsCopy})
+  }
+
+  instaBookedRoom(roomId) {
     var roomIndex; 
     var bookedRoom = this.state.rooms.filter((room, index) => {
 
@@ -65,6 +83,7 @@ export default class RoomsList extends Component {
       console.log('room data', room)
       socket.on('updatedRooms', this.updatedRooms.bind(this));
       socket.on('instaBooked', this.instaBookedRoom.bind(this));
+      socket.on('unBook', this.roomUnBooked.bind(this));
       this.setState({ rooms: this.state.rooms.concat(room.data) })
     })
     .catch( err => {

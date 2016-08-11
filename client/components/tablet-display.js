@@ -90,18 +90,17 @@ export default class TabletDisplay extends Component {
     changeStatus(this.state.currentRoom.roomName)
     .then((x) => x)
 
-    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
-    socket.emit('unBook', this.state.currentRoom._id)  
+    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
+    socket.emit('bookNow', this.state.currentRoom._id)  
   }
 
 
   unBook() {
-    console.log('in unbook')
     changeStatus(this.state.currentRoom.roomName)
-    .then((x) => console.log('what is x?????', x))
+    .then((x) => console.log('x in unBook: ', x))
 
-    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
-    socket.emit('bookNow', this.state.currentRoom._id)  
+    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
+    socket.emit('unBook', this.state.currentRoom._id)  
   }
 
 
@@ -123,16 +122,15 @@ export default class TabletDisplay extends Component {
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-    console.log('this.state.nextRes', this.state.nextRes)
-    console.log('room in tablet display: ', room)
+    // console.log('this.state.nextRes', this.state.nextRes)
+    // console.log('room in tablet display: ', room)
     // console.log('background element', background)
-    let nextReservation = "no current reservations"
+    // let nextReservation = "no current reservations"
 
-    if(this.state.nextRes !== null){
-      let nextReservation = this.state.nextRes.toString()
-      nextReservation = "Next reservation is at " + nextReservation;
-    } 
-      console.log('nextReservation:', nextReservation)
+    // if(this.state.nextRes !== null){
+    //   let nextReservation = this.state.nextRes.toString()
+    //   nextReservation = "Next reservation is at " + nextReservation;
+    // } 
       console.log('this.state.events:', this.state.events)
     
     return (
