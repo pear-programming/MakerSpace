@@ -142,7 +142,8 @@ Reservation.findAllReservations = function() {
     // .then((timeSlots) => {
     //   return timeSlots
     // })
-    return reservationsData;
+    
+    return reservationsData.slice(0, 140);
   })
 }
 
@@ -209,7 +210,7 @@ Reservation.makeSlots = function(reservationData) {
 
       console.log("showing number of rooms:", rooms.length);
 
-    reservationData.forEach((reservation) => {
+    reservationData.slice(0, 140).forEach((reservation) => {
 
       timeSlots.forEach((timeSlot) => {
 
