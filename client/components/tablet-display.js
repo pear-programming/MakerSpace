@@ -80,7 +80,6 @@ export default class TabletDisplay extends Component {
         console.log('this.state ELSE: ', this.state)
 
       }
-
     })
 
   }
@@ -122,16 +121,6 @@ export default class TabletDisplay extends Component {
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-    // console.log('this.state.nextRes', this.state.nextRes)
-    // console.log('room in tablet display: ', room)
-    // console.log('background element', background)
-    // let nextReservation = "no current reservations"
-
-    // if(this.state.nextRes !== null){
-    //   let nextReservation = this.state.nextRes.toString()
-    //   nextReservation = "Next reservation is at " + nextReservation;
-    // } 
-      console.log('this.state.events:', this.state.events)
     
     return (
       <div>

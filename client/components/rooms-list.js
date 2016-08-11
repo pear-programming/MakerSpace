@@ -36,7 +36,6 @@ export default class RoomsList extends Component {
   }
 
   roomUnBooked(roomId) {
-    console.log('in roomUnbooked in rooms-list client')
     console.log("current rooms in state: ", this.state.rooms);
     var roomIndex; 
     var unBookedRoom = this.state.rooms.filter((room, index) => {
@@ -52,7 +51,6 @@ export default class RoomsList extends Component {
     unbookedRoom.isAvailable = true;
     var roomsCopy = this.state.rooms.slice();
     roomsCopy[roomIndex] = unBookedRoom; 
-    console.log("showing rooms copy:", roomsCopy);
     this.setState({rooms: roomsCopy})
   }
 
@@ -72,7 +70,6 @@ export default class RoomsList extends Component {
     bookedRoom.isAvailable = false;
     var roomsCopy = this.state.rooms.slice();
     roomsCopy[roomIndex] = bookedRoom; 
-    console.log("showing rooms copy:", roomsCopy);
     this.setState({rooms: roomsCopy})
   }
 
