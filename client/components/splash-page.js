@@ -1,9 +1,12 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
 import NavBar from './nav-bar';
-import RoomsList from './rooms-list';
+import RoomsList from './rooms-list'; 
 import { Button } from 'react-bootstrap';
 import { checkStatus } from '../models/auth';
+
+
+
 
 export default class SplashPage extends React.Component {
   constructor(){ 
@@ -18,20 +21,32 @@ export default class SplashPage extends React.Component {
     checkStatus()
     .then(userData => {
       console.log('userData', userData)
-      this.setState({ user: userData.data })
+      this.setState({ user: userData.data});
     })
   }
 
+  
+
+  
+
   render(){
+    console.log("showing reservations in render:", this.state.reservations)
     return (
       this.state.user ?
-       <RoomsList /> 
-      : <div>
+      <div>
+        <RoomsList />  
+      </div>
+      : 
+      <div>
         <NavBar />
         <div id="home">
           <h3 className="loginButton" ><a href="/auth/makerpass" className="loginButton"><span id="fakeButton">Login with Maker<strong>Pass</strong></span></a></h3>
         </div>
-        </div>
+      </div>
     )
   }
 }
+
+
+
+ // <button onClick={this.getReservations.bind(this)}>SEE RESERVATIONS</button>

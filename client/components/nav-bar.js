@@ -37,8 +37,9 @@ export default class NavBar extends Component {
           <Nav pullRight>
             <Image className="profilePicture" src={this.state.user.avatar_url} />
             <NavDropdown eventKey={3} title={`Welcome ${this.state.user.name}`} id="basic-nav-dropdown">
-              <LinkContainer to={'my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
+              <LinkContainer to={'/my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
               <LinkContainer to={'/rooms'}><MenuItem eventKey={3.2}>View rooms</MenuItem></LinkContainer>
+              <LinkContainer to={'/dashboard'}><MenuItem eventKey={3.2}>Dashboard</MenuItem></LinkContainer>
               <MenuItem divider />
               <MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem>
 

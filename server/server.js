@@ -72,13 +72,21 @@ app.get('/auth/makerpass/callback',
   });
 
 io.on('connection', function (socket) {
-  socket.broadcast.emit('user connected');  
+  socket.broadcast.emit('user connected');
 
   socket.on('newRoomStatus', function (data) {
     socket.broadcast.emit('updatedRooms', { rooms: data });
   });
 
   socket.on('tabletDisplay', function(data) {
+  })
+
+  socket.on('bookNow', function(roomId) {
+    socket.broadcast.emit('instaBooked', roomId);
+  })
+
+  socket.on('unBook', function(roomId) {
+    socket.broadcast.emit('roomUnBooked', roomId);
   })
 });
 
@@ -97,7 +105,8 @@ app.get('/app-bundle.js',
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
 );
-//////// ENDPOINTS //////////
+
+//<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
 // new user signs up
 app.post('/signup', function(req, res) {
@@ -144,43 +153,13 @@ app.post('/login', function(req, res) {
   })
 })
 
-// POST /rooms/new
-//req.body should be be an array of room objects
-// Example:
- // [
- //   {
- //      "roomName": "d",
- //      "projector": true,
- //      "capacity": 20
- //    },
- //    {
- //      "roomName": "e",
- //      "projector": false,
- //      "capacity": 25
- //    }
- //  ]
-
- app.get('/check', MP.authWithSession(), function(req, res) {
-  res.status(200).send(req.user)
- })
-
-app.post('/rooms/new', function(req, res) {
-
-  Room.addRooms(req.body)
-    .then((roomIds) => {
-
-      console.log("ready to send response after room insertion:", roomIds)
-      res.send(201, {roomIds: roomIds});
-    })
-
-})
 
 app.get('/logout', function(req, res) {
   Session.destroy(req.cookies.sessionId)
-    .then(() => {
-      res.clearCookie('sessionId');
-      res.sendStatus(200);
-    })
+  .then(() => {
+    res.clearCookie('sessionId');
+    res.sendStatus(200);
+  })
 })
 
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
@@ -207,10 +186,10 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 })
 
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
+  console.log("got request")
   Room.findRooms()
   .then(roomInfo => {
-    console.log(req.user)
-    console.log(roomInfo)
+    console.log("about to send roominfo:", roomInfo)
     res.send(201, roomInfo)
   })
 })
@@ -224,25 +203,23 @@ app.put('/room/edit/:id', function(req, res){
   })
 })
 
-// Delete room *********************************************
+// Delete room
 
 app.delete('/:roomName', function(req, res){
-  // console.log('DELETE req.params.roomName: ', req.params.roomName)
   Room.deleteRoom(req.params.roomName)
   .then(resp => {
     console.log('Successfully deleted', req.params.roomName);
     res.send('Successfully deleted room')
-    // res.send(201, resp)
   })
 })
 
 
-///////// RESERVATIONS ENDPOINTS /////////
+//<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
   .then(reservationsData => {
-    console.log('reservationsData: ', reservationsData)
+    // console.log('reservationsData: ', reservationsData)
     res.send(200, reservationsData)
   })
 })
@@ -250,13 +227,12 @@ app.get('/reservations', function(req, res){
 
 app.get('/reservations/:roomName', function(req, res){
   var name = req.params.roomName;
-  console.log('name from params: ', name)
   Reservation.findByName(name)
   .then(reservations => {
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    console.log('reservations: ', reservations)
+    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })
@@ -271,15 +247,19 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
-// delete this block of code when ashlee is done with change reservations!
-// app.post('/reservations/changeReservation', function(req, res){
-//   Reservation.changeReservation(req.body)
-//   console.log("req.body: ", req.body)
-//   .then(reservationInfo => {
-//     res.send(201, reservationInfo)
-//   })
-// })
- 
+
+//update existing reservation
+app.put('/reservations/:id', function(req, res){
+  var resId = req.params.id
+  //req.body should be new reservation info
+  Reservation.updateReservation(resId, req.body)
+  .then(updatedRes => {
+    console.log('result from update: ', updatedRes)
+    res.send(200, updatedRes)
+  })
+})
+
+
 app.delete('/reservations/delete', function(req, res){
   Reservation.delete(req.body)
   .then(reservationInfo => {
@@ -293,6 +273,37 @@ app.delete('/reservations/delete', function(req, res){
   })
 })
 
+app.get('/timeSlots', function(req, res) {
+
+  Reservation.findAllReservations()
+  .then((reservationData) => {
+
+    Reservation.makeSlots(reservationData)
+    .then((timeSlots) => {
+
+      res.send(200, timeSlots)
+    })
+
+  })
+  
+})
+
+//endpoints for calendar asset-serving
+app.get('*/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
+})
+
+app.get('*/lib/moment.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
+})
+
+app.get('*/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+})
+
+app.get('*/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+})
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
@@ -302,3 +313,4 @@ var port = process.env.PORT || 4000;
 
 server.listen(port);
 console.log('Listening on localhost:' + port);
+module.exports = server

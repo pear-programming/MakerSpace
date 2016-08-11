@@ -1,3 +1,10 @@
+/*
+colors:
+blue: #0073b7;
+bright green: #49c633;
+*/
+
+
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
   /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo 1*/
@@ -53,21 +60,176 @@ img.roomImage {
   float: right;
 }
 
-img.floorPlan {
-  max-height: 600px;
-  margin-left: 25%;
+/*==== room modal ====*/
+
+.roomImageContainer {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  margin: auto;
+}
+
+.roomTitleContainer {
+  text-align: center;
+}
+
+.roomTitle {
+  text-transform: uppercase;
+  color: #0073b7;
+  font-size: 2em;
+  letter-spacing: 0.05em;
+}
+
+.roomDetails {
+  display: inline-block;
+  border: 3px solid #808080;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 20px;
+  width: 36%;
+  float: left;
+}
+
+.roomAvailability {
+  width: 64%;
+  float: left;
+  text-align: center;
+  margin-top: 10px;  
+}
+
+.roomAvailability h3 {
+  font-weight: lighter;
+  font-family: 'Open Sans', sans-serif;
+
+}
+
+span.open {
+  font-size: 2.5em;
+  color: #49c633;
+}
+
+span.closed {
+  font-size: 2.5em;
+  color: red; 
+}
+
+.infoCircle {
+  font-size: 20px;
+}
+
+.scheduleBtn {
+  margin-top: 10px;
+  -webkit-border-radius: 11;
+  -moz-border-radius: 11;
+  border-radius: 11px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: lighter;
+  letter-spacing: .06em;
+  background: #0073b7;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.scheduleBtn:hover {
+  background: #208ac7;
+  text-decoration: none;
 }
 
 .roomDetails {
   display: inline-block;
 }
 
+.floorPlan {
+  float: right;
+  margin-right: 300px;
+
+}
+
 .RoomsList {
   display: inline-block;
-  width: 100%;
-  border: 2px solid darkgrey;
+  min-width: 100%;
   padding: 0px 0px 21px 60px;
+  border: 2px solid darkgrey;
 }
+
+/*=========== Tablet Display ========*/
+
+.tabletDisplayOpen h1  {
+  font-size: 5em;
+  margin-top: 35px;
+  font-weight: lighter;
+}
+
+.tabletDisplayClosed h1  {
+  font-size: 5em;
+  margin-top: 35px;
+  font-weight: lighter;
+}
+
+.tabletBlock {
+  text-align: center;
+  width: 46%;
+  padding-left: 3%;
+  float: left;
+  background-color: #0073b7;
+  height: 100vh;
+  color: white;
+}
+
+.roomCalendar {
+  width:44%;
+  padding-right: 3%;
+  float: right; 
+  margin-top: 20px;
+ }
+
+.tabletFooter {
+  margin-top: 20px;
+}
+
+.bookBtn {
+  border: 3px solid white;
+  background-color: #0073b7;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  text-transform: uppercase;
+  font-size: 1.25em;
+}
+
+.bookBtn:hover {
+  border: 3px solid  #49c633;
+  color:  #49c633;
+  border-radius: 15px;
+  padding: 15px;
+  text-transform: uppercase;
+  font-size: 1.25em;
+}
+
+
+.fc-today {
+  background: rgba(99,159,222,.1) !important;
+} 
+
+.fc-toolbar h2 {
+  color:  #49c633;
+  /*font-weight: lighter;*/
+    /*font-family: 'Open Sans', sans-serif;*/
+
+}
+
+/*div.fc-content {
+  background: #0073b7;
+}*/
+.fc-time-grid-event {
+    background: #0073b7;
+
+}
+
+/*=======================================*/
 
 .room:hover{
   fill-opacity: 1;
@@ -127,4 +289,3 @@ img.floorPlan {
   cursor: none;
   transition-duration: 0.1s;
 }
-

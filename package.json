@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A boiler plate with basic examples of react-router and react-redux",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --bail --reporter nyan test/ServerSpec.js",
+    "test": "mocha --recursive --reporter=nyan ./test/setup.js ./test",
     "start": "nodemon server/server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./client"
   },
@@ -20,6 +20,7 @@
     "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
+    "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "react-tap-event-plugin": "^1.0.0",
     "supertest": "^1.2.0",
@@ -35,7 +36,9 @@
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-alpha.1",
     "express": "^4.14.0",
+    "fullcalendar": "^2.9.1",
     "jquery": "^3.1.0",
+    "lodash": "^4.14.1",
     "middleware": "^1.0.0",
     "mocha": "^2.5.3",
     "node-makerpass": "^1.1.0",

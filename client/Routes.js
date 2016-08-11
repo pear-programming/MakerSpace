@@ -4,6 +4,7 @@ import SplashPage from './components/splash-page';
 import MyAccount from './components/my-account';
 import App from './components/app';
 import TabletDisplay from './components/tablet-display';
+import Dashboard from './components/dashboard';
 
 
 export default class Routes extends React.Component {
@@ -15,6 +16,7 @@ export default class Routes extends React.Component {
           <IndexRoute component={SplashPage} />
           <Route path='my-account' component={MyAccount} />
           <Route path=':roomName/display' component={TabletDisplay} />
+          <Route path='dashboard' component={Dashboard} />
         </Route>
       </Router>
     )

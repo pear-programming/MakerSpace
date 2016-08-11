@@ -42,12 +42,53 @@ export default class RoomsList extends Component {
   updatedRooms(data) {
     this.setState({ rooms: data.rooms.rooms })
   }
+
+  roomUnBooked(roomId) {
+    console.log("current rooms in state: ", this.state.rooms);
+    var roomIndex; 
+    var unBookedRoom = this.state.rooms.filter((room, index) => {
+      if(room._id.toString() === roomId.toString()) {
+        roomIndex = index;
+        return true;
+      }    
+      else {
+        return false
+      }
+    })[0] 
+
+    unbookedRoom.isAvailable = true;
+    var roomsCopy = this.state.rooms.slice();
+    roomsCopy[roomIndex] = unBookedRoom; 
+    this.setState({rooms: roomsCopy})
+  }
+
+  instaBookedRoom(roomId) {
+    var roomIndex; 
+    var bookedRoom = this.state.rooms.filter((room, index) => {
+
+      if(room._id.toString() === roomId.toString()) {
+        roomIndex = index;
+        return true;
+      }    
+      else {
+        return false
+      }
+    })[0] 
+
+    bookedRoom.isAvailable = false;
+    var roomsCopy = this.state.rooms.slice();
+    roomsCopy[roomIndex] = bookedRoom; 
+    this.setState({rooms: roomsCopy})
+  }
+
   componentWillMount() {
     //ping server for latest room info then open socket to listen for someone else changing the state
     fetchRooms()
     .then( room => {
       console.log('room data', room)
-      socket.on('updatedRooms', this.updatedRooms.bind(this))
+      socket.on('updatedRooms', this.updatedRooms.bind(this));
+      socket.on('instaBooked', this.instaBookedRoom.bind(this));
+      socket.on('unBook', this.roomUnBooked.bind(this));
       this.setState({ rooms: this.state.rooms.concat(room.data) })
     })
     .catch( err => {
@@ -76,22 +117,23 @@ export default class RoomsList extends Component {
       <div >
         <NavBar />
         <Grid>
-        <Row>
-
-        <Col md={4} ><div className="RoomsList"> 
-          <h1>Rooms</h1> 
-         {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
-        </div></Col>
-        
-        <Col md={8} >
-
-        <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
-        
-        <div className="roomWindow">
-          { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
-        </div>
-        </Col>
-      </Row></Grid>
+          <Row>
+            <Col md={4} >
+              <div className="RoomsList"> 
+                <h1>Rooms</h1> 
+                {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
+              </div>
+            </Col>
+            
+            <Col md={8} >
+              <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
+          
+              <div className="roomWindow">
+                { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

@@ -22,17 +22,15 @@ export default class Room extends Component {
     this.setState({ showModal: true });
   }
 
-  // componentWillMount(){
-  //    window.addEventListener('load', function() {
-  //       FastClick.attach(document.body);
-  //   }, false);
-  // }
-
   render() {
     
     const room = this.props.roomInfo;
 
+    var title = {float: 'left'}
+    var info = {float: 'right'}
+
     return (
+
      
 
       <div>
@@ -46,18 +44,26 @@ export default class Room extends Component {
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>{this.props.mode}</Modal.Title>
+          <div className="roomTitleContainer">
+            <Modal.Title>{this.props.mode}<span className="roomTitle">{room.roomName}</span></Modal.Title>
+          </div>
           </Modal.Header>
-          <Modal.Body>
-            <h4> {room.roomName} </h4>
-            <p> Capacity: {room.capacity} </p>
-            <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
-            <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
-            <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+          <Modal.Body className="clearfix">
+            <div className="roomImageContainer">
+              <img className="roomImage" src={room.image}/>
+            </div>
+            <div className="roomDetails">
+              <p> Capacity: {room.capacity} </p>
+              <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
+              <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
+              <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+            </div>
+            <div className="roomAvailability">
+              <h3> <span className={room.isAvailable ? 'open' : 'closed'}>{room.isAvailable ? 'available' : 'In use'}</span></h3>
+              <button className="scheduleBtn">Today's Schedule</button>
+            </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Link to={`${this.props.roomInfo.roomName}/display`} ><Button>Display</Button></Link>
-          </Modal.Footer>
+
         </Modal>
       </div>
     )
