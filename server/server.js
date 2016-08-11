@@ -246,11 +246,26 @@ app.get('/reservations/:roomName', function(req, res){
 
 
 // putting new reservations to the database
-app.post('/reservations/new', function(req, res){
+app.post('/reservations/new', function(req, res){ 
+  console.log("got new reserv:", typeof req.body.startTime)
   Reservation.create(req.body)
   .then(reservationInfo => {
     console.log("reservationInfo: ", reservationInfo)
     res.send(201, reservationInfo)
+  })
+})
+
+app.get('/reservations/:userId', function(req, res){
+  var userId = req.params.userId;
+  console.log('userId from params: ', userId)
+  Reservation.findByUserId(userId)
+  .then(reservations => {
+    
+    console.log('reservations: ', reservations)
+    res.send(200, reservations)
+  })
+  .catch(err => {
+    console.log("error:", err)
   })
 })
 

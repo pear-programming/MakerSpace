@@ -16,7 +16,7 @@ export default class Routes extends React.Component {
           <IndexRoute component={SplashPage} />
           <Route path='my-account' component={MyAccount} />
           <Route path=':roomName/display' component={TabletDisplay} />
-          <Route path='dashboard' component={Dashboard} />
+          <Route path='dashboard' component={Dashboard} /> 
         </Route>
       </Router>
     )

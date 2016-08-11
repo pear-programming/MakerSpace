@@ -24,3 +24,9 @@ export function fetchTimeSlots(){
 
   return request
 }
+
+export function addReservation(reservation){
+  const request = axios.post('/reservations/new', reservation)
+
+  return request
+}
