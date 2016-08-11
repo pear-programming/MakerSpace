@@ -17,7 +17,7 @@ export default class RoomDisplays extends Component {
       pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
       data: [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],
       roomOccurences: {Room: 15},
-      barData: [],
+      barData: [[{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],[{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],[{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}], [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}]],
       barLabel: []
     }
   }
@@ -165,10 +165,10 @@ export default class RoomDisplays extends Component {
             <Col md={6} mdPush={6}>
               {this.state.data ? 
                 <div>
-                  <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 1000 }}>
+                  <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 5000 }}>
                     <VictoryAxis
                       label="Rooms"
-                      animate={{ duration: 1000 }}
+                      animate={{ duration: 5000 }}
                       tickValues={this.getTickValues.call(this)}
                       style={{
                         axis: {stroke: "black", strokeWidth: 2},
@@ -177,7 +177,7 @@ export default class RoomDisplays extends Component {
                       }}
                     />
                     <VictoryAxis label="Reservations" dependentAxis
-                      animate={{ duration: 1000 }}
+                      animate={{ duration: 5000 }}
                       tickValues={this.getYaxis.call(this)}
                       style={{
                         grid: {strokeWidth: 1},
@@ -186,7 +186,7 @@ export default class RoomDisplays extends Component {
                       }}
                     />
                     <VictoryBar style={{data: {width: 15, fill: "orange"}}}
-                      animate={{ duration: 1000 }}
+                      animate={{ duration: 5000 }}
                       data={this.state.data}
                     />
                   </VictoryChart> 
@@ -200,7 +200,7 @@ export default class RoomDisplays extends Component {
                     }}
                     labels={this.state.barLabel}
                     animate={{
-                      duration: 1000,
+                      duration: 5000,
                       onEnter: {
                         duration: 500
                     }
@@ -218,7 +218,7 @@ export default class RoomDisplays extends Component {
                   style={{  }}
                   data={this.state.pieData}
                   animate={{
-                    duration: 1000,
+                    duration: 5000,
                     onEnter: {
                       duration: 500
                     }
