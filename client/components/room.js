@@ -31,19 +31,17 @@ export default class Room extends Component {
   render() {
     
     const room = this.props.roomInfo;
-    const style = { display: "inline-flex"}
 
     return (
      
 
-      <div id="eachRoom">
-        <Row style={style} >
-          <Col><h3>{room.roomName}</h3></Col>
+      <div>
+        <Row className="row">
+          <Col md={6} className="eachRoom"><div>{room.roomName}</div></Col>
 
-          <Col><label className="switch">
-            { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
-            <div className="slider"></div>
-          </label></Col>
+          <Col md={6}>
+            { room.isAvailable ? <div className="open" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
+          </Col>
         </Row>
 
         <Modal show={this.state.showModal} onHide={this.close}>

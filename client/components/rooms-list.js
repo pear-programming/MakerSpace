@@ -84,9 +84,11 @@ export default class RoomsList extends Component {
         </div></Col>
         
         <Col md={8} >
+
         <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
+        
         <div className="roomWindow">
-          { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} /> : null }
+          { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
         </div>
         </Col>
       </Row></Grid>
