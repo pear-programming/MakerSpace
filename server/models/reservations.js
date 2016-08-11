@@ -5,7 +5,7 @@ var Reservation = module.exports
 //reservations
 
 Reservation.findByRoomId = function(Id) {
-  return db.collection('reservations').find({id: id})
+  return db.reservations.find({id: id})
   .then((reservations) => {
   return reservations
   })
@@ -13,7 +13,7 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.create = function(reservationData) {
-  return db.collection('reservations').insert(reservationData)
+  return db.reservations.insert(reservationData)
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -34,7 +34,7 @@ Reservation.delete = function(reservationId){
     }) .catch(err => console.log('error in reservation: ', err))
 }
   else{
-  return db.collection('reservations').remove(reservationId)//reservations
+  return db.reservations.remove(reservationId)//reservations
     .then((data) => {
       console.log("successfully canceled reservation!:", data)
       return data;
@@ -45,7 +45,7 @@ Reservation.delete = function(reservationId){
 
 
 Reservation.findAllReservations = function() {
-  return db.collection('reservations').find({})
+  return db.reservations.find({})
   .then(reservationsData => {
 
     // var roomReservations = reservationsData.reduce((accum, reservation) => {
@@ -109,7 +109,7 @@ Reservation.findAllReservations = function() {
   //         console.log("showing reservations:", reservations);
 
 
-  //         db.collection('reservations').insert(reservations)
+  //         db.reservations.insert(reservations)
   //           .then(() =>  {
   //             console.log("success");
   //             return reservationsData;
@@ -157,7 +157,7 @@ Reservation.findByName = function(name) {
     }
   })
   .then(id => {
-    return db.collection('reservations').find({roomId: id})
+    return db.reservations.find({roomId: id})
   })
   .then(roomReservationData => {
     if(roomReservationData[0]) {
@@ -176,13 +176,13 @@ Reservation.updateReservation = function(resId, newInfo) {
     resId = db.ObjectId(resId)
   }
 
-  return db.collection('reservations').update(
+  return db.reservations.update(
     {"_id" : resId },
     { "$set" : newInfo }
   )
   .then(updatedRes => {
     // console.log('updatedRes:', updatedRes)
-    return db.collection('reservations').find({"_id":resId})
+    return db.reservations.find({"_id":resId})
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }

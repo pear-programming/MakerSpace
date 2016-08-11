@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './nav-bar';
 import { fetchRooms, fetchReservations } from '../models/rooms';
 import { Link } from 'react-router';
-import {
-  VictoryAxis,
-  VictoryArea,
-  VictoryBar,
-  VictoryChart,
-  VictoryLine,
-  VictoryPie,
-  VictoryScatter
-} from 'victory';
+import { VictoryAxis, VictoryArea, VictoryBar, VictoryChart, VictoryLine, VictoryPie, VictoryScatter, VictoryStack } from 'victory';
 import moment from 'moment';
 import { Grid, Row, Col } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
@@ -22,9 +14,10 @@ export default class RoomDisplays extends Component {
 
     this.state = {
       rooms: [],
-      pieData: [{x: 'Sun', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'TR', y: 2}, {x: 'F', y: 2}, {x: 'Sat', y: 2}],
+      pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
       data: [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],
-      roomOccurences: {Room: 15}
+      roomOccurences: {Room: 15},
+      barData: []
     }
   }
 	componentWillMount() {
@@ -43,33 +36,56 @@ export default class RoomDisplays extends Component {
     .then( reservations => {
       let resArray = reservations.data;
       let resOccurences = {};
-
-      resArray.forEach(reservation => {
-        if(!resOccurences[reservation.roomName]) {
-          resOccurences[reservation.roomName] = 1
-        } else {
-          resOccurences[reservation.roomName] += 1
-        }
-      })
-
       let days = [
-        { x: 'Sun', y: 0 }, 
+        { x: 'Su', y: 0 }, 
         { x: 'M', y: 0 }, 
         { x: 'T', y: 0 }, 
         { x: 'W', y: 0 }, 
-        { x: 'TR', y: 0 },
+        { x: 'Th', y: 0 },
         { x: 'F', y: 0 },
-        { x: 'Sat', y: 0 }
-        ]
+        { x: 'Sa', y: 0 }
+        ];
+      let users = {};
+      let jen = [];
 
       resArray.forEach(reservation => {
         let time = moment(reservation.startTime)
         let dayIndex = time._d.getDay();
 
+        if(!resOccurences[reservation.roomName]) {
+          resOccurences[reservation.roomName] = 1
+        } else {
+          resOccurences[reservation.roomName] += 1
+        }  
+
+        if(!users[reservation.userName]){
+          users[reservation.userName] = {}
+          users[reservation.userName][reservation.roomName] = 1
+        } else if(!users[reservation.userName][reservation.roomName]){
+          users[reservation.userName][reservation.roomName] = 1
+        } else {
+          users[reservation.userName][reservation.roomName] += 1
+        }       
+
         days[dayIndex].y += 1
       })
 
-      this.setState({ pieData: days })
+
+      let rooms = Object.keys(resOccurences)
+      rooms.forEach( room => {      
+        let x = 1
+        let data = []
+        for (let key in users){
+          if(users[key][room]){
+            data.push({ x: x, y: users[key][room] })
+            x++
+          }
+        }
+
+        jen.push(data)
+      })
+
+      this.setState({ pieData: days, barData: jen })
       
       let x = 1
       let data = []
@@ -79,6 +95,8 @@ export default class RoomDisplays extends Component {
       }
       this.setState({ data: data, roomOccurences: resOccurences })
     })
+
+    console.log('bitch better have my money', users)
   }
 
   componentDidMount() {
@@ -96,6 +114,8 @@ export default class RoomDisplays extends Component {
       )
     })
   }
+
+
 
   getTickValues() {
     let ticks = Object.keys(this.state.roomOccurences)
@@ -116,6 +136,12 @@ export default class RoomDisplays extends Component {
     return ans;
   }
 
+  renderBarGraph() {
+    return this.state.barData.map( room => <VictoryBar 
+      style={{data: {fill: randomColor() }}}
+      data={room}
+    />)
+  }
 
 
   render() {
@@ -129,6 +155,7 @@ export default class RoomDisplays extends Component {
           <Row>
             <Col md={6} mdPush={6}>
               {this.state.data ? 
+                <div>
                   <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 1000 }}>
                     <VictoryAxis
                       label="Rooms"
@@ -154,6 +181,26 @@ export default class RoomDisplays extends Component {
                       data={this.state.data}
                     />
                   </VictoryChart> 
+
+                  <VictoryStack horizontal
+                    height={500}
+                    padding={75}
+                    style={{
+                      data: {width: 30},
+                      labels: {fontSize: 24}
+
+                    }}
+                    labels={["one", "two", "three"]}
+                    animate={{
+                      duration: 1000,
+                      onEnter: {
+                        duration: 500
+                    }
+                  }}
+                  >
+                    {this.renderBarGraph.call(this)}
+                  </VictoryStack>
+                </div>
                 :
                 '' }
             </Col>
@@ -181,5 +228,8 @@ export default class RoomDisplays extends Component {
   }
 }
 
+function randomColor(){
+  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6); 
+}
 
 
