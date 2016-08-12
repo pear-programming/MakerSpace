@@ -84,7 +84,10 @@ io.on('connection', function (socket) {
 
   socket.on('bookNow', function(roomId) {
     socket.broadcast.emit('instaBooked', roomId);
+  })
 
+  socket.on('unBook', function(roomId) {
+    socket.broadcast.emit('roomUnBooked', roomId);
   })
 });
 
@@ -189,8 +192,10 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 })
 
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
+  console.log("got request")
   Room.findRooms()
   .then(roomInfo => {
+    console.log("about to send roominfo:", roomInfo)
     res.send(201, roomInfo)
   })
 })
@@ -231,13 +236,12 @@ app.get('/reservations', function(req, res){
 
 app.get('/reservations/:roomName', function(req, res){
   var name = req.params.roomName;
-  console.log('name from params: ', name)
   Reservation.findByName(name)
   .then(reservations => {
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    console.log('reservations: ', reservations)
+    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })

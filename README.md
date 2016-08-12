@@ -4,3 +4,6 @@
 
 ## To lint the client folder
 > npm run lint
+
+## To start tests
+> npm test

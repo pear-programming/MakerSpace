@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import Room from './room';
-import {fetchRooms, changeStatus} from '../models/rooms';
+import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import _ from 'lodash'
+import RoomCalendar from './room-calendar';
 
+
+function formatEvents(resArray) {
+  return resArray.map(res => {
+    var start = new Date(res.startTime).getTime()
+    var end = new Date(res.endTime).getTime()
+    return {
+      title: res.userName,
+      start: start,
+      end: end,
+      allDay: false
+    }
+  })
+}
 
 export default class TabletDisplay extends Component {
   constructor(props){  
@@ -12,7 +27,10 @@ export default class TabletDisplay extends Component {
 
     // dummy data for testing
     this.state = { 
-      currentRoom: {}
+      currentRoom: {},
+      reservations: [{}],
+      nextRes: {},
+      events: null
     }
 
   }
@@ -28,14 +46,40 @@ export default class TabletDisplay extends Component {
     socket.on('updatedRooms', this.updateState.bind(this))
     fetchRooms() 
     .then(rooms=>{
-      console.log(rooms.data)
-      const room = rooms.data.find(findRoom)
-      
-      function findRoom(findThisRoom) { 
-        return findThisRoom.roomName === currentRoom;
-      }
-
+      let room = rooms.data.find((room)=>room.roomName === currentRoom)
       this.setState({currentRoom: room})
+      return room
+    })
+    .then(room => {
+      return getRoomReservations(room.roomName)
+    })
+    .then(reservations => {
+
+      let timeDiffs = []
+      console.log('reservations.data: ', reservations.data)
+      if(reservations.data !== "no reservations currently exist for this room") {
+        //if there are reservations do this....
+        reservations.data.forEach(reservation => {
+          let now = new Date()
+          let startTime = new Date(reservation.startTime)
+
+          timeDiffs.push({difference : now - startTime, startTime: startTime})
+        })
+        //finds largest negative number which is the next reservation start time
+
+        let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
+        let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
+        let events = formatEvents(reservations.data)
+        console.log('events: ', events)
+        this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
+        console.log('this.state IF: ', this.state)
+      } else {  //no current reservations
+     
+        this.setState({reservations: null, nextRes: null, events: null})
+        console.log('this.state ELSE: ', this.state)
+
+      }
+      this.setState({ currentRoom: room })
     }) 
 
     //start timer that checks room status 10 seconds
@@ -61,6 +105,7 @@ export default class TabletDisplay extends Component {
     }, 10000)
   }
 
+
   bookNow() {
     changeStatus(this.state.currentRoom.roomName)
     .then((x) => x)
@@ -68,6 +113,16 @@ export default class TabletDisplay extends Component {
     this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
     socket.emit('bookNow', this.state.currentRoom._id)  
   }
+
+
+  unBook() {
+    changeStatus(this.state.currentRoom.roomName)
+    .then((x) => console.log('x in unBook: ', x))
+
+    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
+    socket.emit('unBook', this.state.currentRoom._id)  
+  }
+
 
   updateState(room) {
     var url = window.location.href.split('/');
@@ -82,26 +137,46 @@ export default class TabletDisplay extends Component {
   componentWillUnmount() {
      socket.off('updatedRooms');
   }
-  changeColor(mode) {
-    $('body').css('background-color', 'green')
-  }
+
 
   render() {
-    var open = { backgroundColor: "green"}
-    var closed = { backgroundColor: "red"}
+    var background = document.querySelector('body')
+    const room = this.state.currentRoom
 
     return (
-      this.state.currentRoom.isAvailable ? // dummy for testing
-        <div className="fullscreen" style={open}>
-          <h2>{this.state.currentRoom.roomName}</h2>
-          <h1>OPEN</h1> 
-          <button onClick={this.bookNow.bind(this)}>Book Now!</button>     
-        </div>
-        : 
-        <div className="fullscreen" style={closed}>
-          <h2>{this.state.currentRoom.roomName}</h2>
-          <h1>CLOSED</h1>
+      <div>
+       { room.isAvailable ? 
+          <div className="tabletDisplayOpen tabletBlock">
+            <h1>{room.roomName} </h1>
+            <span className="open">available</span>
+        
+            <div className="tabletFooter">
+             <button className="bookBtn" onClick={this.bookNow.bind(this)}>Book Now!</button> 
+            </div>
+          </div>
+          : 
+          <div className="tabletDisplayClosed tabletBlock">
+            <h1>{room.roomName} </h1> 
+            <span className="closed">In use</span>
+            <div className="tabletFooter">
+            <p>Please mark room as available below if you are no longer using it.</p>
+              <button className="bookBtn" onClick={this.unBook.bind(this)}>All Done!</button> 
+            </div>
+          </div> 
+        }
+
+        { this.state.events ? 
+        <div className="roomCalendar" >
+           <RoomCalendar events={this.state.events} view="agendaDay"  /> 
         </div> 
+        : 
+        null
+        }
+
+      </div>
     )
   }
 }
+
+
+

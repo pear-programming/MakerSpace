@@ -1,29 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Calendar extends React.Component {
+export default class RoomCalendar extends React.Component {
 
-	componentDidMount() {
+  componentDidMount() {
     const { calendar } = this.refs;
-
-    var open = this.props.open;
   
     $(calendar).fullCalendar({
       events: this.props.events,
       eventClick: function(event) {
-        open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0)); 
+
+        console.log("showing event:", event);
+        alert("clicked event!")
+       
       },
       dayClick: function(date, jsEvent, view) {
 
-        open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
+          console.log("showing date:", date);
+          alert('Clicked empty space!', date);
       },
       allDay: false,
-      minTime: "09:00:00",
-      maxTime: "21:00:00",
-      height: "auto"  
+      minTime: "09:00:00",
+      maxTime: "21:00:00",
+      height: "auto"
     });
     
-    $(calendar).fullCalendar( 'changeView', 'agendaWeek' );  
+    $(calendar).fullCalendar( 'changeView', this.props.view ); 
+
+
 }
 
   componentWillUnmount() {
@@ -33,6 +37,8 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    console.log("showing reservations in calendar.js:", this.props.events);
+
     return (
       <div ref="calendar"></div>
     );
