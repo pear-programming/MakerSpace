@@ -36,7 +36,7 @@ export default class Dashboard extends React.Component {
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
     var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0] 
-    console.log("showing current room in open:", currentRoom)
+    // console.log("showing current room in open:", currentRoom)
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
     goToDate = time.getTime();
 
@@ -62,7 +62,6 @@ export default class Dashboard extends React.Component {
           fetchReservations()
 
           .then(reserv => {
-            console.log("showing data type for reservation:", typeof Date.parse(reserv.data[0].startTime))
             timeSlots = slots.data; 
             user = userData.data;
             rooms = roomsData.data;
@@ -200,9 +199,9 @@ export default class Dashboard extends React.Component {
 
   submitBooking() {
 
-    console.log("startTime:", this.state.startTime);
-    console.log("endTime:", this.state.endTime);
-    console.log("room:", this.state.currentRoom); 
+    // console.log("startTime:", this.state.startTime);
+    // console.log("endTime:", this.state.endTime);
+    // console.log("room:", this.state.currentRoom); 
     // console.log("user:", this.state.user);
 
     var reservation = {
@@ -216,7 +215,7 @@ export default class Dashboard extends React.Component {
     }
 
 
-    console.log("ready to insert reservation:", reservation);
+    // console.log("ready to insert reservation:", reservation);
 
     addReservation(reservation)
     .then(data => {
@@ -229,7 +228,7 @@ export default class Dashboard extends React.Component {
         color: this.state.currentRoom.roomColor
       })
      
-      console.log("successfully inserted!:", data)
+      // console.log("successfully inserted!:", data)
       goToDate = Date.parse(reservation.startTime)
       this.setState({showModal: false, events: events, reRenderCalendar: true})
     })
@@ -257,7 +256,6 @@ export default class Dashboard extends React.Component {
 
         <div>
          
-
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
             <div className="roomTitleContainer">

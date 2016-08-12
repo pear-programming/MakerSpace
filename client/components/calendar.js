@@ -1,28 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import {events} from './dashboard'
-
-var ran = false;
-
 export default class Calendar extends React.Component { 
-
-  // constructor(){ 
-  //   super()
-    
-    
-  // }
-
 
 	componentDidMount() {
     
-    // console.log("in componentDidMount in calendar.js")
     const { calendar } = this.refs;
 
     var open = this.props.open;
     var wait = this.props.wait;
-    // var render = this.render;
-    // var events = this.props.events;
 
     $(calendar).fullCalendar({
       events: this.props.events,
@@ -42,22 +28,12 @@ export default class Calendar extends React.Component {
     
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' );
       
-}
+  }
 
   componentDidUpdate() {
-
- 
-
-    // console.log("in componentDidUpdate in calendar.js:", this.props.events.length);
-
- 
-
     const { calendar } = this.refs;
 
     var open = this.props.open;
-    // var wait = this.props.wait;
-    // var render = this.render;
-    // var events = this.props.events;
 
     $(calendar).fullCalendar({
       events: this.props.events,
@@ -76,40 +52,23 @@ export default class Calendar extends React.Component {
     
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 
 
-    // console.log("about to go to date:", this.props.goToDate)
-
 
     if(this.props.goToDate) {
       $(calendar).fullCalendar( 'gotoDate', this.props.goToDate )
     }
 
-    
-
-      // $(calendar).fullCalendar( 'gotoDate', this.props.goToDate ) 
   }
 
-
-
   componentWillUpdate() {
-    // console.log("dfriirffslkfmsekl===============")
  
-
     const { calendar} = this.refs;
-    $(calendar).fullCalendar( 'destroy');  
-      
-    
+    $(calendar).fullCalendar( 'destroy');   
   }
 
   render() {
-    // console.log("got to render in calendar.js:", this.props.events.length)
     return ( 
       <div ref="calendar"></div> 
     );
-
-    // if(ran) {
-
-    // }
-    // this.componentDidMount()
   }
 }
 
