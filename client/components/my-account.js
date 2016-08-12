@@ -14,7 +14,6 @@ export default class MyAccount extends Component {
     
     this.state = {
       user: null,
-      firstName: null,
       reservations: []
     }
   }
@@ -22,10 +21,8 @@ export default class MyAccount extends Component {
   componentWillMount() {
     checkStatus()
     .then(userData => {
-      console.log('userData', userData)
-      var firstName = userData.data.name.split(" ")[0];
-      console.log('firstName', firstName)
-      this.setState({ user: userData.data, name: firstName })
+      console.log('userData.data', userData.data)
+      this.setState({ user: userData.data})
     })
   }
 
@@ -33,9 +30,9 @@ export default class MyAccount extends Component {
     return (
       <div> 
         <NavBar />
-        {this.state.firstName ? 
+        {this.state.user ? 
           <div>
-            <h2>{this.state.firstName} 's Reservations</h2> 
+            <h2>{this.state.user.name.split(" ")[0]}'s Reservations</h2> 
             <ul>
             
             </ul>
