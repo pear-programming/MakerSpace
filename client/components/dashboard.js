@@ -51,13 +51,11 @@ export default class Dashboard extends React.Component {
         .then(timeSlots => {
           fetchReservations()
           .then(reservations => {
-            console.log('reservations', reservations.data)
-            console.log('do i have rooms? ', rooms.data) ///array of room objects
-            var mappedData = this.mapTimeSlots(reservations);
-            // var addColor = mappedData.map(reservation => {
-            //   reservation.color = 
-            // });
-            console.log('mappedData:~~~ ', mappedData)
+            // console.log('reservations', reservations.data)
+            // console.log('do i have rooms? ', rooms.data) /// room.data.roomColor
+          
+            var mappedData = this.mapTimeSlots(reservations, rooms.data);
+
             this.setState({ 
               user: user.data, 
               events: mappedData, 
@@ -92,15 +90,27 @@ export default class Dashboard extends React.Component {
     return nextSlots;  
   }
 
-  mapTimeSlots(reservations) {
-    console.log('reservations!!!', reservations)
+  mapTimeSlots(reservations, rooms) {
+    console.log('reservations!!!', reservations.data)
+    console.log('rooms:', rooms)
+    //add room color to reservations object
+
+
     return reservations.data.map(reservation => {
+      var room = rooms.filter(room => room.roomName === reservation.roomName)
+      var color;
+      if(room[0]) {
+        color = room[0].roomColor;
+      } else {
+        color = "#0073b7"
+      }
+
       return {
         title: reservation.roomName, 
         start: Date.parse(reservation.startTime), 
         end: Date.parse(reservation.endTime), 
         allDay: false, 
-        color: 'red'
+        color: color
       };
     })
 
