@@ -10,6 +10,7 @@ var timeSlots;
 var user;
 var rooms;
 var reservations;
+var goToDate = null;
 
 export default class Dashboard extends React.Component {
   constructor(){ 
@@ -23,6 +24,7 @@ export default class Dashboard extends React.Component {
       showModal: false,
       startTime: new Date(2016, 0, 1, 9, 10),
       endTime: new Date(2016, 0, 1, 9, 11)
+
     }
   }
 
@@ -35,6 +37,7 @@ export default class Dashboard extends React.Component {
     var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0] 
     console.log("showing current room in open:", currentRoom)
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
+    goToDate = time.getTime();
 
     this.setState({
       showModal: true, 
@@ -46,14 +49,6 @@ export default class Dashboard extends React.Component {
     });
   }
 
-  // wait() { 
-
-
-   
-
-  //   })
-
-  // }
 
   componentWillMount() {
 
@@ -80,6 +75,8 @@ export default class Dashboard extends React.Component {
       })
     })    
   }
+
+  
 
   getTimeSlotInfo(time, room) {
 
@@ -231,23 +228,26 @@ export default class Dashboard extends React.Component {
       // };
 
       console.log("successfully inserted!:", data)
-      this.setState({events: events})
+      goToDate = Date.parse(reservation.startTime)
+      this.setState({showModal: false, events: events})
 
     })
   }
 
   renderCalendar() { 
-    console.log("renderCalendar got called:", this.state.events);
+    // console.log("renderCalendar got called:", this.state.events);
 
     return <Calendar key={0} 
       events={this.state.events} 
       open={this.open.bind(this)}
-      wait={this.wait.bind(this)}
+      goToDate={goToDate}
+      // wait={this.wait.bind(this)}
       /> 
   }
 
   render(){
-    console.log("showing events:", this.state.events);
+    // console.log("showing events:", this.state.events);
+    // console.log("showing this:", this);
     const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return (
       <div>
@@ -255,7 +255,7 @@ export default class Dashboard extends React.Component {
        {this.state.events ?  
 
         <div>
-          {this.renderCalendar.call(this)}
+         
 
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
@@ -320,6 +320,8 @@ export default class Dashboard extends React.Component {
               </div>
             </Modal.Body>
           </Modal>
+
+          {this.renderCalendar.call(this)}
         </div>
 
         : null   }
