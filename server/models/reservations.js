@@ -12,7 +12,19 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
-Reservation.create = function(reservationData) {
+
+
+Reservation.create = function(reservationData) { 
+
+  if(typeof reservationData.startTime === 'string') {
+
+    reservationData.startTime = new Date(Date.parse(reservationData.startTime));
+    reservationData.endTime = new Date(Date.parse(reservationData.endTime));
+    reservationData.roomId = db.ObjectId(reservationData.roomId);
+    // reservationData.userId = db.ObjectId(reservationData.userId);
+
+  }
+
   return db.reservations.insert(reservationData)//reservations
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
@@ -171,6 +183,9 @@ Reservation.findByName = function(name) {
   .catch(err => console.log('error in findByName: ',err))
 }
 
+Reservation.findByUserId = function(userId) {
+  return db.reservations.find({userId: userId})
+}
 
 Reservation.updateReservation = function(resId, newInfo) {
   if(typeof resId==='string'){
