@@ -91,10 +91,7 @@ export default class Dashboard extends React.Component {
   }
 
   mapTimeSlots(reservations, rooms) {
-    console.log('reservations!!!', reservations.data)
-    console.log('rooms:', rooms)
     //add room color to reservations object
-
 
     return reservations.data.map(reservation => {
       var room = rooms.filter(room => room.roomName === reservation.roomName)
