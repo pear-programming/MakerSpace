@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col } from 'react-bootstrap';
 import { browserHistory, Link } from 'react-router';
 
 export default class Room extends Component {
@@ -23,20 +23,25 @@ export default class Room extends Component {
   }
 
   render() {
-    const room = this.props.roomInfo
+    
+    const room = this.props.roomInfo;
 
     var title = {float: 'left'}
     var info = {float: 'right'}
 
     return (
-      <div id="eachRoom clearfix">
-        <span onClick={this.open}>{room.roomName}</span>
 
-        <label className="switch">
-          { room.isAvailable ? <input onClick={() => this.props.toggleState(room)} type="checkbox" checked /> : <input onClick={() => this.props.toggleState(room)} type="checkbox" /> }
-          <div className="slider round"></div>
-        </label>
-        
+     
+
+      <div>
+        <Row className="row">
+          <Col md={6} className="eachRoom"><div>{room.roomName}</div></Col>
+
+          <Col md={6}>
+            { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
+          </Col>
+        </Row>
+
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
           <div className="roomTitleContainer">
@@ -54,7 +59,7 @@ export default class Room extends Component {
               <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
             </div>
             <div className="roomAvailability">
-              <h3>currently <span>available</span></h3>
+              <h3> <span className={room.isAvailable ? 'open' : 'closed'}>{room.isAvailable ? 'available' : 'In use'}</span></h3>
               <button className="scheduleBtn">Today's Schedule</button>
             </div>
           </Modal.Body>

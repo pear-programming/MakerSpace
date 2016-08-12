@@ -79,12 +79,14 @@ io.on('connection', function (socket) {
   });
 
   socket.on('tabletDisplay', function(data) {
-    console.log('data should be ex dee', data)
   })
 
   socket.on('bookNow', function(roomId) {
     socket.broadcast.emit('instaBooked', roomId);
+  })
 
+  socket.on('unBook', function(roomId) {
+    socket.broadcast.emit('roomUnBooked', roomId);
   })
 });
 
@@ -121,7 +123,6 @@ app.post('/signup', function(req, res) {
     }
   })
   .then(sessionId => {
-    console.log('sending sessionId: ', sessionId)
     //set cookie or session storage
     res.cookie("sessionId", sessionId)
     res.send(201, req.body.name)
@@ -161,18 +162,15 @@ app.get('/logout', function(req, res) {
   })
 })
 
-
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
  app.get('/check', MP.authWithSession(), function(req, res) {
-  console.log('scopes', req.scopes)
   res.status(200).send(req.user)
  })
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
   .then((roomIds) => {
-    console.log("ready to send response after room insertion:", roomIds)
     res.send(201, {roomIds: roomIds});
   })
 })
@@ -180,7 +178,6 @@ app.post('/rooms/new', function(req, res) {
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
-  console.log('req.params.roomName: ', req.params.roomName)
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
     console.log('resp in changeAvailability endpoint: ', resp)
@@ -199,15 +196,12 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
 
 app.put('/room/edit/:id', function(req, res){
   var roomId = req.params.id
-  // console.log("req ", req.body._id)
   //req.body should be new reservation info
   Room.updateRoom(roomId, req.body)
   .then(updatedRoom => {
-    console.log('result from update: ', updatedRoom)
     res.send(200, updatedRoom)
   })
 })
-
 
 // Delete room
 
@@ -233,13 +227,12 @@ app.get('/reservations', function(req, res){
 
 app.get('/reservations/:roomName', function(req, res){
   var name = req.params.roomName;
-  console.log('name from params: ', name)
   Reservation.findByName(name)
   .then(reservations => {
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    console.log('reservations: ', reservations)
+    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })
@@ -311,19 +304,19 @@ app.get('/timeSlots', function(req, res) {
 })
 
 //endpoints for calendar asset-serving
-app.get('/lib/jquery.min.js', function(req, res){
+app.get('*/lib/jquery.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
-app.get('/lib/moment.min.js', function(req, res){
+app.get('*/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.js', function(req, res){
+app.get('*/fullcalendar/fullcalendar.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
 })
 
-app.get('/fullcalendar/fullcalendar.css', function(req, res){
+app.get('*/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
 // Wild card route for client side routing.

@@ -60,13 +60,14 @@ export default class Dashboard extends React.Component {
         fetchTimeSlots()
         .then(slots => {
           fetchReservations()
+
           .then(reserv => {
             console.log("showing data type for reservation:", typeof Date.parse(reserv.data[0].startTime))
             timeSlots = slots.data; 
             user = userData.data;
             rooms = roomsData.data;
             reservations = reserv;
-            var mappedData = this.mapTimeSlots(reserv);
+            var mappedData = this.mapTimeSlots(reserv, rooms);
             this.setState({ 
               events: mappedData, 
               currentRoom: Object.assign(roomsData.data[0], {openSlots: []})     
@@ -98,15 +99,27 @@ export default class Dashboard extends React.Component {
     return nextSlots;  
   }
 
-  mapTimeSlots(reservations) {
+  mapTimeSlots(reservations, rooms) {
+    console.log('reservations!!!', reservations.data)
+    console.log('rooms:', rooms)
+    //add room color to reservations object
+
 
     return reservations.data.map(reservation => {
+      var room = rooms.filter(room => room.roomName === reservation.roomName)
+      var color;
+      if(room[0]) {
+        color = room[0].roomColor;
+      } else {
+        color = "#0073b7"
+      }
+
       return {
         title: reservation.roomName, 
         start: Date.parse(reservation.startTime), 
         end: Date.parse(reservation.endTime), 
         allDay: false, 
-        color: 'red'
+        color: color
       };
     })
 
@@ -241,6 +254,7 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
+
        {this.state.events ?  
 
         <div>
