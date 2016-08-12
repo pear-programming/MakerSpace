@@ -43,6 +43,7 @@ export default class Calendar extends React.Component {
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
       },
       allDay: false,
+      hiddenDays: [ 0 ],
       minTime: "09:00:00",
       maxTime: "21:00:00",
       height: "auto"  
