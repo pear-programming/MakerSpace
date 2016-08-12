@@ -203,7 +203,7 @@ export default class Dashboard extends React.Component {
     console.log("startTime:", this.state.startTime);
     console.log("endTime:", this.state.endTime);
     console.log("room:", this.state.currentRoom); 
-    console.log("user:", this.state.user);
+    // console.log("user:", this.state.user);
 
     var reservation = {
       startTime: this.state.startTime,
@@ -226,7 +226,7 @@ export default class Dashboard extends React.Component {
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
-        color: 'red'
+        color: this.state.currentRoom.roomColor
       })
      
       console.log("successfully inserted!:", data)
@@ -242,8 +242,6 @@ export default class Dashboard extends React.Component {
       events={this.state.events} 
       open={this.open.bind(this)}
       goToDate={goToDate}
-      reRenderCalendar={this.state.reRenderCalendar}
-      // wait={this.wait.bind(this)}
       /> 
   }
 

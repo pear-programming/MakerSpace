@@ -49,6 +49,9 @@ export default class Calendar extends React.Component {
  
 
     // console.log("in componentDidUpdate in calendar.js:", this.props.events.length);
+
+ 
+
     const { calendar } = this.refs;
 
     var open = this.props.open;
@@ -75,9 +78,12 @@ export default class Calendar extends React.Component {
 
     // console.log("about to go to date:", this.props.goToDate)
 
+
     if(this.props.goToDate) {
       $(calendar).fullCalendar( 'gotoDate', this.props.goToDate )
     }
+
+    
 
       // $(calendar).fullCalendar( 'gotoDate', this.props.goToDate ) 
   }
@@ -86,8 +92,12 @@ export default class Calendar extends React.Component {
 
   componentWillUpdate() {
     // console.log("dfriirffslkfmsekl===============")
+ 
+
     const { calendar} = this.refs;
     $(calendar).fullCalendar( 'destroy');  
+      
+    
   }
 
   render() {
