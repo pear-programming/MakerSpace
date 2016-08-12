@@ -210,10 +210,7 @@ export default class Dashboard extends React.Component {
       userId: user.uid,
       userEmail: user.email
     }
-
-
-    // console.log("ready to insert reservation:", reservation);
-
+    
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice(); 
