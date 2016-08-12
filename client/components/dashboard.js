@@ -12,6 +12,7 @@ var rooms;
 var reservations;
 var goToDate = null;
 
+
 export default class Dashboard extends React.Component {
   constructor(){ 
     super()
@@ -23,8 +24,8 @@ export default class Dashboard extends React.Component {
       currentRoom: null,
       showModal: false,
       startTime: new Date(2016, 0, 1, 9, 10),
-      endTime: new Date(2016, 0, 1, 9, 11)
-
+      endTime: new Date(2016, 0, 1, 9, 11),
+      reRenderCalendar: false
     }
   }
 
@@ -75,8 +76,6 @@ export default class Dashboard extends React.Component {
       })
     })    
   }
-
-  
 
   getTimeSlotInfo(time, room) {
 
@@ -167,10 +166,7 @@ export default class Dashboard extends React.Component {
 
   changeEndTime(event) { 
 
-
-
     this.setState({endTime: new Date(event.target.value)});
-
   }
 
   formatTime(time) {
@@ -219,18 +215,10 @@ export default class Dashboard extends React.Component {
         allDay: false,
         color: 'red'
       })
-      //  return {
-      //   title: reservation.roomName, 
-      //   start: Date.parse(reservation.startTime), 
-      //   end: Date.parse(reservation.endTime), 
-      //   allDay: false, 
-      //   color: 'red'
-      // };
-
+     
       console.log("successfully inserted!:", data)
       goToDate = Date.parse(reservation.startTime)
-      this.setState({showModal: false, events: events})
-
+      this.setState({showModal: false, events: events, reRenderCalendar: true})
     })
   }
 
@@ -241,6 +229,7 @@ export default class Dashboard extends React.Component {
       events={this.state.events} 
       open={this.open.bind(this)}
       goToDate={goToDate}
+      reRenderCalendar={this.state.reRenderCalendar}
       // wait={this.wait.bind(this)}
       /> 
   }
