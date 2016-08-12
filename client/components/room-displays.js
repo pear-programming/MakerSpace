@@ -15,7 +15,7 @@ export default class RoomDisplays extends Component {
     this.state = {
       rooms: [],
       pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
-      data: [{x: 1, y: 15}, {x: 2, y: 15}, {x: 3, y: 15}, {x: 4, y: 15}, {x: 5, y: 15}],
+      data: [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 5}, {x: 6, y: 6}, {x: 7, y: 7}, {x: 8, y: 8}, {x: 9, y: 9}, {x: 10, y: 10}, {x: 11, y: 11}],
       roomOccurences: {Room: 15},
       barData: [[{}]],
       barLabel: [],
@@ -198,8 +198,8 @@ export default class RoomDisplays extends Component {
       return (
 
         <tr>
-          <td>{room.x}</td>
-          <td>{room.y} Reservations</td>
+          <td><strong>{room.x}</strong></td>
+          <td>{room.y} reservations</td>
           <td>{Math.floor(room.y / sum  * 100)}%</td>
         </tr>
       )
@@ -255,17 +255,18 @@ export default class RoomDisplays extends Component {
           </Row>
           
           <Row style={chart}>
-            <Col md={6}>
+            <Col md={3}>
               <h1>Reservations by Room</h1>
               <Table>
                 <tbody>
-                  <div><strong>{sum}</strong> Total Reservations</div>
+                  <div><h3><strong>{sum}</strong> Total Reservations</h3></div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </tbody>
               </Table>
             </Col>
 
-            <Col md={6}>
-              <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }}>
+            <Col md={9}>
+              <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
                   animate={{ duration: 2000 }}
@@ -297,6 +298,7 @@ export default class RoomDisplays extends Component {
             <Col md={6}>
               <VictoryStack horizontal
                 padding={30}
+                height={300}
                 animate={{ duration: 2000 }}
                 style={{
                   data: {width: 30},
