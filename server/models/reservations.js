@@ -147,7 +147,7 @@ Reservation.findAllReservations = function() {
 }
 
 Reservation.findByName = function(name) {
-  return db.collection('rooms').find({roomName: name})
+  return db.rooms.find({roomName: name})
   .then(room => {
     if(room[0]){
       console.log('room[0]._id: ', room[0]._id)
