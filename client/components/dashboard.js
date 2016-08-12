@@ -168,6 +168,7 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
+
        {this.state.events ?  
 
         <div>

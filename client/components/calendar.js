@@ -39,6 +39,7 @@ export default class Calendar extends React.Component {
         open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0)); 
       },
       dayClick: function(date, jsEvent, view) {
+
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
       },
       allDay: false,
