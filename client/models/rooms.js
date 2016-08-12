@@ -24,6 +24,12 @@ export function fetchReservations(){
   return request
 }
 
+export function fetchUserReservations(userId){
+  const request = axios.get(`/reservations/${userId}`)
+
+  return request
+}
+
 export function fetchTimeSlots(){
   const request = axios.get('/timeSlots')
 
