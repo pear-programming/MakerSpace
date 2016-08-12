@@ -25,10 +25,6 @@ export default class SplashPage extends React.Component {
     })
   }
 
-  
-
-  
-
   render(){
     console.log("showing reservations in render:", this.state.reservations)
     return (
