@@ -3,6 +3,7 @@ import { browserHistory, Link } from 'react-router';
 import Room from './room';
 import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 import _ from 'lodash'
 import RoomCalendar from './room-calendar';
 
@@ -19,8 +20,6 @@ function formatEvents(resArray) {
     }
   })
 }
-
-
 
 export default class TabletDisplay extends Component {
   constructor(props){  
@@ -80,8 +79,30 @@ export default class TabletDisplay extends Component {
         console.log('this.state ELSE: ', this.state)
 
       }
-    })
+      this.setState({ currentRoom: room })
+    }) 
 
+    //start timer that checks room status 10 seconds
+    this.checkForChanges.call(this)
+
+  }
+
+  checkForChanges() {
+    var url = window.location.href.split('/');
+    var currentRoom = url[url.length-2];
+    currentRoom = decodeURIComponent(currentRoom)
+    setInterval(() => {
+      fetchRooms() 
+      .then(rooms=>{
+        const room = rooms.data.find(findRoom)
+        
+        function findRoom(findThisRoom) { 
+          return findThisRoom.roomName === currentRoom;
+        }
+
+        this.setState({currentRoom: room})
+      }) 
+    }, 10000)
   }
 
 
@@ -121,7 +142,7 @@ export default class TabletDisplay extends Component {
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-    
+
     return (
       <div>
        { room.isAvailable ? 

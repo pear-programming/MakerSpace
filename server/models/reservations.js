@@ -5,15 +5,14 @@ var Reservation = module.exports
 //reservations
 
 Reservation.findByRoomId = function(Id) {
-  console.log("inside reservations findbyid:", id);
-  return db.reservations.find({id: id}) //reservations
+  return db.reservations.find({id: id})
   .then((reservations) => {
   return reservations
   })
 }
 
 Reservation.create = function(reservationData) {
-  return db.reservations.insert(reservationData)//reservations
+  return db.reservations.insert(reservationData)
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -45,7 +44,7 @@ Reservation.delete = function(reservationId){
 
 
 Reservation.findAllReservations = function() {
-  return db.reservations.find({})//reservations
+  return db.reservations.find({})
   .then(reservationsData => {
 
     // var roomReservations = reservationsData.reduce((accum, reservation) => {
