@@ -7,7 +7,8 @@ bright green: #49c633;
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
-  background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo*/
+  /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo 1*/
+  background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; /*Carlo 2*/
   background-size: cover;
   background-repeat: no-repeat;
   border: .1px solid white;
@@ -39,7 +40,7 @@ bright green: #49c633;
 }
 
 #fakeButton:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 9px 25px 0 rgba(0,0,0,0.19);
   color: #f8f8f8;
   background-color: #0073b7;
   border-color: #0073b7;
@@ -54,14 +55,12 @@ bright green: #49c633;
   text-align: center;
 }
 
-/*==== room modal ====*/
-
 img.roomImage {
-/*  height: 160px;
-  float: right;*/
-  width: 100%;
-  border-right: 5px;
+  height: 160px;
+  float: right;
 }
+
+/*==== room modal ====*/
 
 .roomImageContainer {
   border-radius: 20px;
@@ -71,7 +70,6 @@ img.roomImage {
   overflow: hidden;
   margin: auto;
 }
-
 
 .roomTitleContainer {
   text-align: center;
@@ -121,9 +119,6 @@ span.closed {
   font-size: 20px;
 }
 
-
-
-
 .scheduleBtn {
   margin-top: 10px;
   -webkit-border-radius: 11;
@@ -143,14 +138,8 @@ span.closed {
   text-decoration: none;
 }
 
-
-
-
-
-/*==============*/
-
-#eachRoom {
-  width: 50%;
+.roomDetails {
+  display: inline-block;
 }
 
 .floorPlan {
@@ -161,12 +150,10 @@ span.closed {
 
 .RoomsList {
   display: inline-block;
-  margin-left: 20px;
-  min-width: 300px;
+  min-width: 100%;
+  padding: 0px 0px 21px 60px;
+  border: 2px solid darkgrey;
 }
-
-
-
 
 /*=========== Tablet Display ========*/
 
@@ -244,74 +231,61 @@ span.closed {
 
 /*=======================================*/
 
-.switch {
-  position: relative;
+.room:hover{
+  fill-opacity: 1;
+}
+
+.window {
+  border: 2px solid darkgrey;
+  padding: 0px 20px 21px 20px;
+}
+
+.window img { 
+  margin-top: -55px;
+  height: 285px;
+  width: 464.11px;
+  float: right; 
+}
+
+.eachRoom {
+  font-size: 24px;
+}
+
+.row {
+  padding-top: 14px; 
+}
+
+/*=============================================================*/
+
+.opened {
+    background-color: white; 
+    border-radius: 20px;
+    color: #0073B7;
+    padding: 3px 6px ;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px ;
+    cursor: pointer;
+    transition-duration: 0.1s;
+    border: 1px solid #0073B7;
+}
+
+.opened:hover {
+  background-color: #0073B7;
+  color: white;
+}
+
+.booked {
+  background-color: #0073B7;
+  border: 1px solid #0073B7; 
+  border-radius: 20px;
+  color: white;
+  padding: 3px 6px ;
+  text-align: center;
+  text-decoration: none;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  margin: 4px 2px;
+  cursor: none;
+  transition-duration: 0.1s;
 }
-
-.switch input {display:none;}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #49c633;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #49c633;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-
-
-.clearfix:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
-.clearfix { display: inline-block; }
-/* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
-/* close commented backslash hack */

@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import {fetchRooms, changeStatus} from '../models/rooms';
+import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
+import Plan from './Plan';
 import NavBar from './nav-bar';
+import RoomWindow from './room-window';
 
 
 export default class RoomsList extends Component {
   constructor(props) {
     super(props)
 
+    this.showWindow = this.showWindow.bind(this);
+    this.updateWindow = this.updateWindow.bind(this);
+
     this.state = {
-      rooms: []
+      rooms: [],
+      window: null,
+      room: {}
     }
   }
   
@@ -29,7 +37,7 @@ export default class RoomsList extends Component {
     socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
   renderRooms() {
-    return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} />)
+    return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} current={this.state.room} />)
   }
   updatedRooms(data) {
     this.setState({ rooms: data.rooms.rooms })
@@ -92,17 +100,40 @@ export default class RoomsList extends Component {
     socket.off('updatedRooms');
   }
 
+  showWindow (bool) {
+    this.setState({ window: bool })
+  }
+
+  updateWindow(name) {
+    const room = this.state.rooms.find(findRoom)  
+    function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
+    this.setState({room})
+    this.showWindow(true)
+  }
+
   render() {
+
     return (
-      <div>
+      <div >
         <NavBar />
-        <div className="RoomsList"> 
-          <h2>Rooms</h2> 
-          {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
-        </div>
-        <div className="floorPlan">       
-          <img src="https://s32.postimg.org/e5a41xdzp/floorplan.jpg"/>
-        </div>
+        <Grid>
+          <Row>
+            <Col md={4} >
+              <div className="RoomsList"> 
+                <h1>Rooms</h1> 
+                {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
+              </div>
+            </Col>
+            
+            <Col md={8} >
+              <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
+          
+              <div className="roomWindow">
+                { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }
