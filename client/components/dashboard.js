@@ -246,11 +246,11 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
-        <ReservationList />
+        <div className='dashboardContainer'>
 
        {this.state.events ?  
 
-        <div>
+        <div className="calendarContainer col-md-9">
          
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
@@ -318,9 +318,12 @@ export default class Dashboard extends React.Component {
 
           {this.renderCalendar.call(this)}
         </div>
+        
 
         : null   }
            
+      <ReservationList />
+      </div>
       </div>
     )
   }

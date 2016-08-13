@@ -291,7 +291,7 @@ span.closed {
 }
 
 
-/*================= My Account Page Table =======================*/
+/*========= Reservation List Table =========*/
 
 
 
@@ -325,12 +325,17 @@ span.closed {
   }
 
 
-/* account page */
+/*========= Dashboard =========*/
 
-.accountPage {
-  width: 90%;
+/* calendar */
+.dashboardContainer {
+  width: 95%;
   margin: auto;
 }
 
+.calendarContainer {
+/*  width: 80%;
+  float: right;*/
+}
 
 

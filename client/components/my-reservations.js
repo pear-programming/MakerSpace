@@ -74,9 +74,9 @@ export default class ReservationList extends Component {
 
   render() {
     return (
-      <div> 
+      <div className="reservationList col-md-3"> 
         {this.state.user ? 
-          <div className="accountPage">
+          <div>
             <h2>{this.state.user.name.split(" ")[0]}'s Reservations</h2> 
             <div className="table-responsive">
             <table className="myTable">
@@ -94,7 +94,7 @@ export default class ReservationList extends Component {
                   <tr>
                     <td> { res.roomName } </td>
                     <td> { this.formatDate(res.startTime) } </td>
-                    <td> { this.formatTime(res.startTime) + ' to ' + this.formatTime(res.endTime)} </td>
+                    <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
                     <td> <button onClick={ () => this.deleteThisReservation(res._id) } > DELETE </button> </td>
                   </tr>                  
                   )
