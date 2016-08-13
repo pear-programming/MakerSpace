@@ -12,7 +12,12 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
+db.products.remove( { qty: { $gt: 20 } }, true )
 
+Reservation.deleteIt = function() {
+  console.log("got run here")
+  return db.reservations.remove({roomName: "Turing"})
+}
 
 Reservation.create = function(reservationData) { 
 
