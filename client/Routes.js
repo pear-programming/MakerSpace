@@ -6,7 +6,7 @@ import App from './components/app';
 import TabletDisplay from './components/tablet-display';
 import Dashboard from './components/dashboard';
 import RoomDisplays from './components/room-displays';
-
+import TabletList from './components/tablet-list';
 
 export default class Routes extends React.Component {
   render(){
@@ -19,6 +19,8 @@ export default class Routes extends React.Component {
           <Route path='room-displays' component={RoomDisplays} />
           <Route path=':roomName/display' component={TabletDisplay} />
           <Route path='dashboard' component={Dashboard} /> 
+          <Route path='tablet-list' component={TabletList} /> 
+
         </Route>
       </Router>
     )

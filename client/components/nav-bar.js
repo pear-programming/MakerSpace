@@ -40,6 +40,7 @@ export default class NavBar extends Component {
               <LinkContainer to={'/my-account'}><MenuItem eventKey={3.1}>My Account</MenuItem></LinkContainer>
               <LinkContainer to={'/room-displays'}><MenuItem eventKey={3.2}>View room displays</MenuItem></LinkContainer>
               <LinkContainer to={'/dashboard'}><MenuItem eventKey={3.2}>Dashboard</MenuItem></LinkContainer>
+              <LinkContainer to={'/tablet-list'}><MenuItem eventKey={3.3}>Tablet List</MenuItem></LinkContainer>
               <MenuItem divider />
               <MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem>
 
