@@ -1,3 +1,4 @@
+"use strict";
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -88,6 +89,23 @@ io.on('connection', function (socket) {
   socket.on('unBook', function(roomId) {
     socket.broadcast.emit('roomUnBooked', roomId);
   })
+
+    Reservation.findAllReservations()
+    .then(reservationsData => {
+      let date = new Date();
+      let currentTime = date.getTime();
+      reservationsData.forEach( x => {
+        let resStart = x.startTime.getTime() + 18000000;
+        let resEnd = x.endTime.getTime() + 18000000;
+
+        console.log(resStart, currentTime, resEnd)
+
+        if(resStart <= currentTime && currentTime <= resEnd) {
+         console.log('reserved room', x.roomName)
+        }
+      })
+    })
+
 });
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
@@ -153,20 +171,11 @@ app.post('/login', function(req, res) {
   })
 })
 
-
-app.get('/logout', function(req, res) {
-  Session.destroy(req.cookies.sessionId)
-  .then(() => {
-    res.clearCookie('sessionId');
-    res.sendStatus(200);
-  })
-})
-
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
- app.get('/check', MP.authWithSession(), function(req, res) {
+app.get('/check', MP.authWithSession(), function(req, res) {
   res.status(200).send(req.user)
- })
+})
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
@@ -175,21 +184,25 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
+app.get('/logout', function(req, res){
+  console.log('logging out')
+  req.logout();
+  res.redirect('/');
+});
+
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
-    console.log('resp in changeAvailability endpoint: ', resp)
     res.send(201, resp)
   })
 })
 
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
-  console.log("got request")
+  
   Room.findRooms()
   .then(roomInfo => {
-    console.log("about to send roominfo:", roomInfo)
     res.send(201, roomInfo)
   })
 })
@@ -208,7 +221,6 @@ app.put('/room/edit/:id', function(req, res){
 app.delete('/:roomName', function(req, res){
   Room.deleteRoom(req.params.roomName)
   .then(resp => {
-    console.log('Successfully deleted', req.params.roomName);
     res.send('Successfully deleted room')
   })
 })
@@ -219,11 +231,9 @@ app.delete('/:roomName', function(req, res){
 app.get('/reservations', function(req, res){
   Reservation.findAllReservations()
   .then(reservationsData => {
-    // console.log('reservationsData: ', reservationsData)
     res.send(200, reservationsData)
   })
 })
-
 
 app.get('/reservations/:roomName', function(req, res){
   var name = req.params.roomName;
@@ -232,36 +242,28 @@ app.get('/reservations/:roomName', function(req, res){
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })
 
-
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
-  console.log("got new reserv:", typeof req.body.startTime)
+  
   Reservation.create(req.body)
   .then(reservationInfo => {
-    console.log("reservationInfo: ", reservationInfo)
     res.send(201, reservationInfo)
   })
 })
 
 app.get('/reservations/:userId', function(req, res){
   var userId = req.params.userId;
-  console.log('userId from params: ', userId)
+  
   Reservation.findByUserId(userId)
   .then(reservations => {
-    
-    console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
-  .catch(err => {
-    console.log("error:", err)
-  })
+  .catch(err => {})
 })
-
 
 //update existing reservation
 app.put('/reservations/:id', function(req, res){
@@ -269,16 +271,14 @@ app.put('/reservations/:id', function(req, res){
   //req.body should be new reservation info
   Reservation.updateReservation(resId, req.body)
   .then(updatedRes => {
-    console.log('result from update: ', updatedRes)
     res.send(200, updatedRes)
   })
 })
 
-
 app.delete('/reservations/delete', function(req, res){
+
   Reservation.delete(req.body)
   .then(reservationInfo => {
-  console.log("reservationInfo: ", reservationInfo)
     if(reservationInfo.n === 0){
       res.send(400, "reservations does not exist")
     }
@@ -295,12 +295,9 @@ app.get('/timeSlots', function(req, res) {
 
     Reservation.makeSlots(reservationData)
     .then((timeSlots) => {
-
       res.send(200, timeSlots)
     })
-
   })
-  
 })
 
 //endpoints for calendar asset-serving

@@ -44,6 +44,12 @@ export default class TabletDisplay extends Component {
     currentRoom = decodeURIComponent(currentRoom)
 
     socket.on('updatedRooms', this.updateState.bind(this))
+    socket.on('checkingChanges', (newRes) => {
+      let date = new Date();
+      let time = date.getTime();
+      console.log('currentTime', time)
+      console.log('changing', newRes)
+    })
     fetchRooms() 
     .then(rooms=>{
       let room = rooms.data.find((room)=>room.roomName === currentRoom)
@@ -51,12 +57,13 @@ export default class TabletDisplay extends Component {
       return room
     })
     .then(room => {
+      this.setState({ currentRoom: room })
       return getRoomReservations(room.roomName)
     })
     .then(reservations => {
 
       let timeDiffs = []
-      console.log('reservations.data: ', reservations.data)
+      
       if(reservations.data !== "no reservations currently exist for this room") {
         //if there are reservations do this....
         reservations.data.forEach(reservation => {
@@ -70,16 +77,15 @@ export default class TabletDisplay extends Component {
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
-        console.log('events: ', events)
+        
         this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
-        console.log('this.state IF: ', this.state)
+        
       } else {  //no current reservations
      
         this.setState({reservations: null, nextRes: null, events: null})
-        console.log('this.state ELSE: ', this.state)
+        
 
       }
-      this.setState({ currentRoom: room })
     }) 
 
     //start timer that checks room status 10 seconds
@@ -117,7 +123,7 @@ export default class TabletDisplay extends Component {
 
   unBook() {
     changeStatus(this.state.currentRoom.roomName)
-    .then((x) => console.log('x in unBook: ', x))
+    .then((x) => x)
 
     this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
     socket.emit('unBook', this.state.currentRoom._id)  
