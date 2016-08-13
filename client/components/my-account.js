@@ -36,38 +36,57 @@ export default class MyAccount extends Component {
 
   }
 
+  formatTime(time) {
+    var hours = new Date(Date.parse(time) + 18000000).getHours() 
+    var amPm;
+    if(hours > 12) {
+      hours = hours - 12
+      amPm = 'pm'
+    }
+    else if(hours === 12) amPm = 'pm'
+    else amPm = 'am'
+    return hours.toString() + ":" + (new Date(time).getMinutes().toString() + "0").slice(0,2) + amPm;
+  }
 
+  formatDate(time) {
+    var tomonth = new Date(time).getMonth() +1;
+    var todate= new Date(time).getDate();
+    var toyear = new Date(time).getFullYear();
+    return tomonth+'/'+todate+'/'+toyear;
+  }
 
   render() {
     return (
-      <div> 
+      <div className="accountPage"> 
         <NavBar />
         {this.state.user ? 
           <div>
             <h2>{this.state.user.name.split(" ")[0]}'s Reservations</h2> 
-            <table>
+            <div className="table-responsive">
+            <table className="myTable">
               <tr>
-                <td>Room Name</td>
-                <td>Start Time</td>
-                <td>End Time</td>
-                <td>Edit Reservation</td>
-                <td>Delete Reservation</td>
+                <th>Room Name</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Edit Reservation</th>
+                <th>Delete Reservation</th>
               </tr>              
 
               { this.state.reservations ? 
 
-                this.state.reservations.map(res => {
+                this.state.reservations.sort((a,b) => Date.parse(a.startTime) - Date.parse(b.startTime) ).map(res => {
                 return (
                 <tr>
-                  <td> {res.roomName} </td>
-                  <td> {res.startTime} </td>
-                  <td> {res.endTime} </td>
-                  <td> <button>Edit Reservation</button> </td>
-                  <td> <button>Delete Reservation</button> </td>
+                  <td> { res.roomName } </td>
+                  <td> { this.formatDate(res.startTime) } </td>
+                  <td> { this.formatDate(res.startTime) } </td>
+                  <td> { this.formatTime(res.endTime) } </td>
+                  <td> <button> Edit Reservation </button> </td>
+                  <td> <button> Delete Reservation </button> </td>
                 </tr>  
                   )
                 })
-
 
                 :
 
@@ -75,6 +94,7 @@ export default class MyAccount extends Component {
               }
             
             </table>
+            </div>
           </div>
           :
           null

@@ -289,3 +289,39 @@ span.closed {
   cursor: none;
   transition-duration: 0.1s;
 }
+
+
+/*================= My Account Page Table =======================*/
+
+  table.myTable {
+    /*font-family: verdana, arial, sans-serif;*/
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #3A3A3A;
+    border-collapse: collapse;
+  }
+ 
+  table.myTable th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #517994;
+    background-color: #B2CFD8;
+  }
+ 
+  table.myTable tr:hover td {
+    background-color: #DFEBF1;
+  }
+ 
+  table.myTable td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #517994;
+    background-color: #ffffff;
+  }
+
+
+
+
