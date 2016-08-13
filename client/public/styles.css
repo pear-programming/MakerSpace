@@ -161,6 +161,11 @@ span.closed {
   margin-right: -50px;
 }
 
+
+.tabList {
+  width: 300px;
+}
+
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {

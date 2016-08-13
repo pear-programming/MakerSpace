@@ -20,7 +20,6 @@ export default class Routes extends React.Component {
           <Route path=':roomName/display' component={TabletDisplay} />
           <Route path='dashboard' component={Dashboard} /> 
           <Route path='tablet-list' component={TabletList} /> 
-
         </Route>
       </Router>
     )
