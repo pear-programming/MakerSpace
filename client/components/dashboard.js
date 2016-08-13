@@ -3,6 +3,7 @@ import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
 import Calendar from './calendar';
+import ReservationList from './my-reservations';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -245,6 +246,7 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
+        <ReservationList />
 
        {this.state.events ?  
 
