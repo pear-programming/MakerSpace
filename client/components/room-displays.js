@@ -17,7 +17,7 @@ export default class RoomDisplays extends Component {
       pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
       data: [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 5}, {x: 6, y: 6}, {x: 7, y: 7}, {x: 8, y: 8}, {x: 9, y: 9}, {x: 10, y: 10}, {x: 11, y: 11}],
       roomOccurences: {Room: 15},
-      barData: [[{}]],
+      barData: [[]],
       barLabel: [],
       topFive: []
     }
@@ -135,15 +135,14 @@ export default class RoomDisplays extends Component {
         })
       })
 
-      this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum })
-      
       let x = 1
       let data = []
       for ( let key in resOccurences ) {
         data.push({ x: x, y: resOccurences[key] })
         x += 1
       }
-      this.setState({ data: data, roomOccurences: resOccurences })
+      this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
+      
     })
 
     console.log('bitch better have my money', users)
@@ -223,7 +222,7 @@ export default class RoomDisplays extends Component {
     };
     
     let chart = { backgroundColor: "lightblue" }
-    let stack = { backgroundColor: "#e6e6ff" }
+    let stack = { backgroundColor: "#DEEDDE" }
     let grid = { padding: "0px" }
     let sum = this.sum(this.state.pieData, 'y');
 
@@ -255,7 +254,7 @@ export default class RoomDisplays extends Component {
           </Row>
           
           <Row style={chart}>
-            <Col md={3}>
+            <Col md={4}>
               <h1>Reservations by Room</h1>
               <Table>
                 <tbody>
@@ -265,7 +264,7 @@ export default class RoomDisplays extends Component {
               </Table>
             </Col>
 
-            <Col md={9}>
+            <Col md={8}>
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
