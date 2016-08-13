@@ -35,7 +35,7 @@ export default class Room extends Component {
 
       <div>
         <Row className="row">
-          <Col md={6} className="eachRoom"><div>{room.roomName}</div></Col>
+          <Col md={6} className="eachRoom"><div id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }>{room.roomName}</div></Col>
 
           <Col md={6}>
             { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
