@@ -19,8 +19,8 @@ export default class ReservationList extends Component {
   }
 
   componentWillMount() {
-    this.update.call(this)
 
+    this.update.call(this)
   }
 
 
@@ -77,7 +77,7 @@ export default class ReservationList extends Component {
       <div className="reservationList col-md-3"> 
         {this.state.user ? 
           <div>
-            <h2>{this.state.user.name.split(" ")[0]}'s Reservations</h2> 
+            <h3> Your Reservations</h3> 
             <div className="table-responsive">
             <table className="myTable">
               <tr>

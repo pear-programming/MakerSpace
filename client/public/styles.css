@@ -296,7 +296,6 @@ span.closed {
 
 
   table.myTable {
-    /*font-family: verdana, arial, sans-serif;*/
     font-size: 11px;
     color: #333333;
     border-width: 1px;
@@ -306,7 +305,7 @@ span.closed {
  
   table.myTable th {
     border-width: 1px;
-    padding: 8px;
+    padding: 5px;
     border-style: solid;
     border-color: #517994;
     background-color: #B2CFD8;
@@ -318,7 +317,7 @@ span.closed {
  
   table.myTable td {
     border-width: 1px;
-    padding: 8px;
+    padding: 5px;
     border-style: solid;
     border-color: #517994;
     background-color: #ffffff;
@@ -333,9 +332,7 @@ span.closed {
   margin: auto;
 }
 
-.calendarContainer {
-/*  width: 80%;
-  float: right;*/
+.reservationList h3 {
+  color: #49c633
 }
-
 
