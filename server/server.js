@@ -233,20 +233,16 @@ app.get('/reservations/:roomName', function(req, res){
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })
 
 
 app.get('/reservations-by-user/:userId', function(req, res){
-  console.log("AM I RUNNING???!?!??!!")
   var userId = req.params.userId;
-  console.log('userId from params: ', userId)
+
   Reservation.findByUserId(userId)
   .then(reservations => {
-    
-    console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
   .catch(err => {
@@ -280,6 +276,7 @@ app.put('/reservations/:id', function(req, res){
 
 
 app.delete('/reservations/delete', function(req, res){
+  console.log('in app.delete -req', req.body)
   Reservation.delete(req.body)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)

@@ -293,6 +293,8 @@ span.closed {
 
 /*================= My Account Page Table =======================*/
 
+
+
   table.myTable {
     /*font-family: verdana, arial, sans-serif;*/
     font-size: 11px;
@@ -322,6 +324,13 @@ span.closed {
     background-color: #ffffff;
   }
 
+
+/* account page */
+
+.accountPage {
+  width: 90%;
+  margin: auto;
+}
 
 
 

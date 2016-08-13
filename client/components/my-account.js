@@ -3,6 +3,7 @@ import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import MyReservations from './my-reservations';
 import { fetchReservations , fetchTimeSlots, fetchRooms, fetchUserReservations, getRoomReservations } from '../models/rooms';
+import { deleteReservation } from '../models/reservations';
 import {Grid, Row, Col} from 'react-bootstrap';
 
 
@@ -55,12 +56,24 @@ export default class MyAccount extends Component {
     return tomonth+'/'+todate+'/'+toyear;
   }
 
+
+  deleteThisReservation(res) {
+    console.log("resId!!!!!", res)
+    var reservation = {_id: res}
+    deleteReservation(reservation)
+    
+  }
+
+
+
+
+
   render() {
     return (
-      <div className="accountPage"> 
+      <div> 
         <NavBar />
         {this.state.user ? 
-          <div>
+          <div className="accountPage">
             <h2>{this.state.user.name.split(" ")[0]}'s Reservations</h2> 
             <div className="table-responsive">
             <table className="myTable">
@@ -82,10 +95,10 @@ export default class MyAccount extends Component {
                   <td> { this.formatDate(res.startTime) } </td>
                   <td> { this.formatDate(res.startTime) } </td>
                   <td> { this.formatTime(res.endTime) } </td>
-                  <td> <button> Edit Reservation </button> </td>
-                  <td> <button> Delete Reservation </button> </td>
-                </tr>  
-                  )
+                  <td> <button onClick={ () => this.deleteThisReservation(res._id) } > Edit Reservation </button> </td>
+                  <td> <button onClick={ () => this.deleteThisReservation(res._id) } > Delete Reservation </button> </td>
+                </tr>                  
+                )
                 })
 
                 :
@@ -105,45 +118,3 @@ export default class MyAccount extends Component {
   }
 }
 
-
-// endTime
-// :
-// "2016-08-10T14:30:00.000Z"
-// roomId
-// :
-// "579cdae4682f1ba7032f0d7c"
-// roomName
-// :
-// "Turing"
-// startTime
-// :
-// "2016-08-10T13:30:00.000Z"
-// userEmail
-// :
-// "ashleymarie4989@gmail.com"
-// userId
-// :
-// "ef95bd0cca83"
-// userName
-// :
-// "Ashley Smith"
-
-
-/*
-<table border="1">
-  <tr>
-  <td>Row 1, Column 1</td>
-  <td>Row 1, Column 2</td>
-  </tr>
-  <tr>
-  <td>Row 2, Column 1</td>
-  <td>Row 2, Column 2</td>
-  </tr>
-</table>
-  GOALS:
-  - Get user name from log in?
-  - show existing reservations
-  - ability to update or delete existing reservations 
-  - past reservations
-  - stylish styling
-*/
