@@ -217,6 +217,7 @@ app.delete('/:roomName', function(req, res){
 //<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
+    console.log("/reservations req.params:  ", req.params)
   Reservation.findAllReservations()
   .then(reservationsData => {
     // console.log('reservationsData: ', reservationsData)
@@ -238,17 +239,8 @@ app.get('/reservations/:roomName', function(req, res){
 })
 
 
-// putting new reservations to the database
-app.post('/reservations/new', function(req, res){ 
-  console.log("got new reserv:", typeof req.body.startTime)
-  Reservation.create(req.body)
-  .then(reservationInfo => {
-    console.log("reservationInfo: ", reservationInfo)
-    res.send(201, reservationInfo)
-  })
-})
-
-app.get('/reservations/:userId', function(req, res){
+app.get('/reservations-by-user/:userId', function(req, res){
+  console.log("AM I RUNNING???!?!??!!")
   var userId = req.params.userId;
   console.log('userId from params: ', userId)
   Reservation.findByUserId(userId)
@@ -261,6 +253,18 @@ app.get('/reservations/:userId', function(req, res){
     console.log("error:", err)
   })
 })
+
+// putting new reservations to the database
+app.post('/reservations/new', function(req, res){ 
+  console.log("got new reserv:", typeof req.body.startTime)
+  Reservation.create(req.body)
+  .then(reservationInfo => {
+    console.log("reservationInfo: ", reservationInfo)
+    res.send(201, reservationInfo)
+  })
+})
+
+
 
 
 //update existing reservation
