@@ -100,7 +100,6 @@ export default class Dashboard extends React.Component {
   }
 
   mapTimeSlots(reservations, rooms) {
-    //add room color to reservations object
 
     return reservations.data.map(reservation => {
       var room = rooms.filter(room => room.roomName === reservation.roomName)
@@ -196,11 +195,6 @@ export default class Dashboard extends React.Component {
   }
 
   submitBooking() {
-
-    // console.log("startTime:", this.state.startTime);
-    // console.log("endTime:", this.state.endTime);
-    // console.log("room:", this.state.currentRoom); 
-    // console.log("user:", this.state.user);
 
     var reservation = {
       startTime: this.state.startTime,
@@ -323,6 +317,7 @@ export default class Dashboard extends React.Component {
         : null   }
            
       <ReservationList />
+      
       </div>
       </div>
     )
