@@ -20,10 +20,17 @@ export default class MyAccount extends Component {
   }
 
   componentWillMount() {
+    this.update.call(this)
+
+  }
+
+
+  update() {
     checkStatus()
     .then(userData => {
       console.log('userData.data', userData.data)
       this.setState({ user: userData.data})
+
       return userData.data.uid
     })
     .then(userId => {
@@ -34,7 +41,6 @@ export default class MyAccount extends Component {
        console.log('userReservations.data: ', userReservations.data)
        this.setState({ reservations: userReservations.data })
       })
-
   }
 
   formatTime(time) {
@@ -58,10 +64,9 @@ export default class MyAccount extends Component {
 
 
   deleteThisReservation(res) {
-    console.log("resId!!!!!", res)
-    var reservation = {_id: res}
-    deleteReservation(reservation)
-    
+    // console.log("resId!!!!!", res)
+    deleteReservation(res)
+    .then(() => this.update.call(this))
   }
 
 

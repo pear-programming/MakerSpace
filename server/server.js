@@ -275,16 +275,17 @@ app.put('/reservations/:id', function(req, res){
 })
 
 
-app.delete('/reservations/delete', function(req, res){
-  console.log('in app.delete -req', req.body)
-  Reservation.delete(req.body)
+app.delete('/reservations/delete/:resId', function(req, res){
+  var resId = req.params.resId
+  console.log('id from params', resId)
+  Reservation.delete(resId)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)
-    if(reservationInfo.n === 0){
-      res.send(400, "reservations does not exist")
+    if(reservationInfo === "success"){
+      res.send(201, reservationInfo)
     }
     else{
-      res.send(201, reservationInfo)
+      res.send(400, "error")
     }
   })
 })

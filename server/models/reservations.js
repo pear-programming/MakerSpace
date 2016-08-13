@@ -43,12 +43,12 @@ Reservation.delete = function(reservationId){
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
-}
-  else{
-  return db.reservations.remove(reservationId)//reservations
+  }
+  else {
+  return db.reservations.remove(db.ObjectId(reservationId))//reservations
     .then((data) => {
-      console.log("successfully canceled reservation!:", data)
-      return data;
+      console.log("successfully canceled reservation from string!:", data)
+      return "success";
   }) .catch(err => console.log('error in reservation: ', err))
 }
 }
