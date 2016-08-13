@@ -4,13 +4,10 @@ export default class Plan extends Component {
 
   constructor(props) {
     super(props)   
-
   }
 
   render() {
       
-    console.log('child', this.props.rooms)
-
     return (
         
     <svg width="800" height="260">
