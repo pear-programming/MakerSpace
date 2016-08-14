@@ -18,10 +18,6 @@ export default class Conflict extends React.Component {
     }
   }
 
-  // close() {
-
-  // }
-
   render() {
 
     console.log("showing props in conflict.js:", this.props);
@@ -54,29 +50,6 @@ export default class Conflict extends React.Component {
     )
   }
 }
-
-
-
-
-
-// <div className="roomDetails">
-                // <p> Capacity: {this.state.currentRoom.capacity} </p>
-                // <p> Conference Table: {this.state.currentRoom.conferenceTable ? "Yes" : "No"} </p>
-                // <p> Air-play: {this.state.currentRoom.airPlay ? "Yes" : "No"} </p>
-                // <p> Hammock: {this.state.currentRoom.hammock ? "Yes" : "No"} </p>
-              // </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

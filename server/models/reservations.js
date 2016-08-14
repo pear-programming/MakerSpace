@@ -12,7 +12,6 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
-db.products.remove( { qty: { $gt: 20 } }, true )
 
 Reservation.deleteIt = function() {
   console.log("got run here")
