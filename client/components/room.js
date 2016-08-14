@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col } from 'react-bootstrap';
 import { browserHistory, Link } from 'react-router';
+import RoomCalendar from './room-calendar';
 
 export default class Room extends Component {
 
@@ -48,6 +49,9 @@ export default class Room extends Component {
             <Modal.Title>{this.props.mode}<span className="roomTitle">{room.roomName}</span></Modal.Title>
           </div>
           </Modal.Header>
+          <div className="roomCalendarDay" >
+             <RoomCalendar events={this.state.events} view="agendaDay"  />
+          </div>
           <Modal.Body className="clearfix">
             <div className="roomAvailability">
               <h3> <span className={room.isAvailable ? 'open' : 'closed'}>{room.isAvailable ? 'available' : 'In use'}</span></h3>
