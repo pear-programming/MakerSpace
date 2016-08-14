@@ -4,13 +4,13 @@ import { browserHistory, Link } from 'react-router';
 
 export default class Room extends Component {
 
-  constructor(props){  
+  constructor(props){
     super(props)
 
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
 
-    this.state = { 
+    this.state = {
       showModal: false
     };
   }
@@ -23,7 +23,7 @@ export default class Room extends Component {
   }
 
   render() {
-    
+
     const room = this.props.roomInfo;
 
     var title = {float: 'left'}
@@ -31,11 +31,11 @@ export default class Room extends Component {
 
     return (
 
-     
+
 
       <div>
         <Row className="row">
-          <Col md={6} className="eachRoom"><div>{room.roomName}</div></Col>
+          <Col md={6} className="eachRoom"><div onClick={() => this.showModal} >{room.roomName}</div></Col>
 
           <Col md={6}>
             { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
