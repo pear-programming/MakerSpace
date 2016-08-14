@@ -35,7 +35,7 @@ export default class Room extends Component {
 
       <div>
         <Row className="row">
-          <Col md={6} className="eachRoom"><div onClick={() => this.showModal} >{room.roomName}</div></Col>
+          <Col md={6} className="eachRoom"><div onClick={() => this.open() } >{room.roomName}</div></Col>
 
           <Col md={6}>
             { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
@@ -49,15 +49,6 @@ export default class Room extends Component {
           </div>
           </Modal.Header>
           <Modal.Body className="clearfix">
-            <div className="roomImageContainer">
-              <img className="roomImage" src={room.image}/>
-            </div>
-            <div className="roomDetails">
-              <p> Capacity: {room.capacity} </p>
-              <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
-              <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
-              <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
-            </div>
             <div className="roomAvailability">
               <h3> <span className={room.isAvailable ? 'open' : 'closed'}>{room.isAvailable ? 'available' : 'In use'}</span></h3>
               <button className="scheduleBtn">Today's Schedule</button>
@@ -69,3 +60,14 @@ export default class Room extends Component {
     )
   }
 }
+
+
+// <div className="roomImageContainer">
+//   <img className="roomImage" src={room.image}/>
+// </div>
+// <div className="roomDetails">
+//   <p> Capacity: {room.capacity} </p>
+//   <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
+//   <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
+//   <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
+// </div>
