@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col } from 'react-bootstrap';
+import { fetchRooms, getRoomReservations } from '../models/rooms';
 import { browserHistory, Link } from 'react-router';
 import RoomCalendar from './room-calendar';
+import TabletDisplay from './tablet-display';
+import _ from 'lodash';
+
+function formatEvents(resArray) {
+  return resArray.map(res => {
+    var start = new Date(res.startTime).getTime()
+    var end = new Date(res.endTime).getTime()
+    return {
+      title: res.userName,
+      start: start,
+      end: end,
+      allDay: false
+    }
+  })
+}
 
 export default class Room extends Component {
 
@@ -12,8 +28,81 @@ export default class Room extends Component {
     this.open = this.open.bind(this);
 
     this.state = {
-      showModal: false
+      showModal: false,
+      events: [],
+      currentRoom: {},
+      nextRes: {}
     };
+  }
+
+  // componentWillMount() {
+  //   fetchRooms()
+  //   .then((room) => {
+  //     console.log('what', room)
+  //     this.setState({currentRoom: room.roomName})
+  //     return room.roomName}
+  //   )
+  //   .then(room =>{
+  //     return getRoomReservations(room.roomName)
+  //   })
+  //   .then(reservations => {
+  //
+  //     let timeDiffs = []
+  //     console.log('reservations.data: ', reservations.data)
+  //     if(reservations.data !== "no reservations currently exist for this room") {
+  //       //if there are reservations do this....
+  //       reservations.data.forEach(reservation => {
+  //         let now = new Date()
+  //         let startTime = new Date(reservation.startTime)
+  //
+  //         timeDiffs.push({difference : now - startTime, startTime: startTime})
+  //       })
+  //       //finds largest negative number which is the next reservation start time
+  //
+  //       let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
+  //       let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
+  //       let events = formatEvents(reservations.data)
+  //       console.log('events: ', events)
+  //       this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
+  //       console.log('this.state IF: ', this.state)
+  //     } else {  //no current reservations
+  //
+  //       this.setState({reservations: null, nextRes: null, events: null})
+  //       console.log('this.state ELSE: ', this.state)
+  //
+  //     }
+  //   })
+  // }
+
+  getInfo(name){
+    getRoomReservations(name).then(reservations => {
+      console.log('reservations', reservations)
+      let timeDiffs = []
+      console.log('reservations.data: ', reservations.data)
+      if(reservations.data !== "no reservations currently exist for this room") {
+        //if there are reservations do this....
+        reservations.data.forEach(reservation => {
+          let now = new Date()
+          let startTime = new Date(reservation.startTime)
+
+          timeDiffs.push({difference : now - startTime, startTime: startTime})
+        })
+        //finds largest negative number which is the next reservation start time
+
+        let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
+        let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
+        let events = formatEvents(reservations.data)
+        console.log('events: ', events)
+        this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events, showModal: true })
+        console.log('this.state IF: ', this.state)
+      } else {  //no current reservations
+
+        this.setState({reservations: null, nextRes: null, events: null, showModal: true})
+        console.log('this.state ELSE: ', this.state)
+
+      }
+    })
+    console.log('what', this.state.events)
   }
 
   close() {
@@ -22,6 +111,9 @@ export default class Room extends Component {
   open() {
     this.setState({ showModal: true });
   }
+
+  //we need events of a specific room to display for the current day
+  //we need to be able to book a room with start time and endtime of only 2 hours
 
   render() {
 
@@ -39,7 +131,7 @@ export default class Room extends Component {
           <Col md={6} className="eachRoom"><div onClick={() => this.open() } >{room.roomName}</div></Col>
 
           <Col md={6}>
-            { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
+            { room.isAvailable ? <div className="opened" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>⚪ Book Now </div> : <div className="booked" id={room.roomName} >🕒 Reserved  </div> }
           </Col>
         </Row>
 
@@ -50,7 +142,7 @@ export default class Room extends Component {
           </div>
           </Modal.Header>
           <div className="roomCalendarDay" >
-             <RoomCalendar events={this.state.events} view="agendaDay"  />
+             <RoomCalendar events={this.state.events} view="agendaDay"/>
           </div>
           <Modal.Body className="clearfix">
             <div className="roomAvailability">
