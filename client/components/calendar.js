@@ -45,6 +45,7 @@ export default class Calendar extends React.Component {
        
       },
       allDay: false,
+      hiddenDays: [ 0 ],
       minTime: "09:00:00",
       maxTime: "21:00:00",
       height: "auto"  
