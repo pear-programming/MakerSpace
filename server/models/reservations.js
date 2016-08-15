@@ -13,6 +13,10 @@ Reservation.findByRoomId = function(Id) {
 }
 
 
+Reservation.deleteIt = function() {
+  console.log("got run here")
+  return db.reservations.remove({roomName: "Turing"})
+}
 
 Reservation.create = function(reservationData) { 
 
@@ -31,6 +35,7 @@ Reservation.create = function(reservationData) {
     return data._id;
   })
 }
+
 
 Reservation.delete = function(reservationId){
   if( Object.keys(reservationId).length === 0 ){
