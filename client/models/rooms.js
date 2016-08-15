@@ -27,6 +27,7 @@ export function fetchReservations(){
 export function fetchUserReservations(userId) {
   const request = axios.get(`/reservations-by-user/${userId}`)
 
+
   return request
 }
 
