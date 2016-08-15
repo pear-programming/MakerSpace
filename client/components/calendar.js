@@ -11,7 +11,7 @@ export default class Calendar extends React.Component {
     var wait = this.props.wait;
 
     $(calendar).fullCalendar({
-      events: events,
+      events: this.props.events,
       eventClick: function(event) {
         open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0)); 
       },
