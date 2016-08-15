@@ -15,7 +15,7 @@ var rooms;
 var reservations;
 var reservation = {roomName: " ", startTime: new Date(2016), endTime: new Date(2016)};
 var goToDate = null;
-var bookingConflicts = [{roomName: " ", startTime: " ", endTime: " "}];
+var bookingConflicts = [{roomName: " ", startTime: '', endTime: ''}];
 var reRenderCalendar = false;
 var roomPlaceHolder = false;
 
@@ -65,17 +65,6 @@ export default class Dashboard extends React.Component {
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
     console.log("showing rooms with slot info:", roomsWithTimeSlotInfo);
-    // var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0] 
-    // var currentRoom;
-    // if(shouldMaintainRoom) {
-    //   currentRoom = roomsWithTimeSlotInfo.filter(room => room._id === this.state.currentRoom._id)[0];
-    //   if(!currentRoom.openSlots.length) {
-    //     currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
-    //   }
-    // }
-    // else {
-    //   currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
-    // }
     var currentRoom;
     if(this.state.currentRoom && !roomPlaceHolder) {
       this.state.currentRoom.openSlots = roomsWithTimeSlotInfo.filter(room => room._id === this.state.currentRoom._id)[0].openSlots;
@@ -435,6 +424,7 @@ export default class Dashboard extends React.Component {
               showVerify={this.state.showVerify}
               closeVerify={this.closeVerify.bind(this)}
               bookingConflicts={bookingConflicts}
+              MONTHS={MONTHS}
             /> 
 
             <Confirm 

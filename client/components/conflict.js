@@ -37,6 +37,7 @@ export default class Conflict extends React.Component {
           </div>
           <div className="roomDetails">
             <p> Room: {this.props.bookingConflicts[0].roomName} </p>
+            <p> Date: {this.props.MONTHS[new Date(this.props.bookingConflicts[0].startTime).getMonth()] + ' ' + new Date(this.props.bookingConflicts[0].startTime).getDate().toString()}</p>
             <p> StartTime: {formatTime(this.props.bookingConflicts[0].startTime)} </p>
             <p> EndTime: {formatTime(this.props.bookingConflicts[0].endTime)} </p>  
           </div>

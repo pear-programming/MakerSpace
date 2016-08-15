@@ -36,6 +36,12 @@ Reservation.create = function(reservationData) {
   })
 }
 
+// Reservation.checkByTime = function(reservation) {
+
+//   db.reservations.find({startTime: {gt}})
+
+// }
+
 Reservation.delete = function(reservationId){
   console.log(reservationId, " reservationId")
   if( Object.keys(reservationId).length === 0 ){
