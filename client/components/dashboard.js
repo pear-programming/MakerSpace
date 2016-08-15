@@ -5,6 +5,7 @@ import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '.
 import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
 import Conflict from './conflict';
+import Confirm from './confirm-reservation';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -12,6 +13,7 @@ var timeSlots;
 var user;
 var rooms;
 var reservations;
+var reservation = {roomName: " ", startTime: new Date(2016), endTime: new Date(2016)};
 var goToDate = null;
 var bookingConflicts = [{roomName: " ", startTime: " ", endTime: " "}];
 var reRenderCalendar = false;
@@ -29,6 +31,7 @@ export default class Dashboard extends React.Component {
       currentRoom: null,
       showModal: false,
       showVerify: false,
+      showConfirm: false,
       startTime: new Date(2016, 0, 1, 9, 10),
       endTime: new Date(2016, 0, 1, 9, 11)
     }
@@ -42,14 +45,24 @@ export default class Dashboard extends React.Component {
   closeVerify(shouldCloseModal) {
     console.log("inside closeVerify")
     if(shouldCloseModal) { 
-      this.submitBooking(this.makeReservation());  
+      this.confirmBooking();  
     }
     else {
       this.setState({showVerify: false})
     }  
   }
 
-  open(time, shouldMaintainRoom) {
+  closeConfirm(shouldCloseModal) {
+    console.log("inside closeVerify")
+    if(shouldCloseModal) { 
+      this.submitBooking();  
+    }
+    else {
+      this.setState({showConfirm: false})
+    }  
+  }
+
+  open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
     console.log("showing rooms with slot info:", roomsWithTimeSlotInfo);
     // var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0] 
@@ -66,7 +79,7 @@ export default class Dashboard extends React.Component {
     var currentRoom;
     if(this.state.currentRoom && !roomPlaceHolder) {
       this.state.currentRoom.openSlots = roomsWithTimeSlotInfo.filter(room => room._id === this.state.currentRoom._id)[0].openSlots;
-      console.log("found tomorrow's:", this.state.currentRoom);
+      // console.log("found tomorrow's:", this.state.currentRoom);
       if(!this.state.currentRoom.openSlots.length) {
         currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0];
       }
@@ -240,7 +253,7 @@ export default class Dashboard extends React.Component {
   }
 
   makeReservation() {
-    return {
+    reservation = {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
       roomName: this.state.currentRoom.roomName,
@@ -252,9 +265,7 @@ export default class Dashboard extends React.Component {
   }
 
   checkBooking() {
-
-    var reservation = this.makeReservation();
-
+    this.makeReservation();
     var conflicts = reservations.filter(res => {
 
       return res.userId === reservation.userId && 
@@ -269,11 +280,16 @@ export default class Dashboard extends React.Component {
       this.setState({showVerify: true})
     }
     else {
-      this.submitBooking(reservation)
+      this.confirmBooking()
     }
   }
 
-  submitBooking(reservation) {
+  confirmBooking() {
+
+    this.setState({showConfirm: true, showVerify: false})
+  }
+
+  submitBooking() {
     console.log("inside submit booking")
 
     addReservation(reservation)
@@ -294,18 +310,18 @@ export default class Dashboard extends React.Component {
         endTime: reservation.endTime.toUTCString()
       })); 
 
-      this.addToTimeslots(reservation);
+      this.addToTimeslots();
 
       console.log("pushed new reservation:", reservations[reservations.length - 1]);
 
       goToDate = Date.parse(reservation.startTime)
       reRenderCalendar = true;
       roomPlaceHolder = true;
-      this.setState({showModal: false, events: events, showVerify: false})
+      this.setState({showModal: false, events: events, showVerify: false, showConfirm: false})
     })
   }
 
-  addToTimeslots(reservation) {
+  addToTimeslots() {
     timeSlots.filter(slot => {
       return Date.parse(slot.startTime) >= Date.parse(reservation.startTime) && Date.parse(slot.endTime) <= Date.parse(reservation.endTime)
     }).forEach(slot => slot.reservations.push(reservation))
@@ -420,6 +436,13 @@ export default class Dashboard extends React.Component {
               closeVerify={this.closeVerify.bind(this)}
               bookingConflicts={bookingConflicts}
             /> 
+
+            <Confirm 
+              showConfirm={this.state.showConfirm}
+              closeConfirm= {this.closeConfirm.bind(this)}
+              reservation={reservation}
+              MONTHS={MONTHS}
+            />
 
           {this.renderCalendar.call(this)}
         </div>
