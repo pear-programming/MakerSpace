@@ -55,10 +55,12 @@ export default class ReservationList extends Component {
   }
 
   formatDate(time) {
-    var tomonth = new Date(time).getMonth() +1;
-    var todate= new Date(time).getDate();
+    var tomonth = new Date(time).getMonth() + 1;
+    var todate = new Date(time).getDate();
     var toyear = new Date(time).getFullYear();
-    return tomonth+'/'+todate+'/'+toyear;
+    toyear = toyear.toString().substring(2)
+    
+    return tomonth + '/' + todate + '/' + toyear;
   }
 
 
