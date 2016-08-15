@@ -65,7 +65,7 @@ export default class Dashboard extends React.Component {
 
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
-    console.log("showing rooms with slot info:", roomsWithTimeSlotInfo);
+    // console.log("showing rooms with slot info:", roomsWithTimeSlotInfo);
     var currentRoom;
     if(this.state.currentRoom && !roomPlaceHolder) {
       this.state.currentRoom.openSlots = roomsWithTimeSlotInfo.filter(room => room._id === this.state.currentRoom._id)[0].openSlots;
@@ -261,7 +261,7 @@ export default class Dashboard extends React.Component {
         Date.parse(res.endTime) <= reservation.startTime.getTime())
     })
 
-    console.log("found conflicts:", conflicts);
+    // console.log("found conflicts:", conflicts);
     if(conflicts.length) {
       bookingConflicts = conflicts;
       // alert("CONFLICT(S) FOUND!")
@@ -291,7 +291,7 @@ export default class Dashboard extends React.Component {
         color: this.state.currentRoom.roomColor
       })
      
-      console.log("successfully inserted!:", data);
+      // console.log("successfully inserted!:", data);
       
       reservations.push(Object.assign(reservation, {
         startTime: reservation.startTime.toUTCString(),
@@ -300,7 +300,7 @@ export default class Dashboard extends React.Component {
 
       this.addToTimeslots();
 
-      console.log("pushed new reservation:", reservations[reservations.length - 1]);
+      // console.log("pushed new reservation:", reservations[reservations.length - 1]);
 
       goToDate = Date.parse(reservation.startTime)
       reRenderCalendar = true;

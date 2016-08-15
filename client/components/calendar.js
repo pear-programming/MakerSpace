@@ -30,6 +30,19 @@ export default class Calendar extends React.Component {
 
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
       },
+      customButtons: {
+        myCustomButton: {
+            text: 'custom!',
+            click: function() {
+                alert('clicked the custom button!');
+            }
+        }
+      },
+      header: {
+          left: 'prev,next today',
+          center: 'title'
+      },
+
       allDay: false,
       hiddenDays: [ 0 ],
       minTime: "09:00:00",
@@ -38,14 +51,15 @@ export default class Calendar extends React.Component {
     });
     
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' );
-      
   }
+
+  
 
   componentDidUpdate() {
 
     if(this.props.reRenderCalendar) {
 
-      console.log("got inside componentDidUpdate")
+      // console.log("got inside componentDidUpdate")
       const { calendar } = this.refs;
 
       var open = this.props.open;
@@ -60,6 +74,7 @@ export default class Calendar extends React.Component {
          
         },
         allDay: false,
+        hiddenDays: [ 0 ],
         minTime: "09:00:00",
         maxTime: "21:00:00",
         height: "auto"  
