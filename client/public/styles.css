@@ -166,6 +166,10 @@ span.closed {
   width: 300px;
 }
 
+.tabBtn {
+  float: right;
+}
+
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {

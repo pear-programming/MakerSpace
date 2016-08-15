@@ -31,8 +31,7 @@ export default class TabletList extends Component {
     return this.state.rooms.map(room => {
       return (
         <Col md={4}><Thumbnail src={room.image} className="tabList">
-          <h3>{room.roomName}</h3>
-          <p><Link to={`${room.roomName}/display`}><Button bsStyle="primary">Tablet View</Button></Link></p>
+          <h2>{room.roomName} <Link to={`${room.roomName}/display`}><Button bsStyle="primary" className="tabBtn">Tablet View</Button></Link></h2>
         </Thumbnail>
         </Col>
       )

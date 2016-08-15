@@ -26,12 +26,7 @@ export default class Room extends Component {
     
     const room = this.props.roomInfo;
 
-    var title = {float: 'left'}
-    var info = {float: 'right'}
-
     return (
-
-     
 
       <div>
         <Row className="row">
