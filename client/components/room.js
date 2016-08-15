@@ -26,19 +26,26 @@ export default class Room extends Component {
     
     const room = this.props.roomInfo;
 
-    var title = {float: 'left'}
-    var info = {float: 'right'}
-
     return (
-
-     
 
       <div>
         <Row className="row">
           <Col md={6} className="eachRoom"><div id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }>{room.roomName}</div></Col>
 
           <Col md={6}>
-            { room.isAvailable ? <div className="opened" onClick={() => this.props.toggleState(room)}>⚪ Book Now </div> : <div className="booked" onClick={() => this.props.toggleState(room)}>🕒 Reserved  </div> }
+            { room.isAvailable ? 
+              <div className="opened" id={room.roomName} 
+                onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) } 
+                onClick={() => this.props.toggleState(room)
+                }>⚪ Book Now 
+              </div> 
+              : 
+              <div className="booked" id={room.roomName} 
+                onMouseEnter={(e)=> this.props.updateWindow(e.target.id)} 
+                onClick={() => this.props.toggleState(room)
+                }>🕒 Reserved  
+              </div> 
+            }
           </Col>
         </Row>
 

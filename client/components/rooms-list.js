@@ -15,7 +15,7 @@ export default class RoomsList extends Component {
 
     this.state = {
       rooms: [],
-      window: null,
+      window: false,
       room: {}
     }
   }
@@ -107,7 +107,7 @@ export default class RoomsList extends Component {
     const room = this.state.rooms.find(findRoom)  
     function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
     this.setState({room})
-    this.showWindow(true)
+    this.showWindow(name)
   }
 
   render() {
