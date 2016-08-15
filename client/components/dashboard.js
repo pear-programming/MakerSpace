@@ -6,6 +6,7 @@ import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
 import Conflict from './conflict';
 import Confirm from './confirm-reservation';
+import ReservationList from './my-reservations';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -157,10 +158,6 @@ export default class Dashboard extends React.Component {
   }
 
   mapTimeSlots(reservations, rooms) {
-    // console.log('reservations!!!', reservations.data)
-    console.log('rooms:', rooms)
-    //add room color to reservations object
-
 
     return reservations.data.map(reservation => {
       var room = rooms.filter(room => room.roomName === reservation.roomName)
@@ -241,6 +238,7 @@ export default class Dashboard extends React.Component {
     this.setState({endTime: new Date(event.target.value)});
   }
 
+
   makeReservation() {
     reservation = {
       startTime: this.state.startTime,
@@ -252,6 +250,7 @@ export default class Dashboard extends React.Component {
       userEmail: user.email
     };
   }
+
 
   checkBooking() {
     this.makeReservation();
@@ -316,9 +315,6 @@ export default class Dashboard extends React.Component {
     }).forEach(slot => slot.reservations.push(reservation))
   }
 
-  // componentDidUpdate() {
-  //   reRenderCalendar = false;
-  // }
 
   renderCalendar() { 
 
@@ -343,10 +339,11 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
+        <div className='dashboardContainer'>
 
        {this.state.events && this.state.currentRoom ?  
 
-        <div>
+        <div className="calendarContainer col-md-9">
          
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
@@ -436,9 +433,13 @@ export default class Dashboard extends React.Component {
 
           {this.renderCalendar.call(this)}
         </div>
+        
 
         : null   }
            
+      <ReservationList />
+      
+      </div>
       </div>
     )
   }
