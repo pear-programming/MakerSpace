@@ -3,6 +3,7 @@ import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
 import Calendar from './calendar';
+import ReservationList from './my-reservations';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -99,10 +100,6 @@ export default class Dashboard extends React.Component {
   }
 
   mapTimeSlots(reservations, rooms) {
-    console.log('reservations!!!', reservations.data)
-    console.log('rooms:', rooms)
-    //add room color to reservations object
-
 
     return reservations.data.map(reservation => {
       var room = rooms.filter(room => room.roomName === reservation.roomName)
@@ -199,11 +196,6 @@ export default class Dashboard extends React.Component {
 
   submitBooking() {
 
-    // console.log("startTime:", this.state.startTime);
-    // console.log("endTime:", this.state.endTime);
-    // console.log("room:", this.state.currentRoom); 
-    // console.log("user:", this.state.user);
-
     var reservation = {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
@@ -213,10 +205,7 @@ export default class Dashboard extends React.Component {
       userId: user.uid,
       userEmail: user.email
     }
-
-
-    // console.log("ready to insert reservation:", reservation);
-
+    
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice(); 
@@ -251,10 +240,11 @@ export default class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
+        <div className='dashboardContainer'>
 
        {this.state.events ?  
 
-        <div>
+        <div className="calendarContainer col-md-9">
          
           <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
             <Modal.Header closeButton>
@@ -322,9 +312,13 @@ export default class Dashboard extends React.Component {
 
           {this.renderCalendar.call(this)}
         </div>
+        
 
         : null   }
            
+      <ReservationList />
+      
+      </div>
       </div>
     )
   }
