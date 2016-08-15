@@ -3,9 +3,7 @@ var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var User = require('./models/users');
-var Admin = require('./models/admins');
 var Session = require('./models/userSessions');
-var AdminSession = require('./models/adminSessions');
 var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
 var app = require('express')();
@@ -90,23 +88,53 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('roomUnBooked', roomId);
   })
 
-    Reservation.findAllReservations()
-    .then(reservationsData => {
-      let date = new Date();
-      let currentTime = date.getTime();
-      reservationsData.forEach( x => {
-        let resStart = x.startTime.getTime() + 18000000;
-        let resEnd = x.endTime.getTime() + 18000000;
+  var date = new Date();
+  var currentTime = date.getTime();
+  var rooms;
+  var resv;
+  var roomsToClose = [];
 
-        console.log(resStart, currentTime, resEnd)
+  Reservation.findAllReservations()
+  .then(reservationsData => {
+    resv = reservationsData
+    return Room.findRooms()
+  })
+  .then(data => {
+    rooms = data
+  })
+  .then(() => {
+    resv.forEach( x => {
+      var resStart = x.startTime.getTime() + 18000000;
+      var resEnd = x.endTime.getTime() + 18000000;
+      var currRoom = rooms.find(findRoom)
 
-        if(resStart <= currentTime && currentTime <= resEnd) {
-         console.log('reserved room', x.roomName)
+      function findRoom(findThisRoom) { 
+        return findThisRoom.roomName === x.roomName;
+      }
+
+      if(resStart <= currentTime && currentTime <= resEnd) {
+        
+        if(currRoom.isAvailable === true) {
+          roomsToClose.push(x.roomName)
         }
-      })
+      } else {
+      }
     })
+    console.log('rooms to change: ', roomsToClose)
+  })
+  .then(() => {
+    roomsToClose.forEach( room => {
+      Room.changeAvailability(room)
+      .then(() => console.log('changing status'))
+    })
+  })
+  .then(() => {
+    var hello = rooms.map( room => room.roomName ).filter( room => roomsToClose.includes(room) )
 
+    console.log(hello)
+  })
 });
+
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
