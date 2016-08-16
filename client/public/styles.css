@@ -7,8 +7,9 @@ bright green: #49c633;
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
-  /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo 1*/
-  background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; /*Carlo 2*/
+  /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; Carlo 1*/
+  /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/  
+  background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; /*Carlo 3*/
   background-size: cover;
   background-repeat: no-repeat;
   border: .1px solid white;
@@ -155,6 +156,11 @@ span.closed {
   border: 2px solid darkgrey;
 }
 
+.grid .row {
+  margin-left: -50px;
+  margin-right: -50px;
+}
+
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {
@@ -288,4 +294,50 @@ span.closed {
   margin: 4px 2px;
   cursor: none;
   transition-duration: 0.1s;
+}
+
+
+/*========= Reservation List Table =========*/
+
+
+
+  table.myTable {
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #3A3A3A;
+    border-collapse: collapse;
+  }
+ 
+  table.myTable th {
+    border-width: 1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #517994;
+    background-color: #B2CFD8;
+  }
+ 
+  table.myTable tr:hover td {
+    background-color: #DFEBF1;
+  }
+ 
+  table.myTable td {
+    border-width: 1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #517994;
+    background-color: #ffffff;
+  }
+
+
+/*========= Dashboard =========*/
+
+/* calendar */
+.dashboardContainer {
+  width: 95%;
+  margin: auto;
+}
+
+.reservationList h3 {
+  color: #49c633
 }

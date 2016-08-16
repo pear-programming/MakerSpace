@@ -108,6 +108,11 @@ app.get('/app-bundle.js',
 
 //<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
+app.delete('/res', function(req, res) {
+  console.log("got res delete request")
+  return Reservation.deleteIt()
+    .then(data => data)
+})
 // new user signs up
 app.post('/signup', function(req, res) {
   //now we want to add info to users db table
@@ -128,6 +133,7 @@ app.post('/signup', function(req, res) {
     res.send(201, req.body.name)
   })
 })
+
 
 app.post('/login', function(req, res) {
   var userName;
@@ -217,6 +223,8 @@ app.delete('/:roomName', function(req, res){
 //<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
+
+  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     // console.log('reservationsData: ', reservationsData)
@@ -232,11 +240,22 @@ app.get('/reservations/:roomName', function(req, res){
     if(!reservations) {
       res.send(400, 'bad request')
     }
-    // console.log('reservations: ', reservations)
     res.send(200, reservations)
   })
 })
 
+
+app.get('/reservations-by-user/:userId', function(req, res){
+  var userId = req.params.userId;
+
+  Reservation.findByUserId(userId)
+  .then(reservations => {
+    res.send(200, reservations)
+  })
+  .catch(err => {
+    console.log("error:", err)
+  })
+})
 
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
@@ -248,19 +267,6 @@ app.post('/reservations/new', function(req, res){
   })
 })
 
-app.get('/reservations/:userId', function(req, res){
-  var userId = req.params.userId;
-  console.log('userId from params: ', userId)
-  Reservation.findByUserId(userId)
-  .then(reservations => {
-    
-    console.log('reservations: ', reservations)
-    res.send(200, reservations)
-  })
-  .catch(err => {
-    console.log("error:", err)
-  })
-})
 
 
 //update existing reservation
@@ -275,15 +281,17 @@ app.put('/reservations/:id', function(req, res){
 })
 
 
-app.delete('/reservations/delete', function(req, res){
-  Reservation.delete(req.body)
+app.delete('/reservations/delete/:resId', function(req, res){
+  var resId = req.params.resId
+  console.log('id from params', resId)
+  Reservation.delete(resId)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)
-    if(reservationInfo.n === 0){
-      res.send(400, "reservations does not exist")
+    if(reservationInfo === "success"){
+      res.send(201, reservationInfo)
     }
     else{
-      res.send(201, reservationInfo)
+      res.send(400, "error")
     }
   })
 })
