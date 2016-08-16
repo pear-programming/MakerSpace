@@ -158,7 +158,7 @@ export default class RoomDisplays extends Component {
     }
     let largestOccurence = Math.max(...occurences)
 
-    for (let i = 0; i <= largestOccurence; i=i+5) {
+    for (let i = 0; i <= largestOccurence; i=i+10) {
       ans.push(i)
     }
 
@@ -229,12 +229,14 @@ export default class RoomDisplays extends Component {
         <NavBar />
         <Grid className="grid">  
           
+   {/*========================= Pie Chart ===========================*/}
+       
           <Row> 
             <Col md={5}>
               <Col md={2} />
               <Col md={8} >
 
-                <h2 className="graphTitle">Reservations by Day</h2>
+                <h2 className="pieTitle">Reservations by Day</h2>
               
                 <Table responsive>
                   <tbody>
@@ -265,15 +267,15 @@ export default class RoomDisplays extends Component {
 
             <Col md={1} />
 
-
           </Row>
           
-          <Row id="byRoom">
-            
+{/*========================= Bar Graph ===========================*/}
 
-            <Col md={8}>
-              <h1 className="graphTitle">Reservations by Room</h1>
-              
+          <Row id="byRoom">
+            <h2 className="barTitle">Reservations by Room</h2>
+
+            <Col md={9}>
+                          
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
@@ -301,19 +303,20 @@ export default class RoomDisplays extends Component {
               </VictoryChart> 
             </Col>
 
-            <Col md={3}>
-               <h3><strong>{sum}</strong> Total Reservations</h3>
+            <Col md={3}>              
+              
               <Table responsive>
                 <tbody>
                   {this.stackTable.call(this)}
+                  <tr><td><strong>{sum}</strong> Total Reservations</td></tr>
                 </tbody>
               </Table>
             </Col>   
 
-            <Col md={1} />
-
           </Row>
 
+{/*========================= Horizontal Graph ===========================*/}
+          
           <Row> 
 
             <h1 className="graphTitle">Top 5 Users</h1>
@@ -328,23 +331,20 @@ export default class RoomDisplays extends Component {
             
             <Col md={8} className="horStack">
             
-  
-                 <VictoryStack horizontal
-                  padding={30}
-                  width={225}
-                  height={150}
-                  animate={{ duration: 2000 }}
-                  labels={this.stackLabel.call(this)}
-                  style={{
-                    data: {width: 8},
-                    labels: {fontSize: 4}
-                  }}
-                
-                >
-                  {this.renderBarGraph.call(this)}
-                </VictoryStack>
+            <VictoryStack horizontal
+              padding={30}
+              width={225}
+              height={150}
+              animate={{ duration: 2000 }}
+              labels={this.stackLabel.call(this)}
+              style={{
+                data: {width: 8},
+                labels: {fontSize: 4}
+              }}
+            >
+              {this.renderBarGraph.call(this)}
+            </VictoryStack>
               
-            
             </Col>
 
           </Row>

@@ -76,9 +76,13 @@ img.roomImage {
   padding: 0px; 
 }
 
-.graphTitle {
+.pieTitle {
   text-align: center;
   padding-bottom: 30px;
+}
+
+.barTitle {
+  text-align: center;
 }
 
 #byRoom {
@@ -238,7 +242,6 @@ span.closed {
   text-transform: uppercase;
   font-size: 1.25em;
 }
-
 
 .fc-today {
   background: rgba(99,159,222,.1) !important;
