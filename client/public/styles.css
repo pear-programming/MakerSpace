@@ -61,6 +61,35 @@ img.roomImage {
   float: right;
 }
 
+/*==== analytics ====*/
+
+.grid .row {
+  margin-left: -50px;
+  margin-right: -50px;
+}
+
+.horStack {
+  margin-left: -100px;
+}
+
+.grid { 
+  padding: 0px; 
+}
+
+.graphTitle {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+#byRoom {
+  color: white;
+  background-color: lightblue;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
 /*==== room modal ====*/
 
 .roomImageContainer {
@@ -154,15 +183,6 @@ span.closed {
   min-width: 100%;
   padding: 0px 0px 21px 60px;
   border: 2px solid darkgrey;
-}
-
-.grid .row {
-  margin-left: -50px;
-  margin-right: -50px;
-}
-
-.horStack {
-  margin-left: -100px;
 }
 
 /*=========== Tablet Display ========*/

@@ -138,8 +138,7 @@ export default class RoomDisplays extends Component {
       this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
       
     })
-
-    console.log('bitch better have my money', users)
+    
   }
 
   componentDidMount() {
@@ -182,9 +181,8 @@ export default class RoomDisplays extends Component {
       return (
 
         <tr>
-          <td><strong>{room.x}</strong></td>
-          <td>{room.y} reservations</td>
-          <td>{Math.floor(room.y / sum  * 100)}%</td>
+          <td><h4>{Math.floor(room.y / sum  * 100)}%</h4></td>
+          <td className="pieRow">on <strong>{room.x}</strong> with {room.y} reservations</td>
         </tr>
       )
     })
@@ -224,30 +222,38 @@ export default class RoomDisplays extends Component {
       parent: { margin: "2%", maxWidth: "92.5%"}
     };
     
-    let chart = { backgroundColor: "lightblue" }
-    let stack = { backgroundColor: "#DEEDDE" }
-    let grid = { padding: "0px" }
     let sum = this.sum(this.state.pieData, 'y');
 
     return (
       <div>
         <NavBar />
-        <Grid style={grid} className="grid">  
+        <Grid className="grid">  
           
           <Row> 
+            <Col md={5}>
+              <Col md={2} />
+              <Col md={8} >
 
-            <Col md={6}>
-              <h1>Reservations by Day</h1>
-              <Table responsive>
-                <tbody>
-                  {this.pieTable.call(this)}
-                </tbody>
-              </Table>
+                <h2 className="graphTitle">Reservations by Day</h2>
+              
+                <Table responsive>
+                  <tbody>
+                    {this.pieTable.call(this)}
+                  </tbody>
+                </Table>
+             
+              </Col>
+              
             </Col>
 
             <Col md={6}>     
               <VictoryPie 
-                style={{  }}
+                style={{  
+                  labels: {
+                    fill: "white",
+                    fontSize: 14
+                  }
+                }}
                 data={this.state.pieData}
                 animate={{
                   duration: 1000,
@@ -257,12 +263,17 @@ export default class RoomDisplays extends Component {
                 }} /> 
             </Col>
 
+            <Col md={1} />
+
+
           </Row>
           
-          <Row style={chart}>
-            <h1>Reservations by Room</h1>
+          <Row id="byRoom">
+            
 
             <Col md={8}>
+              <h1 className="graphTitle">Reservations by Room</h1>
+              
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
@@ -290,47 +301,50 @@ export default class RoomDisplays extends Component {
               </VictoryChart> 
             </Col>
 
-            <Col md={4}>
+            <Col md={3}>
+               <h3><strong>{sum}</strong> Total Reservations</h3>
               <Table responsive>
-                <thead>
-                  <tr>
-                    <td><h4><strong>{sum}</strong> Total Reservations</h4></td>
-                  </tr>
-                </thead>
                 <tbody>
                   {this.stackTable.call(this)}
                 </tbody>
               </Table>
-            </Col>
+            </Col>   
+
+            <Col md={1} />
 
           </Row>
 
-          <Row style={stack}> 
-            
-            <Col md={8} className="horStack">
-              <VictoryStack horizontal
-                padding={30}
-                width={225}
-                height={150}
-                animate={{ duration: 2000 }}
-                labels={this.stackLabel.call(this)}
-                style={{
-                  data: {width: 8},
-                  labels: {fontSize: 4}
-                }}
-              
-              >
-                {this.renderBarGraph.call(this)}
-              </VictoryStack>
-            </Col>
+          <Row> 
 
+            <h1 className="graphTitle">Top 5 Users</h1>
+            
             <Col md={4}>
-              <h1>Top 5 Users</h1>
                 <Table responsive>
                   <tbody>
                     {this.chartTable.call(this)} 
                   </tbody>
                 </Table>      
+            </Col>
+            
+            <Col md={8} className="horStack">
+            
+  
+                 <VictoryStack horizontal
+                  padding={30}
+                  width={225}
+                  height={150}
+                  animate={{ duration: 2000 }}
+                  labels={this.stackLabel.call(this)}
+                  style={{
+                    data: {width: 8},
+                    labels: {fontSize: 4}
+                  }}
+                
+                >
+                  {this.renderBarGraph.call(this)}
+                </VictoryStack>
+              
+            
             </Col>
 
           </Row>
