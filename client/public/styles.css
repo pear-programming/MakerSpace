@@ -7,8 +7,9 @@ bright green: #49c633;
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
-  /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; /*Carlo 1*/
-  background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; /*Carlo 2*/
+  /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; Carlo 1*/
+  /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/  
+  background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; /*Carlo 3*/
   background-size: cover;
   background-repeat: no-repeat;
   border: .1px solid white;
@@ -153,6 +154,11 @@ span.closed {
   min-width: 100%;
   padding: 0px 0px 21px 60px;
   border: 2px solid darkgrey;
+}
+
+.grid .row {
+  margin-left: -50px;
+  margin-right: -50px;
 }
 
 /*=========== Tablet Display ========*/
