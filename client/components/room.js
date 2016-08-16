@@ -20,16 +20,8 @@ function formatEvents(resArray) {
   })
 }
 
-
-
 let timeSlots = [];
 let goToDate = null;
-
-
-
-
-
-
 
 export default class Room extends Component {
 
@@ -47,26 +39,28 @@ export default class Room extends Component {
       currentRoom: {},
       nextRes: {},
       startTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ),
-      endTime: new Date(2016, 0, 1, 9, 11),
+      endTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 30 ),
       nextFourSlots:[],
       reRenderCalendar: false,
       user: null,
       userId: null,
       userEmail: null,
-      // goToDate: null
     };
   }
 
   componentWillMount() {
+
+
     checkStatus()
     .then(userData => {
       this.setState(
         {
         user: userData.data.name,
         userId: userData.data.uid,
-        userEmail: userData.data.email
+        userEmail: userData.data.email,
         })
     })
+
   }
 
 
@@ -160,9 +154,12 @@ export default class Room extends Component {
         })
         //finds largest negative number which is the next reservation start time
         // console.log(this.state.startTime, "this is the startTime ~~~~~~~~~~~~~~~~");
-        this.mapTimeSlotsByDay(this.state.startTime)
+        let currentTime = new Date(Date.now())
+        this.mapTimeSlotsByDay(new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ))
+        console.log("showing typeof this.state.startTime  ", typeof this.state.startTime);
+        console.log(" showing this.props.roomInfo.openSlots[0].startTime ", typeof this.props.roomInfo.openSlots[0].startTime);
         var nextFourSlots = this.getTimeSlotInfo(this.props.roomInfo.openSlots[0].startTime, this.props.roomInfo);
-        console.log(this.mapTimeSlotsByDay(this.state.startTime), " show time slots !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // console.log(this.mapTimeSlotsByDay(this.state.startTime), " show time slots !!!!!!!!!!!!!!!!!!!!!!!!!!!");
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
@@ -171,7 +168,9 @@ export default class Room extends Component {
            nextRes: new Date(future.startTime),
            events: events,
            showModal: true,
-           nextFourSlots: nextFourSlots
+           nextFourSlots: nextFourSlots,
+           startTime: new Date(this.props.roomInfo.openSlots[0].startTime),
+           endTime: new Date(Date.parse(this.props.roomInfo.openSlots[0].startTime) + 1800000)
          })
         console.log('this.state IF: ', this.state)
       } else {  //no current reservations
@@ -188,9 +187,21 @@ export default class Room extends Component {
   close() {
     this.setState({ showModal: false });
   }
-  open() {
-    goToDate = time.getTime()
-    this.setState({ showModal: true });
+  open(time) {
+    var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time);
+    var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
+    // console.log("showing current room in open:", currentRoom)
+    var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
+    goToDate = time.getTime();
+
+    this.setState({
+      showModal: true,
+      roomsWithTimeSlotInfo: roomsWithTimeSlotInfo,
+      currentRoom: currentRoom,
+      startTime: new Date(currentRoom.openSlots[0].startTime),
+      endTime: new Date(currentRoom.openSlots[0].endTime),
+      nextFourSlots: nextFourSlots
+    });
   }
   formatTime(time) {
     var hours = new Date(Date.parse(time) + 18000000).getHours()
@@ -259,6 +270,8 @@ export default class Room extends Component {
   }
 
   submitBooking() {
+    // changeStartTime(event)
+    // changeEndTime(event)
     // checkStatus()
     // .then(userData => {
     //   this.setState(
@@ -298,7 +311,7 @@ export default class Room extends Component {
         color: this.state.currentRoom.roomColor
       })
 
-      console.log("successfully inserted!:", data)
+      // console.log("successfully inserted!:", data)
       goToDate = Date.parse(reservation.startTime)
       this.setState({showModal: false, events: events, reRenderCalendar: true})
     })
@@ -333,10 +346,10 @@ export default class Room extends Component {
 
       <div>
         <Row className="row">
-          <Col md={6} className="eachRoom"><div onClick={() => this.open() } >{room.roomName}</div></Col>
+          <Col md={6} className="eachRoom"><div onClick={() => this.open(this.state.startTime) } >{room.roomName}</div></Col>
 
           <Col md={6}>
-            { room.isAvailable ? <div className="opened" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>⚪ Book Now </div> : <div className="booked" id={room.roomName} >🕒 Reserved  </div> }
+            { room.isAvailable ? <div className="opened" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>⚪ Book Now </div> : <div className="booked" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>🕒 Reserved  </div> }
           </Col>
         </Row>
 
@@ -360,7 +373,7 @@ export default class Room extends Component {
                 <select name="select" onChange={this.changeStartTime.bind(this)}>
                   { this.props.roomInfo.openSlots.map(slot => {
                     return(
-                      <option value={slot.startTime}>{this.formatTime(slot.startTime)}</option>
+                      <option className="changeStartTimes" value={slot.startTime}>{this.formatTime(slot.startTime)}</option>
                     );
                   })
                 }
@@ -372,7 +385,7 @@ export default class Room extends Component {
               <select name="select" onChange={this.changeEndTime.bind(this)}>
                 { this.state.nextFourSlots.map(slot => {
                   return(
-                    <option value={slot}>{this.formatTime(slot)}</option>
+                    <option className="changeEndTimes" value={slot}>{this.formatTime(slot)}</option>
                   );
                 })
               }
