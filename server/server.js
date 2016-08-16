@@ -181,12 +181,10 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
-// should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
-    console.log('resp in changeAvailability endpoint: ', resp)
     res.send(201, resp)
   })
 })
@@ -195,14 +193,12 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
   console.log("got request")
   Room.findRooms()
   .then(roomInfo => {
-    console.log("about to send roominfo:", roomInfo)
     res.send(201, roomInfo)
   })
 })
 
 app.put('/room/edit/:id', function(req, res){
   var roomId = req.params.id
-  //req.body should be new reservation info
   Room.updateRoom(roomId, req.body)
   .then(updatedRoom => {
     res.send(200, updatedRoom)
@@ -214,7 +210,6 @@ app.put('/room/edit/:id', function(req, res){
 app.delete('/:roomName', function(req, res){
   Room.deleteRoom(req.params.roomName)
   .then(resp => {
-    console.log('Successfully deleted', req.params.roomName);
     res.send('Successfully deleted room')
   })
 })
@@ -224,7 +219,6 @@ app.delete('/:roomName', function(req, res){
 
 app.get('/reservations', function(req, res){
 
-  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     // console.log('reservationsData: ', reservationsData)
@@ -259,10 +253,10 @@ app.get('/reservations-by-user/:userId', function(req, res){
 
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
-  console.log("got new reserv:", typeof req.body.startTime)
+
   Reservation.create(req.body)
   .then(reservationInfo => {
-    console.log("reservationInfo: ", reservationInfo)
+    // console.log("reservationInfo: ", reservationInfo)
     res.send(201, reservationInfo)
   })
 })
@@ -275,7 +269,7 @@ app.put('/reservations/:id', function(req, res){
   //req.body should be new reservation info
   Reservation.updateReservation(resId, req.body)
   .then(updatedRes => {
-    console.log('result from update: ', updatedRes)
+    // console.log('result from update: ', updatedRes)
     res.send(200, updatedRes)
   })
 })
@@ -283,7 +277,7 @@ app.put('/reservations/:id', function(req, res){
 
 app.delete('/reservations/delete/:resId', function(req, res){
   var resId = req.params.resId
-  console.log('id from params', resId)
+
   Reservation.delete(resId)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)

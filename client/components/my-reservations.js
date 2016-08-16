@@ -4,6 +4,7 @@ import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, fetchUserReservations, getRoomReservations } from '../models/rooms';
 import { deleteReservation } from '../models/reservations';
 import {Grid, Row, Col} from 'react-bootstrap';
+import ConfirmDelete from './confirm-delete-reservation';
 
 
 
@@ -14,7 +15,9 @@ export default class ReservationList extends Component {
     
     this.state = {
       user: null,
-      reservations: []
+      reservations: [],
+      showConfirmDelete: false,
+      resId: null
     }
   }
 
@@ -27,7 +30,6 @@ export default class ReservationList extends Component {
   update() {
     checkStatus()
     .then(userData => {
-      console.log('userData.data', userData.data)
       this.setState({ user: userData.data})
 
       return userData.data.uid
@@ -37,7 +39,6 @@ export default class ReservationList extends Component {
      return fetchUserReservations(userId)
     })
     .then(userReservations => {
-       console.log('userReservations.data: ', userReservations.data)
        this.setState({ reservations: userReservations.data })
       })
   }
@@ -75,6 +76,17 @@ export default class ReservationList extends Component {
     .then(() => this.update.call(this))
   }
 
+  closeConfirmDelete(shouldDeleteRes) {
+    // console.log('inside closeConfirmDeleteReservation');
+    if(shouldDeleteRes) {
+      //delete reservations
+      this.state.resId ? this.deleteThisReservation(this.state.resId) : null
+      //then reset state to hide modal
+      this.setState({showConfirmDelete : false})
+    } else {
+      this.setState({showConfirmDelete : false})
+    }
+  }
 
 
 
@@ -102,7 +114,7 @@ export default class ReservationList extends Component {
                     <td> { res.roomName } </td>
                     <td> { this.formatDate(res.startTime) } </td>
                     <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
-                    <td> <button onClick={ () => this.deleteThisReservation(res._id) } > DELETE </button> </td>
+                    <td> <button onClick={ () => this.setState({showConfirmDelete: true, resId: res._id}) } > DELETE </button> </td>
                   </tr>                  
                   )
                 })
@@ -118,6 +130,13 @@ export default class ReservationList extends Component {
           :
           null
         }
+
+        <ConfirmDelete 
+          showConfirmDelete = {this.state.showConfirmDelete}
+          resId = {this.state.resId}
+          closeConfirmDelete = {this.closeConfirmDelete.bind(this)}
+        />
+
 
       </div>
 

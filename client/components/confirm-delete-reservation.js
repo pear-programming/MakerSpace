@@ -8,43 +8,39 @@ import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 
-export default class ConfirmDeleteReservation extends React.Component {
+export default class ConfirmDelete extends React.Component {
 
   constructor(props){ 
     super(props)
     
     this.state = {
-      
+      showConfirmDelete : false
     }
   }
 
-  render() {
 
-    console.log("showing props in confirm-delete-reservation.js:", this.props);
+
+  render() {
+    console.log('ConfirmDelete - this.props: ', this.props)
+
+    // this.props --> {showConfirmDelete: false}
 
     return (
-      <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>
+      <Modal show={this.props.showConfirmDelete} onHide={() => this.props.closeConfirmDelete(false)}>
         <Modal.Header closeButton>
         <div className="verifyTitleContainer">
-          <Modal.Title><span className="roomTitle">Confirm Reservation</span></Modal.Title>
+          <Modal.Title><span className="roomTitle">Confirm Cancel Reservation</span></Modal.Title>
         </div>
         </Modal.Header>
         <Modal.Body className="clearfix">
-         
           
           <div className="roomAvailability">
-            <h3>Here are your booking details.  Click confirm to secure your reservation</h3> 
-          </div>
-          <div className="roomDetails">
-            <p> Room: {this.props.reservation.roomName} </p>
-            <p> Date: {this.props.MONTHS[new Date(this.props.reservation.startTime).getMonth()] + ' ' + new Date(this.props.reservation.startTime).getDate().toString()} </p>
-            <p> StartTime: {formatTime(this.props.reservation.startTime)} </p>
-            <p> EndTime: {formatTime(this.props.reservation.endTime)} </p>  
+            <h3>Are you sure you want to cancel this reservation?</h3> 
           </div>
           
           <div>
-            <button onClick={() => this.props.closeConfirm(true)}>Confirm</button>
-            <button onClick={() => this.props.closeConfirm(false)}>Cancel</button>
+            <button onClick={() => this.props.closeConfirmDelete(true)}>Delete</button>
+            <button onClick={() => this.props.closeConfirmDelete(false)}>Cancel</button>
           </div>
         </Modal.Body>
       </Modal>

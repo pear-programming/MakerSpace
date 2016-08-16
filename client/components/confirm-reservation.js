@@ -20,7 +20,7 @@ export default class ConfirmReservation extends React.Component {
 
   render() {
 
-    console.log("showing props in confirm-reservation.js:", this.props);
+    // console.log("showing props in confirm-reservation.js:", this.props);
 
     return (
       <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>

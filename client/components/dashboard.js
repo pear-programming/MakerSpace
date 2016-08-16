@@ -6,7 +6,6 @@ import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
 import Conflict from './conflict';
 import ConfirmReservation from './confirm-reservation';
-import ConfirmDeleteReservation from './confirm-delete-reservation';
 import ReservationList from './my-reservations';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -64,14 +63,6 @@ export default class Dashboard extends React.Component {
     }  
   }
 
-  closeConfirmDeleteReservation(shouldDeleteRes) {
-    console.log('inside closeConfirmDeleteReservation');
-    if(shouldDeleteRes) {
-      //delete reservations
-    } else {
-      this.setState({showDeleteReservation : false})
-    }
-  }
 
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time); 
@@ -130,7 +121,7 @@ export default class Dashboard extends React.Component {
         .then(slots => {
           fetchReservations()
           .then(reserv => {
-            console.log("showing reservations:", reserv);
+            // console.log("showing reservations:", reserv);
             timeSlots = slots.data; 
             user = userData.data;
             rooms = roomsData.data;
