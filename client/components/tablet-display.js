@@ -44,15 +44,14 @@ export default class TabletDisplay extends Component {
     currentRoom = decodeURIComponent(currentRoom)
 
     socket.on('updatedRooms', this.updateState.bind(this))
+    socket.on('checkStatus', (data) => console.log('checck for changes', data))
     socket.on('checkingChanges', (newRes) => {
       let date = new Date();
       let time = date.getTime();
-      console.log('currentTime', time)
-      console.log('changing', newRes)
     })
     fetchRooms() 
     .then(rooms=>{
-      let room = rooms.data.find((room)=>room.roomName === currentRoom)
+      let room = rooms.data.find( room =>room.roomName === currentRoom)
       this.setState({currentRoom: room})
       return room
     })
@@ -94,12 +93,14 @@ export default class TabletDisplay extends Component {
   }
 
   checkForChanges() {
+
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
     currentRoom = decodeURIComponent(currentRoom)
     setInterval(() => {
       fetchRooms() 
       .then(rooms=>{
+        console.log('checking changes')
         const room = rooms.data.find(findRoom)
         
         function findRoom(findThisRoom) { 
@@ -108,7 +109,7 @@ export default class TabletDisplay extends Component {
 
         this.setState({currentRoom: room})
       }) 
-    }, 10000)
+    }, 5000)
   }
 
 

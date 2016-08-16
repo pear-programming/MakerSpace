@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export function fetchRooms(){
-	console.log("about to fetch rooms")
   const request = axios.get('/all-rooms')
 
   return request
