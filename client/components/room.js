@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col } from 'react-bootstrap';
-import { fetchRooms, getRoomReservations, fetchTimeSlots } from '../models/rooms';
+import { fetchRooms, getRoomReservations, fetchTimeSlots, addReservation } from '../models/rooms';
+import { checkStatus } from '../models/auth';
 import { browserHistory, Link } from 'react-router';
 import RoomCalendar from './room-calendar';
 import TabletDisplay from './tablet-display';
@@ -19,7 +20,16 @@ function formatEvents(resArray) {
   })
 }
 
+
+
 let timeSlots = [];
+let goToDate = null;
+
+
+
+
+
+
 
 export default class Room extends Component {
 
@@ -39,7 +49,24 @@ export default class Room extends Component {
       startTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ),
       endTime: new Date(2016, 0, 1, 9, 11),
       nextFourSlots:[],
+      reRenderCalendar: false,
+      user: null,
+      userId: null,
+      userEmail: null,
+      // goToDate: null
     };
+  }
+
+  componentWillMount() {
+    checkStatus()
+    .then(userData => {
+      this.setState(
+        {
+        user: userData.data.name,
+        userId: userData.data.uid,
+        userEmail: userData.data.email
+        })
+    })
   }
 
 
@@ -162,6 +189,7 @@ export default class Room extends Component {
     this.setState({ showModal: false });
   }
   open() {
+    goToDate = time.getTime()
     this.setState({ showModal: true });
   }
   formatTime(time) {
@@ -230,7 +258,66 @@ export default class Room extends Component {
     this.setState({endTime: new Date(event.target.value)});
   }
 
-  //we need events of a specific room to display for the current day
+  submitBooking() {
+    // checkStatus()
+    // .then(userData => {
+    //   this.setState(
+    //     {
+    //     user: userData.data.name,
+    //     userId: userData.data.uid,
+    //     userEmail: userData.data.email
+    //     })
+    // })
+    console.log(this.state, "find me!!!!!!!!!!!!!!!!!!!!!!!!");
+    // console.log("startTime:", this.state.startTime);
+    // console.log("endTime:", this.state.endTime);
+    // console.log("room:", this.state.currentRoom);
+    // console.log("user:", this.state.user);
+
+    var reservation = {
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
+      roomName: this.props.roomInfo.roomName,
+      roomId: this.props.roomInfo._id,
+      userName: this.state.user,
+      userId: this.state.userId,
+      userEmail: this.state.userEmail
+    }
+
+
+    console.log("ready to insert reservation:", reservation);
+
+    addReservation(reservation)
+    .then(data => {
+      var events = this.state.events.slice();
+      events.push({
+        title: reservation.roomName,
+        start: Date.parse(reservation.startTime),
+        end: Date.parse(reservation.endTime),
+        allDay: false,
+        color: this.state.currentRoom.roomColor
+      })
+
+      console.log("successfully inserted!:", data)
+      goToDate = Date.parse(reservation.startTime)
+      this.setState({showModal: false, events: events, reRenderCalendar: true})
+    })
+
+  }
+
+
+  renderCalendar() {
+    // console.log("renderCalendar got called:", this.state.events);
+
+    return <Calendar key={0}
+      events={this.state.events}
+      open={this.open.bind(this)}
+      goToDate={goToDate}
+      />
+  }
+
+
+  ////  we need events of a specific room to display for the current day
   //we need to be able to book a room with start time and endtime of only 2 hours
 
   render() {
@@ -265,7 +352,7 @@ export default class Room extends Component {
           <Modal.Body className="clearfix">
             <div className="roomAvailability">
               <h3> <span className={room.isAvailable ? 'open' : 'closed'}>{room.isAvailable ? 'available' : 'In use'}</span></h3>
-              <button className="scheduleBtn">Today's Schedule</button>
+              <button onClick={this.submitBooking.bind(this)} className="scheduleBtn">Book Today</button>
             </div>
             <div className="selectStartTime">
               <label>Select a Start Time</label>
