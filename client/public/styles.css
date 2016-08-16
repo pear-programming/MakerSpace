@@ -161,6 +161,10 @@ span.closed {
   margin-right: -50px;
 }
 
+.horStack {
+  margin-left: -100px;
+}
+
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {

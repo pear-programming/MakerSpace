@@ -213,6 +213,12 @@ export default class RoomDisplays extends Component {
     })
   } 
 
+  stackLabel(){
+    var label = [];
+    this.state.topFive.map(user =>{ label.push(user.userName)}) 
+    return label
+  }
+
   render() {
     const style = {
       parent: { margin: "2%", maxWidth: "92.5%"}
@@ -229,6 +235,16 @@ export default class RoomDisplays extends Component {
         <Grid style={grid} className="grid">  
           
           <Row> 
+
+            <Col md={6}>
+              <h1>Reservations by Day</h1>
+              <Table responsive>
+                <tbody>
+                  {this.pieTable.call(this)}
+                </tbody>
+              </Table>
+            </Col>
+
             <Col md={6}>     
               <VictoryPie 
                 style={{  }}
@@ -240,32 +256,13 @@ export default class RoomDisplays extends Component {
                   }
                 }} /> 
             </Col>
-            <Col md={6}>
-              <h1>Reservations by Day</h1>
-              <Table responsive>
-                <tbody>
-                  {this.pieTable.call(this)}
-                </tbody>
-              </Table>
-            </Col>
+
           </Row>
           
           <Row style={chart}>
             <h1>Reservations by Room</h1>
-            <Col md={3}>
-              <Table responsive>
-                <thead>
-                  <tr>
-                    <th><h3><strong>{sum}</strong> Total Reservations</h3></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.stackTable.call(this)}
-                </tbody>
-              </Table>
-            </Col>
 
-            <Col md={9}>
+            <Col md={8}>
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
@@ -292,16 +289,34 @@ export default class RoomDisplays extends Component {
                 />
               </VictoryChart> 
             </Col>
+
+            <Col md={4}>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <td><h4><strong>{sum}</strong> Total Reservations</h4></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.stackTable.call(this)}
+                </tbody>
+              </Table>
+            </Col>
+
           </Row>
 
           <Row style={stack}> 
-            <Col md={8}>
+            
+            <Col md={8} className="horStack">
               <VictoryStack horizontal
                 padding={30}
-                height={300}
+                width={225}
+                height={150}
                 animate={{ duration: 2000 }}
+                labels={this.stackLabel.call(this)}
                 style={{
-                  data: {width: 30},
+                  data: {width: 8},
+                  labels: {fontSize: 4}
                 }}
               
               >
@@ -317,6 +332,7 @@ export default class RoomDisplays extends Component {
                   </tbody>
                 </Table>      
             </Col>
+
           </Row>
           
         </Grid>
