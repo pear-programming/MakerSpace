@@ -1,4 +1,4 @@
-"use strict";
+
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -13,6 +13,7 @@ var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
 var client = require('./client_credentials');
+var _ = require('lodash')
 
 
 app.use(session({
@@ -93,6 +94,7 @@ io.on('connection', function (socket) {
   var rooms;
   var resv;
   var roomsToClose = [];
+  var bookedRooms = [];
 
   Reservation.findAllReservations()
   .then(reservationsData => {
@@ -113,26 +115,40 @@ io.on('connection', function (socket) {
       }
 
       if(resStart <= currentTime && currentTime <= resEnd) {
-        
+        bookedRooms.push(x.roomName)
         if(currRoom.isAvailable === true) {
           roomsToClose.push(x.roomName)
         }
       } else {
       }
     })
-    console.log('rooms to change: ', roomsToClose)
+    console.log('booked rooms: ', bookedRooms)
   })
   .then(() => {
+    var openRooms = rooms.map( room => room.roomName ).filter( x => !(bookedRooms.indexOf(x) >= 0))
+    var roomsToOpen = []
+    console.log('openRooms', openRooms)
+    
+    openRooms.forEach( room => {
+      var currentRoom = rooms.find(findRoom)
+      function findRoom(findThisRoom) { 
+        return findThisRoom.roomName === room;
+      }
+      if(currentRoom.isAvailable === false) {
+        roomsToOpen.push(currentRoom.roomName)
+      }
+    })
+
     roomsToClose.forEach( room => {
       Room.changeAvailability(room)
       .then(() => console.log('changing status'))
     })
+    roomsToOpen.forEach( room => {
+      Room.changeAvailability(room)
+      .then(() => console.log('changing status'))
+    })
   })
-  .then(() => {
-    var hello = rooms.map( room => room.roomName ).filter( room => roomsToClose.includes(room) )
 
-    console.log(hello)
-  })
 });
 
 
