@@ -14,7 +14,6 @@ export default class Routes extends React.Component {
       <Router history={browserHistory}>
         <Route path='/' component={App}>
           <IndexRoute component={SplashPage} />
-          <Route path='my-account' component={MyAccount} />
           <Route path='room-displays' component={RoomDisplays} />
           <Route path=':roomName/display' component={TabletDisplay} />
           <Route path='dashboard' component={Dashboard} /> 
