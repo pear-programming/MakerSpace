@@ -80,7 +80,6 @@ export default class RoomDisplays extends Component {
 
       })
 
-
       for (let key in users){
         caleb.push(key)
       }
@@ -100,7 +99,6 @@ export default class RoomDisplays extends Component {
         jen.push(data)
 
       })
-        console.log('calm down caleb', jen)
 
       let count = {};
       jen.forEach(room=> {
@@ -116,7 +114,6 @@ export default class RoomDisplays extends Component {
       let topFive  = Object.keys(count).sort(function(a,b){return count[b]-count[a] }).slice(0, 5)
       let platinum = [];
       topFive.forEach( person => platinum.push({ userName: person, totalRes: count[person] }))
-      console.log('dat ass', platinum)
 
       let rihanna = jen.map( room => {
         return room.filter( user => {
@@ -124,9 +121,6 @@ export default class RoomDisplays extends Component {
         })
       })
 
-
-
-      console.log('riri', rihanna)
       rihanna.forEach( room => {
         let counter = 1
         room.forEach( user => {
@@ -152,16 +146,6 @@ export default class RoomDisplays extends Component {
       this.setState({data: this.getGraphData()});
   }
 
-  renderRooms() {
-    return this.state.rooms.map(room => {
-      return (
-        <li>
-          <Link to={`${room.roomName}/display`}>{room.roomName}</Link>
-        </li>
-      )
-    })
-  }
-
   getTickValues() {
     let ticks = Object.keys(this.state.roomOccurences)
     return ticks
@@ -175,9 +159,10 @@ export default class RoomDisplays extends Component {
     }
     let largestOccurence = Math.max(...occurences)
 
-    for (let i = 0; i <= largestOccurence; i++) {
+    for (let i = 0; i <= largestOccurence; i=i+5) {
       ans.push(i)
     }
+
     return ans;
   }
 
@@ -216,6 +201,18 @@ export default class RoomDisplays extends Component {
     }) 
   }
 
+  stackTable() {
+    console.log('here', this.state.data)
+    return this.getTickValues.call(this).map((tick, i) =>{
+      return(
+        <tr>
+          <td>{tick}</td>
+          <td>{this.state.data[i].y}</td>
+        </tr>
+      )
+    })
+  } 
+
   render() {
     const style = {
       parent: { margin: "2%", maxWidth: "92.5%"}
@@ -245,7 +242,7 @@ export default class RoomDisplays extends Component {
             </Col>
             <Col md={6}>
               <h1>Reservations by Day</h1>
-              <Table>
+              <Table responsive>
                 <tbody>
                   {this.pieTable.call(this)}
                 </tbody>
@@ -254,17 +251,21 @@ export default class RoomDisplays extends Component {
           </Row>
           
           <Row style={chart}>
-            <Col md={4}>
-              <h1>Reservations by Room</h1>
-              <Table>
+            <h1>Reservations by Room</h1>
+            <Col md={3}>
+              <Table responsive>
+                <thead>
+                  <tr>
+                    <th><h3><strong>{sum}</strong> Total Reservations</h3></th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <div><h3><strong>{sum}</strong> Total Reservations</h3></div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  {this.stackTable.call(this)}
                 </tbody>
               </Table>
             </Col>
 
-            <Col md={8}>
+            <Col md={9}>
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   label="Rooms"
@@ -294,7 +295,7 @@ export default class RoomDisplays extends Component {
           </Row>
 
           <Row style={stack}> 
-            <Col md={6}>
+            <Col md={8}>
               <VictoryStack horizontal
                 padding={30}
                 height={300}
@@ -308,9 +309,9 @@ export default class RoomDisplays extends Component {
               </VictoryStack>
             </Col>
 
-            <Col md={6}>
+            <Col md={4}>
               <h1>Top 5 Users</h1>
-                <Table>
+                <Table responsive>
                   <tbody>
                     {this.chartTable.call(this)} 
                   </tbody>
@@ -319,9 +320,6 @@ export default class RoomDisplays extends Component {
           </Row>
           
         </Grid>
-        <ul>
-          {this.renderRooms.call(this)}
-        </ul>
       </div>
     );
   }

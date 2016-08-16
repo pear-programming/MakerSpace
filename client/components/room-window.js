@@ -7,14 +7,10 @@ export default class RoomWindow extends Component {
 
   }
 
-
-
-
   render() {
     
     const room = this.props.room
     const style = { display: "inline-flex" }
-
 
     return (
       <div className="window" >
