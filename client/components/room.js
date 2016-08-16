@@ -157,7 +157,7 @@ export default class Room extends Component {
         let currentTime = new Date(Date.now())
         this.mapTimeSlotsByDay(new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ))
         console.log("showing typeof this.state.startTime  ", typeof this.state.startTime);
-        console.log(" showing this.props.roomInfo.openSlots[0].startTime ", typeof this.props.roomInfo.openSlots[0].startTime);
+        // console.log(" showing this.props.roomInfo.openSlots[0].startTime ", typeof this.props.roomInfo.openSlots[0].startTime);
         var nextFourSlots = this.getTimeSlotInfo(this.props.roomInfo.openSlots[0].startTime, this.props.roomInfo);
         // console.log(this.mapTimeSlotsByDay(this.state.startTime), " show time slots !!!!!!!!!!!!!!!!!!!!!!!!!!!");
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
@@ -173,7 +173,14 @@ export default class Room extends Component {
            endTime: new Date(Date.parse(this.props.roomInfo.openSlots[0].startTime) + 1800000)
          })
         console.log('this.state IF: ', this.state)
-      } else {  //no current reservations
+      }
+
+
+
+
+
+
+      else {  //no current reservations
 
         this.setState({reservations: null, nextRes: null, events: null, showModal: true})
         console.log('this.state ELSE: ', this.state)
