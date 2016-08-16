@@ -44,14 +44,19 @@ export default class ReservationList extends Component {
 
   formatTime(time) {
     var hours = new Date(Date.parse(time) + 18000000).getHours() 
+    var minutes = (new Date(time).getMinutes().toString() + "0").slice(0,2);
     var amPm;
     if(hours > 12) {
-      hours = hours - 12
-      amPm = 'pm'
+      hours = hours - 12;
+      amPm = 'pm';
     }
-    else if(hours === 12) amPm = 'pm'
-    else amPm = 'am'
-    return hours.toString() + ":" + (new Date(time).getMinutes().toString() + "0").slice(0,2) + amPm;
+    else if(hours === 12) amPm = 'pm';
+    else amPm = 'am';
+    if(minutes === '00') {
+      return hours.toString() + amPm;
+    } else {
+      return hours.toString() + ":" + minutes + amPm;
+    }
   }
 
   formatDate(time) {
@@ -59,7 +64,7 @@ export default class ReservationList extends Component {
     var todate = new Date(time).getDate();
     var toyear = new Date(time).getFullYear();
     toyear = toyear.toString().substring(2)
-    
+
     return tomonth + '/' + todate + '/' + toyear;
   }
 
@@ -115,6 +120,7 @@ export default class ReservationList extends Component {
         }
 
       </div>
+
     )
   }
 }

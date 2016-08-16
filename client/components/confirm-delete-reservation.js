@@ -8,9 +8,9 @@ import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 
-export default class ConfirmReservation extends React.Component {
+export default class ConfirmDeleteReservation extends React.Component {
 
-	constructor(props){ 
+  constructor(props){ 
     super(props)
     
     this.state = {
@@ -20,7 +20,7 @@ export default class ConfirmReservation extends React.Component {
 
   render() {
 
-    console.log("showing props in confirm-reservation.js:", this.props);
+    console.log("showing props in confirm-delete-reservation.js:", this.props);
 
     return (
       <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>

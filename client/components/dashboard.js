@@ -5,7 +5,8 @@ import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '.
 import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
 import Conflict from './conflict';
-import Confirm from './confirm-reservation';
+import ConfirmReservation from './confirm-reservation';
+import ConfirmDeleteReservation from './confirm-delete-reservation';
 import ReservationList from './my-reservations';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -44,7 +45,7 @@ export default class Dashboard extends React.Component {
   }
 
   closeVerify(shouldCloseModal) {
-    console.log("inside closeVerify")
+    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.confirmBooking();  
     }
@@ -54,13 +55,22 @@ export default class Dashboard extends React.Component {
   }
 
   closeConfirm(shouldCloseModal) {
-    console.log("inside closeVerify")
+    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.submitBooking();  
     }
     else {
       this.setState({showConfirm: false})
     }  
+  }
+
+  closeConfirmDeleteReservation(shouldDeleteRes) {
+    console.log('inside closeConfirmDeleteReservation');
+    if(shouldDeleteRes) {
+      //delete reservations
+    } else {
+      this.setState({showDeleteReservation : false})
+    }
   }
 
   open(time) {
@@ -278,7 +288,7 @@ export default class Dashboard extends React.Component {
   }
 
   submitBooking() {
-    console.log("inside submit booking")
+    // console.log("inside submit booking")
 
     addReservation(reservation)
     .then(data => {
@@ -418,18 +428,20 @@ export default class Dashboard extends React.Component {
           </Modal>
  
             <Conflict 
-              showVerify={this.state.showVerify}
-              closeVerify={this.closeVerify.bind(this)}
-              bookingConflicts={bookingConflicts}
-              MONTHS={MONTHS}
+              showVerify = {this.state.showVerify}
+              closeVerify = {this.closeVerify.bind(this)}
+              bookingConflicts = {bookingConflicts}
+              MONTHS = {MONTHS}
             /> 
 
-            <Confirm 
-              showConfirm={this.state.showConfirm}
-              closeConfirm= {this.closeConfirm.bind(this)}
-              reservation={reservation}
-              MONTHS={MONTHS}
+            <ConfirmReservation 
+              showConfirm = {this.state.showConfirm}
+              closeConfirm = {this.closeConfirm.bind(this)}
+              reservation = {reservation}
+              MONTHS = {MONTHS}
             />
+
+
 
           {this.renderCalendar.call(this)}
         </div>
