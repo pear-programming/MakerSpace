@@ -19,12 +19,12 @@ export default class RoomsList extends Component {
       room: {}
     }
   }
-
+  
   changeRoomState(room) {
     const rooms = this.state.rooms
     const roomIndex = rooms.indexOf(rooms.find(findRoom))
     //function to change state in parent of the room selected
-    function findRoom(findThisRoom) {
+    function findRoom(findThisRoom) { 
       return findThisRoom.roomName === room.roomName;
     }
 
@@ -44,39 +44,39 @@ export default class RoomsList extends Component {
 
   roomUnBooked(roomId) {
     console.log("current rooms in state: ", this.state.rooms);
-    var roomIndex;
+    var roomIndex; 
     var unBookedRoom = this.state.rooms.filter((room, index) => {
       if(room._id.toString() === roomId.toString()) {
         roomIndex = index;
         return true;
-      }
+      }    
       else {
         return false
       }
-    })[0]
+    })[0] 
 
     unbookedRoom.isAvailable = true;
     var roomsCopy = this.state.rooms.slice();
-    roomsCopy[roomIndex] = unBookedRoom;
+    roomsCopy[roomIndex] = unBookedRoom; 
     this.setState({rooms: roomsCopy})
   }
 
   instaBookedRoom(roomId) {
-    var roomIndex;
+    var roomIndex; 
     var bookedRoom = this.state.rooms.filter((room, index) => {
 
       if(room._id.toString() === roomId.toString()) {
         roomIndex = index;
         return true;
-      }
+      }    
       else {
         return false
       }
-    })[0]
+    })[0] 
 
     bookedRoom.isAvailable = false;
     var roomsCopy = this.state.rooms.slice();
-    roomsCopy[roomIndex] = bookedRoom;
+    roomsCopy[roomIndex] = bookedRoom; 
     this.setState({rooms: roomsCopy})
   }
 
@@ -104,9 +104,8 @@ export default class RoomsList extends Component {
   }
 
   updateWindow(name) {
-    // console.log("this.state.rooms", this.state.rooms);
-    // console.log('find rooms', findRoom);
-    const room = this.state.rooms.find(findRoom)
+    const room = this.state.rooms.find(findRoom)  
+
     function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
     this.setState({room})
     this.showWindow(name)
@@ -120,17 +119,17 @@ export default class RoomsList extends Component {
         <Grid>
           <Row>
             <Col md={4} >
-              <div className="RoomsList">
-                <h1>Rooms</h1>
+              <div className="RoomsList"> 
+                <h1>Rooms</h1> 
                 {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
               </div>
             </Col>
-
+            
             <Col md={8} >
               <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
-              { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
-
+          
               <div className="roomWindow">
+                { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
               </div>
             </Col>
           </Row>
