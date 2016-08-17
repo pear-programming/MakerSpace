@@ -27,6 +27,7 @@ export default class ReservationList extends Component {
   }
 
 
+
   update() {
     checkStatus()
     .then(userData => {
@@ -71,9 +72,12 @@ export default class ReservationList extends Component {
 
 
   deleteThisReservation(res) {
-    // console.log("resId!!!!!", res)
+    console.log('RES~~~~', res)
     deleteReservation(res)
-    .then(() => this.update.call(this))
+    .then(() => {
+      this.props.deleteFromCalendar(res);
+      this.update.call(this)
+    })
   }
 
   closeConfirmDelete(shouldDeleteRes) {

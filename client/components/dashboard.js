@@ -13,7 +13,7 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 var timeSlots;
 var user;
 var rooms;
-var reservations;
+var reservations; // array of current reservations
 var reservation = {roomName: " ", startTime: new Date(2016), endTime: new Date(2016)};
 var goToDate = null;
 var bookingConflicts = [{roomName: " ", startTime: '', endTime: ''}];
@@ -333,6 +333,20 @@ export default class Dashboard extends React.Component {
     reRenderCalendar = false;
   }
 
+  deleteFromCalendar() {
+    fetchReservations()
+    .then(reserv => {
+      reservations = reserv.data;
+      console.log("showing reservations after delete:", reservations);
+      var mappedData = this.mapTimeSlots(reserv, rooms);
+      console.log('did mappedData work? ', mappedData)
+      this.setState({ events: mappedData })
+    })
+    reRenderCalendar = true
+    
+  }
+
+
   render(){
     // console.log("showing events:", this.state.events);
     // console.log("showing this:", this);
@@ -440,7 +454,7 @@ export default class Dashboard extends React.Component {
 
         : null   }
            
-      <ReservationList />
+      <ReservationList deleteFromCalendar = {this.deleteFromCalendar.bind(this)} />
       
       </div>
       </div>
