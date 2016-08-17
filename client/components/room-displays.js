@@ -199,8 +199,10 @@ export default class RoomDisplays extends Component {
     return this.state.topFive.map(user =>{
       return (
         <tr>
+        <tr></tr>
           <td>{user.userName}</td>
           <td>{user.totalRes} Reservations</td>
+        <tr></tr>
         </tr>
       )
     })
@@ -209,7 +211,7 @@ export default class RoomDisplays extends Component {
   stackTable() {
     return this.getTickValues.call(this).map((tick, i) =>{
       return(
-        <tr>
+        <tr className="horRow">
           <td>{tick}</td>
           <td>{this.state.data[i].y}</td>
         </tr>
@@ -232,7 +234,7 @@ export default class RoomDisplays extends Component {
           
    {/*========================= Pie Chart ===========================*/}
        
-          <Row> 
+          <Row > 
             <Col md={5}>
               <Col md={2} />
               <Col md={8} >
@@ -249,7 +251,7 @@ export default class RoomDisplays extends Component {
               
             </Col>
 
-            <Col md={6}>     
+            <Col md={6} >     
               <VictoryPie 
                 style={{  
                   labels: {
@@ -257,7 +259,6 @@ export default class RoomDisplays extends Component {
                     fontSize: 14
                   }
                 }}
-
                 data={this.state.pieData}
                 animate={{
                   duration: 1000,
@@ -276,6 +277,8 @@ export default class RoomDisplays extends Component {
 
 
           <Row id="byRoom">
+
+            <h2 className="barTitle">Reservations by Room</h2>
 
             <Col md={9}>
                           
@@ -305,22 +308,25 @@ export default class RoomDisplays extends Component {
                   data={this.state.data}
                 />
               </VictoryChart>
+
+           
             </Col>
 
 
             <Col md={3}>              
               
-              <h3><strong>{sum}</strong> Total Reservations</h3>
+            <h3><strong>{sum}</strong> Total Reservations</h3>
 
               <Table responsive>
                 <tbody>
                   {this.stackTable.call(this)}
                 </tbody>
               </Table>
-
-              <p><div id="key" /> Reservations</p>
               
-            </Col>   
+              <p><div id="key" /> Number of Reservations</p>
+
+            </Col> 
+
 
           </Row>
 
@@ -328,14 +334,25 @@ export default class RoomDisplays extends Component {
           
           <Row> 
 
-            <h1 className="graphTitle">Top 5 Users</h1>
             
             <Col md={4}>
-                <Table responsive>
-                  <tbody>
-                    {this.chartTable.call(this)}
-                  </tbody>
-                </Table>
+            
+              <h2 className="horTitle">Top 5 Users</h2>
+            
+              <Col md={2} />
+
+              <Col md={8}>
+              
+                    <Table responsive>
+                      <tbody>
+                        {this.chartTable.call(this)}
+                      </tbody>
+                    </Table>
+
+              </Col>
+
+              <Col md={2} />
+
             </Col>
             
             <Col md={8} className="horStack">

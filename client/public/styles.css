@@ -85,6 +85,11 @@ img.roomImage {
   text-align: center;
 }
 
+.horTitle {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
 #byRoom {
   color: white;
   background-color: #137bbe;
