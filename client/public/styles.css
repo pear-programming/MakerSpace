@@ -292,7 +292,7 @@ span.closed {
   text-decoration: none;
   display: inline-block;
   margin: 4px 2px;
-  cursor: none;
+  cursor: pointer;
   transition-duration: 0.1s;
 }
 
