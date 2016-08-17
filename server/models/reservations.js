@@ -11,6 +11,12 @@ Reservation.findByRoomId = function(Id) {
   })
 }
 
+
+Reservation.deleteIt = function() {
+  console.log("got run here")
+  return db.reservations.remove({roomName: "Turing"})
+}
+
 Reservation.create = function(reservationData) { 
 
   if(typeof reservationData.startTime === 'string') {
@@ -27,8 +33,8 @@ Reservation.create = function(reservationData) {
   })
 }
 
+
 Reservation.delete = function(reservationId){
-  console.log(reservationId, " reservationId")
   if( Object.keys(reservationId).length === 0 ){
     return null;
   }
@@ -39,12 +45,13 @@ Reservation.delete = function(reservationId){
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
-}
-  else{
-  return db.reservations.remove(reservationId)//reservations
+
+  }
+  else {
+  return db.reservations.remove(db.ObjectId(reservationId))//reservations
     .then((data) => {
-      console.log("successfully canceled reservation!:", data)
-      return data;
+      console.log("successfully canceled reservation from string!:", data)
+      return "success";
   }) .catch(err => console.log('error in reservation: ', err))
 }
 }
@@ -59,7 +66,7 @@ Reservation.findAllReservations = function() {
 }
 
 Reservation.findByName = function(name) {
-  return db.collection('rooms').find({roomName: name})
+  return db.rooms.find({roomName: name})
   .then(room => {
     if(room[0]){
       console.log('room[0]._id: ', room[0]._id)

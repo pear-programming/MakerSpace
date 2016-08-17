@@ -45,10 +45,10 @@ export default class RoomDisplays extends Component {
       let resArray = reservations.data;
       let resOccurences = {};
       let days = [
-        { x: 'Su', y: 0 }, 
-        { x: 'M', y: 0 }, 
-        { x: 'T', y: 0 }, 
-        { x: 'W', y: 0 }, 
+        { x: 'Su', y: 0 },
+        { x: 'M', y: 0 },
+        { x: 'T', y: 0 },
+        { x: 'W', y: 0 },
         { x: 'Th', y: 0 },
         { x: 'F', y: 0 },
         { x: 'Sa', y: 0 }
@@ -65,7 +65,7 @@ export default class RoomDisplays extends Component {
           resOccurences[reservation.roomName] = 1
         } else {
           resOccurences[reservation.roomName] += 1
-        }  
+        }
 
         if(!users[reservation.userName]){
           users[reservation.userName] = {}
@@ -74,7 +74,7 @@ export default class RoomDisplays extends Component {
           users[reservation.userName][reservation.roomName] = 1
         } else {
           users[reservation.userName][reservation.roomName] += 1
-        }       
+        }
 
         days[dayIndex].y += 1
 
@@ -85,7 +85,7 @@ export default class RoomDisplays extends Component {
       }
 
       let rooms = Object.keys(resOccurences)
-      rooms.forEach( room => {      
+      rooms.forEach( room => {
         let data = []
         for (let key in users){
           if(users[key][room]){
@@ -103,8 +103,8 @@ export default class RoomDisplays extends Component {
       let count = {};
       jen.forEach(room=> {
         room.forEach(user=>{
-          if(!count[user.z]){ 
-            count[user.z] = user.y 
+          if(!count[user.z]){
+            count[user.z] = user.y
           } else {
             count[user.z] += user.y
           }
@@ -143,7 +143,7 @@ export default class RoomDisplays extends Component {
         x += 1
       }
       this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
-      
+
     })
     
   }
@@ -174,14 +174,14 @@ export default class RoomDisplays extends Component {
 
   renderBarGraph() {
 
-    return this.state.barData.map( room => <VictoryBar 
+    return this.state.barData.map( room => <VictoryBar
       style={{data: {fill: randomColor() }}}
       data={room}
     />)
   }
 
   pieTable() {
-    
+
     let sum = this.sum(this.state.pieData, 'y');
 
     return this.state.pieData.map(room =>  {
@@ -203,7 +203,7 @@ export default class RoomDisplays extends Component {
           <td>{user.totalRes} Reservations</td>
         </tr>
       )
-    }) 
+    })
   }
 
   stackTable() {
@@ -221,12 +221,13 @@ export default class RoomDisplays extends Component {
     const style = {
       parent: { margin: "2%", maxWidth: "92.5%"}
     };
-    
+
     let sum = this.sum(this.state.pieData, 'y');
 
     return (
       <div>
         <NavBar />
+
         <Grid className="grid">  
           
    {/*========================= Pie Chart ===========================*/}
@@ -256,20 +257,23 @@ export default class RoomDisplays extends Component {
                     fontSize: 14
                   }
                 }}
+
                 data={this.state.pieData}
                 animate={{
                   duration: 1000,
                   onEnter: {
                     duration: 500
                   }
-                }} /> 
+                }} />
             </Col>
 
             <Col md={1} />
 
           </Row>
+
           
 {/*========================= Bar Graph ===========================*/}
+
 
           <Row id="byRoom">
 
@@ -300,8 +304,9 @@ export default class RoomDisplays extends Component {
                   animate={{ duration: 2000 }}
                   data={this.state.data}
                 />
-              </VictoryChart> 
+              </VictoryChart>
             </Col>
+
 
             <Col md={3}>              
               
@@ -328,9 +333,9 @@ export default class RoomDisplays extends Component {
             <Col md={4}>
                 <Table responsive>
                   <tbody>
-                    {this.chartTable.call(this)} 
+                    {this.chartTable.call(this)}
                   </tbody>
-                </Table>      
+                </Table>
             </Col>
             
             <Col md={8} className="horStack">
@@ -351,7 +356,7 @@ export default class RoomDisplays extends Component {
             </Col>
 
           </Row>
-          
+
         </Grid>
       </div>
     );
@@ -359,8 +364,5 @@ export default class RoomDisplays extends Component {
 }
 
 function randomColor(){
-  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6); 
+  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6);
 }
-
-
-

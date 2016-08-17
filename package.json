@@ -1,7 +1,7 @@
 {
   "name": "boilerplate",
   "version": "1.0.0",
-  "description": "A boiler plate with basic examples of react-router and react-redux",
+  "description": "A solution to conference room management systems",
   "scripts": {
     "test": "mocha --recursive --reporter=nyan ./test/setup.js ./test",
     "start": "nodemon server/server.js",
@@ -61,6 +61,6 @@
     "sass.js": "^0.9.11",
     "socket.io": "^1.4.8",
     "validator": "^5.5.0",
-    "victory": "^0.6.0"
+    "victory": "^0.6.1"
   }
 }

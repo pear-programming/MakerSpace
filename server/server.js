@@ -1,4 +1,4 @@
-"use strict";
+
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -6,6 +6,7 @@ var User = require('./models/users');
 var Session = require('./models/userSessions');
 var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
+var Check = require('./status-check.js')
 var app = require('express')();
 var express = require('express');
 var server = require('http').Server(app);
@@ -13,6 +14,7 @@ var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
 var client = require('./client_credentials');
+var _ = require('lodash')
 
 
 app.use(session({
@@ -88,51 +90,14 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('roomUnBooked', roomId);
   })
 
-  var date = new Date();
-  var currentTime = date.getTime();
-  var rooms;
-  var resv;
-  var roomsToClose = [];
+  setInterval(() => {
+    console.log('emitting updates')
+    Check.update()
+    .then( e => {
 
-  Reservation.findAllReservations()
-  .then(reservationsData => {
-    resv = reservationsData
-    return Room.findRooms()
-  })
-  .then(data => {
-    rooms = data
-  })
-  .then(() => {
-    resv.forEach( x => {
-      var resStart = x.startTime.getTime() + 18000000;
-      var resEnd = x.endTime.getTime() + 18000000;
-      var currRoom = rooms.find(findRoom)
-
-      function findRoom(findThisRoom) { 
-        return findThisRoom.roomName === x.roomName;
-      }
-
-      if(resStart <= currentTime && currentTime <= resEnd) {
-        
-        if(currRoom.isAvailable === true) {
-          roomsToClose.push(x.roomName)
-        }
-      } else {
-      }
     })
-    console.log('rooms to change: ', roomsToClose)
-  })
-  .then(() => {
-    roomsToClose.forEach( room => {
-      Room.changeAvailability(room)
-      .then(() => console.log('changing status'))
-    })
-  })
-  .then(() => {
-    var hello = rooms.map( room => room.roomName ).filter( room => roomsToClose.includes(room) )
-
-    console.log(hello)
-  })
+  }, 5000)
+  
 });
 
 
@@ -154,6 +119,11 @@ app.get('/app-bundle.js',
 
 //<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
+app.delete('/res', function(req, res) {
+  console.log("got res delete request")
+  return Reservation.deleteIt()
+    .then(data => data)
+})
 // new user signs up
 app.post('/signup', function(req, res) {
   //now we want to add info to users db table
@@ -174,6 +144,7 @@ app.post('/signup', function(req, res) {
     res.send(201, req.body.name)
   })
 })
+
 
 app.post('/login', function(req, res) {
   var userName;
@@ -257,6 +228,8 @@ app.delete('/:roomName', function(req, res){
 //<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
+
+  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     res.send(200, reservationsData)
@@ -274,6 +247,19 @@ app.get('/reservations/:roomName', function(req, res){
   })
 })
 
+
+app.get('/reservations-by-user/:userId', function(req, res){
+  var userId = req.params.userId;
+
+  Reservation.findByUserId(userId)
+  .then(reservations => {
+    res.send(200, reservations)
+  })
+  .catch(err => {
+    console.log("error:", err)
+  })
+})
+
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
   
@@ -281,16 +267,6 @@ app.post('/reservations/new', function(req, res){
   .then(reservationInfo => {
     res.send(201, reservationInfo)
   })
-})
-
-app.get('/reservations/:userId', function(req, res){
-  var userId = req.params.userId;
-  
-  Reservation.findByUserId(userId)
-  .then(reservations => {
-    res.send(200, reservations)
-  })
-  .catch(err => {})
 })
 
 //update existing reservation
@@ -303,15 +279,18 @@ app.put('/reservations/:id', function(req, res){
   })
 })
 
-app.delete('/reservations/delete', function(req, res){
 
-  Reservation.delete(req.body)
+app.delete('/reservations/delete/:resId', function(req, res){
+  var resId = req.params.resId
+  console.log('id from params', resId)
+  Reservation.delete(resId)
   .then(reservationInfo => {
-    if(reservationInfo.n === 0){
-      res.send(400, "reservations does not exist")
+  console.log("reservationInfo: ", reservationInfo)
+    if(reservationInfo === "success"){
+      res.send(201, reservationInfo)
     }
     else{
-      res.send(201, reservationInfo)
+      res.send(400, "error")
     }
   })
 })

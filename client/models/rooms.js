@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export function fetchRooms(){
-	console.log("about to fetch rooms")
   const request = axios.get('/all-rooms')
 
   return request
@@ -24,8 +23,9 @@ export function fetchReservations(){
   return request
 }
 
-export function fetchUserReservations(userId){
-  const request = axios.get(`/reservations/${userId}`)
+export function fetchUserReservations(userId) {
+  const request = axios.get(`/reservations-by-user/${userId}`)
+
 
   return request
 }
@@ -41,3 +41,5 @@ export function addReservation(reservation){
 
   return request
 }
+
+
