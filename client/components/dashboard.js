@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
-import { formatTime } from '../helpers.js'
+import { formatTime } from '../helpers.js';
 import Calendar from './calendar';
 import Conflict from './conflict';
 import ConfirmReservation from './confirm-reservation';
@@ -337,13 +337,13 @@ export default class Dashboard extends React.Component {
     fetchReservations()
     .then(reserv => {
       reservations = reserv.data;
-      console.log("showing reservations after delete:", reservations);
+      // console.log("showing reservations after delete:", reservations);
       var mappedData = this.mapTimeSlots(reserv, rooms);
-      console.log('did mappedData work? ', mappedData)
-      this.setState({ events: mappedData })
+      // console.log('did mappedData work? ', mappedData)
+      this.setState({ events: mappedData  })
     })
     reRenderCalendar = true
-    
+  
   }
 
 

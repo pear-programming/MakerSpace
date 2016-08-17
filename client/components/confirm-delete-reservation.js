@@ -21,8 +21,7 @@ export default class ConfirmDelete extends React.Component {
 
 
   render() {
-    console.log('ConfirmDelete - this.props: ', this.props)
-
+    // console.log('ConfirmDelete - this.props: ', this.props)
     // this.props --> {showConfirmDelete: false}
 
     return (

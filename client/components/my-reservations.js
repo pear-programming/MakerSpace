@@ -3,7 +3,7 @@ import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, fetchUserReservations, getRoomReservations } from '../models/rooms';
 import { deleteReservation } from '../models/reservations';
-import {Grid, Row, Col} from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 import ConfirmDelete from './confirm-delete-reservation';
 
 
@@ -12,7 +12,6 @@ export default class ReservationList extends Component {
   
   constructor(){ 
     super()
-    
     this.state = {
       user: null,
       reservations: [],
