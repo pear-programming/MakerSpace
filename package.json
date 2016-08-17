@@ -1,7 +1,7 @@
 {
   "name": "boilerplate",
   "version": "1.0.0",
-  "description": "A boiler plate with basic examples of react-router and react-redux",
+  "description": "A solution to conference room management systems",
   "scripts": {
     "test": "mocha --recursive --reporter=nyan ./test/setup.js ./test",
     "start": "nodemon server/server.js",

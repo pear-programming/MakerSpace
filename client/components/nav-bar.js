@@ -3,7 +3,7 @@ import { browserHistory, Link } from 'react-router';
 import AuthModal from './auth-modal';
 import { Button, Navbar, NavItem, MenuItem, Nav, NavDropdown, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
-import { checkStatus } from '../models/auth';
+import { checkStatus, logout } from '../models/auth';
 
 export default class NavBar extends Component {
   constructor() {
@@ -22,7 +22,7 @@ export default class NavBar extends Component {
     })
   }
   logout() {
-    this.setState({ user: null })
+    logout()
   }
   render() {
     return (

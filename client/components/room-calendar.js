@@ -37,7 +37,6 @@ export default class RoomCalendar extends React.Component {
   }
 
   render() {
-    console.log("showing reservations in calendar.js:", this.props.events);
 
     return (
       <div ref="calendar"></div>
