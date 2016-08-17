@@ -19,27 +19,22 @@ export default class ReservationList extends Component {
   }
 
   componentWillMount() {
-
     this.update.call(this)
   }
-
 
   update() {
     checkStatus()
     .then(userData => {
-      console.log('userData.data', userData.data)
       this.setState({ user: userData.data})
 
       return userData.data.uid
     })
     .then(userId => {
-
      return fetchUserReservations(userId)
     })
     .then(userReservations => {
-       console.log('userReservations.data: ', userReservations.data)
        this.setState({ reservations: userReservations.data })
-      })
+    })
   }
 
   formatTime(time) {
@@ -61,16 +56,10 @@ export default class ReservationList extends Component {
     return tomonth+'/'+todate+'/'+toyear;
   }
 
-
   deleteThisReservation(res) {
-    // console.log("resId!!!!!", res)
     deleteReservation(res)
     .then(() => this.update.call(this))
   }
-
-
-
-
 
   render() {
     return (
@@ -79,39 +68,38 @@ export default class ReservationList extends Component {
           <div>
             <h3> Your Reservations</h3> 
             <div className="table-responsive">
-            <table className="myTable">
-              <tr>
-                <th>Room Name</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th></th>
-              </tr>              
+              <table className="myTable">
+                <tr>
+                  <th>Room Name</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th></th>
+                </tr>              
 
-              { this.state.reservations ? 
+                { this.state.reservations ? 
 
-                this.state.reservations.sort((a,b) => Date.parse(a.startTime) - Date.parse(b.startTime) ).map(res => {
-                return (
-                  <tr>
-                    <td> { res.roomName } </td>
-                    <td> { this.formatDate(res.startTime) } </td>
-                    <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
-                    <td> <button onClick={ () => this.deleteThisReservation(res._id) } > DELETE </button> </td>
-                  </tr>                  
-                  )
-                })
+                  this.state.reservations.sort((a,b) => Date.parse(a.startTime) - Date.parse(b.startTime) ).map(res => {
+                  return (
+                    <tr>
+                      <td> { res.roomName } </td>
+                      <td> { this.formatDate(res.startTime) } </td>
+                      <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
+                      <td> <button onClick={ () => this.deleteThisReservation(res._id) } > DELETE </button> </td>
+                    </tr>                  
+                    )
+                  })
 
-                :
+                  :
 
-                null  
-              }
-            
-            </table>
+                  null  
+                }
+              
+              </table>
             </div>
           </div>
           :
           null
         }
-
       </div>
     )
   }

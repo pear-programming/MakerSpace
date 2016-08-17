@@ -22,7 +22,7 @@ export default class RoomDisplays extends Component {
       topFive: []
     }
   }
-	componentWillMount() {
+  componentWillMount() {
     fetchRooms()
     .then( room => {
       this.setState({ rooms: this.state.rooms.concat(room.data) })
@@ -56,6 +56,8 @@ export default class RoomDisplays extends Component {
       let users = {};
       let jen = [];
       let caleb = [];
+      let platinum = [];
+      let count = {};
 
       resArray.forEach(reservation => {
         let time = moment(reservation.startTime)
@@ -80,7 +82,6 @@ export default class RoomDisplays extends Component {
 
       })
 
-
       for (let key in users){
         caleb.push(key)
       }
@@ -96,13 +97,9 @@ export default class RoomDisplays extends Component {
           }
           x++
         }
-
         jen.push(data)
-
       })
-        console.log('calm down caleb', jen)
 
-      let count = {};
       jen.forEach(room=> {
         room.forEach(user=>{
           if(!count[user.z]){ 
@@ -114,9 +111,8 @@ export default class RoomDisplays extends Component {
       })
 
       let topFive  = Object.keys(count).sort(function(a,b){return count[b]-count[a] }).slice(0, 5)
-      let platinum = [];
+
       topFive.forEach( person => platinum.push({ userName: person, totalRes: count[person] }))
-      console.log('dat ass', platinum)
 
       let rihanna = jen.map( room => {
         return room.filter( user => {
@@ -124,9 +120,6 @@ export default class RoomDisplays extends Component {
         })
       })
 
-
-
-      console.log('riri', rihanna)
       rihanna.forEach( room => {
         let counter = 1
         room.forEach( user => {
@@ -142,10 +135,7 @@ export default class RoomDisplays extends Component {
         x += 1
       }
       this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
-      
     })
-
-    console.log('bitch better have my money', users)
   }
 
   componentDidMount() {
@@ -160,11 +150,6 @@ export default class RoomDisplays extends Component {
         </li>
       )
     })
-  }
-
-  getTickValues() {
-    let ticks = Object.keys(this.state.roomOccurences)
-    return ticks
   }
 
   getYaxis() {
@@ -182,7 +167,6 @@ export default class RoomDisplays extends Component {
   }
 
   renderBarGraph() {
-
     return this.state.barData.map( room => <VictoryBar 
       style={{data: {fill: randomColor() }}}
       data={room}
@@ -195,7 +179,6 @@ export default class RoomDisplays extends Component {
 
     return this.state.pieData.map(room =>  {
       return (
-
         <tr>
           <td><strong>{room.x}</strong></td>
           <td>{room.y} reservations</td>
@@ -269,7 +252,7 @@ export default class RoomDisplays extends Component {
                 <VictoryAxis
                   label="Rooms"
                   animate={{ duration: 2000 }}
-                  tickValues={this.getTickValues.call(this)}
+                  tickValues={Object.keys(this.state.roomOccurences)}
                   style={{
                     axis: {stroke: "black", strokeWidth: 2},
                     ticks: {stroke: "transparent", padding: 15},
@@ -330,6 +313,4 @@ export default class RoomDisplays extends Component {
 function randomColor(){
   return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6); 
 }
-
-
 
