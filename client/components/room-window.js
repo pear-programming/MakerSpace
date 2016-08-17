@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 
 export default class RoomWindow extends Component {
-
-  constructor(props) {
-    super(props)   
-
-  }
-
-
-
-
   render() {
-    
     const room = this.props.room
     const style = { display: "inline-flex" }
-
 
     return (
       <div className="window" >
@@ -30,6 +19,5 @@ export default class RoomWindow extends Component {
       </div>
      ) 
   }
-
 }
         

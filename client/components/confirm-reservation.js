@@ -9,18 +9,7 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 
 export default class Conflict extends React.Component {
-
-	constructor(props){ 
-    super(props)
-    
-    this.state = {
-      
-    }
-  }
-
   render() {
-
-    console.log("showing props in confirm-reservation.js:", this.props);
 
     return (
       <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>

@@ -58,10 +58,7 @@ export default class Calendar extends React.Component {
   componentDidUpdate() {
 
     if(this.props.reRenderCalendar) {
-
-      // console.log("got inside componentDidUpdate")
       const { calendar } = this.refs;
-
       var open = this.props.open;
 
       $(calendar).fullCalendar({
@@ -81,7 +78,6 @@ export default class Calendar extends React.Component {
       });
       
       $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 
-
 
       if(this.props.goToDate) {
         $(calendar).fullCalendar( 'gotoDate', this.props.goToDate )
