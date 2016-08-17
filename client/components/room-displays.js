@@ -129,6 +129,13 @@ export default class RoomDisplays extends Component {
         })
       })
 
+
+      rihanna.forEach( room => {
+        room.forEach( user => {
+          user.x = topFive.indexOf(user.z)
+        })
+      })
+
       let x = 1
       let data = []
       for ( let key in resOccurences ) {
@@ -182,7 +189,7 @@ export default class RoomDisplays extends Component {
 
         <tr>
           <td><h4>{Math.floor(room.y / sum  * 100)}%</h4></td>
-          <td className="pieRow">on <strong>{room.x}</strong> with {room.y} reservations</td>
+          <td className="pieRow">on <strong>{room.x}</strong> with <strong>{room.y}</strong> reservations</td>
         </tr>
       )
     })
@@ -200,7 +207,6 @@ export default class RoomDisplays extends Component {
   }
 
   stackTable() {
-    console.log('here', this.state.data)
     return this.getTickValues.call(this).map((tick, i) =>{
       return(
         <tr>
@@ -210,12 +216,6 @@ export default class RoomDisplays extends Component {
       )
     })
   } 
-
-  stackLabel(){
-    var label = [];
-    this.state.topFive.map(user =>{ label.push(user.userName)}) 
-    return label
-  }
 
   render() {
     const style = {
@@ -272,28 +272,28 @@ export default class RoomDisplays extends Component {
 {/*========================= Bar Graph ===========================*/}
 
           <Row id="byRoom">
-            <h2 className="barTitle">Reservations by Room</h2>
 
             <Col md={9}>
                           
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
-                  label="Rooms"
                   animate={{ duration: 2000 }}
                   tickValues={this.getTickValues.call(this)}
                   style={{
-                    axis: {stroke: "black", strokeWidth: 2},
+                    axis: {stroke: "darkgrey", strokeWidth: 1},
                     ticks: {stroke: "transparent", padding: 15},
-                    tickLabels: {fill: "black", fontSize: 6}
+                    tickLabels: {fill: "white", fontSize: 6}
                   }}
                 />
-                <VictoryAxis label="Reservations" dependentAxis
+                <VictoryAxis dependentAxis
                   animate={{ duration: 2000 }}
                   tickValues={this.getYaxis.call(this)}
                   style={{
                     grid: {strokeWidth: 1},
-                    axis: {stroke: "black", strokeWidth: 2},
-                    ticks: {stroke: "transparent", padding: 15}
+                    axis: {stroke: "white", strokeWidth: 1},
+                    ticks: {stroke: "transparent", padding: 15},
+                    tickLabels: {fill: "white", fontSize: 6}
+
                   }}
                 />
                 <VictoryBar style={{data: {width: 15, fill: "orange"}}}
@@ -305,12 +305,16 @@ export default class RoomDisplays extends Component {
 
             <Col md={3}>              
               
+              <h3><strong>{sum}</strong> Total Reservations</h3>
+
               <Table responsive>
                 <tbody>
                   {this.stackTable.call(this)}
-                  <tr><td><strong>{sum}</strong> Total Reservations</td></tr>
                 </tbody>
               </Table>
+
+              <p><div id="key" /> Reservations</p>
+              
             </Col>   
 
           </Row>
@@ -336,7 +340,6 @@ export default class RoomDisplays extends Component {
               width={225}
               height={150}
               animate={{ duration: 2000 }}
-              labels={this.stackLabel.call(this)}
               style={{
                 data: {width: 8},
                 labels: {fontSize: 4}

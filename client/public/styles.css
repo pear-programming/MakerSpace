@@ -87,11 +87,18 @@ img.roomImage {
 
 #byRoom {
   color: white;
-  background-color: lightblue;
+  background-color: #137bbe;
 }
 
 .table > tbody > tr > td {
   vertical-align: middle;
+}
+
+#key {
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  float: left;
 }
 
 /*==== room modal ====*/
