@@ -104,11 +104,8 @@ export default class RoomsList extends Component {
   }
 
   updateWindow(name) {
-<<<<<<< Updated upstream
     const room = this.state.rooms.find(findRoom)  
-=======
-    const room = this.state.rooms.find(findRoom)
->>>>>>> Stashed changes
+
     function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
     this.setState({room})
     this.showWindow(name)
