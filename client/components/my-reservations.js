@@ -24,6 +24,12 @@ export default class ReservationList extends Component {
     this.update.call(this)
   }
 
+  componentDidUpdate() {
+    if(this.props.shouldUpdateUserRes) {
+      this.update();
+    }
+  }
+
   update() {
     checkStatus()
     .then(userData => {
@@ -34,8 +40,11 @@ export default class ReservationList extends Component {
     .then(userId => {
      return fetchUserReservations(userId)
     })
-    .then(userReservations => {
-       this.setState({ reservations: userReservations.data })
+    .then(userReservations => { 
+      if(this.props.shouldUpdateUserRes) {
+        this.props.resetShouldUpdate();  
+      }
+      this.setState({ reservations: userReservations.data })
     })
   }
 

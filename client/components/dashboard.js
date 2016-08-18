@@ -22,6 +22,7 @@ var reRenderCalendar = false;
 var roomPlaceHolder = false;
 var allEvents;
 
+
 export default class Dashboard extends React.Component {
   
   constructor(){ 
@@ -36,6 +37,7 @@ export default class Dashboard extends React.Component {
       showModal: false,
       showVerify: false,
       showConfirm: false,
+      shouldUpdateUserRes: false,
       startTime: new Date(2016, 0, 1, 9, 10),
       endTime: new Date(2016, 0, 1, 9, 11)
     }
@@ -227,7 +229,7 @@ export default class Dashboard extends React.Component {
       goToDate = Date.parse(reservation.startTime)
       reRenderCalendar = true;
       roomPlaceHolder = true;
-      this.setState({showModal: false, events: events, showVerify: false, showConfirm: false})
+      this.setState({showModal: false, events: events, showVerify: false, showConfirm: false, shouldUpdateUserRes: true})
     })
   }
 
@@ -242,6 +244,10 @@ export default class Dashboard extends React.Component {
     reRenderCalendar = false;
   }
 
+  resetShouldUpdate() {
+    this.setState({shouldUpdateUserRes: false});
+  }
+
   deleteFromCalendar() {
     fetchReservations()
     .then(reserv => {
@@ -251,9 +257,7 @@ export default class Dashboard extends React.Component {
       reRenderCalendar = true
       this.setState({ events: mappedData })
     })
-  
   }
-
 
   filterRooms(roomsToDisplay) {
     console.log("got rooms to display:", roomsToDisplay);
@@ -316,7 +320,11 @@ export default class Dashboard extends React.Component {
         
         : null   }
            
-      <ReservationList deleteFromCalendar = {this.deleteFromCalendar.bind(this)} />
+      <ReservationList 
+        deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
+        shouldUpdateUserRes={this.state.shouldUpdateUserRes}
+        resetShouldUpdate={this.resetShouldUpdate.bind(this)}
+      />
 
       <FilterRooms 
         rooms={this.state.rooms}
