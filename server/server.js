@@ -13,7 +13,6 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
-var client = require('./client_credentials');
 var _ = require('lodash')
 
 
