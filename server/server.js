@@ -15,8 +15,8 @@ var session = require('cookie-session');
 var MP = require('node-makerpass');
 var _ = require('lodash')
 
-app.use(express.static(path.join(__dirname, '../bower_components/*')));
-app.use(express.static(path.join(__dirname, '../node_modules/*')));
+app.use(express.static(path.join(__dirname, '../bower_components')));
+app.use(express.static(path.join(__dirname, '../node_modules')));
 
 app.use(session({
   name: 'my-app:session',
