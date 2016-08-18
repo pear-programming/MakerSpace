@@ -43,7 +43,7 @@ Check.update = function() {
   .then(() => {
     var openRooms = rooms.map( room => room.roomName ).filter( x => !(bookedRooms.indexOf(x) >= 0))
     var roomsToOpen = []
-    
+
     openRooms.forEach( room => {
       var currentRoom = rooms.find(findRoom)
       function findRoom(findThisRoom) { 

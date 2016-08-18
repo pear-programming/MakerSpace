@@ -6,7 +6,7 @@ import { formatTime, getTimeSlotInfo, mapTimeSlots, mapTimeSlotsByDay} from '../
 import Calendar from './calendar';
 import MakeReservation from './make-reservation'
 import Conflict from './conflict';
-import Confirm from './confirm-reservation';
+import ConfirmReservation from './confirm-reservation';
 import ReservationList from './my-reservations';
 import FilterRooms from './filter-rooms'
 import Room from './room'; 
@@ -42,6 +42,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentWillMount() {
+    console.log("ran componentWillMount")
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
       timeSlots = data[2].data; 
@@ -63,7 +64,7 @@ export default class Dashboard extends React.Component {
   }
 
   closeVerify(shouldCloseModal) {
-    console.log("inside closeVerify")
+    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.confirmBooking();  
     }
@@ -73,7 +74,7 @@ export default class Dashboard extends React.Component {
   }
 
   closeConfirm(shouldCloseModal) {
-    console.log("inside closeVerify")
+    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.submitBooking();  
     }
@@ -81,6 +82,11 @@ export default class Dashboard extends React.Component {
       this.setState({showConfirm: false})
     }  
   }
+
+
+  changeGoToDate(date) {
+    goToDate = date;
+  }  
 
   open(time) {
     var roomsWithTimeSlotInfo = mapTimeSlotsByDay(time, this.state.rooms, timeSlots); 
@@ -122,6 +128,7 @@ export default class Dashboard extends React.Component {
       nextFourSlots: nextFourSlots 
     });
   }
+
 
   changeModalView(event) {
 
@@ -235,6 +242,19 @@ export default class Dashboard extends React.Component {
     reRenderCalendar = false;
   }
 
+  deleteFromCalendar() {
+    fetchReservations()
+    .then(reserv => {
+      reservations = reserv.data;
+      var mappedData = mapTimeSlots(reserv, this.state.rooms);
+      // console.log('did mappedData work? ', mappedData)
+      reRenderCalendar = true
+      this.setState({ events: mappedData })
+    })
+  
+  }
+
+
   filterRooms(roomsToDisplay) {
     console.log("got rooms to display:", roomsToDisplay);
     reRenderCalendar = true;
@@ -269,31 +289,35 @@ export default class Dashboard extends React.Component {
             />
 
             <Conflict 
-              showVerify={this.state.showVerify}
-              closeVerify={this.closeVerify.bind(this)}
-              bookingConflicts={bookingConflicts}
-              MONTHS={MONTHS}
+              showVerify = {this.state.showVerify}
+              closeVerify = {this.closeVerify.bind(this)}
+              bookingConflicts = {bookingConflicts}
+              MONTHS = {MONTHS}
             /> 
 
-            <Confirm 
-              showConfirm={this.state.showConfirm}
-              closeConfirm= {this.closeConfirm.bind(this)}
-              reservation={reservation}
-              MONTHS={MONTHS}
+            <ConfirmReservation 
+              showConfirm = {this.state.showConfirm}
+              closeConfirm = {this.closeConfirm.bind(this)}
+              reservation = {reservation}
+              MONTHS = {MONTHS}
             />
+
 
             <Calendar key={0} 
               events={this.state.events} 
               open={this.open.bind(this)}
               goToDate={goToDate}
+              changeGoToDate={this.changeGoToDate.bind(this)}
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             /> 
+
         </div>
         
         : null   }
            
-      <ReservationList />
+      <ReservationList deleteFromCalendar = {this.deleteFromCalendar.bind(this)} />
+
       <FilterRooms 
         rooms={this.state.rooms}
         filterRooms={this.filterRooms.bind(this)}

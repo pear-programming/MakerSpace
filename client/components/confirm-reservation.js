@@ -9,6 +9,7 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 
 export default class Conflict extends React.Component {
+  
   render() {
 
     return (
