@@ -8,7 +8,7 @@ bright green: #49c633;
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
   /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; Carlo 1*/
-  /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/  
+  /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/
   background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; /*Carlo 3*/
   background-size: cover;
   background-repeat: no-repeat;
@@ -32,7 +32,7 @@ bright green: #49c633;
 
 #fakeButton {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border-radius: 8px;  
+  border-radius: 8px;
   border: 3px solid #f8f8f8;
   padding: 20px;
   width: 200px;
@@ -97,7 +97,7 @@ img.roomImage {
   width: 64%;
   float: left;
   text-align: center;
-  margin-top: 10px;  
+  margin-top: 10px;
 }
 
 .roomAvailability h3 {
@@ -113,7 +113,7 @@ span.open {
 
 span.closed {
   font-size: 2.5em;
-  color: red; 
+  color: red;
 }
 
 .infoCircle {
@@ -188,7 +188,7 @@ span.closed {
 .roomCalendar {
   width:44%;
   padding-right: 3%;
-  float: right; 
+  float: right;
   margin-top: 20px;
  }
 
@@ -218,7 +218,7 @@ span.closed {
 
 .fc-today {
   background: rgba(99,159,222,.1) !important;
-} 
+}
 
 .fc-toolbar h2 {
   color:  #49c633;
@@ -246,11 +246,11 @@ span.closed {
   padding: 0px 20px 21px 20px;
 }
 
-.window img { 
+.window img {
   margin-top: -55px;
   height: 285px;
   width: 464.11px;
-  float: right; 
+  float: right;
 }
 
 .eachRoom {
@@ -258,13 +258,13 @@ span.closed {
 }
 
 .row {
-  padding-top: 14px; 
+  padding-top: 14px;
 }
 
 /*=============================================================*/
 
 .opened {
-    background-color: white; 
+    background-color: white;
     border-radius: 20px;
     color: #0073B7;
     padding: 3px 6px ;
@@ -284,7 +284,7 @@ span.closed {
 
 .booked {
   background-color: #0073B7;
-  border: 1px solid #0073B7; 
+  border: 1px solid #0073B7;
   border-radius: 20px;
   color: white;
   padding: 3px 6px ;
@@ -308,7 +308,7 @@ span.closed {
     border-color: #3A3A3A;
     border-collapse: collapse;
   }
- 
+
   table.myTable th {
     border-width: 1px;
     padding: 5px;
@@ -316,11 +316,11 @@ span.closed {
     border-color: #517994;
     background-color: #B2CFD8;
   }
- 
+
   table.myTable tr:hover td {
     background-color: #DFEBF1;
   }
- 
+
   table.myTable td {
     border-width: 1px;
     padding: 5px;
