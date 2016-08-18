@@ -307,11 +307,11 @@ app.get('/timeSlots', function(req, res) {
 })
 
 //endpoints for calendar asset-serving
-app.get('*/lib/jquery.min.js', function(req, res){
+app.get('http://maker-space.herokuapp.com/lib/jquery.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
-app.get('*/lib/moment.min.js', function(req, res){
+app.get('/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
 })
 
