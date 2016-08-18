@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {fetchRooms, changeStatus} from '../models/rooms';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
-import Plan from './Plan';
+import Plan from './plan';
 import NavBar from './nav-bar';
 import RoomWindow from './room-window';
 
