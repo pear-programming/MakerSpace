@@ -311,19 +311,19 @@ app.get('http://maker-space.herokuapp.com/lib/jquery.min.js', function(req, res)
   res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
-app.get('/lib/moment.min.js', function(req, res){
+app.get('http://maker-space.herokuapp.com/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
 })
 
-app.get('*/fullcalendar/fullcalendar.js', function(req, res){
+app.get('http://maker-space.herokuapp.com/fullcalendar/fullcalendar.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
 })
 
-app.get('*/fullcalendar/fullcalendar.css', function(req, res){
+app.get('http://maker-space.herokuapp.com/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
 
-app.get('*/socket.io/socket.io.js', function(req, res){
+app.get('http://maker-space.herokuapp.com/socket.io/socket.io.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
 })
 // Wild card route for client side routing.
