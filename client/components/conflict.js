@@ -20,8 +20,6 @@ export default class Conflict extends React.Component {
 
   render() {
 
-    console.log("showing props in conflict.js:", this.props);
-
     return (
       <Modal show={this.props.showVerify} onHide={() => this.props.closeVerify(false)}>
         <Modal.Header closeButton>
