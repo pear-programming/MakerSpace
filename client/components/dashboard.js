@@ -42,6 +42,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentWillMount() {
+    console.log("ran componentWillMount")
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
       timeSlots = data[2].data; 
