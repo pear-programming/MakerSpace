@@ -84,6 +84,10 @@ export default class Dashboard extends React.Component {
   }
 
 
+  changeGoToDate(date) {
+    goToDate = date;
+  }  
+
   open(time) {
     var roomsWithTimeSlotInfo = mapTimeSlotsByDay(time, this.state.rooms, timeSlots); 
     var currentRoom;
@@ -303,6 +307,7 @@ export default class Dashboard extends React.Component {
               events={this.state.events} 
               open={this.open.bind(this)}
               goToDate={goToDate}
+              changeGoToDate={this.changeGoToDate.bind(this)}
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             /> 
