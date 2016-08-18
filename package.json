@@ -1,10 +1,10 @@
 {
-  "name": "boilerplate",
+  "name": "Makerspace",
   "version": "1.0.0",
   "description": "A solution to conference room management systems",
   "scripts": {
     "test": "mocha --recursive --reporter=nyan ./test/setup.js ./test",
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
     "lint": "node ./node_modules/eslint/bin/eslint.js ./client"
   },
   "devDependencies": {
