@@ -107,7 +107,7 @@ var assetFolder = path.join(__dirname, '..', 'client','public');
 
 // Serve Static Assets
 app.use(express.static(assetFolder));
-
+app.use('/bower_components',  express.static(__dirname, '..', '/bower_components'));
 app.use( require('body-parser').json() );
 
 app.use(cookieParser());
