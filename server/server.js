@@ -16,8 +16,7 @@ var MP = require('node-makerpass');
 var _ = require('lodash')
 var moment = require('moment');
 
-app.use(express.static(path.join(__dirname, '../bower_components/*')));
-app.use(express.static(path.join(__dirname, '../node_modules/*')));
+
 
 app.use(session({
   name: 'my-app:session',
@@ -107,7 +106,7 @@ var assetFolder = path.join(__dirname, '..', 'client','public');
 
 // Serve Static Assets
 app.use(express.static(assetFolder));
-app.use('/bower_components',  express.static(__dirname, '..', '/bower_components'));
+app.use('/bower_components',  express.static(path.join(__dirname, 'bower_components')));
 app.use( require('body-parser').json() );
 
 app.use(cookieParser());
