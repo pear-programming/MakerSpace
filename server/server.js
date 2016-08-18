@@ -110,7 +110,7 @@ app.use( require('body-parser').json() );
 app.use(cookieParser());
 
 // Serve JS Assets
-app.get('/app-bundle.js',
+app.get('http://maker-space.herokuapp.com/app-bundle.js',
  browserify('./client/index.js', {
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
