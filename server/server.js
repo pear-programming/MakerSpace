@@ -322,6 +322,10 @@ app.get('*/fullcalendar/fullcalendar.js', function(req, res){
 app.get('*/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
+
+app.get('*/socket.io/socket.io.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
+})
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
