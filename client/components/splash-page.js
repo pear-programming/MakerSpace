@@ -5,9 +5,6 @@ import RoomsList from './rooms-list';
 import { Button } from 'react-bootstrap';
 import { checkStatus } from '../models/auth';
 
-
-
-
 export default class SplashPage extends React.Component {
   constructor(){ 
     super()
@@ -20,13 +17,11 @@ export default class SplashPage extends React.Component {
   componentWillMount() {
     checkStatus()
     .then(userData => {
-      console.log('userData', userData)
       this.setState({ user: userData.data});
     })
   }
 
   render(){
-    console.log("showing reservations in render:", this.state.reservations)
     return (
       this.state.user ?
       <div>
@@ -42,7 +37,3 @@ export default class SplashPage extends React.Component {
     )
   }
 }
-
-
-
- // <button onClick={this.getReservations.bind(this)}>SEE RESERVATIONS</button>

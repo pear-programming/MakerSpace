@@ -21,11 +21,8 @@ export default class ReservationList extends Component {
   }
 
   componentWillMount() {
-
     this.update.call(this)
   }
-
-
 
   update() {
     checkStatus()
@@ -35,12 +32,11 @@ export default class ReservationList extends Component {
       return userData.data.uid
     })
     .then(userId => {
-
      return fetchUserReservations(userId)
     })
     .then(userReservations => {
        this.setState({ reservations: userReservations.data })
-      })
+    })
   }
 
   formatTime(time) {
@@ -69,9 +65,8 @@ export default class ReservationList extends Component {
     return tomonth + '/' + todate + '/' + toyear;
   }
 
-
   deleteThisReservation(res) {
-    console.log('RES~~~~', res)
+
     deleteReservation(res)
     .then(() => {
       this.props.deleteFromCalendar(res);
@@ -128,6 +123,7 @@ export default class ReservationList extends Component {
               }
             
             </table>
+
             </div>
           </div>
           :
@@ -139,7 +135,6 @@ export default class ReservationList extends Component {
           resId = {this.state.resId}
           closeConfirmDelete = {this.closeConfirmDelete.bind(this)}
         />
-
 
       </div>
 

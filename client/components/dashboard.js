@@ -7,18 +7,20 @@ import Calendar from './calendar';
 import Conflict from './conflict';
 import ConfirmReservation from './confirm-reservation';
 import ReservationList from './my-reservations';
+import FilterRooms from './filter-rooms'
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 var timeSlots;
 var user;
-var rooms;
-var reservations; // array of current reservations
+// var rooms = [];
+var reservations;
 var reservation = {roomName: " ", startTime: new Date(2016), endTime: new Date(2016)};
 var goToDate = null;
 var bookingConflicts = [{roomName: " ", startTime: '', endTime: ''}];
 var reRenderCalendar = false;
 var roomPlaceHolder = false;
+var allEvents;
 
 
 export default class Dashboard extends React.Component {
@@ -27,6 +29,7 @@ export default class Dashboard extends React.Component {
     
     this.state = {
       events: null,
+      rooms: [],
       roomsWithTimeSlotInfo: [],
       nextFourSlots: [],
       currentRoom: null,
@@ -124,10 +127,12 @@ export default class Dashboard extends React.Component {
             // console.log("showing reservations:", reserv);
             timeSlots = slots.data; 
             user = userData.data;
-            rooms = roomsData.data;
+            // rooms = roomsData.data;
             reservations = reserv.data;
-            var mappedData = this.mapTimeSlots(reserv, rooms);
+            var mappedData = this.mapTimeSlots(reserv, roomsData.data);
+            allEvents = mappedData;
             this.setState({ 
+              rooms: roomsData.data,
               events: mappedData, 
               currentRoom: Object.assign(roomsData.data[0], {openSlots: []})     
             })
@@ -190,7 +195,7 @@ export default class Dashboard extends React.Component {
 
     console.log("showing timeslots in mapTimeSlotsByDay:", timeSlotsForDay);
 
-    return rooms.map(room => { 
+    return this.state.rooms.map(room => { 
       var openSlots = timeSlotsForDay.filter(slot => !slot.reservations.filter(res => res.roomId === room._id).length )
       return Object.assign(room, {openSlots: openSlots})
     })
@@ -289,7 +294,7 @@ export default class Dashboard extends React.Component {
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
-        color: this.state.currentRoom.roomColor
+        color: this.state.currentRoom.roomColor,
       })
      
       // console.log("successfully inserted!:", data);
@@ -346,6 +351,12 @@ export default class Dashboard extends React.Component {
   
   }
 
+
+  filterRooms(roomsToDisplay) {
+    console.log("got rooms to display:", roomsToDisplay);
+    reRenderCalendar = true;
+    this.setState({events: allEvents.filter(ev => roomsToDisplay.includes(ev.title))});
+  }
 
   render(){
     // console.log("showing events:", this.state.events);
@@ -455,6 +466,11 @@ export default class Dashboard extends React.Component {
         : null   }
            
       <ReservationList deleteFromCalendar = {this.deleteFromCalendar.bind(this)} />
+
+      <FilterRooms 
+        rooms={this.state.rooms}
+        filterRooms={this.filterRooms.bind(this)}
+      />
       
       </div>
       </div>

@@ -6,7 +6,6 @@ import Plan from './Plan';
 import NavBar from './nav-bar';
 import RoomWindow from './room-window';
 
-
 export default class RoomsList extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +15,7 @@ export default class RoomsList extends Component {
 
     this.state = {
       rooms: [],
-      window: null,
+      window: false,
       room: {}
     }
   }
@@ -37,7 +36,7 @@ export default class RoomsList extends Component {
     socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
   renderRooms() {
-    return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} current={this.state.room} />)
+    return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} current={this.state.room} window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow}/>)
   }
   updatedRooms(data) {
     this.setState({ rooms: data.rooms.rooms })
@@ -106,9 +105,10 @@ export default class RoomsList extends Component {
 
   updateWindow(name) {
     const room = this.state.rooms.find(findRoom)  
+
     function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
     this.setState({room})
-    this.showWindow(true)
+    this.showWindow(name)
   }
 
   render() {

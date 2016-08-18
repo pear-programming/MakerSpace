@@ -1,12 +1,12 @@
+
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var User = require('./models/users');
-var Admin = require('./models/admins');
 var Session = require('./models/userSessions');
-var AdminSession = require('./models/adminSessions');
 var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
+var Check = require('./status-check.js')
 var app = require('express')();
 var express = require('express');
 var server = require('http').Server(app);
@@ -14,6 +14,7 @@ var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
 var client = require('./client_credentials');
+var _ = require('lodash')
 
 
 app.use(session({
@@ -88,7 +89,17 @@ io.on('connection', function (socket) {
   socket.on('unBook', function(roomId) {
     socket.broadcast.emit('roomUnBooked', roomId);
   })
+
+  setInterval(() => {
+    console.log('emitting updates')
+    Check.update()
+    .then( e => {
+
+    })
+  }, 5000)
+  
 });
+
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
@@ -159,20 +170,11 @@ app.post('/login', function(req, res) {
   })
 })
 
-
-app.get('/logout', function(req, res) {
-  Session.destroy(req.cookies.sessionId)
-  .then(() => {
-    res.clearCookie('sessionId');
-    res.sendStatus(200);
-  })
-})
-
 //<<<<<-------- ROOMS ENDPOINTS -------->>>>>\\
 
- app.get('/check', MP.authWithSession(), function(req, res) {
+app.get('/check', MP.authWithSession(), function(req, res) {
   res.status(200).send(req.user)
- })
+})
 
 app.post('/rooms/new', function(req, res) {
   Room.addRooms(req.body)
@@ -180,6 +182,13 @@ app.post('/rooms/new', function(req, res) {
     res.send(201, {roomIds: roomIds});
   })
 })
+
+
+app.get('/logout', function(req, res){
+  console.log('logging out')
+  req.logout();
+  res.redirect('/');
+});
 
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
@@ -190,7 +199,7 @@ app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, re
 })
 
 app.get('/all-rooms', MP.authWithSession(), function(req, res){
-  console.log("got request")
+  
   Room.findRooms()
   .then(roomInfo => {
     res.send(201, roomInfo)
@@ -221,11 +230,9 @@ app.get('/reservations', function(req, res){
 
   Reservation.findAllReservations()
   .then(reservationsData => {
-    // console.log('reservationsData: ', reservationsData)
     res.send(200, reservationsData)
   })
 })
-
 
 app.get('/reservations/:roomName', function(req, res){
   var name = req.params.roomName;
@@ -254,14 +261,11 @@ app.get('/reservations-by-user/:userId', function(req, res){
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
 
-  Reservation.create(req.body)
+  Reservation.create(req.body)  
   .then(reservationInfo => {
-    // console.log("reservationInfo: ", reservationInfo)
     res.send(201, reservationInfo)
   })
 })
-
-
 
 //update existing reservation
 app.put('/reservations/:id', function(req, res){
@@ -269,7 +273,6 @@ app.put('/reservations/:id', function(req, res){
   //req.body should be new reservation info
   Reservation.updateReservation(resId, req.body)
   .then(updatedRes => {
-    // console.log('result from update: ', updatedRes)
     res.send(200, updatedRes)
   })
 })
@@ -297,12 +300,9 @@ app.get('/timeSlots', function(req, res) {
 
     Reservation.makeSlots(reservationData)
     .then((timeSlots) => {
-
       res.send(200, timeSlots)
     })
-
   })
-  
 })
 
 //endpoints for calendar asset-serving
