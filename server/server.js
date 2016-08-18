@@ -309,12 +309,12 @@ app.get('/timeSlots', function(req, res) {
   })
 })
 
-var jquery = require('jquery')
+var $ = require('jquery')
 var fullcalendar = require('fullcalendar')
 var socket = require('socket');
 //endpoints for calendar asset-serving
 app.get('/lib/jquery.min.js', function(req, res){
-  res.send( jquery );
+  res.send( $ );
 })
 
 app.get('/lib/moment.min.js', function(req, res){
@@ -330,7 +330,7 @@ app.get('/fullcalendar/fullcalendar.css', function(req, res){
 })
 
 app.get('/socket.io/socket.io.js', function(req, res){
-  res.send( socket );
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
 })
 // Wild card route for client side routing.
 app.get('/*', function(req, res){
