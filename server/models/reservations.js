@@ -13,7 +13,6 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.deleteIt = function() {
-  console.log("got run here")
   return db.collection('reservations').remove({roomName: "Turing"})
 }
 

@@ -18,6 +18,25 @@ var moment = require('moment');
 
 
 
+
+
+var assetFolder = path.join(__dirname, '..', 'client','public');
+
+// Serve Static Assets
+
+app.use(express.static(assetFolder));
+
+app.use( require('body-parser').json() );
+
+app.use(cookieParser());
+
+// Serve JS Assets
+app.get('/app-bundle.js',
+ browserify('./client/index.js', {
+    transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
+  })
+);
+
 app.use(session({
   name: 'my-app:session',
   secret: process.env.SESSION_SECRET || 'development',
@@ -92,7 +111,6 @@ io.on('connection', function (socket) {
   })
 
   setInterval(() => {
-    console.log('emitting updates')
     Check.update()
     .then( e => {
 
@@ -101,28 +119,9 @@ io.on('connection', function (socket) {
   
 });
 
-
-var assetFolder = path.join(__dirname, '..', 'client','public');
-
-// Serve Static Assets
-
-app.use(express.static(assetFolder));
-
-app.use( require('body-parser').json() );
-
-app.use(cookieParser());
-
-// Serve JS Assets
-app.get('/app-bundle.js',
- browserify('./client/index.js', {
-    transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
-  })
-);
-
 //<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
 app.delete('/res', function(req, res) {
-  console.log("got res delete request")
   return Reservation.deleteIt()
     .then(data => data)
 })
@@ -185,12 +184,6 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
-app.get('/logout', function(req, res){
-  console.log('logging out')
-  req.logout();
-  res.redirect('/');
-});
-
 // should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
@@ -230,8 +223,6 @@ app.delete('/:roomName', function(req, res){
 //<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
-
-  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     res.send(200, reservationsData)
@@ -284,10 +275,8 @@ app.put('/reservations/:id', function(req, res){
 
 app.delete('/reservations/delete/:resId', function(req, res){
   var resId = req.params.resId
-  console.log('id from params', resId)
   Reservation.delete(resId)
   .then(reservationInfo => {
-  console.log("reservationInfo: ", reservationInfo)
     if(reservationInfo === "success"){
       res.send(201, reservationInfo)
     }
@@ -313,7 +302,6 @@ app.get('/timeSlots', function(req, res) {
 
 
 app.get('/lib/moment.min.js', function(req, res){
-  console.log('getting moment')
   res.sendFile( path.join(__dirname,  '..', 'node_modules/moment/min/moment.min.js') );
 })
 app.get('/lib/jquery.min.js', function(req, res){
