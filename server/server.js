@@ -51,8 +51,8 @@ var passport = require('passport');
 var MakerpassStrategy = require('passport-makerpass').Strategy;
 
 passport.use(new MakerpassStrategy({
-    clientID: '50958e0e124748e15eba0516430c8f6bfb5dd64ac85816c2574a6a35c26d83ac',
-    clientSecret: 'cf783563d548ff10843ec185a509b1e536b7ba8da478cdea6ce2938a93fb983a',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: "http://maker-space.herokuapp.com/auth/makerpass/callback",
     passReqToCallback: true
   },
