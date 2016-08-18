@@ -242,11 +242,22 @@ export default class Room extends Component {
 
 
       <div>
-        <Row className="row">
-          <Col md={6} className="eachRoom"><div onClick={() => this.open(this.state.startTime) } >{room.roomName}</div></Col>
+        <Row className="row" id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
+          <Col md={6} className="eachRoom"><div id={room.roomName}
+            onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
+            >{room.roomName}</div></Col>
 
           <Col md={6}>
-            { room.isAvailable ? <div className="opened" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>⚪ Book Now </div> : <div className="booked" id={room.roomName} onClick={(e)=>this.getInfo(e.target.id)}>🕒 Reserved  </div> }
+            { room.isAvailable
+              ?
+              <div className="opened" id={room.roomName}
+                onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
+                onClick={(e)=>this.getInfo(e.target.id)}>⚪ Book Now </div>
+              :
+              <div className="booked" id={room.roomName}
+                onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
+                onClick={(e)=>this.getInfo(e.target.id)}>🕒 Reserved  </div>
+              }
           </Col>
         </Row>
 
