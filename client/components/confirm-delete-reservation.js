@@ -38,8 +38,8 @@ export default class ConfirmDelete extends React.Component {
           </div>
           
           <div>
-            <button onClick={() => this.props.closeConfirmDelete(true)}>Delete</button>
-            <button onClick={() => this.props.closeConfirmDelete(false)}>Cancel</button>
+            <button onClick={() => this.props.closeConfirmDelete(true)}>Cancel Reservation</button>
+            <button onClick={() => this.props.closeConfirmDelete(false)}>Nevermind</button>
           </div>
         </Modal.Body>
       </Modal>

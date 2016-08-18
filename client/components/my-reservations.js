@@ -75,7 +75,7 @@ export default class ReservationList extends Component {
   }
 
   closeConfirmDelete(shouldDeleteRes) {
-    // console.log('inside closeConfirmDeleteReservation');
+
     if(shouldDeleteRes) {
       //delete reservations
       this.state.resId ? this.deleteThisReservation(this.state.resId) : null

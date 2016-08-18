@@ -242,12 +242,11 @@ export default class Dashboard extends React.Component {
     fetchReservations()
     .then(reserv => {
       reservations = reserv.data;
-      // console.log("showing reservations after delete:", reservations);
-      var mappedData = this.mapTimeSlots(reserv, rooms);
+      var mappedData = mapTimeSlots(reserv, this.state.rooms);
       // console.log('did mappedData work? ', mappedData)
-      this.setState({ events: mappedData  })
+      reRenderCalendar = true
+      this.setState({ events: mappedData })
     })
-    reRenderCalendar = true
   
   }
 
@@ -299,6 +298,7 @@ export default class Dashboard extends React.Component {
               MONTHS = {MONTHS}
             />
 
+
             <Calendar key={0} 
               events={this.state.events} 
               open={this.open.bind(this)}
@@ -306,6 +306,7 @@ export default class Dashboard extends React.Component {
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             /> 
+
         </div>
         
         : null   }
