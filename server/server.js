@@ -315,7 +315,7 @@ app.get('/lib/jquery.min.js', function(req, res){
 })
 
 app.get('/lib/moment.min.js', function(req, res){
-  res.sendFile( moment );
+  res.send( moment );
 })
 
 app.get('http://maker-space.herokuapp.com/fullcalendar/fullcalendar.js', function(req, res){
