@@ -14,9 +14,10 @@ var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
 var _ = require('lodash')
+var moment = require('moment');
 
-app.use(express.static(path.join(__dirname, '../bower_components')));
-app.use(express.static(path.join(__dirname, '../node_modules')));
+app.use(express.static(path.join(__dirname, '../bower_components/*')));
+app.use(express.static(path.join(__dirname, '../node_modules/*')));
 
 app.use(session({
   name: 'my-app:session',
@@ -309,7 +310,26 @@ app.get('/timeSlots', function(req, res) {
 })
 
 //endpoints for calendar asset-serving
+app.get('/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
+})
 
+app.get('/lib/moment.min.js', function(req, res){
+  res.sendFile( moment );
+})
+
+app.get('http://maker-space.herokuapp.com/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+})
+
+app.get('http://maker-space.herokuapp.com/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+})
+
+app.get('http://maker-space.herokuapp.com/socket.io/socket.io.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
+})
+// Wild card route for client side routing.
 app.get('/*', function(req, res){
   res.sendFile( assetFolder + '/index.html' );
 })
