@@ -60,7 +60,8 @@ export default class Dashboard extends React.Component {
     })
   }
 
-  close() {
+  close(event) {
+    event.preventDefault();
     roomPlaceHolder = true;
     this.setState({ showModal: false});
   }
@@ -75,8 +76,8 @@ export default class Dashboard extends React.Component {
     }  
   }
 
-  closeConfirm(shouldCloseModal) {
-    // console.log("inside closeVerify")
+  closeConfirm(event, shouldCloseModal) {
+    event.preventDefault();
     if(shouldCloseModal) { 
       this.submitBooking();  
     }
@@ -217,7 +218,15 @@ export default class Dashboard extends React.Component {
         end: Date.parse(reservation.endTime),
         allDay: false,
         color: this.state.currentRoom.roomColor,
-      })
+      }) 
+
+      allEvents.push({
+        title: reservation.roomName,
+        start: Date.parse(reservation.startTime),
+        end: Date.parse(reservation.endTime),
+        allDay: false,
+        color: this.state.currentRoom.roomColor,
+      }) 
       
       reservations.push(Object.assign(reservation, {
         startTime: reservation.startTime.toUTCString(),

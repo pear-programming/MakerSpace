@@ -36,6 +36,7 @@ export default class FilterRooms extends React.Component {
 
   toggleFilter(event) {
     // event.preventDefault();
+
     console.log("got it:", event.target.value); 
     var roomsCopy = this.state.rooms.slice()
     var index;
