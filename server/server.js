@@ -113,7 +113,7 @@ app.use( require('body-parser').json() );
 app.use(cookieParser());
 
 // Serve JS Assets
-app.get('http://maker-space.herokuapp.com/app-bundle.js',
+app.get('/app-bundle.js',
  browserify('./client/index.js', {
     transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
   })
@@ -309,24 +309,21 @@ app.get('/timeSlots', function(req, res) {
   })
 })
 
-var $ = require('jquery')
-var fullcalendar = require('fullcalendar')
-var socket = require('socket');
 //endpoints for calendar asset-serving
 app.get('/lib/jquery.min.js', function(req, res){
-  res.send( $ );
+  console.log('getting jquey');
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
 })
 
 app.get('/lib/moment.min.js', function(req, res){
-  res.send( moment );
 })
 
 app.get('/fullcalendar/fullcalendar.js', function(req, res){
-  res.send( fullcalendar );
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
 })
 
 app.get('/fullcalendar/fullcalendar.css', function(req, res){
-  res.send( fullcalendar );
+  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
 })
 
 app.get('/socket.io/socket.io.js', function(req, res){
