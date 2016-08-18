@@ -19,13 +19,15 @@ export default class RoomDisplays extends Component {
       roomOccurences: {Room: 15},
       barData: [[]],
       barLabel: [],
-      topFive: []
+      topFive: [],
+      roomColor: []
     }
   }
   componentWillMount() {
     fetchRooms()
     .then( room => {
-      this.setState({ rooms: this.state.rooms.concat(room.data) })
+      console.log('huh', room.roomColor)
+      this.setState({ rooms: this.state.rooms.concat(room.data), roomColor: this.state.roomColor.concat(room.roomColor)})
     })
     .catch( err => {
       console.log('error', err)
@@ -182,6 +184,7 @@ export default class RoomDisplays extends Component {
   }
 
   renderBarGraph() {
+
     return this.state.barData.map( room => <VictoryBar 
       style={{data: {fill: randomColor() }}}
       data={room}
@@ -232,6 +235,8 @@ export default class RoomDisplays extends Component {
     };
 
     let sum = this.sum(this.state.pieData, 'y');
+
+    console.log('colorzzzzzz', this.state.roomColor)
 
     return (
       <div>
@@ -285,16 +290,17 @@ export default class RoomDisplays extends Component {
 
           <Row id="byRoom">
 
-            <h2 className="barTitle">Reservations by Room</h2>
 
-            <Col md={9}>
+            <Col md={8} className="barGraph">
+
+            <h1 className="barTitle">Reservations by Room</h1>
                           
-              <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
+              <VictoryChart style={style} domainPadding={{x: 20, y: 20 }} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   animate={{ duration: 2000 }}
                   tickValues={Object.keys(this.state.roomOccurences)}
                   style={{
-                    axis: {stroke: "darkgrey", strokeWidth: 1},
+                    axis: {stroke: "lightgrey", strokeWidth: 1},
                     ticks: {stroke: "transparent", padding: 15},
                     tickLabels: {fill: "white", fontSize: 6}
                   }}
@@ -304,7 +310,7 @@ export default class RoomDisplays extends Component {
                   tickValues={this.getYaxis.call(this)}
                   style={{
                     grid: {strokeWidth: 1},
-                    axis: {stroke: "white", strokeWidth: 1},
+                    axis: {stroke: "lightgrey", strokeWidth: 1},
                     ticks: {stroke: "transparent", padding: 15},
                     tickLabels: {fill: "white", fontSize: 6}
 
@@ -323,26 +329,26 @@ export default class RoomDisplays extends Component {
 
             <Col md={3}>              
               
-            <h3><strong>{sum}</strong> Total Reservations</h3>
+            <h3 id="totRes"><strong>{sum}</strong> Total Reservations</h3>
 
-              <Table responsive>
+
+              <Table> 
                 <tbody>
                   {this.stackTable.call(this)}
                 </tbody>
               </Table>
-              
-              <p><div id="key" /> Number of Reservations</p>
 
+              <p><div id="key" /> Number of Reservations</p>
             </Col> 
 
+            <Col md={1} />
 
           </Row>
 
 {/*========================= Horizontal Graph ===========================*/}
           
           <Row> 
-
-            
+ 
             <Col md={4}>
             
               <h2 className="horTitle">Top 5 Users</h2>
@@ -378,10 +384,14 @@ export default class RoomDisplays extends Component {
               {this.renderBarGraph.call(this)}
             </VictoryStack>
               
+            <div />
+
             </Col>
 
           </Row>
           
+  {/*==================================================================*/}
+        
         </Grid>
       </div>
     );

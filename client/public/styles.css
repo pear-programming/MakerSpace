@@ -106,6 +106,13 @@ img.roomImage {
   float: left;
 }
 
+.barGraph {
+  padding: 0px;
+}
+
+#totRes {
+  padding: 20px 0px 20px 0px;
+}
 /*==== room modal ====*/
 
 .roomImageContainer {
