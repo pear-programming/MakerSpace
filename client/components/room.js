@@ -63,103 +63,36 @@ export default class Room extends Component {
 
   }
 
-
-
-  // componentWillMount() {
-  //   fetchRooms()
-  //   .then((room) => {
-  //     console.log('what', room)
-  //     this.setState({currentRoom: room.roomName})
-  //     return room.roomName}
-  //   )
-  //   .then(room =>{
-  //     return getRoomReservations(room.roomName)
-  //   })
-  //   .then(reservations => {
-  //
-  //     let timeDiffs = []
-  //     console.log('reservations.data: ', reservations.data)
-  //     if(reservations.data !== "no reservations currently exist for this room") {
-  //       //if there are reservations do this....
-  //       reservations.data.forEach(reservation => {
-  //         let now = new Date()
-  //         let startTime = new Date(reservation.startTime)
-  //
-  //         timeDiffs.push({difference : now - startTime, startTime: startTime})
-  //       })
-  //       //finds largest negative number which is the next reservation start time
-  //
-  //       let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
-  //       let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
-  //       let events = formatEvents(reservations.data)
-  //       console.log('events: ', events)
-  //       this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
-  //       console.log('this.state IF: ', this.state)
-  //     } else {  //no current reservations
-  //
-  //       this.setState({reservations: null, nextRes: null, events: null})
-  //       console.log('this.state ELSE: ', this.state)
-  //
-  //     }
-  //   })
-  // }
-
   mapTimeSlotsByDay(time) {
-    console.log(time.getTime(), " this is the time ");
     var timeSlotsForDay = timeSlots.filter((timeSlot) => {
-
-      // console.log(timeSlot.startTime, " timeSlot~~~~~~");
-
       var startTime = Date.parse(timeSlot.startTime);
-      // console.log(startTime, " ");
       if(startTime === time.getTime()){
-        // console.log(startTime, "found matching time");
       }
       return startTime >= time.getTime() && startTime < (time.getTime() + 43200000)
     })
-
-    console.log(timeSlotsForDay," timeSlotsForDay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     var openSlots = timeSlotsForDay.filter(slot => !slot.reservations.filter(res => res.roomId === this.props.roomInfo._id).length )
       .filter(slot => {
-        console.log(Date.parse(slot.startTime), '!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        console.log(Date.now(), "time now!!!!!!!!!!!!!!!!!!!!!!");
         return Date.parse(slot.startTime) + 18000000 > Date.now()
       })
       this.props.roomInfo.openSlots = openSlots
-    // console.log("openSlots~~~~~~~~~~", openSlots);
-    // return rooms.map(room => {
-    //   var openSlots = timeSlotsForDay.filter(slot => !slot.reservations.filter(res => res.roomId === room._id).length )
-    //   return Object.assign(room, {openSlots: openSlots})
-    // })
-
   }
 
   getInfo(name){
-
     fetchTimeSlots()
     .then(slots => {
     getRoomReservations(name).then(reservations => {
       timeSlots = slots.data
-      // console.log('hiiiiiiiiiii slots ', slots);
-      // console.log('reservations', reservations)
       let timeDiffs = []
-      // console.log('reservations.data: ', reservations.data)
       if(reservations.data !== "no reservations currently exist for this room") {
-        //if there are reservations do this....
         reservations.data.forEach(reservation => {
           let now = new Date()
           let startTime = new Date(reservation.startTime)
-
           timeDiffs.push({difference : now - startTime, startTime: startTime})
         })
-        //finds largest negative number which is the next reservation start time
-        // console.log(this.state.startTime, "this is the startTime ~~~~~~~~~~~~~~~~");
         let currentTime = new Date(Date.now())
         this.mapTimeSlotsByDay(new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ))
         console.log("showing typeof this.state.startTime  ", typeof this.state.startTime);
-        // console.log(" sghowing this.props.roomInfo.openSlots[0].startTime ", typeof this.props.roomInfo.openSlots[0].startTime);
         var nextFourSlots = this.getTimeSlotInfo(this.props.roomInfo.openSlots[0].startTime, this.props.roomInfo);
-        // console.log(this.mapTimeSlotsByDay(this.state.startTime), " show time slots !!!!!!!!!!!!!!!!!!!!!!!!!!!");
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
@@ -174,12 +107,6 @@ export default class Room extends Component {
          })
         console.log('this.state IF: ', this.state)
       }
-
-
-
-
-
-
       else {  //no current reservations
 
         this.setState({reservations: null, nextRes: null, events: null, showModal: true})
@@ -188,7 +115,6 @@ export default class Room extends Component {
       }
     })
   })
-    // console.log('what', this.state.events)
   }
 
   close() {
@@ -197,7 +123,6 @@ export default class Room extends Component {
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time);
     var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
-    // console.log("showing current room in open:", currentRoom)
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
     goToDate = time.getTime();
 
@@ -248,14 +173,6 @@ export default class Room extends Component {
     return nextSlots;
   }
 
-  // var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
-  // this.setState({
-  //   currentRoom: currentRoom,
-  //   nextFourSlots: nextFourSlots,
-  //   startTime: new Date(currentRoom.openSlots[0].startTime),
-  //   endTime: new Date(currentRoom.openSlots[0].endTime)
-  // })
-
   changeStartTime(event){
     $('.selectEndTime option').prop('selected', function() {
         return this.defaultSelected;
@@ -277,10 +194,6 @@ export default class Room extends Component {
   }
 
   submitBooking() {
-
-    console.log(this.state, "find me!!!!!!!!!!!!!!!!!!!!!!!!");
-
-
     var reservation = {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
@@ -290,10 +203,6 @@ export default class Room extends Component {
       userId: this.state.userId,
       userEmail: this.state.userEmail
     }
-
-
-    console.log("ready to insert reservation:", reservation);
-
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice();
@@ -304,17 +213,12 @@ export default class Room extends Component {
         allDay: false,
         color: this.state.currentRoom.roomColor
       })
-
-      // console.log("successfully inserted!:", data)
       goToDate = Date.parse(reservation.startTime)
       this.setState({showModal: false, events: events, reRenderCalendar: true})
     })
-
   }
 
-
   renderCalendar() {
-    // console.log("renderCalendar got called:", this.state.events);
 
     return <Calendar key={0}
       events={this.state.events}
@@ -322,7 +226,6 @@ export default class Room extends Component {
       goToDate={goToDate}
       />
   }
-
 
   ////  we need events of a specific room to display for the current day
   //we need to be able to book a room with start time and endtime of only 2 hours
@@ -391,15 +294,3 @@ export default class Room extends Component {
     )
   }
 }
-
-
-
-// <div className="roomImageContainer">
-//   <img className="roomImage" src={room.image}/>
-// </div>
-// <div className="roomDetails">
-//   <p> Capacity: {room.capacity} </p>
-//   <p> Conference Table: {room.conferenceTable ? "Yes" : "No"} </p>
-//   <p> Air-play: {room.airPlay ? "Yes" : "No"} </p>
-//   <p> Hammock: {room.hammock ? "Yes" : "No"} </p>
-// </div>
