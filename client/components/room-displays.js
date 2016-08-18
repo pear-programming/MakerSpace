@@ -22,7 +22,7 @@ export default class RoomDisplays extends Component {
       topFive: []
     }
   }
-	componentWillMount() {
+  componentWillMount() {
     fetchRooms()
     .then( room => {
       this.setState({ rooms: this.state.rooms.concat(room.data) })
@@ -45,10 +45,10 @@ export default class RoomDisplays extends Component {
       let resArray = reservations.data;
       let resOccurences = {};
       let days = [
-        { x: 'Su', y: 0 },
-        { x: 'M', y: 0 },
-        { x: 'T', y: 0 },
-        { x: 'W', y: 0 },
+        { x: 'Su', y: 0 }, 
+        { x: 'M', y: 0 }, 
+        { x: 'T', y: 0 }, 
+        { x: 'W', y: 0 }, 
         { x: 'Th', y: 0 },
         { x: 'F', y: 0 },
         { x: 'Sa', y: 0 }
@@ -56,6 +56,8 @@ export default class RoomDisplays extends Component {
       let users = {};
       let jen = [];
       let caleb = [];
+      let platinum = [];
+      let count = {};
 
       resArray.forEach(reservation => {
         let time = moment(reservation.startTime)
@@ -65,7 +67,7 @@ export default class RoomDisplays extends Component {
           resOccurences[reservation.roomName] = 1
         } else {
           resOccurences[reservation.roomName] += 1
-        }
+        }  
 
         if(!users[reservation.userName]){
           users[reservation.userName] = {}
@@ -74,7 +76,7 @@ export default class RoomDisplays extends Component {
           users[reservation.userName][reservation.roomName] = 1
         } else {
           users[reservation.userName][reservation.roomName] += 1
-        }
+        }       
 
         days[dayIndex].y += 1
 
@@ -85,7 +87,7 @@ export default class RoomDisplays extends Component {
       }
 
       let rooms = Object.keys(resOccurences)
-      rooms.forEach( room => {
+      rooms.forEach( room => {      
         let data = []
         for (let key in users){
           if(users[key][room]){
@@ -95,16 +97,13 @@ export default class RoomDisplays extends Component {
           }
           x++
         }
-
         jen.push(data)
-
       })
 
-      let count = {};
       jen.forEach(room=> {
         room.forEach(user=>{
-          if(!count[user.z]){
-            count[user.z] = user.y
+          if(!count[user.z]){ 
+            count[user.z] = user.y 
           } else {
             count[user.z] += user.y
           }
@@ -112,7 +111,7 @@ export default class RoomDisplays extends Component {
       })
 
       let topFive  = Object.keys(count).sort(function(a,b){return count[b]-count[a] }).slice(0, 5)
-      let platinum = [];
+
       topFive.forEach( person => platinum.push({ userName: person, totalRes: count[person] }))
 
       let rihanna = jen.map( room => {
@@ -143,18 +142,28 @@ export default class RoomDisplays extends Component {
         x += 1
       }
       this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
-
     })
-    
+
   }
 
   componentDidMount() {
       this.setState({data: this.getGraphData()});
   }
 
+
   getTickValues() {
     let ticks = Object.keys(this.state.roomOccurences)
     return ticks
+  }
+
+  renderRooms() {
+    return this.state.rooms.map(room => {
+      return (
+        <li>
+          <Link to={`${room.roomName}/display`}>{room.roomName}</Link>
+        </li>
+      )
+    })
   }
 
   getYaxis() {
@@ -173,20 +182,18 @@ export default class RoomDisplays extends Component {
   }
 
   renderBarGraph() {
-
-    return this.state.barData.map( room => <VictoryBar
+    return this.state.barData.map( room => <VictoryBar 
       style={{data: {fill: randomColor() }}}
       data={room}
     />)
   }
 
   pieTable() {
-
+    
     let sum = this.sum(this.state.pieData, 'y');
 
     return this.state.pieData.map(room =>  {
       return (
-
         <tr>
           <td><h4>{Math.floor(room.y / sum  * 100)}%</h4></td>
           <td className="pieRow">on <strong>{room.x}</strong> with <strong>{room.y}</strong> reservations</td>
@@ -205,7 +212,7 @@ export default class RoomDisplays extends Component {
         <tr></tr>
         </tr>
       )
-    })
+    }) 
   }
 
   stackTable() {
@@ -259,19 +266,19 @@ export default class RoomDisplays extends Component {
                     fontSize: 14
                   }
                 }}
+
                 data={this.state.pieData}
                 animate={{
                   duration: 1000,
                   onEnter: {
                     duration: 500
                   }
-                }} />
+                }} /> 
             </Col>
 
             <Col md={1} />
 
           </Row>
-
           
 {/*========================= Bar Graph ===========================*/}
 
@@ -285,7 +292,7 @@ export default class RoomDisplays extends Component {
               <VictoryChart style={style} domainPadding={{x: 30, y: 30}} animate={{ duration: 2000 }} >
                 <VictoryAxis
                   animate={{ duration: 2000 }}
-                  tickValues={this.getTickValues.call(this)}
+                  tickValues={Object.keys(this.state.roomOccurences)}
                   style={{
                     axis: {stroke: "darkgrey", strokeWidth: 1},
                     ticks: {stroke: "transparent", padding: 15},
@@ -307,9 +314,10 @@ export default class RoomDisplays extends Component {
                   animate={{ duration: 2000 }}
                   data={this.state.data}
                 />
-              </VictoryChart>
 
-           
+
+              </VictoryChart> 
+
             </Col>
 
 
@@ -373,7 +381,7 @@ export default class RoomDisplays extends Component {
             </Col>
 
           </Row>
-
+          
         </Grid>
       </div>
     );
@@ -381,5 +389,6 @@ export default class RoomDisplays extends Component {
 }
 
 function randomColor(){
-  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6);
+  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6); 
 }
+
