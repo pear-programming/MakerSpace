@@ -38,10 +38,6 @@ export default class Calendar extends React.Component {
             }
         }
       },
-      header: {
-          left: 'prev,next today',
-          center: 'title'
-      },
 
       allDay: false,
       hiddenDays: [ 0 ],
