@@ -3,7 +3,8 @@ import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, fetchUserReservations, getRoomReservations } from '../models/rooms';
 import { deleteReservation } from '../models/reservations';
-import {Grid, Row, Col} from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
+import ConfirmDelete from './confirm-delete-reservation';
 
 
 
@@ -11,15 +12,22 @@ export default class ReservationList extends Component {
   
   constructor(){ 
     super()
-    
     this.state = {
       user: null,
-      reservations: []
+      reservations: [],
+      showConfirmDelete: false,
+      resId: null
     }
   }
 
   componentWillMount() {
     this.update.call(this)
+  }
+
+  componentDidUpdate() {
+    if(this.props.shouldUpdateUserRes) {
+      this.update();
+    }
   }
 
   update() {
@@ -32,34 +40,63 @@ export default class ReservationList extends Component {
     .then(userId => {
      return fetchUserReservations(userId)
     })
-    .then(userReservations => {
-       this.setState({ reservations: userReservations.data })
+    .then(userReservations => { 
+      if(this.props.shouldUpdateUserRes) {
+        this.props.resetShouldUpdate();  
+      }
+      this.setState({ reservations: userReservations.data })
     })
   }
 
   formatTime(time) {
     var hours = new Date(Date.parse(time) + 18000000).getHours() 
+    var minutes = (new Date(time).getMinutes().toString() + "0").slice(0,2);
     var amPm;
     if(hours > 12) {
-      hours = hours - 12
-      amPm = 'pm'
+      hours = hours - 12;
+      amPm = 'pm';
     }
-    else if(hours === 12) amPm = 'pm'
-    else amPm = 'am'
-    return hours.toString() + ":" + (new Date(time).getMinutes().toString() + "0").slice(0,2) + amPm;
+    else if(hours === 12) amPm = 'pm';
+    else amPm = 'am';
+    if(minutes === '00') {
+      return hours.toString() + amPm;
+    } else {
+      return hours.toString() + ":" + minutes + amPm;
+    }
   }
 
   formatDate(time) {
-    var tomonth = new Date(time).getMonth() +1;
-    var todate= new Date(time).getDate();
+    var tomonth = new Date(time).getMonth() + 1;
+    var todate = new Date(time).getDate();
     var toyear = new Date(time).getFullYear();
-    return tomonth+'/'+todate+'/'+toyear;
+    toyear = toyear.toString().substring(2)
+
+    return tomonth + '/' + todate + '/' + toyear;
   }
 
   deleteThisReservation(res) {
+
     deleteReservation(res)
-    .then(() => this.update.call(this))
+    .then(() => {
+      this.props.deleteFromCalendar(res);
+      this.update.call(this)
+    })
   }
+
+  closeConfirmDelete(shouldDeleteRes) {
+
+    if(shouldDeleteRes) {
+      //delete reservations
+      this.state.resId ? this.deleteThisReservation(this.state.resId) : null
+      //then reset state to hide modal
+      this.setState({showConfirmDelete : false})
+    } else {
+      this.setState({showConfirmDelete : false})
+    }
+  }
+
+
+
 
   render() {
     return (
@@ -68,39 +105,48 @@ export default class ReservationList extends Component {
           <div>
             <h3> Your Reservations</h3> 
             <div className="table-responsive">
-              <table className="myTable">
-                <tr>
-                  <th>Room Name</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th></th>
-                </tr>              
+            <table className="myTable">
+              <tr>
+                <th>Room Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th></th>
+              </tr>              
 
-                { this.state.reservations ? 
+              { this.state.reservations ? 
 
-                  this.state.reservations.sort((a,b) => Date.parse(a.startTime) - Date.parse(b.startTime) ).map(res => {
-                  return (
-                    <tr>
-                      <td> { res.roomName } </td>
-                      <td> { this.formatDate(res.startTime) } </td>
-                      <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
-                      <td> <button onClick={ () => this.deleteThisReservation(res._id) } > DELETE </button> </td>
-                    </tr>                  
-                    )
-                  })
+                this.state.reservations.sort((a,b) => Date.parse(a.startTime) - Date.parse(b.startTime) ).map(res => {
+                return (
+                  <tr>
+                    <td> { res.roomName } </td>
+                    <td> { this.formatDate(res.startTime) } </td>
+                    <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
+                    <td> <button onClick={ () => this.setState({showConfirmDelete: true, resId: res._id}) } > DELETE </button> </td>
+                  </tr>                  
+                  )
+                })
 
-                  :
+                :
 
-                  null  
-                }
-              
-              </table>
+                null  
+              }
+            
+            </table>
+
             </div>
           </div>
           :
           null
         }
+
+        <ConfirmDelete 
+          showConfirmDelete = {this.state.showConfirmDelete}
+          resId = {this.state.resId}
+          closeConfirmDelete = {this.closeConfirmDelete.bind(this)}
+        />
+
       </div>
+
     )
   }
 }

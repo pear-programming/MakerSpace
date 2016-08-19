@@ -9,8 +9,8 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 
 export default class Conflict extends React.Component {
+  
   render() {
-
     return (
       <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>
         <Modal.Header closeButton>
@@ -32,8 +32,8 @@ export default class Conflict extends React.Component {
           </div>
           
           <div>
-            <button onClick={() => this.props.closeConfirm(true)}>Confirm</button>
-            <button onClick={() => this.props.closeConfirm(false)}>Cancel</button>
+            <button onClick={(event) => this.props.closeConfirm(event, true)}>Confirm</button>
+            <button onClick={(event) => this.props.closeConfirm(event, false)}>Cancel</button>
           </div>
         </Modal.Body>
       </Modal>

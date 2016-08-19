@@ -13,9 +13,34 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var session = require('cookie-session');
 var MP = require('node-makerpass');
-var client = require('./client_credentials');
 var _ = require('lodash')
+var moment = require('moment');
 
+if(process.env.NODE_ENV !== 'production') {
+  console.log('setting Client')
+  var Client = require('./client_credentials')
+} else {
+  var Client = {};
+  Client.ID = process.env.CLIENT_ID;
+  Client.secret = process.env.CLIENT_SECRET;
+}
+
+var assetFolder = path.join(__dirname, '..', 'client','public');
+
+// Serve Static Assets
+
+app.use(express.static(assetFolder));
+
+app.use( require('body-parser').json() );
+
+app.use(cookieParser());
+
+// Serve JS Assets
+app.get('/app-bundle.js',
+ browserify('./client/index.js', {
+    transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
+  })
+);
 
 app.use(session({
   name: 'my-app:session',
@@ -31,9 +56,9 @@ var passport = require('passport');
 var MakerpassStrategy = require('passport-makerpass').Strategy;
 
 passport.use(new MakerpassStrategy({
-    clientID: client.ID,
-    clientSecret: client.secret,
-    callbackURL: "http://localhost:4000/auth/makerpass/callback",
+    clientID: Client.ID,
+    clientSecret: Client.secret,
+    callbackURL: "http://maker-space.herokuapp.com/auth/makerpass/callback",
     passReqToCallback: true
   },
   function(req, accessToken, refreshToken, profile, done) {
@@ -91,7 +116,6 @@ io.on('connection', function (socket) {
   })
 
   setInterval(() => {
-    console.log('emitting updates')
     Check.update()
     .then( e => {
 
@@ -100,27 +124,9 @@ io.on('connection', function (socket) {
   
 });
 
-
-var assetFolder = path.join(__dirname, '..', 'client','public');
-
-// Serve Static Assets
-app.use(express.static(assetFolder));
-
-app.use( require('body-parser').json() );
-
-app.use(cookieParser());
-
-// Serve JS Assets
-app.get('/app-bundle.js',
- browserify('./client/index.js', {
-    transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
-  })
-);
-
 //<<<<<-------- AUTHENTICATION ENDPOINTS -------->>>>>\\
 
 app.delete('/res', function(req, res) {
-  console.log("got res delete request")
   return Reservation.deleteIt()
     .then(data => data)
 })
@@ -183,14 +189,6 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
-app.get('/logout', function(req, res){
-  console.log('logging out')
-  req.logout();
-  res.redirect('/');
-});
-
-// should be a PUT
-
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   Room.changeAvailability(req.params.roomName)
   .then(resp => {
@@ -208,7 +206,6 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
 
 app.put('/room/edit/:id', function(req, res){
   var roomId = req.params.id
-  //req.body should be new reservation info
   Room.updateRoom(roomId, req.body)
   .then(updatedRoom => {
     res.send(200, updatedRoom)
@@ -228,8 +225,6 @@ app.delete('/:roomName', function(req, res){
 //<<<<<-------- RESERVATIONS ENDPOINTS -------->>>>>\\
 
 app.get('/reservations', function(req, res){
-
-  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     res.send(200, reservationsData)
@@ -262,8 +257,8 @@ app.get('/reservations-by-user/:userId', function(req, res){
 
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
-  
-  Reservation.create(req.body)
+
+  Reservation.create(req.body)  
   .then(reservationInfo => {
     res.send(201, reservationInfo)
   })
@@ -282,10 +277,9 @@ app.put('/reservations/:id', function(req, res){
 
 app.delete('/reservations/delete/:resId', function(req, res){
   var resId = req.params.resId
-  console.log('id from params', resId)
+
   Reservation.delete(resId)
   .then(reservationInfo => {
-  console.log("reservationInfo: ", reservationInfo)
     if(reservationInfo === "success"){
       res.send(201, reservationInfo)
     }
@@ -308,20 +302,22 @@ app.get('/timeSlots', function(req, res) {
 })
 
 //endpoints for calendar asset-serving
-app.get('*/lib/jquery.min.js', function(req, res){
-  res.sendFile( path.join(__dirname,  '..', 'bower_components/jquery/dist/jquery.min.js') );
-})
 
-app.get('*/lib/moment.min.js', function(req, res){
-  res.sendFile( path.join(__dirname,  '..', 'bower_components/moment/min/moment.min.js') );
-})
 
-app.get('*/fullcalendar/fullcalendar.js', function(req, res){
-  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.js') );
+app.get('/lib/moment.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/moment/min/moment.min.js') );
 })
-
-app.get('*/fullcalendar/fullcalendar.css', function(req, res){
-  res.sendFile( path.join(__dirname,  '..', 'bower_components/fullcalendar/dist/fullcalendar.css') );
+app.get('/lib/jquery.min.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/jquery/dist/jquery.min.js') );
+})
+app.get('/fullcalendar/fullcalendar.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/fullcalendar/dist/fullcalendar.js') );
+})
+app.get('/fullcalendar/fullcalendar.css', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/fullcalendar/dist/fullcalendar.css') );
+})
+app.get('/socket.io/socket.io.js', function(req, res){
+  res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
 })
 // Wild card route for client side routing.
 app.get('/*', function(req, res){

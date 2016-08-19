@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 
 export default class Plan extends Component {
-
-  constructor(props) {
-    super(props)   
-  }
-
   render() {
-    
-    console.log('huh', this.props.window)  
-
     return (
         
     <svg width="800" height="260">

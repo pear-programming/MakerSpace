@@ -10,21 +10,12 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 var roomPlaceHolder = false;
 
 export default class MakeReservation extends React.Component {
-
-  constructor(props){ 
-    super(props)
-    
-    this.state = {
-
-    }
-  } 
-
   render() {
 
     return (
       <div className="calendarContainer col-md-9">
              
-        <Modal show={this.props.showModal} onHide={this.props.close}>
+        <Modal show={this.props.showModal} onHide={(event) => this.props.close(event)}>
           <Modal.Header closeButton>
           <div className="roomTitleContainer">
             <Modal.Title>My Modal<span className="roomTitle">{this.props.currentRoom.roomName || "room"}</span></Modal.Title>
