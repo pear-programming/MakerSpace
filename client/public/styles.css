@@ -406,6 +406,10 @@ span.closed {
     background-color: #ffffff;
   }
 
+  table.myTable td button {
+    background-color: #66B2C9;
+    color: white;
+  }
 
 /*========= Dashboard =========*/
 

@@ -328,7 +328,7 @@ export default class Dashboard extends React.Component {
         </div>
         
         : null   }
-      <div className="dashboard-sidebar col-md-3 col-sm-12">     
+      <div className="dashboard-sidebar col-md-3">     
         <ReservationList 
           deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
           shouldUpdateUserRes={this.state.shouldUpdateUserRes}

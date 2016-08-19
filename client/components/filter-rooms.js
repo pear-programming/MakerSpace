@@ -59,7 +59,7 @@ export default class FilterRooms extends React.Component {
 
   render() {
     return (
-      <div className='filterRoomContainer'>
+      <div className='filterRoomContainer col-md-12 col-sm-6'>
       {this.state.rooms ? 
       <div>
       <h3> Filter calendar by room </h3> 
