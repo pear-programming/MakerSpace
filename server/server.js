@@ -183,13 +183,13 @@ app.post('/rooms/new', function(req, res) {
   })
 })
 
+
 app.get('/logout', function(req, res){
   console.log('logging out')
   req.logout();
   res.redirect('/');
 });
 
-// should be a PUT
 
 app.post('/:roomName/changeAvailability', MP.authWithSession(), function(req, res){
   Room.changeAvailability(req.params.roomName)
@@ -208,7 +208,6 @@ app.get('/all-rooms', MP.authWithSession(), function(req, res){
 
 app.put('/room/edit/:id', function(req, res){
   var roomId = req.params.id
-  //req.body should be new reservation info
   Room.updateRoom(roomId, req.body)
   .then(updatedRoom => {
     res.send(200, updatedRoom)
@@ -229,7 +228,6 @@ app.delete('/:roomName', function(req, res){
 
 app.get('/reservations', function(req, res){
 
-  console.log("got request for all reservations");
   Reservation.findAllReservations()
   .then(reservationsData => {
     res.send(200, reservationsData)
@@ -262,8 +260,8 @@ app.get('/reservations-by-user/:userId', function(req, res){
 
 // putting new reservations to the database
 app.post('/reservations/new', function(req, res){ 
-  
-  Reservation.create(req.body)
+
+  Reservation.create(req.body)  
   .then(reservationInfo => {
     res.send(201, reservationInfo)
   })
@@ -282,7 +280,7 @@ app.put('/reservations/:id', function(req, res){
 
 app.delete('/reservations/delete/:resId', function(req, res){
   var resId = req.params.resId
-  console.log('id from params', resId)
+
   Reservation.delete(resId)
   .then(reservationInfo => {
   console.log("reservationInfo: ", reservationInfo)

@@ -7,7 +7,7 @@ import Calendar from './calendar';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-var once = false;
+var runOnce = false;
 var roomsToDisplay = [];
 
 export default class FilterRooms extends React.Component {
@@ -21,9 +21,13 @@ export default class FilterRooms extends React.Component {
     }
   }
 
+  componentWillMount() {
+    runOnce = false;
+  }
+
   componentDidUpdate() {
-    if(!once) {
-      once = true;
+    if(!runOnce) {
+      runOnce = true;
       roomsToDisplay = this.props.rooms.map(room => room.roomName);
       this.setState({rooms: this.props.rooms.map(room => Object.assign(room, {checked: true}))});
     }
@@ -32,6 +36,7 @@ export default class FilterRooms extends React.Component {
 
   toggleFilter(event) {
     // event.preventDefault();
+
     console.log("got it:", event.target.value); 
     var roomsCopy = this.state.rooms.slice()
     var index;

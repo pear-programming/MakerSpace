@@ -19,7 +19,7 @@ export default class Calendar extends React.Component {
     const { calendar } = this.refs;
 
     var open = this.props.open;
-    var wait = this.props.wait;
+    var changeGoToDate = this.props.changeGoToDate
 
     $(calendar).fullCalendar({
       events: this.props.events,
@@ -30,19 +30,9 @@ export default class Calendar extends React.Component {
 
         open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
       },
-      customButtons: {
-        myCustomButton: {
-            text: 'custom!',
-            click: function() {
-                alert('clicked the custom button!');
-            }
-        }
+      viewRender: function(view, element){
+        changeGoToDate(view.start._d)
       },
-      header: {
-          left: 'prev,next today',
-          center: 'title'
-      },
-
       allDay: false,
       hiddenDays: [ 0 ],
       minTime: "09:00:00",
@@ -57,6 +47,9 @@ export default class Calendar extends React.Component {
 
   componentDidUpdate() {
 
+    var changeGoToDate = this.props.changeGoToDate
+
+
     if(this.props.reRenderCalendar) {
       const { calendar } = this.refs;
       var open = this.props.open;
@@ -69,6 +62,9 @@ export default class Calendar extends React.Component {
         dayClick: function(date, jsEvent, view) {
           open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
          
+        },
+        viewRender: function(view, element){
+          changeGoToDate(view.start._d)
         },
         allDay: false,
         hiddenDays: [ 0 ],
