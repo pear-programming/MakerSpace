@@ -43,7 +43,6 @@ export default class RoomsList extends Component {
   }
 
   roomUnBooked(roomId) {
-    console.log("current rooms in state: ", this.state.rooms);
     var roomIndex; 
     var unBookedRoom = this.state.rooms.filter((room, index) => {
       if(room._id.toString() === roomId.toString()) {
@@ -84,7 +83,6 @@ export default class RoomsList extends Component {
     //ping server for latest room info then open socket to listen for someone else changing the state
     fetchRooms()
     .then( room => {
-      console.log('room data', room)
       socket.on('updatedRooms', this.updatedRooms.bind(this));
       socket.on('instaBooked', this.instaBookedRoom.bind(this));
       socket.on('unBook', this.roomUnBooked.bind(this));

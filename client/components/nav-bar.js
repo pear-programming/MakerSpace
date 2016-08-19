@@ -20,9 +20,7 @@ export default class NavBar extends Component {
       this.setState({ user: userData.data })
     })
   }
-  logout() {
-    logout()
-  }
+
   render() {
     return (
       <Navbar>
