@@ -16,6 +16,11 @@ var MP = require('node-makerpass');
 var _ = require('lodash')
 var moment = require('moment');
 
+if(process.env.NODE_ENV !== 'production') {
+  console.log('setting Client')
+  var Client = require('./client_credentials')
+
+}
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
 
@@ -48,8 +53,8 @@ var passport = require('passport');
 var MakerpassStrategy = require('passport-makerpass').Strategy;
 
 passport.use(new MakerpassStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientID: Client.ID || process.env.CLIENT_ID,
+    clientSecret: Client.secret || process.env.CLIENT_SECRET,
     callbackURL: "http://maker-space.herokuapp.com/auth/makerpass/callback",
     passReqToCallback: true
   },
