@@ -100,7 +100,7 @@ export default class ReservationList extends Component {
 
   render() {
     return (
-      <div className="reservationList col-md-3"> 
+      <div className="reservationList"> 
         {this.state.user ? 
           <div>
             <h3> Your Reservations</h3> 
