@@ -22,7 +22,12 @@ export default class RoomCalendar extends React.Component {
       allDay: false,
       minTime: "09:00:00",
       maxTime: "21:00:00",
-      height: "auto"
+      height: "auto",
+      header: {
+        left: '',
+        right: '',
+        center: 'title'
+      }
     });
 
     $(calendar).fullCalendar( 'changeView', this.props.view );
