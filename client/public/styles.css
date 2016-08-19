@@ -61,6 +61,73 @@ img.roomImage {
   float: right;
 }
 
+/*==== analytics ====*/
+
+.grid .row {
+  margin-left: -50px;
+  margin-right: -50px;
+}
+
+.horStack {
+  margin-left: -100px;
+}
+
+.grid { 
+  padding: 0px; 
+}
+
+.pieTitle {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.barTitle {
+  text-align: center;
+}
+
+.horTitle {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+#byRoom {
+  color: white;
+  background-color: #137bbe;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+#key {
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  float: left;
+}
+
+.colorChart {
+  display: inline-block;
+}
+
+.colKey {
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  float: left;
+}
+
+.colorKey {
+  padding: 0px;
+}
+
+.barGraph {
+  padding: 0px;
+}
+
+#totRes {
+  padding: 20px 0px 20px 0px;
+}
 /*==== room modal ====*/
 
 .roomImageContainer {
@@ -161,6 +228,14 @@ span.closed {
   margin-right: -50px;
 }
 
+.tabList {
+  width: 300px;
+}
+
+.tabBtn {
+  float: right;
+}
+
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {
@@ -214,7 +289,6 @@ span.closed {
   text-transform: uppercase;
   font-size: 1.25em;
 }
-
 
 .fc-today {
   background: rgba(99,159,222,.1) !important;

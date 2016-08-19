@@ -33,8 +33,8 @@ export default class Conflict extends React.Component {
           </div>
           
           <div>
-            <button onClick={() => this.props.closeConfirm(true)}>Confirm</button>
-            <button onClick={() => this.props.closeConfirm(false)}>Cancel</button>
+            <button onClick={(event) => this.props.closeConfirm(event, true)}>Confirm</button>
+            <button onClick={(event) => this.props.closeConfirm(event, false)}>Cancel</button>
           </div>
         </Modal.Body>
       </Modal>
