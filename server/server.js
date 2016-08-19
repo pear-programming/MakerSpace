@@ -19,7 +19,10 @@ var moment = require('moment');
 if(process.env.NODE_ENV !== 'production') {
   console.log('setting Client')
   var Client = require('./client_credentials')
-
+} else {
+  var Client = {};
+  Client.ID = process.env.CLIENT_ID;
+  Client.secret = process.env.CLIENT_SECRET;
 }
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
@@ -53,8 +56,8 @@ var passport = require('passport');
 var MakerpassStrategy = require('passport-makerpass').Strategy;
 
 passport.use(new MakerpassStrategy({
-    clientID: Client.ID || process.env.CLIENT_ID,
-    clientSecret: Client.secret || process.env.CLIENT_SECRET,
+    clientID: Client.ID,
+    clientSecret: Client.secret,
     callbackURL: "http://maker-space.herokuapp.com/auth/makerpass/callback",
     passReqToCallback: true
   },
