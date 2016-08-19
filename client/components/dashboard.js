@@ -6,7 +6,7 @@ import { formatTime, getTimeSlotInfo, mapTimeSlots, mapTimeSlotsByDay} from '../
 import Calendar from './calendar';
 import MakeReservation from './make-reservation'
 import Conflict from './conflict';
-import Confirm from './confirm-reservation';
+import ConfirmReservation from './confirm-reservation';
 import ReservationList from './my-reservations';
 import FilterRooms from './filter-rooms'
 import Room from './room'; 
@@ -22,6 +22,7 @@ var reRenderCalendar = false;
 var roomPlaceHolder = false;
 var allEvents;
 
+
 export default class Dashboard extends React.Component {
   
   constructor(){ 
@@ -36,12 +37,14 @@ export default class Dashboard extends React.Component {
       showModal: false,
       showVerify: false,
       showConfirm: false,
+      shouldUpdateUserRes: false,
       startTime: new Date(2016, 0, 1, 9, 10),
       endTime: new Date(2016, 0, 1, 9, 11)
     }
   }
 
   componentWillMount() {
+    console.log("ran componentWillMount")
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
       timeSlots = data[2].data; 
@@ -57,13 +60,14 @@ export default class Dashboard extends React.Component {
     })
   }
 
-  close() {
+  close(event) {
+    event.preventDefault();
     roomPlaceHolder = true;
     this.setState({ showModal: false});
   }
 
   closeVerify(shouldCloseModal) {
-    console.log("inside closeVerify")
+    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.confirmBooking();  
     }
@@ -72,8 +76,8 @@ export default class Dashboard extends React.Component {
     }  
   }
 
-  closeConfirm(shouldCloseModal) {
-    console.log("inside closeVerify")
+  closeConfirm(event, shouldCloseModal) {
+    event.preventDefault();
     if(shouldCloseModal) { 
       this.submitBooking();  
     }
@@ -81,6 +85,11 @@ export default class Dashboard extends React.Component {
       this.setState({showConfirm: false})
     }  
   }
+
+
+  changeGoToDate(date) {
+    goToDate = date;
+  }  
 
   open(time) {
     var roomsWithTimeSlotInfo = mapTimeSlotsByDay(time, this.state.rooms, timeSlots); 
@@ -122,6 +131,7 @@ export default class Dashboard extends React.Component {
       nextFourSlots: nextFourSlots 
     });
   }
+
 
   changeModalView(event) {
 
@@ -208,7 +218,15 @@ export default class Dashboard extends React.Component {
         end: Date.parse(reservation.endTime),
         allDay: false,
         color: this.state.currentRoom.roomColor,
-      })
+      }) 
+
+      allEvents.push({
+        title: reservation.roomName,
+        start: Date.parse(reservation.startTime),
+        end: Date.parse(reservation.endTime),
+        allDay: false,
+        color: this.state.currentRoom.roomColor,
+      }) 
       
       reservations.push(Object.assign(reservation, {
         startTime: reservation.startTime.toUTCString(),
@@ -220,7 +238,7 @@ export default class Dashboard extends React.Component {
       goToDate = Date.parse(reservation.startTime)
       reRenderCalendar = true;
       roomPlaceHolder = true;
-      this.setState({showModal: false, events: events, showVerify: false, showConfirm: false})
+      this.setState({showModal: false, events: events, showVerify: false, showConfirm: false, shouldUpdateUserRes: true})
     })
   }
 
@@ -233,6 +251,21 @@ export default class Dashboard extends React.Component {
   resetReRender() {
     console.log("ran resetReRender")
     reRenderCalendar = false;
+  }
+
+  resetShouldUpdate() {
+    this.setState({shouldUpdateUserRes: false});
+  }
+
+  deleteFromCalendar() {
+    fetchReservations()
+    .then(reserv => {
+      reservations = reserv.data;
+      var mappedData = mapTimeSlots(reserv, this.state.rooms);
+      // console.log('did mappedData work? ', mappedData)
+      reRenderCalendar = true
+      this.setState({ events: mappedData })
+    })
   }
 
   filterRooms(roomsToDisplay) {
@@ -269,31 +302,39 @@ export default class Dashboard extends React.Component {
             />
 
             <Conflict 
-              showVerify={this.state.showVerify}
-              closeVerify={this.closeVerify.bind(this)}
-              bookingConflicts={bookingConflicts}
-              MONTHS={MONTHS}
+              showVerify = {this.state.showVerify}
+              closeVerify = {this.closeVerify.bind(this)}
+              bookingConflicts = {bookingConflicts}
+              MONTHS = {MONTHS}
             /> 
 
-            <Confirm 
-              showConfirm={this.state.showConfirm}
-              closeConfirm= {this.closeConfirm.bind(this)}
-              reservation={reservation}
-              MONTHS={MONTHS}
+            <ConfirmReservation 
+              showConfirm = {this.state.showConfirm}
+              closeConfirm = {this.closeConfirm.bind(this)}
+              reservation = {reservation}
+              MONTHS = {MONTHS}
             />
+
 
             <Calendar key={0} 
               events={this.state.events} 
               open={this.open.bind(this)}
               goToDate={goToDate}
+              changeGoToDate={this.changeGoToDate.bind(this)}
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             /> 
+
         </div>
         
         : null   }
            
-      <ReservationList />
+      <ReservationList 
+        deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
+        shouldUpdateUserRes={this.state.shouldUpdateUserRes}
+        resetShouldUpdate={this.resetShouldUpdate.bind(this)}
+      />
+
       <FilterRooms 
         rooms={this.state.rooms}
         filterRooms={this.filterRooms.bind(this)}
