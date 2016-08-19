@@ -212,27 +212,23 @@ export default class Dashboard extends React.Component {
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice(); 
-      events.push({
+      var newReservation = {
         title: reservation.roomName,
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
         color: this.state.currentRoom.roomColor,
-      }) 
+      }
+      events.push(newReservation) 
 
-      allEvents.push({
-        title: reservation.roomName,
-        start: Date.parse(reservation.startTime),
-        end: Date.parse(reservation.endTime),
-        allDay: false,
-        color: this.state.currentRoom.roomColor,
-      }) 
+      allEvents.push(newReservation) 
       
       reservations.push(Object.assign(reservation, {
         startTime: reservation.startTime.toUTCString(),
         endTime: reservation.endTime.toUTCString()
       })); 
-
+      console.log('newReservation')
+      socket.emit('newReservation', newReservation)
       this.addToTimeslots();
 
       goToDate = Date.parse(reservation.startTime)

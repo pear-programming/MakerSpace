@@ -115,6 +115,11 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('roomUnBooked', roomId);
   })
 
+  socket.on('newReservation', function(newRes) {
+    console.log('emitting newRes')
+    socket.broadcast.emit('updateCalendar', newRes)
+  })
+
   setInterval(() => {
     Check.update()
     .then( e => {

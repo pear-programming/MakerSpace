@@ -91,12 +91,10 @@ export default class Room extends Component {
         })
         let currentTime = new Date(Date.now())
         this.mapTimeSlotsByDay(new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ))
-        console.log("showing typeof this.state.startTime  ", typeof this.state.startTime);
         var nextFourSlots = this.getTimeSlotInfo(this.props.roomInfo.openSlots[0].startTime, this.props.roomInfo);
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
-        console.log('events: ', events)
         this.setState({reservations: reservations.data,
            nextRes: new Date(future.startTime),
            events: events,
@@ -105,12 +103,10 @@ export default class Room extends Component {
            startTime: new Date(this.props.roomInfo.openSlots[0].startTime),
            endTime: new Date(Date.parse(this.props.roomInfo.openSlots[0].startTime) + 1800000)
          })
-        console.log('this.state IF: ', this.state)
       }
       else {  //no current reservations
 
         this.setState({reservations: null, nextRes: null, events: null, showModal: true})
-        console.log('this.state ELSE: ', this.state)
 
       }
     })
@@ -231,16 +227,12 @@ export default class Room extends Component {
   //we need to be able to book a room with start time and endtime of only 2 hours
 
   render() {
-    console.log("this.state.startTime ", this.state.startTime);
     const room = this.props.roomInfo;
 
     var title = {float: 'left'}
     var info = {float: 'right'}
 
     return (
-
-
-
       <div>
         <Row className="row" id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
           <Col md={6} className="eachRoom"><div id={room.roomName}

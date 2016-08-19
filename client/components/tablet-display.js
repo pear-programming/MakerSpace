@@ -49,6 +49,12 @@ export default class TabletDisplay extends Component {
       let date = new Date();
       let time = date.getTime();
     })
+    socket.on('updateCalendar', (newRes) => {
+      console.log(newRes, this.state.currentRoom)
+      if(newRes.title === this.state.currentRoom.roomName) {
+        this.updateCalendar.call(this, newRes)
+      }
+    })
     fetchRooms() 
     .then(rooms=>{
       let room = rooms.data.find( room =>room.roomName === currentRoom)
@@ -92,6 +98,14 @@ export default class TabletDisplay extends Component {
 
   }
 
+  updateCalendar(newRes) {
+    delete newRes.color
+    console.log('new reservation', newRes)
+    var newevents = this.state.events.concat(newRes) 
+    this.setState({ events: null })
+    this.setState({ events: newevents })
+    console.log('new events list', newevents)
+  }
   checkForChanges() {
 
     var url = window.location.href.split('/');
