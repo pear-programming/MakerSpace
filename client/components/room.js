@@ -275,7 +275,7 @@ export default class Room extends Component {
           </div>
           </Modal.Header>
           <div className="roomCalendarDay" >
-        <RoomCalendar className="roomImageContainer" events={this.state.events} view="agendaDay"/>
+        <RoomCalendar events={this.state.events} view="agendaDay"/>
           </div>
             <Modal.Body className="clearfix">
               <div className="roomAvailability">

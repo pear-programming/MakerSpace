@@ -63,14 +63,14 @@ img.roomImage {
 
 /*==== room modal ====*/
 
-.roomImageContainer {
+/*.roomImageContainer {
   border-radius: 20px;
   overflow: hidden;
   width: 100%;
   max-height: 300px;
   overflow: hidden;
   margin: auto;
-}
+}*/
 
 .roomTitleContainer {
   text-align: center;
@@ -167,12 +167,18 @@ span.closed {
   font-size: 5em;
   margin-top: 35px;
   font-weight: lighter;
+  background-color: green;
 }
 
 .tabletDisplayClosed h1  {
   font-size: 5em;
   margin-top: 35px;
   font-weight: lighter;
+  background-color: red;
+}
+
+.tabletTitle {
+  top: 100px;
 }
 
 .tabletBlock {
@@ -180,9 +186,9 @@ span.closed {
   width: 46%;
   padding-left: 3%;
   float: left;
-  background-color: #0073b7;
   height: 100vh;
-  color: white;
+  position: absolute;
+  top:1%;
 }
 
 .roomCalendar {
@@ -190,6 +196,10 @@ span.closed {
   padding-right: 3%;
   float: right;
   margin-top: 20px;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  background-color: white;
  }
 
 .tabletFooter {
@@ -215,6 +225,11 @@ span.closed {
   font-size: 1.25em;
 }
 
+.tabletImage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
 .fc-today {
   background: rgba(99,159,222,.1) !important;
