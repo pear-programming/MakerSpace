@@ -106,6 +106,21 @@ img.roomImage {
   float: left;
 }
 
+.colorChart {
+  display: inline-block;
+}
+
+.colKey {
+  width: 15px;
+  height: 15px;
+  background-color: orange;
+  float: left;
+}
+
+.colorKey {
+  padding: 0px;
+}
+
 .barGraph {
   padding: 0px;
 }

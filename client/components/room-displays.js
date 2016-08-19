@@ -13,26 +13,14 @@ export default class RoomDisplays extends Component {
     super()
 
     this.state = {
-      rooms: [],
       pieData: [{x: 'Su', y: 2}, {x: 'M', y: 2}, {x: 'T', y: 2}, {x: 'W', y: 2}, {x: 'Th', y: 2}, {x: 'F', y: 2}, {x: 'Sa', y: 2}],
       data: [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 5}, {x: 6, y: 6}, {x: 7, y: 7}, {x: 8, y: 8}, {x: 9, y: 9}, {x: 10, y: 10}, {x: 11, y: 11}],
       roomOccurences: {Room: 15},
       barData: [[]],
       barLabel: [],
       topFive: [],
-      roomColor: []
+      color: []
     }
-  }
-  componentWillMount() {
-    fetchRooms()
-    .then( room => {
-      console.log('huh', room.roomColor)
-      this.setState({ rooms: this.state.rooms.concat(room.data), roomColor: this.state.roomColor.concat(room.roomColor)})
-    })
-    .catch( err => {
-      console.log('error', err)
-      this.setState({ rooms: null })
-    })
   }
 
   sum(items, prop){
@@ -143,30 +131,36 @@ export default class RoomDisplays extends Component {
         data.push({ x: x, y: resOccurences[key] })
         x += 1
       }
+
+
       this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
     })
 
   }
 
-  componentDidMount() {
-      this.setState({data: this.getGraphData()});
+  getColor() {
+    let color = [];
+    let roomList = [];
+
+    fetchRooms()
+    .then( rooms => {
+      rooms.data.map( room => {
+        roomList.push(room.roomName)
+        color.push(room.roomColor)
+      })
+    this.setState({ color: color, room: roomList }, )
+    })
   }
 
+  componentDidMount() {
+      this.setState({ data: this.getGraphData(), color: this.getColor() });
+  }
 
   getTickValues() {
     let ticks = Object.keys(this.state.roomOccurences)
     return ticks
   }
 
-  renderRooms() {
-    return this.state.rooms.map(room => {
-      return (
-        <li>
-          <Link to={`${room.roomName}/display`}>{room.roomName}</Link>
-        </li>
-      )
-    })
-  }
 
   getYaxis() {
     let occurences = [];
@@ -185,8 +179,9 @@ export default class RoomDisplays extends Component {
 
   renderBarGraph() {
 
-    return this.state.barData.map( room => <VictoryBar 
-      style={{data: {fill: randomColor() }}}
+
+    return this.state.barData.map( (room, i) => <VictoryBar 
+      style={{data: {fill: this.state.color[i] }}}
       data={room}
     />)
   }
@@ -211,7 +206,7 @@ export default class RoomDisplays extends Component {
         <tr>
         <tr></tr>
           <td>{user.userName}</td>
-          <td>{user.totalRes} Reservations</td>
+          <td>{user.totalRes} reservations</td>
         <tr></tr>
         </tr>
       )
@@ -227,7 +222,19 @@ export default class RoomDisplays extends Component {
         </tr>
       )
     })
-  } 
+  }
+
+  colorChart(){
+    if(this.state.room){
+      return this.state.room.map((eachRoom, i) =>{
+        let col = { backgroundColor: this.state.color[i]}
+        return(
+          <p className="colorChart"><span style={col} className="colKey" /> {eachRoom} </p>
+        )
+      })
+    }
+  }
+
 
   render() {
     const style = {
@@ -236,7 +243,7 @@ export default class RoomDisplays extends Component {
 
     let sum = this.sum(this.state.pieData, 'y');
 
-    console.log('colorzzzzzz', this.state.roomColor)
+    console.log('bar data', this.state.barData)
 
     return (
       <div>
@@ -349,56 +356,49 @@ export default class RoomDisplays extends Component {
           
           <Row> 
  
-            <Col md={4}>
+            <h1 className="horTitle">Reservations by Users</h1>
             
-              <h2 className="horTitle">Top 5 Users</h2>
-            
-              <Col md={2} />
+            <Col md={3}>  
 
-              <Col md={8}>
+              <h2>Top 5 Users</h2>
               
-                    <Table responsive>
-                      <tbody>
-                        {this.chartTable.call(this)}
-                      </tbody>
-                    </Table>
-
-              </Col>
-
-              <Col md={2} />
+              <Table cellspacing="100">
+                <tbody>
+                  {this.chartTable.call(this)}
+                </tbody>
+              </Table>
 
             </Col>
             
             <Col md={8} className="horStack">
             
-            <VictoryStack horizontal
-              padding={30}
-              width={225}
-              height={150}
-              animate={{ duration: 2000 }}
-              style={{
-                data: {width: 8},
-                labels: {fontSize: 4}
-              }}
-            >
-              {this.renderBarGraph.call(this)}
-            </VictoryStack>
-              
-            <div />
+              <VictoryStack horizontal
+                padding={30}
+                width={225}
+                height={150}
+                animate={{ duration: 2000 }}
+                style={{
+                  data: {width: 8},
+                  labels: {fontSize: 4}
+                }}
+              >
+                {this.renderBarGraph.call(this)}
+              </VictoryStack>
+            
+            </Col>
 
+            <Col md={1} className="colorKey">
+
+              <div>{this.colorChart.call(this)}</div>
+            
             </Col>
 
           </Row>
           
   {/*==================================================================*/}
-        
+
         </Grid>
       </div>
     );
   }
 }
-
-function randomColor(){
-  return "#" + ("000000" + Math.floor(Math.random()*0xffffff).toString(16)).slice(-6); 
-}
-
