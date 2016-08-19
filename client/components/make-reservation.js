@@ -10,15 +10,6 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 var roomPlaceHolder = false;
 
 export default class MakeReservation extends React.Component {
-
-  constructor(props){ 
-    super(props)
-    
-    this.state = {
-
-    }
-  } 
-
   render() {
 
     return (
