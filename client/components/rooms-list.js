@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {fetchRooms, changeStatus} from '../models/rooms';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
-import Plan from './Plan';
+import Plan from './plan';
 import NavBar from './nav-bar';
 import RoomWindow from './room-window';
 
@@ -43,7 +43,6 @@ export default class RoomsList extends Component {
   }
 
   roomUnBooked(roomId) {
-    console.log("current rooms in state: ", this.state.rooms);
     var roomIndex; 
     var unBookedRoom = this.state.rooms.filter((room, index) => {
       if(room._id.toString() === roomId.toString()) {
@@ -84,7 +83,6 @@ export default class RoomsList extends Component {
     //ping server for latest room info then open socket to listen for someone else changing the state
     fetchRooms()
     .then( room => {
-      console.log('room data', room)
       socket.on('updatedRooms', this.updatedRooms.bind(this));
       socket.on('instaBooked', this.instaBookedRoom.bind(this));
       socket.on('unBook', this.roomUnBooked.bind(this));

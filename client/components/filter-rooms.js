@@ -15,7 +15,7 @@ export default class FilterRooms extends React.Component {
 
   constructor(props){ 
     super(props)
-    // console.log("this.props.rooms:", this.props.rooms);
+
     this.state = {
       rooms: null
     }
@@ -35,9 +35,6 @@ export default class FilterRooms extends React.Component {
   }
 
   toggleFilter(event) {
-    // event.preventDefault();
-
-    console.log("got it:", event.target.value); 
     var roomsCopy = this.state.rooms.slice()
     var index;
 
@@ -47,7 +44,7 @@ export default class FilterRooms extends React.Component {
         break;
       }
     }
-    // console.log("showing roomsCopy index:", roomsCopy[index]);
+
     roomsCopy[index].checked = event.target.checked
 
     if(event.target.checked) {
@@ -58,14 +55,9 @@ export default class FilterRooms extends React.Component {
     }
     this.props.filterRooms(roomsToDisplay);
     this.setState({rooms: roomsCopy});
-
-    // event.target.checked = !event.target.checked
-    // $('.myCheckbox').prop('checked', false)
   }
 
   render() {
-
-    // console.log("this.state.rooms in filter-rooms:", this.state.rooms);
     return (
       <div>
       {this.state.rooms ? 

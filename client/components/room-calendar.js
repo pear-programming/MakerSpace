@@ -9,14 +9,9 @@ export default class RoomCalendar extends React.Component {
     $(calendar).fullCalendar({
       events: this.props.events,
       eventClick: function(event) {
-
-        console.log("showing event:", event);
         alert("clicked event!")
-       
       },
       dayClick: function(date, jsEvent, view) {
-
-          console.log("showing date:", date);
           alert('Clicked empty space!', date);
       },
       allDay: false,
