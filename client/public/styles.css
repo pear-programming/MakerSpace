@@ -377,9 +377,8 @@ span.closed {
 
   table.myTable {
     font-size: 11px;
-    color: #333333;
     border-width: 1px;
-    border-color: #3A3A3A;
+    border-color: #0073b7;;
     border-collapse: collapse;
   }
  
@@ -388,18 +387,22 @@ span.closed {
     padding: 5px;
     border-style: solid;
     border-color: #517994;
-    background-color: #B2CFD8;
+    background-color: #0073b7;
+    color: white;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: .03em;
   }
  
   table.myTable tr:hover td {
-    background-color: #DFEBF1;
+    background-color: #e7e7e7;
   }
  
   table.myTable td {
     border-width: 1px;
     padding: 5px;
     border-style: solid;
-    border-color: #517994;
+    border-color: #0073b7;;
     background-color: #ffffff;
   }
 
