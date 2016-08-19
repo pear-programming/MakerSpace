@@ -32,17 +32,16 @@ export default class NavBar extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
 
-          { this.state.user ?
-            <Nav pullRight>
-              <Image className="profilePicture" src={this.state.user.avatar_url} />
-              <NavDropdown eventKey={3} title={`Welcome ${this.state.user.name}`} id="basic-nav-dropdown">
-                <LinkContainer to={'/room-displays'}><MenuItem eventKey={3.2}>View room displays</MenuItem></LinkContainer>
-                <LinkContainer to={'/dashboard'}><MenuItem eventKey={3.2}>Dashboard</MenuItem></LinkContainer>
-                <MenuItem divider />
-                <MenuItem eventKey={3.3} onClick={this.logout.bind(this)}>Log Out</MenuItem>
-
-              </NavDropdown>
-            </Nav>
+        { this.state.user ?
+          <Nav pullRight>
+            <Image className="profilePicture" src={this.state.user.avatar_url} />
+            <NavDropdown title={`Welcome ${this.state.user.name}`} id="basic-nav-dropdown">
+              <LinkContainer to={'/'}><MenuItem >Dashboard</MenuItem></LinkContainer>
+              <LinkContainer to={'calendar'}><MenuItem >Calendar</MenuItem></LinkContainer>
+              <LinkContainer to={'analytics'}><MenuItem >Analytics</MenuItem></LinkContainer>
+              <LinkContainer to={'tablet-list'}><MenuItem >Tablet List</MenuItem></LinkContainer>
+            </NavDropdown>
+          </Nav>
             : 
             null
           }
