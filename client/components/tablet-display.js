@@ -77,23 +77,19 @@ export default class TabletDisplay extends Component {
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
 
-        this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
-
+        this.setState({
+          reservations: reservations.data,
+          nextRes: new Date(future.startTime),
+          events: events
+        })
       } else {  //no current reservations
-
         this.setState({reservations: null, nextRes: null, events: null})
-
-
       }
     })
-
     //start timer that checks room status 10 seconds
     this.checkForChanges.call(this)
-
   }
-
   checkForChanges() {
-
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
     currentRoom = decodeURIComponent(currentRoom)
@@ -102,17 +98,13 @@ export default class TabletDisplay extends Component {
       .then(rooms=>{
         console.log('checking changes')
         const room = rooms.data.find(findRoom)
-
         function findRoom(findThisRoom) {
           return findThisRoom.roomName === currentRoom;
         }
-
         this.setState({currentRoom: room})
       })
     }, 5000)
   }
-
-
   bookNow() {
     changeStatus(this.state.currentRoom.roomName)
     .then((x) => x)
@@ -120,17 +112,12 @@ export default class TabletDisplay extends Component {
     this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
     socket.emit('bookNow', this.state.currentRoom._id)
   }
-
-
   unBook() {
     changeStatus(this.state.currentRoom.roomName)
     .then((x) => x)
-
     this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
     socket.emit('unBook', this.state.currentRoom._id)
   }
-
-
   updateState(room) {
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
@@ -144,14 +131,10 @@ export default class TabletDisplay extends Component {
   componentWillUnmount() {
      socket.off('updatedRooms');
   }
-
-
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-
     let image;
-
     if(room.isAvailable){
       image = {
         borderLeft: "50px solid green",
@@ -163,38 +146,29 @@ export default class TabletDisplay extends Component {
         borderRight: "50px solid red"
       }
     }
-
     return (
       <div >
-
-        <img src={room.image} className="tabletImage" style={image}/>
-
+        <div style={image} >
+          <img src={room.image} className="tabletImage" />
+        </div>
      { room.isAvailable ?
-
           <div className="tabletDisplayOpen tabletBlock" >
             <h1 className="tabletTitle">{room.roomName} </h1>
-            <span className="open">available</span>
-
-
+            <span className="available">Available</span>
             <div className="tabletFooter">
              <button className="bookBtn" onClick={this.bookNow.bind(this)}>Book Now!</button>
             </div>
           </div>
-
           :
-
           <div className="tabletDisplayClosed tabletBlock" >
             <h1 className="tabletTitle">{room.roomName} </h1>
-            <span className="closed">In use</span>
-
-
+            <span className="inUse" >In use</span>
             <div className="tabletFooter">
-            <p>Please mark room as available below if you are no longer using it.</p>
               <button className="bookBtn" onClick={this.unBook.bind(this)}>All Done!</button>
+              <p>Please mark room as available below if you are no longer using it.</p>
             </div>
           </div>
         }
-
         { this.state.events ?
         <div className="roomCalendar" >
            <RoomCalendar events={this.state.events} view="agendaDay"  />
@@ -202,7 +176,6 @@ export default class TabletDisplay extends Component {
         :
         null
         }
-
       </div>
     )
   }

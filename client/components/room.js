@@ -263,7 +263,7 @@ export default class Room extends Component {
               }
           </Col>
         </Row>
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal className="carlo" show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
           <div className="roomTitleContainer">
             <Modal.Title>
@@ -274,47 +274,49 @@ export default class Room extends Component {
             </Modal.Title>
           </div>
           </Modal.Header>
-          <div className="roomCalendarDay" >
-        <RoomCalendar events={this.state.events} view="agendaDay"/>
-          </div>
             <Modal.Body className="clearfix">
-              <div className="roomAvailability">
-                <h3>
-                  <span className={room.isAvailable ? 'open' : 'closed'}>
-                {room.isAvailable ? 'available' : 'In use'}
-              </span>
-              </h3>
-              <button onClick={this.submitBooking.bind(this)} className="scheduleBtn">
-                Book Today
-              </button>
-            </div>
-            <div className="selectStartTime">
-              <label>Select a Start Time</label>
-              {this.props.roomInfo.openSlots ?
-                <select name="select" onChange={this.changeStartTime.bind(this)}>
-                  { this.props.roomInfo.openSlots.map(slot => {
+              <div className="selecters">
+                <div>
+                  <h3>
+                    <span className={room.isAvailable ? 'open' : 'closed'}>
+                      {room.isAvailable ? 'available' : 'In use'}
+                    </span>
+                  </h3>
+                </div>
+              <div className="selectStartTime">
+                <label>Select a Start Time</label>
+                {this.props.roomInfo.openSlots ?
+                  <select name="select1" onChange={this.changeStartTime.bind(this)}>
+                    { this.props.roomInfo.openSlots.map(slot => {
+                      return(
+                        <option className="changeStartTimes" value={slot.startTime}>
+                          {this.formatTime(slot.startTime)}
+                        </option>
+                      );
+                    })
+                  }
+                </select> : null}
+              </div>
+              <div className="select">
+                <label>Select an End Time</label>
+                <select name="select2" onChange={this.changeEndTime.bind(this)}>
+                  { this.state.nextFourSlots.map(slot => {
                     return(
-                      <option className="changeStartTimes" value={slot.startTime}>
-                        {this.formatTime(slot.startTime)}
+                      <option className="changeEndTimes" value={slot}>
+                        {this.formatTime(slot)}
                       </option>
                     );
                   })
                 }
-              </select> : null}
+              </select>
             </div>
-            <div className="selectEndTime">
-              <label>Select an End Time</label>
-              <select name="select" onChange={this.changeEndTime.bind(this)}>
-                { this.state.nextFourSlots.map(slot => {
-                  return(
-                    <option className="changeEndTimes" value={slot}>
-                      {this.formatTime(slot)}
-                    </option>
-                  );
-                })
-              }
-            </select>
+            <button onClick={this.submitBooking.bind(this)} className="scheduleBtn">
+              Book Today
+            </button>
           </div>
+              <div className="roomCalendarDay" >
+                <RoomCalendar events={this.state.events} view="agendaDay"/>
+              </div>
           </Modal.Body>
         </Modal>
       </div>
