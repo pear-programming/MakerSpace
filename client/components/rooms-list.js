@@ -35,9 +35,11 @@ export default class RoomsList extends Component {
     this.setState({ rooms: rooms })
     socket.emit('newRoomStatus', { rooms: this.state.rooms });
   }
+  //this adds list of room to render on dashboard
   renderRooms() {
     return this.state.rooms.map((room, i) => <Room key={i} toggleState={this.changeRoomState.bind(this)} roomInfo={room} current={this.state.room} window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow}/>)
   }
+
   updatedRooms(data) {
     this.setState({ rooms: data.rooms.rooms })
   }

@@ -2,18 +2,19 @@
 colors:
 blue: #0073b7;
 bright green: #49c633;
+hover grey: #e7e7e7;
 
 Google Fonts:
 font-family: 'Montserrat', sans-serif;
 font-family: 'Libre Franklin', sans-serif;
 */
-/** {
+* {
   font-family: 'Libre Franklin', sans-serif;;
 }
 
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Montserrat', sans-serif;
-}*/
+}
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
@@ -229,8 +230,8 @@ span.closed {
 .RoomsList {
   display: inline-block;
   min-width: 100%;
-  padding: 0px 0px 21px 60px;
-  border: 2px solid darkgrey;
+  /*padding: 20px;*/
+  /*border: 2px solid #0073b7;*/
 }
 
 .grid .row {
@@ -342,13 +343,18 @@ span.closed {
 }
 
 .eachRoom {
-  font-size: 24px;
+  font-size: 1.65em;
 }
+
+
 
 .row {
   padding-top: 14px; 
 }
 
+/*.row div:first-child:hover {
+  background-color: #e7e7e7;
+}*/
 /*.window div:first-child {
   margin-left: 30px;
 }*/
@@ -442,7 +448,9 @@ span.closed {
 }
 
 .reservationList h3 {
-  color: #49c633
+  color: #49c633;   
+  font-size: 1.5em;
+
 }
 
 .table-responsive {
@@ -454,7 +462,8 @@ span.closed {
 /*-----filter room div-----*/
 
 .filterRoomContainer h3{
-   color: #49c633
+   color: #49c633;
+   font-size: 1.5em;
 } 
 
 .filterRoomContainer ul {

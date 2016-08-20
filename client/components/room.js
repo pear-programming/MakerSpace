@@ -243,9 +243,12 @@ export default class Room extends Component {
 
       <div>
         <Row className="row" id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
-          <Col md={6} className="eachRoom"><div id={room.roomName}
+          <div>
+          <Col md={6} className="eachRoom">
+            <div id={room.roomName}
             onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
-            >{room.roomName}</div></Col>
+            >{room.roomName}</div>
+          </Col>
 
           <Col md={6}>
             { room.isAvailable
@@ -259,6 +262,7 @@ export default class Room extends Component {
                 onClick={(e)=>this.getInfo(e.target.id)}>🕒 Reserved  </div>
               }
           </Col>
+          </div>
         </Row>
 
         <Modal show={this.state.showModal} onHide={this.close}>
