@@ -37,7 +37,12 @@ export default class Calendar extends React.Component {
       hiddenDays: [ 0 ],
       minTime: "09:00:00",
       maxTime: "21:00:00",
-      height: "auto"  
+      height: "auto",
+      header: {
+        left:"title",
+        right: "today, prev,next",
+        center: ""
+      }  
     });
     
     $(calendar).fullCalendar( 'changeView', 'agendaWeek' );
@@ -70,7 +75,12 @@ export default class Calendar extends React.Component {
         hiddenDays: [ 0 ],
         minTime: "09:00:00",
         maxTime: "21:00:00",
-        height: "auto"  
+        height: "auto",
+        header: {
+          left:"title",
+          right: "today, prev,next",
+          center: ""
+        }   
       });
       
       $(calendar).fullCalendar( 'changeView', 'agendaWeek' ); 

@@ -1,19 +1,6 @@
-/*
-colors:
-blue: #0073b7;
-bright green: #49c633;
+$color-base: #0073b7;
+$green-highlight: #49c633;
 
-Google Fonts:
-font-family: 'Montserrat', sans-serif;
-font-family: 'Libre Franklin', sans-serif;
-*/
-/** {
-  font-family: 'Libre Franklin', sans-serif;;
-}
-
-h1,h2,h3,h4,h5,h6 {
-  font-family: 'Montserrat', sans-serif;
-}*/
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
@@ -34,11 +21,11 @@ h1,h2,h3,h4,h5,h6 {
   color: #0073b7;
   font-weight: lighter;
   letter-spacing: 0.05em;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-.loginButton:hover {
-  text-decoration: none;
-}
 
 #fakeButton {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
@@ -71,73 +58,6 @@ img.roomImage {
   float: right;
 }
 
-/*==== analytics ====*/
-
-.grid .row {
-  margin-left: -50px;
-  margin-right: -50px;
-}
-
-.horStack {
-  margin-left: -100px;
-}
-
-.grid { 
-  padding: 0px; 
-}
-
-.pieTitle {
-  text-align: center;
-  padding-bottom: 30px;
-}
-
-.barTitle {
-  text-align: center;
-}
-
-.horTitle {
-  text-align: center;
-  padding-bottom: 30px;
-}
-
-#byRoom {
-  color: white;
-  background-color: #137bbe;
-}
-
-.table > tbody > tr > td {
-  vertical-align: middle;
-}
-
-#key {
-  width: 15px;
-  height: 15px;
-  background-color: orange;
-  float: left;
-}
-
-.colorChart {
-  display: inline-block;
-}
-
-.colKey {
-  width: 15px;
-  height: 15px;
-  background-color: orange;
-  float: left;
-}
-
-.colorKey {
-  padding: 0px;
-}
-
-.barGraph {
-  padding: 0px;
-}
-
-#totRes {
-  padding: 20px 0px 20px 0px;
-}
 /*==== room modal ====*/
 
 .roomImageContainer {
@@ -238,14 +158,6 @@ span.closed {
   margin-right: -50px;
 }
 
-.tabList {
-  width: 300px;
-}
-
-.tabBtn {
-  float: right;
-}
-
 /*=========== Tablet Display ========*/
 
 .tabletDisplayOpen h1  {
@@ -300,6 +212,7 @@ span.closed {
   font-size: 1.25em;
 }
 
+
 .fc-today {
   background: rgba(99,159,222,.1) !important;
 } 
@@ -326,19 +239,15 @@ span.closed {
 }
 
 .window {
-/*  border: 2px solid #DFEBF1;*/  
-  padding: 20px;
-  background-color: #DFEBF1;
-}
-
-.window h1 {
-  margin-bottom: 10px;
-
+  border: 2px solid darkgrey;
+  padding: 0px 20px 21px 20px;
 }
 
 .window img { 
-  width: 100%;
-  border: 10px solid white;
+  margin-top: -55px;
+  height: 285px;
+  width: 464.11px;
+  float: right; 
 }
 
 .eachRoom {
@@ -348,10 +257,6 @@ span.closed {
 .row {
   padding-top: 14px; 
 }
-
-/*.window div:first-child {
-  margin-left: 30px;
-}*/
 
 /*=============================================================*/
 
@@ -395,8 +300,9 @@ span.closed {
 
   table.myTable {
     font-size: 11px;
+    color: #333333;
     border-width: 1px;
-    border-color: #0073b7;;
+    border-color: #3A3A3A;
     border-collapse: collapse;
   }
  
@@ -405,35 +311,23 @@ span.closed {
     padding: 5px;
     border-style: solid;
     border-color: #517994;
-    background-color: #0073b7;
-    color: white;
-    font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: .03em;
+    background-color: #B2CFD8;
   }
  
   table.myTable tr:hover td {
-    background-color: #e7e7e7;
+    background-color: #DFEBF1;
   }
  
   table.myTable td {
     border-width: 1px;
     padding: 5px;
     border-style: solid;
-    border-color: #0073b7;;
+    border-color: #517994;
     background-color: #ffffff;
   }
 
-  table.myTable td button {
-    background-color: #66B2C9;
-    color: white;
-  }
 
 /*========= Dashboard =========*/
-
-.dashboard-sidebar {
-  border-left: 3px solid #E7E7E7;
-}
 
 /* calendar */
 .dashboardContainer {
@@ -443,31 +337,4 @@ span.closed {
 
 .reservationList h3 {
   color: #49c633
-}
-
-.table-responsive {
-  height: 45vh;
-  overflow: scroll;
-}
-
-
-/*-----filter room div-----*/
-
-.filterRoomContainer h3{
-   color: #49c633
-} 
-
-.filterRoomContainer ul {
-  list-style: none;
-  line-height: .6em;
-}
-
-.filterRoomContainer label input {
-   margin-right:10px;
-}
-
-.filterRoomContainer label {
-  font-weight: normal;
-  text-transform: uppercase;
-  letter-spacing: .03em;
 }
