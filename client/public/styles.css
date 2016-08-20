@@ -338,6 +338,8 @@ span.closed {
 /*  border: 2px solid #DFEBF1;*/  
   padding: 20px;
   background-color: #DFEBF1;
+  height: 332px;
+  margin-top: 10px;
 }
 
 .window h1 {
@@ -362,6 +364,7 @@ span.closed {
 
 #Turing.row, #DeathStar.row, #Hopper.row, #Tatooine.row, #Ellis.row, #Lovelace.row, #Dagobah.row, #LectureHall.row, #Dijkstra.row, #Naboo.row {
   border-bottom: 2px solid #DFEBF1;
+  padding: 8px 0px;
 }
 
 #Turing.row:hover, #DeathStar.row:hover, #Hopper.row:hover, #Tatooine.row:hover, #Ellis.row:hover, #Lovelace.row:hover, #Dagobah.row:hover, #LectureHall.row:hover, #Dijkstra.row:hover, #Naboo.row:hover {
