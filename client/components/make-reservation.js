@@ -4,7 +4,7 @@ import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
 import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
-import Room from './room'; 
+import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 var roomPlaceHolder = false;
@@ -14,7 +14,7 @@ export default class MakeReservation extends React.Component {
 
     return (
       <div className="calendarContainer col-md-9">
-             
+
         <Modal show={this.props.showModal} onHide={(event) => this.props.close(event)}>
           <Modal.Header closeButton>
           <div className="roomTitleContainer">
@@ -34,23 +34,23 @@ export default class MakeReservation extends React.Component {
             <div className="roomAvailability">
               <h3>{this.props.MONTHS[this.props.startTime.getMonth()]} <span>{this.props.startTime.getDate()}</span></h3>
               <div className="button-bar">
-                
+
                 <button onClick={() => this.props.open(new Date(2016, new Date(this.props.startTime).getMonth(), new Date(this.props.startTime).getDate() - 1, 4, 0))}>{this.props.MONTHS[new Date(Date.parse(this.props.startTime) - 86400000).getMonth()] + ' ' + new Date(Date.parse(this.props.startTime) - 86400000).getDate().toString()}</button>
                 <button onClick={() => this.props.open(new Date(2016, new Date(this.props.startTime).getMonth(), new Date(this.props.startTime).getDate() + 1, 4, 0))}>{this.props.MONTHS[new Date(Date.parse(this.props.startTime) + 86400000).getMonth()] + ' ' + new Date(Date.parse(this.props.startTime) + 86400000).getDate().toString()}</button>
-            
+
               </div>
             </div>
             <div className="selectRoom">
               <label>Select a Room</label>
               <select name="select" onChange={this.props.changeModalView}>
                 { this.props.roomsWithTimeSlotInfo.filter(room => room.openSlots.length)
-                    .map(room => { 
-                      
-                      return( 
+                    .map(room => {
+
+                      return(
                         this.props.currentRoom && room._id === this.props.currentRoom._id ?
-                        <option value={room._id} selected="selected">{room.roomName}</option> : 
-                        <option value={room._id}>{room.roomName}</option> 
-                      ); 
+                        <option value={room._id} selected="selected">{room.roomName}</option> :
+                        <option value={room._id}>{room.roomName}</option>
+                      );
                     })
                 }
               </select>
@@ -61,9 +61,9 @@ export default class MakeReservation extends React.Component {
               <select name="select" onChange={this.props.changeStartTime}>
                { this.props.currentRoom.openSlots.map(slot => {
 
-                    return(    
-                      <option value={slot.startTime}>{formatTime(slot.startTime)}</option> 
-                    ); 
+                    return(
+                      <option value={slot.startTime}>{formatTime(slot.startTime)}</option>
+                    );
                   })
                 }
               </select>
@@ -74,8 +74,8 @@ export default class MakeReservation extends React.Component {
               <select name="select" onChange={this.props.changeEndTime}>
                 { this.props.nextFourSlots.map(slot => {
                       return(
-                        <option value={slot}>{formatTime(slot)}</option> 
-                      ); 
+                        <option value={slot}>{formatTime(slot)}</option>
+                      );
                     })
                 }
               </select>

@@ -4,7 +4,7 @@ import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
 import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
-import Room from './room'; 
+import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 var runOnce = false;
@@ -13,7 +13,7 @@ var roomsToDisplay = [];
 export default class FilterRooms extends React.Component {
 
 
-  constructor(props){ 
+  constructor(props){
     super(props)
 
     this.state = {
@@ -31,7 +31,7 @@ export default class FilterRooms extends React.Component {
       roomsToDisplay = this.props.rooms.map(room => room.roomName);
       this.setState({rooms: this.props.rooms.map(room => Object.assign(room, {checked: true}))});
     }
-    
+
   }
 
   toggleFilter(event) {
@@ -60,7 +60,7 @@ export default class FilterRooms extends React.Component {
   render() {
     return (
       <div>
-      {this.state.rooms ? 
+      {this.state.rooms ?
       <div>
         <ul>
           {this.state.rooms.map((room, index) => {
@@ -69,7 +69,7 @@ export default class FilterRooms extends React.Component {
             )
           })}
         </ul>
-      </div> 
+      </div>
 
       : null}
       </div>

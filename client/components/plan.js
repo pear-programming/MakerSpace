@@ -3,97 +3,97 @@ import React, { Component } from 'react';
 export default class Plan extends Component {
   render() {
     return (
-        
+
     <svg width="800" height="260">
      <g transform="scale(1.25)">
-      
-      <rect 
-        className="room" id="Dijkstra" 
-        onClick={()=>alert('Dijkstra')} 
+
+      <rect
+        className="room" id="Dijkstra"
+        onClick={()=>alert('Dijkstra')}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7f7f7f" transform="rotate(-45.16584777832031 158.7763671875,46.063694000244155) "  height="26.86994" width="16.533696" y="32.628725" x="150.509514" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        stroke="#7f7f7f" transform="rotate(-45.16584777832031 158.7763671875,46.063694000244155) "  height="26.86994" width="16.533696" y="32.628725" x="150.509514" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Dijkstra" ? "1" : ".25"}
         fill="#8AD4EB"/>
-      
-      <path 
-        className="room" id="Death Star" 
-        onClick={()=>alert('Death Star')} 
+
+      <path
+        className="room" id="Death Star"
+        onClick={()=>alert('Death Star')}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7f7f7f" transform="rotate(-89.98080444335938 28.26541519165043,156.59671020507815) " d="m1.942203,183.14199l0,-53.090559l52.646424,53.090559l-52.646424,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        stroke="#7f7f7f" transform="rotate(-89.98080444335938 28.26541519165043,156.59671020507815) " d="m1.942203,183.14199l0,-53.090559l52.646424,53.090559l-52.646424,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Death Star" ? "1" : ".25"}
         fill="#b266cc"/>
-      
-      <path stroke="#7f7f7f" transform="rotate(134.31851196289062 56.4438591003418,156.76611328125) "  d="m36.749135,176.419003l0,-39.305785l39.38945,39.305785l-39.38945,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+
+      <path stroke="#7f7f7f" transform="rotate(134.31851196289062 56.4438591003418,156.76611328125) "  d="m36.749135,176.419003l0,-39.305785l39.38945,39.305785l-39.38945,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
       fill="white"/>
-      
-      <path className="room" id="Naboo" 
-        onClick={()=>alert('Naboo')} 
+
+      <path className="room" id="Naboo"
+        onClick={()=>alert('Naboo')}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7f7f7f" transform="rotate(134.31851196289062 56.4438591003418,156.76611328125) "  d="m36.749135,176.419003l0,-39.305785l39.38945,39.305785l-39.38945,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        stroke="#7f7f7f" transform="rotate(134.31851196289062 56.4438591003418,156.76611328125) "  d="m36.749135,176.419003l0,-39.305785l39.38945,39.305785l-39.38945,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Naboo" ? "1" : ".25"}
         fill="#B296C7"/>
 
 
-      <path 
-        className="room" id="Tatooine" 
-        onClick={()=>alert("Tatooine")} 
+      <path
+        className="room" id="Tatooine"
+        onClick={()=>alert("Tatooine")}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7f7f7f" d="m548.620592,181.792932l0,-50.993266l51.009373,50.993266l-51.009373,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        stroke="#7f7f7f" d="m548.620592,181.792932l0,-50.993266l51.009373,50.993266l-51.009373,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Tatooine" ? "1" : ".25"}
         fill="#9FE966"/>
-      
-      <path stroke="#7c7c7c" transform="rotate(134.83108520507812 545.2105712890625,156.4084625244141) "  d="m524.67226,176.838057l0,-40.859182l41.076643,40.859182l-41.076643,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" 
+
+      <path stroke="#7c7c7c" transform="rotate(134.83108520507812 545.2105712890625,156.4084625244141) "  d="m524.67226,176.838057l0,-40.859182l41.076643,40.859182l-41.076643,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null"
       fill="white"/>
 
-      <path 
-        className="room" id="Dagobah" 
-        onClick={()=>alert("Dagobah")} 
+      <path
+        className="room" id="Dagobah"
+        onClick={()=>alert("Dagobah")}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7c7c7c" transform="rotate(134.83108520507812 545.2105712890625,156.4084625244141) "  d="m524.67226,176.838057l0,-40.859182l41.076643,40.859182l-41.076643,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" 
+        stroke="#7c7c7c" transform="rotate(134.83108520507812 545.2105712890625,156.4084625244141) "  d="m524.67226,176.838057l0,-40.859182l41.076643,40.859182l-41.076643,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null"
         fillOpacity={this.props.window === "Dagobah" ? "1" : ".25"}
         fill="#3599B8"/>
-      
-      
-      <rect 
-        className="room" id="Ellis" 
-        onClick={()=>alert("Ellis")} 
+
+
+      <rect
+        className="room" id="Ellis"
+        onClick={()=>alert("Ellis")}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        height="27.586207" width="34.827586" y="12.452437" x="215.852995" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" stroke="#7f7f7f" 
+        height="27.586207" width="34.827586" y="12.452437" x="215.852995" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" stroke="#7f7f7f"
         fillOpacity={this.props.window === "Ellis" ? "1" : ".25"}
         fill="#FD625E"/>
-      
-      <rect 
-        className="room" id="Lecture Hall" 
-        onClick={()=>alert('Lecture Hall')} 
+
+      <rect
+        className="room" id="Lecture Hall"
+        onClick={()=>alert('Lecture Hall')}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        height="41.37931" width="46.551724" y="80.862069" x="201.551724" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" stroke="#7f7f7f" 
+        height="41.37931" width="46.551724" y="80.862069" x="201.551724" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" stroke="#7f7f7f"
         fillOpacity={this.props.window === "Lecture Hall" ? "1" : ".25"}
         fill="#FFA500"/>
-      
-      <rect 
-        className="room" id="Hopper" 
-        onClick={()=>alert("Hopper")} 
+
+      <rect
+        className="room" id="Hopper"
+        onClick={()=>alert("Hopper")}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7f7f7f" height="27.794137" width="17.2979" y="12.241379" x="182.227552" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        stroke="#7f7f7f" height="27.794137" width="17.2979" y="12.241379" x="182.227552" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Hopper" ? "1" : ".25"}
         fill="#F2C80F"/>
-      
-      <rect 
-        className="room" id="Lovelace" 
+
+      <rect
+        className="room" id="Lovelace"
         onClick={()=>alert('Lovelace')}
-        onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) } 
-        stroke="#7f7f7f" height="27.759489" width="16.08448" y="12.283406" x="199.787557" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" 
+        onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
+        stroke="#7f7f7f" height="27.759489" width="16.08448" y="12.283406" x="199.787557" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null"
         fillOpacity={this.props.window === "Lovelace" ? "1" : ".25"}
         fill="#0066cc"/>
-      
-      <path 
-        className="room" id="Turing" 
-        onClick={()=>alert('Turing')} 
+
+      <path
+        className="room" id="Turing"
+        onClick={()=>alert('Turing')}
         onMouseEnter={ (e)=> this.props.updateWindow(e.target.id) }
-        stroke="#7c7c7c" transform="rotate(45.09850311279297 182.18260192871094,30.97190475463868) "  d="m162.891259,50.058811l0,-38.173809l38.582686,38.173809l-38.582686,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" 
+        stroke="#7c7c7c" transform="rotate(45.09850311279297 182.18260192871094,30.97190475463868) "  d="m162.891259,50.058811l0,-38.173809l38.582686,38.173809l-38.582686,0z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null"
         fillOpacity={this.props.window === "Turing" ? "1" : ".25"}
         fill="#01B8AA"/>
-      
+
       <line id="svg_15" y2="107.634206" x2="314.148217" y1="125.887607" x1="314.327172" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="0.5" stroke="#7f7f7f" fill="none"/>
       <line id="svg_14" y2="107.554098" x2="401.10869" y1="132.469923" x1="401.10869" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#7f7f7f" fill="none"/>
       <path id="svg_277" d="m268.433763,166.6475l33.749997,-33.749997l33.749997,33.749997l-33.749997,33.749997l-33.749997,-33.749997z" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#7c7c7c" fill="#b2b2b2"/>
@@ -268,8 +268,8 @@ export default class Plan extends Component {
       <rect id="svg_279" height="8.676208" width="10.554562" y="130.04471" x="296.610031" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#ffffff" fill="#ffffff"/>
       <line id="svg_283" y2="182.752318" x2="164.842572" y1="182.600925" x1="156.929774" strokeLinecap="null" strokeLinejoin="null" strokeDasharray="null" strokeWidth="null" stroke="#7c7c7c" fill="none"/>
      </g>
-    </svg>     
-      
+    </svg>
+
     )
   }
 }
