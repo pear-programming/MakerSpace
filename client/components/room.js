@@ -206,14 +206,16 @@ export default class Room extends Component {
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice();
-      events.push({
+      const newReservation = {
         title: reservation.roomName,
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
         color: this.state.currentRoom.roomColor
-      })
-      goToDate = Date.parse(reservation.startTime)
+      }
+      events.push(newReservation);
+      socket.emit('newReservation', newReservation);
+      goToDate = Date.parse(reservation.startTime);
       this.setState({
         showModal: false,
         events: events,
