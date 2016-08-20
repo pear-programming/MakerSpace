@@ -242,7 +242,7 @@ export default class Room extends Component {
 
 
       <div>
-        <Row className="row" id={room.roomName} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
+        <Row className="row" id={room.roomName.replace(" ", "")} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
           <div>
           <Col md={6} className="eachRoom">
             <div id={room.roomName}

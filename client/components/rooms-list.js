@@ -120,7 +120,7 @@ export default class RoomsList extends Component {
           <Row>
             <Col md={4} >
               <div className="RoomsList"> 
-                <h1>Rooms</h1> 
+                <h1>ROOMS</h1> 
                 {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
               </div>
             </Col>

@@ -227,9 +227,14 @@ span.closed {
 
 }
 
+.RoomsList h1  {
+  color: #0073b7;
+}
+
 .RoomsList {
   display: inline-block;
   min-width: 100%;
+
   /*padding: 20px;*/
   /*border: 2px solid #0073b7;*/
 }
@@ -321,9 +326,12 @@ span.closed {
 }
 
 /*=======================================*/
-
-.room:hover{
+.room{
   fill-opacity: 1;
+}
+
+.room:hover {
+  fill: #F5D54A;
 }
 
 .window {
@@ -352,12 +360,14 @@ span.closed {
   padding-top: 14px; 
 }
 
-/*.row div:first-child:hover {
-  background-color: #e7e7e7;
-}*/
-/*.window div:first-child {
-  margin-left: 30px;
-}*/
+#Turing.row, #DeathStar.row, #Hopper.row, #Tatooine.row, #Ellis.row, #Lovelace.row, #Dagobah.row, #LectureHall.row, #Dijkstra.row, #Naboo.row {
+  border-bottom: 2px solid #DFEBF1;
+}
+
+#Turing.row:hover, #DeathStar.row:hover, #Hopper.row:hover, #Tatooine.row:hover, #Ellis.row:hover, #Lovelace.row:hover, #Dagobah.row:hover, #LectureHall.row:hover, #Dijkstra.row:hover, #Naboo.row:hover {
+  border-bottom: 2px solid #DFEBF1;
+  background-color:  #e7e7e7;
+}
 
 /*=============================================================*/
 
@@ -373,6 +383,7 @@ span.closed {
     cursor: pointer;
     transition-duration: 0.1s;
     border: 1px solid #0073B7;
+    float:right;
 }
 
 .opened:hover {
@@ -392,6 +403,7 @@ span.closed {
   margin: 4px 2px;
   cursor: none;
   transition-duration: 0.1s;
+  float:right;
 }
 
 
