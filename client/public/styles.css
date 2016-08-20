@@ -326,16 +326,15 @@ span.closed {
 }
 
 /*=======================================*/
-.room{
+.room:hover{
   fill-opacity: 1;
 }
 
-.room:hover {
+/*.room:hover {
   fill: #F5D54A;
-}
+}*/
 
 .window {
-/*  border: 2px solid #DFEBF1;*/  
   padding: 20px;
   background-color: #DFEBF1;
   height: 332px;
