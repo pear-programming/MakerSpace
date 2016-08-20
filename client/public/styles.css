@@ -2,8 +2,18 @@
 colors:
 blue: #0073b7;
 bright green: #49c633;
-*/
 
+Google Fonts:
+font-family: 'Montserrat', sans-serif;
+font-family: 'Libre Franklin', sans-serif;
+*/
+/** {
+  font-family: 'Libre Franklin', sans-serif;;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Montserrat', sans-serif;
+}*/
 
 #home {
   /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
@@ -316,15 +326,19 @@ span.closed {
 }
 
 .window {
-  border: 2px solid darkgrey;
-  padding: 0px 20px 21px 20px;
+/*  border: 2px solid #DFEBF1;*/  
+  padding: 20px;
+  background-color: #DFEBF1;
+}
+
+.window h1 {
+  margin-bottom: 10px;
+
 }
 
 .window img { 
-  margin-top: -55px;
-  height: 285px;
-  width: 464.11px;
-  float: right; 
+  width: 100%;
+  border: 10px solid white;
 }
 
 .eachRoom {
@@ -334,6 +348,10 @@ span.closed {
 .row {
   padding-top: 14px; 
 }
+
+/*.window div:first-child {
+  margin-left: 30px;
+}*/
 
 /*=============================================================*/
 
