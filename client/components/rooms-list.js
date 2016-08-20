@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {fetchRooms, changeStatus} from '../models/rooms';
 import { Grid, Row, Col } from 'react-bootstrap';
 import Room from './room';
-import Plan from './Plan';
+import Plan from './plan';
 import NavBar from './nav-bar';
 import RoomWindow from './room-window';
 
@@ -19,12 +19,12 @@ export default class RoomsList extends Component {
       room: {}
     }
   }
-  
+
   changeRoomState(room) {
     const rooms = this.state.rooms
     const roomIndex = rooms.indexOf(rooms.find(findRoom))
     //function to change state in parent of the room selected
-    function findRoom(findThisRoom) { 
+    function findRoom(findThisRoom) {
       return findThisRoom.roomName === room.roomName;
     }
 
@@ -43,40 +43,39 @@ export default class RoomsList extends Component {
   }
 
   roomUnBooked(roomId) {
-    console.log("current rooms in state: ", this.state.rooms);
-    var roomIndex; 
+    var roomIndex;
     var unBookedRoom = this.state.rooms.filter((room, index) => {
       if(room._id.toString() === roomId.toString()) {
         roomIndex = index;
         return true;
-      }    
+      }
       else {
         return false
       }
-    })[0] 
+    })[0]
 
     unbookedRoom.isAvailable = true;
     var roomsCopy = this.state.rooms.slice();
-    roomsCopy[roomIndex] = unBookedRoom; 
+    roomsCopy[roomIndex] = unBookedRoom;
     this.setState({rooms: roomsCopy})
   }
 
   instaBookedRoom(roomId) {
-    var roomIndex; 
+    var roomIndex;
     var bookedRoom = this.state.rooms.filter((room, index) => {
 
       if(room._id.toString() === roomId.toString()) {
         roomIndex = index;
         return true;
-      }    
+      }
       else {
         return false
       }
-    })[0] 
+    })[0]
 
     bookedRoom.isAvailable = false;
     var roomsCopy = this.state.rooms.slice();
-    roomsCopy[roomIndex] = bookedRoom; 
+    roomsCopy[roomIndex] = bookedRoom;
     this.setState({rooms: roomsCopy})
   }
 
@@ -84,7 +83,6 @@ export default class RoomsList extends Component {
     //ping server for latest room info then open socket to listen for someone else changing the state
     fetchRooms()
     .then( room => {
-      console.log('room data', room)
       socket.on('updatedRooms', this.updatedRooms.bind(this));
       socket.on('instaBooked', this.instaBookedRoom.bind(this));
       socket.on('unBook', this.roomUnBooked.bind(this));
@@ -104,7 +102,7 @@ export default class RoomsList extends Component {
   }
 
   updateWindow(name) {
-    const room = this.state.rooms.find(findRoom)  
+    const room = this.state.rooms.find(findRoom)
 
     function findRoom(findThisRoom) { return findThisRoom.roomName === name;}
     this.setState({room})
@@ -119,15 +117,15 @@ export default class RoomsList extends Component {
         <Grid>
           <Row>
             <Col md={4} >
-              <div className="RoomsList"> 
-                <h1>Rooms</h1> 
+              <div className="RoomsList">
+                <h1>Rooms</h1>
                 {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
               </div>
             </Col>
-            
+
             <Col md={8} >
               <Plan window={this.state.window} showWindow={this.showWindow} updateWindow={this.updateWindow} />
-          
+
               <div className="roomWindow">
                 { this.state.window ? <RoomWindow window={this.state.window} room={this.state.room} rooms={this.state.room} /> : null }
               </div>

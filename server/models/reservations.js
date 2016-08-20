@@ -13,7 +13,6 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.deleteIt = function() {
-  console.log("got run here")
   return db.reservations.remove({roomName: "Turing"})
 }
 
@@ -45,6 +44,7 @@ Reservation.delete = function(reservationId){
         console.log("successfully canceled reservation!:", data)
         return data;
     }) .catch(err => console.log('error in reservation: ', err))
+
   }
   else {
   return db.reservations.remove(db.ObjectId(reservationId))//reservations

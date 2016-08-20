@@ -9,15 +9,6 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 
 export default class Conflict extends React.Component {
-
-	constructor(props){ 
-    super(props)
-    
-    this.state = {
-      
-    }
-  }
-
   render() {
 
     return (

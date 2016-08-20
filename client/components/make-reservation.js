@@ -18,14 +18,11 @@ export default class MakeReservation extends React.Component {
 
     }
   }
-
   render() {
 
     return (
       <div className="calendarContainer col-md-9">
-
-        <Modal show={this.props.showModal} onHide={this.props.close} className="calModal">
-
+        <Modal show={this.props.showModal} onHide={(event) => this.props.close(event)}>
           <Modal.Header closeButton>
 
             <div className="roomTitleContainer">

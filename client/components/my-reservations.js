@@ -24,6 +24,12 @@ export default class ReservationList extends Component {
     this.update.call(this)
   }
 
+  componentDidUpdate() {
+    if(this.props.shouldUpdateUserRes) {
+      this.update();
+    }
+  }
+
   update() {
     checkStatus()
     .then(userData => {
@@ -34,8 +40,11 @@ export default class ReservationList extends Component {
     .then(userId => {
      return fetchUserReservations(userId)
     })
-    .then(userReservations => {
-       this.setState({ reservations: userReservations.data })
+    .then(userReservations => { 
+      if(this.props.shouldUpdateUserRes) {
+        this.props.resetShouldUpdate();  
+      }
+      this.setState({ reservations: userReservations.data })
     })
   }
 
@@ -91,7 +100,7 @@ export default class ReservationList extends Component {
 
   render() {
     return (
-      <div className="reservationList col-md-3"> 
+      <div className="reservationList col-md-12 col-sm-6"> 
         {this.state.user ? 
           <div>
             <h3> Your Reservations</h3> 
@@ -112,7 +121,7 @@ export default class ReservationList extends Component {
                     <td> { res.roomName } </td>
                     <td> { this.formatDate(res.startTime) } </td>
                     <td> { this.formatTime(res.startTime) + ' - \n' + this.formatTime(res.endTime)} </td>
-                    <td> <button onClick={ () => this.setState({showConfirmDelete: true, resId: res._id}) } > DELETE </button> </td>
+                    <td> <button onClick={ () => this.setState({showConfirmDelete: true, resId: res._id}) } > Delete </button> </td>
                   </tr>                  
                   )
                 })
