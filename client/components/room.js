@@ -276,15 +276,19 @@ export default class Room extends Component {
           </Modal.Header>
             <Modal.Body className="clearfix">
               <div className="selecters">
-                <div>
+                <div className="isAvailables">
                   <h3>
                     <span className={room.isAvailable ? 'open' : 'closed'}>
                       {room.isAvailable ? 'Available' : 'In use'}
                     </span>
                   </h3>
                 </div>
-              <div className="selectStartTime">
-                <label>Select a Start Time</label>
+
+              <div>
+                <img className='roomIma' src={room.image} />
+              </div>
+              <div className="startTime">
+                <label>Start Time</label>
                 {this.props.roomInfo.openSlots ?
                   <select name="select1" onChange={this.changeStartTime.bind(this)}>
                     { this.props.roomInfo.openSlots.map(slot => {
@@ -297,8 +301,8 @@ export default class Room extends Component {
                   }
                 </select> : null}
               </div>
-              <div className="select">
-                <label>Select an End Time</label>
+              <div className="endTime">
+                <label>End Time</label>
                 <select name="select2" onChange={this.changeEndTime.bind(this)}>
                   { this.state.nextFourSlots.map(slot => {
                     return(
@@ -310,6 +314,14 @@ export default class Room extends Component {
                 }
               </select>
             </div>
+            <div className="roomInf">
+              <p>Capacity: {room.capacity ? room.capacity : null }</p>
+              <p>Projector: { room.projector ? "Yes" : "No" }</p>
+              <p>Whiteboard: {room.whiteBoard ? "Yes": "No" }</p>
+              <p>TV: {room.tv ? "Yes": "No" }</p>
+              <p>AirPlay: {room.airPlay ? "Yes": "No" }</p>
+              <p>Hammock: {room.hammock ? "Yes": "No" }</p>
+            </div>
             <button onClick={this.submitBooking.bind(this)} className="scheduleBtn">
               Book Today
             </button>
@@ -317,6 +329,7 @@ export default class Room extends Component {
               <div className="roomCalendarDay" >
                 <RoomCalendar events={this.state.events} view="agendaDay"/>
               </div>
+
           </Modal.Body>
         </Modal>
       </div>

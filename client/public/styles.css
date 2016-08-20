@@ -465,11 +465,20 @@ margin-top: -21px;
  border-width: 21px;
  margin-top: -21px;
 }
+
 .submitBooking{
   position: relative;
   float: left;
   top: 40px;
   left: -111px;
+}
+
+/*==============Confirmation Modal===============*/
+
+.confirmButton{
+  position: relative;
+  top: -50px;
+  left: 120px;
 }
 
 /*==============Carlo Modal===============*/
@@ -481,4 +490,40 @@ margin-top: -21px;
 .selecters{
   float: right;
   right: 25%;
+  top: 100%;
+}
+.scheduleBtn{
+  position: relative;
+  float: left;
+  top: 40px;
+  left: 65px;
+}
+.startTime{
+  position: relative;
+  top: 10px;
+  left: 65px;
+}
+.endTime{
+  position: relative;
+  top: 20px;
+  left: 70px;
+}
+.roomIma{
+  width: 255px;
+  position: relative;
+  left: 7px;
+  top: -43px;
+}
+.isAvailables{
+  position: relative;
+  left: 7px;
+  top: -35px;
+}
+.roomInf{
+  position: absolute;
+  left: 400px;
+  top: 455px;
+  border: 3px solid #808080;
+  border-radius: 20px;
+  padding: 10px;
 }
