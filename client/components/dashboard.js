@@ -327,18 +327,19 @@ export default class Dashboard extends React.Component {
         </div>
         
         : null   }
-           
-      <ReservationList 
-        deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
-        shouldUpdateUserRes={this.state.shouldUpdateUserRes}
-        resetShouldUpdate={this.resetShouldUpdate.bind(this)}
-      />
+      <div className="dashboard-sidebar col-md-3">     
+        <ReservationList 
+          deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
+          shouldUpdateUserRes={this.state.shouldUpdateUserRes}
+          resetShouldUpdate={this.resetShouldUpdate.bind(this)}
+        />
 
-      <FilterRooms 
-        rooms={this.state.rooms}
-        filterRooms={this.filterRooms.bind(this)}
-      />
-      
+        <FilterRooms 
+          rooms={this.state.rooms}
+          filterRooms={this.filterRooms.bind(this)}
+        />
+      </div>
+
       </div>
       </div>
     )
