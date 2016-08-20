@@ -2,8 +2,6 @@
 var browserify = require('browserify-middleware');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var User = require('./models/users');
-var Session = require('./models/userSessions');
 var Reservation = require('./models/reservations.js');
 var Room = require('./models/rooms.js');
 var Check = require('./status-check.js')
@@ -17,12 +15,13 @@ var _ = require('lodash')
 var moment = require('moment');
 
 if(process.env.NODE_ENV !== 'production') {
-  console.log('setting Client')
   var Client = require('./client_credentials')
+  Client.URL = "http://localhost:4000/auth/makerpass/callback"
 } else {
   var Client = {};
   Client.ID = process.env.CLIENT_ID;
   Client.secret = process.env.CLIENT_SECRET;
+  Client.URL = "http://maker-space.herokuapp.com/auth/makerpass/callback";
 }
 
 var assetFolder = path.join(__dirname, '..', 'client','public');
@@ -58,7 +57,7 @@ var MakerpassStrategy = require('passport-makerpass').Strategy;
 passport.use(new MakerpassStrategy({
     clientID: Client.ID,
     clientSecret: Client.secret,
-    callbackURL: "http://maker-space.herokuapp.com/auth/makerpass/callback",
+    callbackURL: Client.URL,
     passReqToCallback: true
   },
   function(req, accessToken, refreshToken, profile, done) {

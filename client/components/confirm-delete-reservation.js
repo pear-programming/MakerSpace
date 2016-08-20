@@ -18,12 +18,7 @@ export default class ConfirmDelete extends React.Component {
     }
   }
 
-
-
   render() {
-    // console.log('ConfirmDelete - this.props: ', this.props)
-    // this.props --> {showConfirmDelete: false}
-
     return (
       <Modal show={this.props.showConfirmDelete} onHide={() => this.props.closeConfirmDelete(false)}>
         <Modal.Header closeButton>

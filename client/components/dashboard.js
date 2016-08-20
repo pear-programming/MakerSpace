@@ -220,7 +220,7 @@ export default class Dashboard extends React.Component {
         color: this.state.currentRoom.roomColor,
       }
       events.push(newReservation) 
-
+      console.log('data in submit booking', data)
       allEvents.push(newReservation) 
       
       reservations.push(Object.assign(reservation, {

@@ -12,7 +12,7 @@ export default class TabletList extends Component {
     super()
 
     this.state = {
-      rooms: [],
+      rooms: []
     }
   }
 
@@ -44,9 +44,9 @@ export default class TabletList extends Component {
       <div>
         <NavBar />
         <Grid>
-        <Row>
-          {this.renderRooms.call(this)}
-        </Row>
+          <Row>
+            {this.renderRooms.call(this)}
+          </Row>
         </Grid>
       </div>
     );
