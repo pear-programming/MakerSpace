@@ -231,7 +231,6 @@ export default class Room extends Component {
   //we need to be able to book a room with start time and endtime of only 2 hours
 
   render() {
-    console.log("this.state.startTime ", this.state.startTime);
     const room = this.props.roomInfo;
 
     var title = {float: 'left'}
