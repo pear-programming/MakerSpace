@@ -12,7 +12,7 @@ export default class Conflict extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(false)}>
+      <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(event,false)}>
         <Modal.Header closeButton>
         <div className="verifyTitleContainer">
           <Modal.Title><span className="roomTitle">Confirm Reservation</span></Modal.Title>
@@ -30,7 +30,6 @@ export default class Conflict extends React.Component {
             <p> StartTime: {formatTime(this.props.reservation.startTime)} </p>
             <p> EndTime: {formatTime(this.props.reservation.endTime)} </p>
           </div>
-
           <div>
 
             <button className="confirmButton" onClick={(event) => this.props.closeConfirm(event, true)}>Confirm</button>

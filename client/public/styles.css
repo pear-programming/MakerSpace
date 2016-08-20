@@ -314,7 +314,6 @@ span.closed {
   font-size: 1.25em;
 }*/
 
-<<<<<<< HEAD
 .tabletImage {
   width: 100%;
   height: 768px;
@@ -322,8 +321,7 @@ span.closed {
   -webkit-filter: grayscale(.1) brightness(.45) contrast(1.05);
 }
 
-=======
->>>>>>> c59de631f4575816744ede1843e6e2e1600a689d
+
 .fc-today {
   background: rgba(99,159,222,.1) !important;
 }
@@ -607,6 +605,7 @@ margin-top: -21px;
   position: relative;
   left: 7px;
   top: -35px;
+  font-size: 20px;
 }
 .roomInf{
   position: absolute;
@@ -615,7 +614,7 @@ margin-top: -21px;
   border: 3px solid #808080;
   border-radius: 20px;
   padding: 10px;
-=======
+}
 .table-responsive {
   height: 45vh;
   overflow: scroll;
