@@ -1,6 +1,5 @@
 var db = require('../db.js');
 var Room = require('./rooms.js');
-// var ObjectId = require('bson-objectid');
 
 var Reservation = module.exports
 //reservations
@@ -23,7 +22,6 @@ Reservation.create = function(reservationData) {
     reservationData.startTime = new Date(Date.parse(reservationData.startTime));
     reservationData.endTime = new Date(Date.parse(reservationData.endTime));
     reservationData.roomId = db.ObjectId(reservationData.roomId);
-    // reservationData.userId = db.ObjectId(reservationData.userId);
   }
 
   return db.reservations.insert(reservationData)//reservations
@@ -116,49 +114,6 @@ Reservation.updateReservation = function(resId, newInfo) {
     .catch(err => console.log("error:", err))
   })
 
-
-  //   // store the document in a variable
-  // doc = db.clients.findOne({_id: ObjectId("4cc45467c55f4d2d2a000002")})
-
-  // // set a new _id on the document
-  // doc._id = ObjectId("4c8a331bda76c559ef000004")
-
-  // // insert the document, using the new _id
-  // db.clients.insert(doc)
-
-  // // remove the document with the old _id
-  // db.clients.remove({_id: ObjectId("4cc45467c55f4d2d2a000002")})
-
-  // console.log("newInfo in reservation.updateReservation:", newInfo)
-  // if(typeof resId==='string'){
-  //   resId = db.ObjectId(resId)
-  // }
-
-  // return db.reservations.update({_id: resId}, newInfo)
-
-//   db.people.update(
-//    { name: "Andy" },
-//    {
-//       name: "Andy",
-//       rating: 1,
-//       score: 1
-//    },
-//    { upsert: true }
-// )
-
-  // if ( resId && ( typeof(resId) === 'string' ) ) {
-
-  //   resId = db.ObjectID.createFromHexString(resId)
-  // }
-
-  // console.log("showing _id:", resId); 
-  // console.log("shwowing newInfo:", newInfo);
-  // return db.reservations.update({"_id" : resId}, newInfo, {upsert: true})
-  // .then(updatedRes => {
-  //   // console.log('updatedRes:', updatedRes)
-
-  // })
-  // .catch(err => console.log('err in updateExisting: ', err))
 }
 
 Reservation.makeSlots = function(reservationData) {
