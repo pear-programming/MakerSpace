@@ -45,13 +45,13 @@ Room.updateRoom = function(roomId, newInfo) {
     roomId = db.ObjectId(roomId)
   }
 
-  return db.collection('rooms').update(
+  return db.rooms.update(
     {"_id" : roomId },
     { "$set" : newInfo }
   )
   .then(updatedRoom => {
     console.log('updatedRoom confermation: ', updatedRoom)
-    return db.collection('rooms').find({"_id":roomId})
+    return db.rooms.find({"_id":roomId})
   })
   .catch(err => console.log('err in updateExisting: ', err))
 }

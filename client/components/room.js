@@ -239,13 +239,14 @@ export default class Room extends Component {
 
     return (
       <div>
-        <Row className="row" id={room.roomName}
-          onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
-          <Col md={6} className="eachRoom"><div id={room.roomName}
-            onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
-            {room.roomName}
-          </div>
+        <Row className="row" id={room.roomName.replace(" ", "")} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
+          <div>
+          <Col md={6} className="eachRoom">
+            <div id={room.roomName}
+            onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
+            >{room.roomName}</div>
           </Col>
+
           <Col md={6}>
             { room.isAvailable
               ?
@@ -262,6 +263,7 @@ export default class Room extends Component {
               </div>
               }
           </Col>
+          </div>
         </Row>
         <Modal className="carlo" show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>

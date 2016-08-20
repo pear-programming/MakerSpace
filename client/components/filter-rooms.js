@@ -62,7 +62,7 @@ export default class FilterRooms extends React.Component {
       <div className='filterRoomContainer col-md-12 col-sm-6'>
       {this.state.rooms ? 
       <div>
-      <h3> Filter calendar by room </h3> 
+      <h4> Filter calendar by room </h4> 
         <ul>
           {this.state.rooms.map((room, index) => {
             var roomName = "  " + room.roomName;

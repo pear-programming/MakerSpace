@@ -2,14 +2,26 @@
 colors:
 blue: #0073b7;
 bright green: #49c633;
+hover grey: #e7e7e7;
+
+Google Fonts:
+font-family: 'Montserrat', sans-serif;
+font-family: 'Libre Franklin', sans-serif;
 */
 
+* {
+  font-family: 'Libre Franklin', sans-serif;;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Montserrat', sans-serif;
+}
 
 #home {
-  /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
+  background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;
   /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; Carlo 1*/
   /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/
-  background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; /*Carlo 3*/
+  /*background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; Carlo 3*/
   background-size: cover;
   background-repeat: no-repeat;
   border: .1px solid white;
@@ -119,6 +131,7 @@ img.roomImage {
 
 .colorKey {
   padding: 0px;
+  width: 130px;
 }
 
 .barGraph {
@@ -169,8 +182,8 @@ img.roomImage {
 
 .roomAvailability h3 {
   font-weight: lighter;
-  font-family: 'Open Sans', sans-serif;
-
+/*  font-family: 'Open Sans', sans-serif;
+*/
 }
 
 span.open {
@@ -216,11 +229,12 @@ span.closed {
 
 }
 
+.RoomsList h1  {
+  color: #0073b7;
+}
+
 .RoomsList {
   display: inline-block;
-  min-width: 100%;
-  padding: 0px 0px 21px 60px;
-  border: 2px solid darkgrey;
 }
 
 .grid .row {
@@ -305,18 +319,9 @@ span.closed {
   font-size: 1.25em;
 }
 
-/*.bookBtn:hover {
-  border: 3px solid  #49c633;
-  color:  #49c633;
-  border-radius: 15px;
-  padding: 15px;
-  text-transform: uppercase;
-  font-size: 1.25em;
-}*/
-
 .tabletImage {
   width: 100%;
-  height: 768px;
+  height: 800px;
   position: relative;
   -webkit-filter: grayscale(.1) brightness(.45) contrast(1.05);
 }
@@ -326,45 +331,53 @@ span.closed {
   background: rgba(99,159,222,.1) !important;
 }
 
-.fc-toolbar h2 {
-  /*color:  #49c633;*/
-  /*font-weight: lighter;*/
-    /*font-family: 'Open Sans', sans-serif;*/
-
-}
-
-/*div.fc-content {
-  background: #0073b7;
-}*/
 .fc-time-grid-event {
     background: #0073b7;
 
 }
 
 /*=======================================*/
-
 .room:hover{
   fill-opacity: 1;
 }
 
 .window {
-  border: 2px solid darkgrey;
-  padding: 0px 20px 21px 20px;
+  padding: 20px;
+  background-color: #DFEBF1;
+  height: 332px;
+  margin-top: 10px;
 }
 
-.window img {
-  margin-top: -55px;
+.window h1 {
+  margin-bottom: 10px;
+
+}
+
+.window img { 
+  width: 100%;
+  border: 10px solid white;
   height: 285px;
-  width: 464.11px;
   float: right;
 }
 
 .eachRoom {
-  font-size: 24px;
+  font-size: 1.65em;
 }
+
+
 
 .row {
   padding-top: 14px;
+}
+
+#Turing.row, #DeathStar.row, #Hopper.row, #Tatooine.row, #Ellis.row, #Lovelace.row, #Dagobah.row, #LectureHall.row, #Dijkstra.row, #Naboo.row {
+  border-bottom: 2px solid #DFEBF1;
+  padding: 8px 0px;
+}
+
+#Turing.row:hover, #DeathStar.row:hover, #Hopper.row:hover, #Tatooine.row:hover, #Ellis.row:hover, #Lovelace.row:hover, #Dagobah.row:hover, #LectureHall.row:hover, #Dijkstra.row:hover, #Naboo.row:hover {
+  border-bottom: 2px solid #DFEBF1;
+  background-color:  #e7e7e7;
 }
 
 /*=============================================================*/
@@ -381,6 +394,7 @@ span.closed {
     cursor: pointer;
     transition-duration: 0.1s;
     border: 1px solid #0073B7;
+    float:right;
 }
 
 .opened:hover {
@@ -400,12 +414,11 @@ span.closed {
   margin: 4px 2px;
   cursor: none;
   transition-duration: 0.1s;
+  float:right;
 }
 
 
 /*========= Reservation List Table =========*/
-
-
 
   table.myTable {
     font-size: 11px;
@@ -456,7 +469,9 @@ span.closed {
 }
 
 .reservationList h3 {
-  color: #49c633
+  color: #49c633;   
+  font-size: 1.5em;
+
 }
 
 /* Modal */
@@ -624,8 +639,10 @@ margin-top: -21px;
 /*-----filter room div-----*/
 
 .filterRoomContainer h3{
-   color: #49c633
-}
+   color: #49c633;
+   font-size: 1.5em;
+} 
+
 
 .filterRoomContainer ul {
   list-style: none;
