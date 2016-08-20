@@ -59,13 +59,20 @@ export default class FilterRooms extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='filterRoomContainer col-md-12 col-sm-6'>
       {this.state.rooms ? 
       <div>
+      <h4> Filter calendar by room </h4> 
         <ul>
           {this.state.rooms.map((room, index) => {
+            var roomName = "  " + room.roomName;
             return (
-              <li key={index}><input type="checkbox" id={index} name="choice" value={room.roomName} onChange={this.toggleFilter.bind(this)} checked={room.checked}/>{room.roomName}</li>
+              <li key={index}>
+              <label for={index} >
+              <input type="checkbox" id={index} name="choice" value={room.roomName} onChange={this.toggleFilter.bind(this)} checked={room.checked}/>
+                  {room.roomName}
+                </label>
+              </li>
             )
           })}
         </ul>
@@ -76,5 +83,20 @@ export default class FilterRooms extends React.Component {
     )
   }
 }
+
+
+
+
+/////////////////////////////JUST FOR NOW
+// <h3>Checkboxes</h3>
+//   <div>
+//       <input id="checkbox-1" class="checkbox-custom" name="checkbox-1" type="checkbox" checked>
+//       <label for="checkbox-1" class="checkbox-custom-label">First Choice</label>
+//   </div>
+//   <div>
+//       <input id="checkbox-2" class="checkbox-custom" name="checkbox-2" type="checkbox">
+//       <label for="checkbox-2" class="checkbox-custom-label">Second Choice</label>
+//   </div>
+//   <div>
 
 
