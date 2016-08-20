@@ -279,7 +279,7 @@ export default class Room extends Component {
                 <div>
                   <h3>
                     <span className={room.isAvailable ? 'open' : 'closed'}>
-                      {room.isAvailable ? 'available' : 'In use'}
+                      {room.isAvailable ? 'Available' : 'In use'}
                     </span>
                   </h3>
                 </div>

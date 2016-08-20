@@ -46,12 +46,15 @@ export default class MakeReservation extends React.Component {
               <div className="cal-button-bar">
 
                 <button className="leftArrow" onClick={() => this.props.open(new Date(2016, new Date(this.props.startTime).getMonth(), new Date(this.props.startTime).getDate() - 1, 4, 0))}>{this.props.MONTHS[new Date(Date.parse(this.props.startTime) - 86400000).getMonth()] + ' ' + new Date(Date.parse(this.props.startTime) - 86400000).getDate().toString()}</button>
-                <h4>{this.props.MONTHS[this.props.startTime.getMonth()]} <span>{this.props.startTime.getDate()}</span></h4>
+                <button className="middle">{this.props.MONTHS[this.props.startTime.getMonth()]} <span>{this.props.startTime.getDate()}</span></button>
                 <button className="rightArrow" onClick={() => this.props.open(new Date(2016, new Date(this.props.startTime).getMonth(), new Date(this.props.startTime).getDate() + 1, 4, 0))}>{this.props.MONTHS[new Date(Date.parse(this.props.startTime) + 86400000).getMonth()] + ' ' + new Date(Date.parse(this.props.startTime) + 86400000).getDate().toString()}</button>
 
               </div>
             </div>
 
+            <div className="submitBooking">
+              <button onClick={this.props.checkBooking}>Book Now</button>
+            </div>
 
             <div className="calSelectors">
               <div className="selectRoom">
@@ -97,9 +100,6 @@ export default class MakeReservation extends React.Component {
               </div>
             </div>
 
-            <div className="submitBooking">
-              <button onClick={this.props.checkBooking}>Book Now</button>
-            </div>
 
           </Modal.Footer>
 
