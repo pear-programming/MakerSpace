@@ -59,8 +59,8 @@ export default class Dashboard extends React.Component {
     })
   }
 
-  close(event) {
-    event.preventDefault();
+  close() {
+    // event.preventDefault();
     roomPlaceHolder = true;
     this.setState({ showModal: false});
   }

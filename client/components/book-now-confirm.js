@@ -23,10 +23,10 @@ export default class BookNowConfirm extends React.Component {
          
           
           <div className="roomAvailability">
-            <h3>Here are your booking details.  Click confirm to secure your reservation</h3> 
+            <h3>Please choose an end time for your reservation</h3> 
           </div>
           
-          <div className="roomDetails">
+          <div>
         
             <button onClick={() => this.props.bookNow(this.props.nextOpenSlots[0])}>{formatTime(this.props.nextOpenSlots[0])} </button> 
             {this.props.nextOpenSlots[1] ?
@@ -38,7 +38,6 @@ export default class BookNowConfirm extends React.Component {
             }
           </div>
           <div>
-            <button onClick={this.props.bookNow}>Confirm</button>
             <button onClick={this.props.closeConfirm}>Cancel</button>
           </div>
         </Modal.Body>
