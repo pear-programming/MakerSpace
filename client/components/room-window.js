@@ -14,10 +14,9 @@ export default class RoomWindow extends Component {
         <p>Projector: { room.projector ? "Yes" : "No" }</p>
         <p>Whiteboard: {room.whiteBoard ? "Yes": "No" }</p>
         <p>TV: {room.tv ? "Yes": "No" }</p>
-        <p>AirPlay: {room.airPlay ? "Yes": "No" }</p>  
+        <p>AirPlay: {room.airPlay ? "Yes": "No" }</p>
         <p>Hammock: {room.hammock ? "Yes": "No" }</p>
       </div>
-     ) 
+     )
   }
 }
-        

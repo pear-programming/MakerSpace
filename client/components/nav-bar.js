@@ -40,7 +40,7 @@ export default class NavBar extends Component {
               <LinkContainer to={'tablet-list'}><MenuItem >Tablet List</MenuItem></LinkContainer>
             </NavDropdown>
           </Nav>
-            : 
+            :
             null
           }
         </Navbar.Collapse>
