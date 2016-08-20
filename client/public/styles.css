@@ -205,13 +205,15 @@ span.closed {
   width:44%;
   /*padding-right: 3%;*/
   float: right;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
   position: absolute;
-  top: 1%;
+  top: 5%;
   right: 8%;
   background-color: white;
-  height: 90%;
-  overflow: auto;
+  /*height: 90%;*/
+  /*overflow: auto;*/
+  border-radius: 25px;
+  padding: 2%;
  }
 
 .tabletFooter {
@@ -219,12 +221,12 @@ span.closed {
 }
 
 .bookBtn {
-  border: 3px solid white;
+  border: 2px solid white;
+  width: 200px;
   background-color: transparent;
   color: white;
-  border-radius: 15px;
+  border-radius: 8px;
   padding: 15px;
-  text-transform: uppercase;
   font-size: 1.25em;
 }
 
@@ -249,7 +251,7 @@ span.closed {
 }
 
 .fc-toolbar h2 {
-  color:  #49c633;
+  /*color:  #49c633;*/
   /*font-weight: lighter;*/
     /*font-family: 'Open Sans', sans-serif;*/
 
@@ -369,8 +371,87 @@ span.closed {
 .reservationList h3 {
   color: #49c633
 }
-/*==============Carlo Modal===============*/
 
+/* Modal */
+
+.calRoomImage{
+  width: 100%;
+}
+
+.calRoomAvailability {
+  float: left;
+}
+
+.cal-button-bar {
+  display: inline-flex;
+}
+
+/* Buttons */
+
+.leftArrow {
+position: relative;
+background: lightgrey;
+border: 1px solid darkgrey;
+height: 30px;
+}
+
+.leftArrow:after, .leftArrow:before {
+right: 100%;
+top: 50%;
+border: solid transparent;
+content: " ";
+height: 0;
+width: 0;
+position: absolute;
+pointer-events: none;
+}
+
+.leftArrow:after {
+border-color: rgba(136, 183, 213, 0);
+border-right-color: lightgrey;
+border-width:20px;
+margin-top: -20px;
+}
+
+.leftArrow:before {
+border-color: rgba(194, 225, 245, 0);
+border-right-color: darkgrey;
+border-width: 21px;
+margin-top: -21px;
+}
+
+.rightArrow {
+ position: relative;
+ background: lightgrey;
+ border: 1px solid darkgrey;
+ height: 30px;
+}
+
+.rightArrow:after, .rightArrow:before {
+ left: 100%;
+ top: 50%;
+ border: solid transparent;
+ content: " ";
+ height: 0;
+ width: 0;
+ position: absolute;
+ pointer-events: none;
+}
+
+.rightArrow:after {
+ border-color: rgba(136, 183, 213, 0);
+ border-left-color: lightgrey;
+ border-width: 20px;
+ margin-top: -20px;
+}
+.rightArrow:before {
+ border-color: rgba(194, 225, 245, 0);
+ border-left-color: darkgrey;
+ border-width: 21px;
+ margin-top: -21px;
+}
+
+/*==============Carlo Modal===============*/
 
 .roomCalendarDay{
   width: 55%;

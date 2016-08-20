@@ -60,23 +60,18 @@ export default class TabletDisplay extends Component {
       return getRoomReservations(room.roomName)
     })
     .then(reservations => {
-
       let timeDiffs = []
-
       if(reservations.data !== "no reservations currently exist for this room") {
         //if there are reservations do this....
         reservations.data.forEach(reservation => {
           let now = new Date()
           let startTime = new Date(reservation.startTime)
-
           timeDiffs.push({difference : now - startTime, startTime: startTime})
         })
         //finds largest negative number which is the next reservation start time
-
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
-
         this.setState({
           reservations: reservations.data,
           nextRes: new Date(future.startTime),
@@ -154,18 +149,17 @@ export default class TabletDisplay extends Component {
      { room.isAvailable ?
           <div className="tabletDisplayOpen tabletBlock" >
             <h1 className="tabletTitle">{room.roomName} </h1>
-            <span className="available">Available</span>
+            <span className="available">Open</span>
             <div className="tabletFooter">
-             <button className="bookBtn" onClick={this.bookNow.bind(this)}>Book Now!</button>
+             <button className="bookBtn" onClick={this.bookNow.bind(this)}>BOOK NOW</button>
             </div>
           </div>
           :
           <div className="tabletDisplayClosed tabletBlock" >
             <h1 className="tabletTitle">{room.roomName} </h1>
-            <span className="inUse" >In use</span>
+            <span className="inUse" >Closed</span>
             <div className="tabletFooter">
-              <button className="bookBtn" onClick={this.unBook.bind(this)}>All Done!</button>
-              <p>Please mark room as available below if you are no longer using it.</p>
+              <button className="bookBtn" onClick={this.unBook.bind(this)}>CHECK OUT</button>
             </div>
           </div>
         }

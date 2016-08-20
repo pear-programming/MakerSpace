@@ -24,9 +24,9 @@ export default class RoomCalendar extends React.Component {
       maxTime: "21:00:00",
       height: "auto",
       header: {
-        left: '',
-        right: '',
-        center: 'title'
+        left: "",
+        right: "",
+        center: "title"
       }
     });
 
