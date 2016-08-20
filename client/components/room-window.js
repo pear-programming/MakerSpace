@@ -21,7 +21,6 @@ export default class RoomWindow extends Component {
           <img src={room.image} />
         </div>
       </div>
-     ) 
+     )
   }
 }
-        
