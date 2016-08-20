@@ -9,7 +9,7 @@ import Conflict from './conflict';
 import ConfirmReservation from './confirm-reservation';
 import ReservationList from './my-reservations';
 import FilterRooms from './filter-rooms'
-import Room from './room'; 
+import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 var timeSlots;
@@ -24,10 +24,10 @@ var allEvents;
 
 
 export default class Dashboard extends React.Component {
-  
-  constructor(){ 
+
+  constructor(){
     super()
-    
+
     this.state = {
       events: null,
       rooms: [],
@@ -47,15 +47,15 @@ export default class Dashboard extends React.Component {
     console.log("ran componentWillMount")
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
-      timeSlots = data[2].data; 
-      user = data[0].data; 
+      timeSlots = data[2].data;
+      user = data[0].data;
       reservations = data[3].data;
       var mappedData = mapTimeSlots(data[3], data[1].data);
       allEvents = mappedData;
-      this.setState({ 
+      this.setState({
         rooms: data[1].data,
-        events: mappedData, 
-        currentRoom: Object.assign(data[1].data[0], {openSlots: []})     
+        events: mappedData,
+        currentRoom: Object.assign(data[1].data[0], {openSlots: []})
       })
     })
   }
@@ -68,41 +68,41 @@ export default class Dashboard extends React.Component {
 
   closeVerify(shouldCloseModal) {
     // console.log("inside closeVerify")
-    if(shouldCloseModal) { 
-      this.confirmBooking();  
+    if(shouldCloseModal) {
+      this.confirmBooking();
     }
     else {
       this.setState({showVerify: false})
-    }  
+    }
   }
 
   closeConfirm(event, shouldCloseModal) {
     event.preventDefault();
-    if(shouldCloseModal) { 
-      this.submitBooking();  
+    if(shouldCloseModal) {
+      this.submitBooking();
     }
     else {
       this.setState({showConfirm: false})
-    }  
+    }
   }
 
 
   changeGoToDate(date) {
     goToDate = date;
-  }  
+  }
 
   open(time) {
-    var roomsWithTimeSlotInfo = mapTimeSlotsByDay(time, this.state.rooms, timeSlots); 
+    var roomsWithTimeSlotInfo = mapTimeSlotsByDay(time, this.state.rooms, timeSlots);
     var currentRoom;
     if(this.state.currentRoom && !roomPlaceHolder) {
       this.state.currentRoom.openSlots = roomsWithTimeSlotInfo.filter(room => room._id === this.state.currentRoom._id)[0].openSlots;
-      
+
       if(!this.state.currentRoom.openSlots.length) {
         currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0];
       }
       else {
         currentRoom = this.state.currentRoom;
-      }  
+      }
     }
     else {
       currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
@@ -123,19 +123,19 @@ export default class Dashboard extends React.Component {
     roomPlaceHolder = false;
 
     this.setState({
-      showModal: true, 
-      roomsWithTimeSlotInfo: roomsWithTimeSlotInfo, 
+      showModal: true,
+      roomsWithTimeSlotInfo: roomsWithTimeSlotInfo,
       currentRoom: currentRoom,
-      startTime: new Date(currentRoom.openSlots[0].startTime), 
+      startTime: new Date(currentRoom.openSlots[0].startTime),
       endTime: new Date(currentRoom.openSlots[0].endTime),
-      nextFourSlots: nextFourSlots 
+      nextFourSlots: nextFourSlots
     });
   }
 
 
   changeModalView(event) {
 
-    var currentRoom = this.state.roomsWithTimeSlotInfo.filter(room => room._id == event.target.value)[0] 
+    var currentRoom = this.state.roomsWithTimeSlotInfo.filter(room => room._id == event.target.value)[0]
 
     $('.selectStartTime option').prop('selected', function() {
         return this.defaultSelected;
@@ -145,10 +145,10 @@ export default class Dashboard extends React.Component {
         return this.defaultSelected;
     });
 
-    var nextFourSlots = getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom); 
+    var nextFourSlots = getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
     this.setState({
-      currentRoom: currentRoom, 
-      nextFourSlots: nextFourSlots, 
+      currentRoom: currentRoom,
+      nextFourSlots: nextFourSlots,
       startTime: new Date(currentRoom.openSlots[0].startTime),
       endTime: new Date(currentRoom.openSlots[0].endTime)
     })
@@ -163,13 +163,13 @@ export default class Dashboard extends React.Component {
     var nextSlots = getTimeSlotInfo(event.target.value, this.state.currentRoom)
     console.log("got next slots from getTimeSlotInfo:", nextSlots);
     this.setState({
-      nextFourSlots: nextSlots, 
+      nextFourSlots: nextSlots,
       startTime: new Date(event.target.value),
       endTime: new Date(Date.parse(event.target.value) + 1800000)
     });
   }
 
-  changeEndTime(event) { 
+  changeEndTime(event) {
     this.setState({endTime: new Date(event.target.value)});
   }
 
@@ -189,8 +189,8 @@ export default class Dashboard extends React.Component {
     this.makeReservation();
     var conflicts = reservations.filter(res => {
 
-      return res.userId === reservation.userId && 
-      !(Date.parse(res.startTime) >= reservation.endTime.getTime() ||  
+      return res.userId === reservation.userId &&
+      !(Date.parse(res.startTime) >= reservation.endTime.getTime() ||
         Date.parse(res.endTime) <= reservation.startTime.getTime())
     })
 
@@ -211,23 +211,22 @@ export default class Dashboard extends React.Component {
 
     addReservation(reservation)
     .then(data => {
-      var events = this.state.events.slice(); 
+      var events = this.state.events.slice();
       var newReservation = {
         title: reservation.roomName,
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
-        color: this.state.currentRoom.roomColor,
-        resId: data.data
+        color: this.state.currentRoom.roomColor
       }
-      events.push(newReservation) 
+      events.push(newReservation)
 
-      allEvents.push(newReservation) 
-      
+      allEvents.push(newReservation)
+
       reservations.push(Object.assign(reservation, {
         startTime: reservation.startTime.toUTCString(),
         endTime: reservation.endTime.toUTCString()
-      })); 
+      }));
 
       socket.emit('newReservation', newReservation)
       this.addToTimeslots();
@@ -279,11 +278,11 @@ export default class Dashboard extends React.Component {
         <NavBar />
         <div className='dashboardContainer'>
 
-        {this.state.events && this.state.currentRoom ?  
+        {this.state.events && this.state.currentRoom ?
 
         <div className="calendarContainer col-md-9">
-            
-            <MakeReservation 
+
+            <MakeReservation
               showModal={this.state.showModal}
               open={this.open.bind(this)}
               close={this.close.bind(this)}
@@ -298,14 +297,14 @@ export default class Dashboard extends React.Component {
               MONTHS={MONTHS}
             />
 
-            <Conflict 
+            <Conflict
               showVerify = {this.state.showVerify}
               closeVerify = {this.closeVerify.bind(this)}
               bookingConflicts = {bookingConflicts}
               MONTHS = {MONTHS}
-            /> 
+            />
 
-            <ConfirmReservation 
+            <ConfirmReservation
               showConfirm = {this.state.showConfirm}
               closeConfirm = {this.closeConfirm.bind(this)}
               reservation = {reservation}
@@ -313,30 +312,30 @@ export default class Dashboard extends React.Component {
             />
 
 
-            <Calendar key={0} 
-              events={this.state.events} 
+            <Calendar key={0}
+              events={this.state.events}
               open={this.open.bind(this)}
               goToDate={goToDate}
               changeGoToDate={this.changeGoToDate.bind(this)}
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
-            /> 
+            />
 
         </div>
-        
+
         : null   }
-           
-      <ReservationList 
+
+      <ReservationList
         deleteFromCalendar = {this.deleteFromCalendar.bind(this)}
         shouldUpdateUserRes={this.state.shouldUpdateUserRes}
         resetShouldUpdate={this.resetShouldUpdate.bind(this)}
       />
 
-      <FilterRooms 
+      <FilterRooms
         rooms={this.state.rooms}
         filterRooms={this.filterRooms.bind(this)}
       />
-      
+
       </div>
       </div>
     )
