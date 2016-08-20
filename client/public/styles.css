@@ -642,3 +642,7 @@ margin-top: -21px;
   letter-spacing: .03em;
 
 }
+.cancelRes{
+  position: relative;
+  top: 30px;
+}
