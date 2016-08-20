@@ -8,12 +8,12 @@ import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 
-export default class Conflict extends React.Component {
+export default class BookNowConfirm extends React.Component {
   
   render() {
 
     return (
-      <Modal show={this.props.showConfirm} onHide={(event) => this.props.closeConfirm(event,false)}>
+      <Modal show={this.props.showConfirm} onHide={this.props.closeConfirm}>
         <Modal.Header closeButton>
         <div className="verifyTitleContainer">
           <Modal.Title><span className="roomTitle">Confirm Reservation</span></Modal.Title>
@@ -25,20 +25,35 @@ export default class Conflict extends React.Component {
           <div className="roomAvailability">
             <h3>Here are your booking details.  Click confirm to secure your reservation</h3> 
           </div>
-          <div className="roomDetails">
-            <p> Room: {this.props.reservation.roomName} </p>
-            <p> Date: {this.props.MONTHS[new Date(this.props.reservation.startTime).getMonth()] + ' ' + new Date(this.props.reservation.startTime).getDate().toString()} </p>
-            <p> StartTime: {formatTime(this.props.reservation.startTime)} </p>
-            <p> EndTime: {formatTime(this.props.reservation.endTime)} </p>  
-          </div>
           
+          <div className="roomDetails">
+        
+            <button onClick={() => this.props.bookNow(this.props.nextOpenSlots[0])}>{formatTime(this.props.nextOpenSlots[0])} </button> 
+            {this.props.nextOpenSlots[1] ?
+
+              <button onClick={() => this.props.bookNow(this.props.nextOpenSlots[1])}>{formatTime(this.props.nextOpenSlots[1])} </button> 
+
+              : null
+
+            }
+          </div>
           <div>
-            <button onClick={(event) => this.props.closeConfirm(event, true)}>Confirm</button>
-            <button onClick={(event) => this.props.closeConfirm(event, false)}>Cancel</button>
+            <button onClick={this.props.bookNow}>Confirm</button>
+            <button onClick={this.props.closeConfirm}>Cancel</button>
           </div>
         </Modal.Body>
       </Modal>
     )
   }
 }
+
+
+
+
+
+
+
+
+
+
 

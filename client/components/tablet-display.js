@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import Room from './room';
-import {fetchRooms, changeStatus, getRoomReservations} from '../models/rooms';
+import {fetchRooms, changeStatus, getRoomReservations, addReservation} from '../models/rooms';
+import {updateReservation} from '../models/reservations';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import _ from 'lodash'
 import RoomCalendar from './room-calendar';
+import BookNowConfirm from './book-now-confirm'
+import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 
 function formatEvents(resArray) {
@@ -16,10 +19,13 @@ function formatEvents(resArray) {
       title: res.userName,
       start: start,
       end: end,
-      allDay: false
+      allDay: false,
+      showConfirm: true
     }
   })
 }
+
+var nextOpenSlots = [new Date(Date.now()).toUTCString()];
 
 export default class TabletDisplay extends Component {
   constructor(props){  
@@ -76,6 +82,8 @@ export default class TabletDisplay extends Component {
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
+
+        console.log("showing events on load:", events);
         
         this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
         
@@ -112,24 +120,128 @@ export default class TabletDisplay extends Component {
     }, 5000)
   }
 
+  confirm() {
 
-  bookNow() {
-    changeStatus(this.state.currentRoom.roomName)
-    .then((x) => x)
+    var nextHour = this.state.reservations.filter(res => {
+      var difference = Date.parse(res.startTime) - Date.now() + 18000000;
+      return difference > 0 && difference < 1800000
+    })
 
-    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}) })
-    socket.emit('bookNow', this.state.currentRoom._id)  
+    var now = new Date(Date.now() - 18000000); 
+    var nextSlots = [];
+    if(now.getMinutes() >= 30) {
+      nextSlots.push(new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0).toUTCString()); 
+      if(!nextHour.length) {
+        nextSlots.push(new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 30));
+      }
+    } 
+    else {
+      nextSlots.push(new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 30).toUTCString());
+      if(!nextHour.length) {
+        nextSlots.push(new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0));
+      }
+    }
+
+    nextOpenSlots = nextSlots;
+
+    this.setState({showConfirm: true});
+  }
+
+  closeConfirm() {
+    this.setState({showConfirm: false});
+  }
+
+  bookNow(endTime) { 
+
+    console.log("got booknow request:", endTime); 
+    console.log("showing room info:", this.state.currentRoom); 
+    var reservation = {
+      roomId: this.state.currentRoom._id,
+      roomName: this.state.currentRoom.roomName,
+      userName: 'anonymous',
+      userId: '123',
+      startTime: new Date(Date.now() - 18000000),
+      endTime: new Date(endTime)
+    }
+
+    Promise.all([changeStatus(this.state.currentRoom.roomName), addReservation(reservation)])
+    .then(data => {
+
+      var stringifiedReservation = Object.assign(
+        reservation, 
+        {startTime: reservation.startTime.toUTCString(), endTime: reservation.endTime.toUTCString()},
+        {_id: data[1].data})
+
+      console.log("got stringifiedReservation:", stringifiedReservation);
+
+      var reservations = this.state.reservations.concat([stringifiedReservation])
+      
+      console.log("showing data from promise.all:", data);
+      var eventsCopy = this.state.events.concat(formatEvents([reservation]))
+      this.setState({events: null});
+      this.setState({ 
+        currentRoom: Object.assign(this.state.currentRoom, {isAvailable: false}),
+        showConfirm: false,
+        events: eventsCopy,
+        reservations: reservations
+      })
+      socket.emit('bookNow', this.state.currentRoom._id)  
+    })
   }
 
 
   unBook() {
-    changeStatus(this.state.currentRoom.roomName)
-    .then((x) => x)
+    var endTime = new Date(Date.now());
 
-    this.setState({ currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}) })
-    socket.emit('unBook', this.state.currentRoom._id)  
+    var index;
+    var completedReservation = this.state.reservations.filter((res, i) => {
+
+      if(Date.parse(res.startTime) < Date.now() - 18000000 && 
+            Date.parse(res.endTime) > Date.now() - 18000000) {
+        index = i;
+        return true;
+      }
+      else {
+        return false;
+      }
+    })[0];
+
+
+     var reservation = {
+      roomId: this.state.currentRoom._id,
+      roomName: this.state.currentRoom.roomName,
+      userName: 'anonymous',
+      userId: '123',
+      startTime: new Date(Date.now() - 18000000),
+      endTime: new Date(endTime)
+    }
+
+
+    var reservations = this.state.reservations.slice();
+    completedReservation = Object.assign(completedReservation, {endTime: new Date(Date.now() - 18000000)})
+    // reservations[index] = Object.assign(reservations[index], {endTime: new Date(Date.now() - 18000000).toUTCString()});
+    console.log("reservations before change:", reservations);
+
+
+    Promise.all([updateReservation(completedReservation._id, completedReservation), 
+      changeStatus(this.state.currentRoom.roomName)])
+    .then(data => {
+
+      // console.log("got back new resId:", data);
+      reservations[index] = data[0].data 
+      console.log("reservations after change:", reservations);
+      var eventsCopy = formatEvents(reservations);
+      this.setState({events: null});
+      // console.log("showing events:", eventsCopy);
+      this.setState({ 
+        currentRoom: Object.assign(this.state.currentRoom, {isAvailable: true}),
+        reservations: reservations,
+        events: eventsCopy
+       })
+      socket.emit('unBook', this.state.currentRoom._id)  
+      
+    })
   }
-
 
   updateState(room) {
     var url = window.location.href.split('/');
@@ -153,12 +265,22 @@ export default class TabletDisplay extends Component {
     return (
       <div>
        { room.isAvailable ? 
-          <div className="tabletDisplayOpen tabletBlock">
-            <h1>{room.roomName} </h1>
-            <span className="open">available</span>
-        
-            <div className="tabletFooter">
-             <button className="bookBtn" onClick={this.bookNow.bind(this)}>Book Now!</button> 
+          <div>
+            <div className="tabletDisplayOpen tabletBlock">
+              <h1>{room.roomName} </h1>
+              <span className="open">available</span>
+          
+              <div className="tabletFooter">
+               <button className="bookBtn" onClick={this.confirm.bind(this)}>Book Now!</button> 
+              </div>
+            </div>
+            <div>
+              <BookNowConfirm 
+                showConfirm={this.state.showConfirm}
+                closeConfirm={this.closeConfirm.bind(this)}
+                bookNow={this.bookNow.bind(this)}
+                nextOpenSlots={nextOpenSlots}
+              />
             </div>
           </div>
           : 
@@ -173,12 +295,14 @@ export default class TabletDisplay extends Component {
         }
 
         { this.state.events ? 
+
         <div className="roomCalendar" >
            <RoomCalendar events={this.state.events} view="agendaDay"  /> 
         </div> 
         : 
         null
         }
+
 
       </div>
     )

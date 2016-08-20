@@ -8,7 +8,7 @@ import MakeReservation from './make-reservation'
 import Conflict from './conflict';
 import ConfirmReservation from './confirm-reservation';
 import ReservationList from './my-reservations';
-import FilterRooms from './filter-rooms'
+import FilterRooms from './filter-rooms';
 import Room from './room'; 
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
@@ -44,7 +44,6 @@ export default class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    console.log("ran componentWillMount")
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
       timeSlots = data[2].data; 
@@ -67,7 +66,6 @@ export default class Dashboard extends React.Component {
   }
 
   closeVerify(shouldCloseModal) {
-    // console.log("inside closeVerify")
     if(shouldCloseModal) { 
       this.confirmBooking();  
     }
@@ -324,6 +322,7 @@ export default class Dashboard extends React.Component {
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             /> 
+
 
         </div>
         

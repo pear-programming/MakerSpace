@@ -269,6 +269,8 @@ app.post('/reservations/new', function(req, res){
 
 //update existing reservation
 app.put('/reservations/:id', function(req, res){
+
+  console.log("got res update request:", req.body);
   var resId = req.params.id
   //req.body should be new reservation info
   Reservation.updateReservation(resId, req.body)
