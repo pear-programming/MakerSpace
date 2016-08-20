@@ -119,8 +119,8 @@ export default class RoomsList extends Component {
         <Grid>
           <Row>
             <Col md={4} >
-              <div className="RoomsList"> 
-                <h1>ROOMS</h1> 
+              <div className="RoomsList">
+                <h1>ROOMS</h1>
                 {this.state.rooms ? this.renderRooms.call(this) : "Login to view rooms"}
               </div>
             </Col>

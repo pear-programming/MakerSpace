@@ -4,7 +4,7 @@ import { checkStatus } from '../models/auth';
 import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
 import { formatTime } from '../helpers.js'
 import Calendar from './calendar';
-import Room from './room'; 
+import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 var runOnce = false;
@@ -13,7 +13,7 @@ var roomsToDisplay = [];
 export default class FilterRooms extends React.Component {
 
 
-  constructor(props){ 
+  constructor(props){
     super(props)
 
     this.state = {
@@ -31,7 +31,7 @@ export default class FilterRooms extends React.Component {
       roomsToDisplay = this.props.rooms.map(room => room.roomName);
       this.setState({rooms: this.props.rooms.map(room => Object.assign(room, {checked: true}))});
     }
-    
+
   }
 
   toggleFilter(event) {
@@ -60,9 +60,9 @@ export default class FilterRooms extends React.Component {
   render() {
     return (
       <div className='filterRoomContainer col-md-12 col-sm-6'>
-      {this.state.rooms ? 
+      {this.state.rooms ?
       <div>
-      <h4> Filter calendar by room </h4> 
+      <h4> Filter calendar by room </h4>
         <ul>
           {this.state.rooms.map((room, index) => {
             var roomName = "  " + room.roomName;
@@ -76,27 +76,11 @@ export default class FilterRooms extends React.Component {
             )
           })}
         </ul>
-      </div> 
+      </div>
 
       : null}
       </div>
     )
   }
 }
-
-
-
-
-/////////////////////////////JUST FOR NOW
-// <h3>Checkboxes</h3>
-//   <div>
-//       <input id="checkbox-1" class="checkbox-custom" name="checkbox-1" type="checkbox" checked>
-//       <label for="checkbox-1" class="checkbox-custom-label">First Choice</label>
-//   </div>
-//   <div>
-//       <input id="checkbox-2" class="checkbox-custom" name="checkbox-2" type="checkbox">
-//       <label for="checkbox-2" class="checkbox-custom-label">Second Choice</label>
-//   </div>
-//   <div>
-
 

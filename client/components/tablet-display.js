@@ -95,7 +95,7 @@ export default class TabletDisplay extends Component {
     delete newRes.color
     delete newRes.resId
     console.log('new reservation', newRes)
-    var newevents = this.state.events.concat(newRes) 
+    var newevents = this.state.events.concat(newRes)
     this.setState({ events: null })
     this.setState({ events: newevents })
     console.log('new events list', newevents)
