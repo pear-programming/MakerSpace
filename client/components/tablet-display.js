@@ -93,6 +93,7 @@ export default class TabletDisplay extends Component {
 
   updateCalendar(newRes) {
     delete newRes.color
+    delete newRes.resId
     console.log('new reservation', newRes)
     var newevents = this.state.events.concat(newRes) 
     this.setState({ events: null })

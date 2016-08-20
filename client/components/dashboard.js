@@ -217,7 +217,8 @@ export default class Dashboard extends React.Component {
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
-        color: this.state.currentRoom.roomColor
+        color: this.state.currentRoom.roomColor,
+        resId: data.data
       }
       events.push(newReservation)
 
