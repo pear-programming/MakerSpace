@@ -18,10 +18,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #home {
-  /*background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;*/
+  background: url('https://s32.postimg.org/dj0g3u6cl/Screen_Shot_2016_08_02_at_1_48_01_PM.png') no-repeat center ;
   /*background: url('https://s32.postimg.org/s6zef6iyt/IMG_0309.jpg') no-repeat center; Carlo 1*/
   /*background: url('https://s31.postimg.org/54jmfup23/download.jpg') no-repeat center; Carlo 2*/
-  background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; /*Carlo 3*/
+  /*background: url('https://s10.postimg.org/sg3cibe6h/IMG_2292_1.jpg') no-repeat center; Carlo 3*/
   background-size: cover;
   background-repeat: no-repeat;
   border: .1px solid white;
@@ -131,6 +131,7 @@ img.roomImage {
 
 .colorKey {
   padding: 0px;
+  width: 130px;
 }
 
 .barGraph {
@@ -234,10 +235,6 @@ span.closed {
 
 .RoomsList {
   display: inline-block;
-  min-width: 100%;
-
-  /*padding: 20px;*/
-  /*border: 2px solid #0073b7;*/
 }
 
 .grid .row {
@@ -324,7 +321,7 @@ span.closed {
 
 .tabletImage {
   width: 100%;
-  height: 768px;
+  height: 800px;
   position: relative;
   -webkit-filter: grayscale(.1) brightness(.45) contrast(1.05);
 }

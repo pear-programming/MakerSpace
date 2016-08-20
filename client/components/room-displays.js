@@ -258,7 +258,7 @@ export default class RoomDisplays extends Component {
               <Col md={2} />
               <Col md={8} >
 
-                <h2 className="pieTitle">Reservations by Day</h2>
+                <h3 className="pieTitle">Reservations by Day</h3>
 
                 <Table responsive>
                   <tbody>
