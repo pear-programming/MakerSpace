@@ -1,8 +1,8 @@
 import React from 'react';
 import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
-import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
-import { formatTime } from '../helpers.js'
+import { fetchReservations, fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
+import { formatTime } from '../helpers.js';
 import Calendar from './calendar';
 import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -10,7 +10,6 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 export default class Conflict extends React.Component {
   render() {
-
     return (
       <Modal show={this.props.showVerify} onHide={() => this.props.closeVerify(false)}>
         <Modal.Header closeButton>
@@ -37,10 +36,7 @@ export default class Conflict extends React.Component {
           </div>
         </Modal.Body>
       </Modal>
-    )
+    );
   }
 }
-
-
-
 

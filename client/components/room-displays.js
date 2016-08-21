@@ -44,19 +44,19 @@ export default class RoomDisplays extends Component {
       barLabel: [],
       topFive: [],
       color: []
-    }
+    };
   }
 
-  sum(items, prop){
-    return items.reduce( function(a, b){
-        return a + b[prop];
+  sum(items, prop) {
+    return items.reduce(function(a, b) {
+      return a + b[prop];
     }, 0);
-  };
+  }
 
 
   getGraphData() {
     fetchReservations()
-    .then( reservations => {
+    .then(reservations => {
       let resArray = reservations.data;
       let resOccurences = {};
       let days = [
@@ -67,101 +67,99 @@ export default class RoomDisplays extends Component {
         { x: 'Th', y: 0 },
         { x: 'F', y: 0 },
         { x: 'Sa', y: 0 }
-        ];
+      ];
       let users = {};
       let jen = [];
       let caleb = [];
       let platinum = [];
       let count = {};
 
-      //finds how many reservations
+      // finds how many reservations
       resArray.forEach(reservation => {
-        let time = moment(reservation.startTime)
+        let time = moment(reservation.startTime);
         let dayIndex = time._d.getDay();
 
-        if(!resOccurences[reservation.roomName]) {
-          resOccurences[reservation.roomName] = 1
+        if (!resOccurences[reservation.roomName]) {
+          resOccurences[reservation.roomName] = 1;
         } else {
-          resOccurences[reservation.roomName] += 1
+          resOccurences[reservation.roomName] += 1;
         }
 
-        if(!users[reservation.userName]){
-          users[reservation.userName] = {}
-          users[reservation.userName][reservation.roomName] = 1
-        } else if(!users[reservation.userName][reservation.roomName]){
-          users[reservation.userName][reservation.roomName] = 1
+        if (!users[reservation.userName]) {
+          users[reservation.userName] = {};
+          users[reservation.userName][reservation.roomName] = 1;
+        } else if (!users[reservation.userName][reservation.roomName]) {
+          users[reservation.userName][reservation.roomName] = 1;
         } else {
-          users[reservation.userName][reservation.roomName] += 1
+          users[reservation.userName][reservation.roomName] += 1;
         }
 
-        days[dayIndex].y += 1
+        days[dayIndex].y += 1;
+      });
 
-      })
-
-      for (let key in users){
-        caleb.push(key)
+      for (let key in users) {
+        caleb.push(key);
       }
 
-      let rooms = Object.keys(resOccurences)
-      rooms.forEach( room => {
-        let data = []
-        for (let key in users){
-          if(users[key][room]){
-            data.push({ y: users[key][room], z: key })
+      let rooms = Object.keys(resOccurences);
+      rooms.forEach(room => {
+        let data = [];
+        for (let key in users) {
+          if (users[key][room]) {
+            data.push({ y: users[key][room], z: key });
           } else {
-            data.push({ y: 0, z: key  })
+            data.push({ y: 0, z: key });
           }
-          x++
+          x++;
         }
-        jen.push(data)
-      })
+        jen.push(data);
+      });
 
-      jen.forEach(room=> {
-        room.forEach(user=>{
-          if(!count[user.z]){
-            count[user.z] = user.y
+      jen.forEach(room => {
+        room.forEach(user => {
+          if (!count[user.z]) {
+            count[user.z] = user.y;
           } else {
-            count[user.z] += user.y
+            count[user.z] += user.y;
           }
-        })
-      })
+        });
+      });
 
-      let topFive  = Object.keys(count).sort(function(a,b){return count[b]-count[a] }).slice(0, 5)
+      let topFive = Object.keys(count).sort(function(a, b) {return count[b] - count[a];}).slice(0, 5);
 
-      topFive.forEach( person => platinum.push({ userName: person, totalRes: count[person] }))
+      topFive.forEach(person => platinum.push({ userName: person, totalRes: count[person] }));
 
-      let rihanna = jen.map( room => {
-        return room.filter( user => {
-           return topFive.includes(user.z)
-        })
-      })
+      let rihanna = jen.map(room => {
+        return room.filter(user => {
+          return topFive.includes(user.z);
+        });
+      });
 
-      rihanna.forEach( room => {
-        let counter = 1
-        room.forEach( user => {
-          user.x = counter
-          counter++
-        })
-      })
+      rihanna.forEach(room => {
+        let counter = 1;
+        room.forEach(user => {
+          user.x = counter;
+          counter++;
+        });
+      });
 
 
-      rihanna.forEach( room => {
-        room.forEach( user => {
-          user.x = topFive.indexOf(user.z)
-        })
-      })
+      rihanna.forEach(room => {
+        room.forEach(user => {
+          user.x = topFive.indexOf(user.z);
+        });
+      });
 
-      let x = 1
-      let data = []
-      for ( let key in resOccurences ) {
-        data.push({ x: x, y: resOccurences[key] })
-        x += 1
+      let x = 1;
+      let data = [];
+      for (let key in resOccurences) {
+        data.push({ x, y: resOccurences[key] });
+        x += 1;
       }
 
 
-      this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data: data, roomOccurences: resOccurences })
-    })
-
+      this.setState({ pieData: days, barData: rihanna, barLabel: caleb, topFive: platinum, data, roomOccurences: resOccurences });
+    });
   }
 
   getColor() {
@@ -174,7 +172,7 @@ export default class RoomDisplays extends Component {
         roomList.push(room.roomName);
         color.push(room.roomColor);
       });
-      this.setState({ color: color, room: roomList });
+      this.setState({ color, room: roomList });
     });
   }
 

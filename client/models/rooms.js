@@ -1,45 +1,43 @@
 import axios from 'axios';
 
-export function fetchRooms(){
-  const request = axios.get('/all-rooms')
+export function fetchRooms() {
+  const request = axios.get('/all-rooms');
 
-  return request
+  return request;
 }
 
-export function changeStatus(roomName){
-	const request = axios.post(`/${roomName}/changeAvailability`)
+export function changeStatus(roomName) {
+  const request = axios.post(`/${roomName}/changeAvailability`);
 
-	return request
+  return request;
 }
 
 export function getRoomReservations(roomName) {
-  const request = axios.get(`/reservations/${roomName}`)
-  return request
+  const request = axios.get(`/reservations/${roomName}`);
+  return request;
 }
 
-export function fetchReservations(){
-  const request = axios.get('/reservations')
+export function fetchReservations() {
+  const request = axios.get('/reservations');
 
-  return request
+  return request;
 }
 
 export function fetchUserReservations(userId) {
-  const request = axios.get(`/reservations-by-user/${userId}`)
+  const request = axios.get(`/reservations-by-user/${userId}`);
 
 
-  return request
+  return request;
 }
 
-export function fetchTimeSlots(){
-  const request = axios.get('/timeSlots')
+export function fetchTimeSlots() {
+  const request = axios.get('/timeSlots');
 
-  return request
+  return request;
 }
 
-export function addReservation(reservation){
-  const request = axios.post('/reservations/new', reservation)
+export function addReservation(reservation) {
+  const request = axios.post('/reservations/new', reservation);
 
-  return request
+  return request;
 }
-
-
