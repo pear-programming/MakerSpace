@@ -14,37 +14,37 @@ export default class Calendar extends React.Component {
     };
   }
 
-	                    componentDidMount() {
-  const { calendar } = this.refs;
+  componentDidMount() {
+    const { calendar } = this.refs;
 
-  var open = this.props.open;
-  var changeGoToDate = this.props.changeGoToDate;
+    var open = this.props.open;
+    var changeGoToDate = this.props.changeGoToDate;
 
-  $(calendar).fullCalendar({
-    events: this.props.events,
-    eventClick(event) {
-      open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0));
-    },
-    dayClick(date, jsEvent, view) {
-      open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
-    },
-    viewRender(view, element) {
-      changeGoToDate(view.start._d);
-    },
-    allDay: false,
-    hiddenDays: [0],
-                                                minTime: '09:00:00',
-                                                maxTime: '21:00:00',
-                                                height: 'auto',
-    header: {
-      left: 'title',
-      right: 'today, prev,next',
-      center: ''
-    }
-  });
+    $(calendar).fullCalendar({
+      events: this.props.events,
+      eventClick(event) {
+        open(new Date(2016, event.start._d.getMonth(), event.start._d.getDate(), 4, 0));
+      },
+      dayClick(date, jsEvent, view) {
+        open(new Date(2016, date._d.getMonth(), date._d.getDate(), 4, 0));
+      },
+      viewRender(view, element) {
+        changeGoToDate(view.start._d);
+      },
+      allDay: false,
+      hiddenDays: [0],
+      minTime: '09:00:00',
+      maxTime: '21:00:00',
+      height: 'auto',
+      header: {
+        left: 'title',
+        right: 'today, prev,next',
+        center: ''
+      }
+    });
 
-  $(calendar).fullCalendar('changeView', 'agendaWeek');
-}
+    $(calendar).fullCalendar('changeView', 'agendaWeek');
+  }
 
 
   componentDidUpdate() {
@@ -68,9 +68,9 @@ export default class Calendar extends React.Component {
         },
         allDay: false,
         hiddenDays: [0],
-                                                                    minTime: '09:00:00',
-                                                                    maxTime: '21:00:00',
-                                                                    height: 'auto',
+        minTime: '09:00:00',
+        maxTime: '21:00:00',
+        height: 'auto',
         header: {
           left: 'title',
           right: 'today, prev,next',
