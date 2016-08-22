@@ -28,11 +28,11 @@ function formatEvents(resArray) {
 var nextOpenSlots = [new Date(Date.now()).toUTCString()];
 
 export default class TabletDisplay extends Component {
-  constructor(props){  
+  constructor(props){
     super(props)
 
     // dummy data for testing
-    this.state = { 
+    this.state = {
       currentRoom: {},
       reservations: [{}],
       nextRes: {},
@@ -55,7 +55,7 @@ export default class TabletDisplay extends Component {
       let date = new Date();
       let time = date.getTime();
     })
-    fetchRooms() 
+    fetchRooms()
     .then(rooms=>{
       let room = rooms.data.find( room =>room.roomName === currentRoom)
       this.setState({currentRoom: room})
@@ -66,59 +66,49 @@ export default class TabletDisplay extends Component {
       return getRoomReservations(room.roomName)
     })
     .then(reservations => {
-
       let timeDiffs = []
-      
       if(reservations.data !== "no reservations currently exist for this room") {
         //if there are reservations do this....
         reservations.data.forEach(reservation => {
           let now = new Date()
           let startTime = new Date(reservation.startTime)
-
           timeDiffs.push({difference : now - startTime, startTime: startTime})
         })
         //finds largest negative number which is the next reservation start time
-
         let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
         let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
         let events = formatEvents(reservations.data)
 
-        console.log("showing events on load:", events);
-        
-        this.setState({reservations: reservations.data, nextRes: new Date(future.startTime), events: events })
-        
+        this.setState({
+          reservations: reservations.data,
+          nextRes: new Date(future.startTime),
+          events: events
+        })
+
       } else {  //no current reservations
-     
         this.setState({reservations: null, nextRes: null, events: null})
-        
-
       }
-    }) 
-
+    })
     //start timer that checks room status 10 seconds
     this.checkForChanges.call(this)
-
   }
-
   checkForChanges() {
-
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
     currentRoom = decodeURIComponent(currentRoom)
     setInterval(() => {
-      fetchRooms() 
+      fetchRooms()
       .then(rooms=>{
         console.log('checking changes')
         const room = rooms.data.find(findRoom)
-        
-        function findRoom(findThisRoom) { 
+        function findRoom(findThisRoom) {
           return findThisRoom.roomName === currentRoom;
         }
-
         this.setState({currentRoom: room})
-      }) 
+      })
     }, 5000)
   }
+
 
   confirm() {
 
@@ -247,8 +237,8 @@ export default class TabletDisplay extends Component {
     var url = window.location.href.split('/');
     var currentRoom = url[url.length-2];
     const roomz = room.rooms.rooms.find(findRoom)
-    
-    function findRoom(findThisRoom) { 
+
+    function findRoom(findThisRoom) {
       return findThisRoom.roomName === currentRoom;
     }
     this.setState({currentRoom: roomz})
@@ -256,25 +246,33 @@ export default class TabletDisplay extends Component {
   componentWillUnmount() {
      socket.off('updatedRooms');
   }
-
-
   render() {
     var background = document.querySelector('body')
     const room = this.state.currentRoom
-
+    let image;
+    if(room.isAvailable){
+      image = {
+        borderLeft: "50px solid green",
+        borderRight: "50px solid green"
+      }
+    } else {
+      image = {
+        borderLeft: "50px solid red",
+        borderRight: "50px solid red"
+      }
+    }
     return (
-      <div>
-       { room.isAvailable ? 
-          <div>
-            <div className="tabletDisplayOpen tabletBlock">
-              <h1>{room.roomName} </h1>
-              <span className="open">available</span>
-          
-              <div className="tabletFooter">
-               <button className="bookBtn" onClick={this.confirm.bind(this)}>Book Now!</button> 
-              </div>
-            </div>
-            <div>
+
+      <div >
+        <div style={image} >
+          <img src={room.image} className="tabletImage" />
+        </div>
+     { room.isAvailable ?
+          <div className="tabletDisplayOpen tabletBlock" >
+            <h1 className="tabletTitle">{room.roomName} </h1>
+            <span className="available">Open</span>
+            <div className="tabletFooter">
+             <button className="bookBtn" onClick={this.bookNow.bind(this)}>BOOK NOW</button>
               <BookNowConfirm 
                 showConfirm={this.state.showConfirm}
                 closeConfirm={this.closeConfirm.bind(this)}
@@ -283,31 +281,25 @@ export default class TabletDisplay extends Component {
               />
             </div>
           </div>
-          : 
-          <div className="tabletDisplayClosed tabletBlock">
-            <h1>{room.roomName} </h1> 
-            <span className="closed">In use</span>
+          :
+          <div className="tabletDisplayClosed tabletBlock" >
+            <h1 className="tabletTitle">{room.roomName} </h1>
+            <span className="inUse" >Closed</span>
             <div className="tabletFooter">
-            <p>Please mark room as available below if you are no longer using it.</p>
-              <button className="bookBtn" onClick={this.unBook.bind(this)}>All Done!</button> 
+              <button className="bookBtn" onClick={this.unBook.bind(this)}>CHECK OUT</button>
             </div>
-          </div> 
+          </div>
         }
 
-        { this.state.events ? 
-
+        { this.state.events ?
         <div className="roomCalendar" >
-           <RoomCalendar events={this.state.events} view="agendaDay"  /> 
-        </div> 
-        : 
+           <RoomCalendar events={this.state.events} view="agendaDay"  />
+        </div>
+        :
         null
         }
-
-
+        
       </div>
     )
   }
 }
-
-
-

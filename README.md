@@ -5,6 +5,14 @@ MakerSpace is a conference room management solution which leverages socket.io to
 
 ![Airpal UI](screenshots/demo.gif)
 
+## Tech Stack
+
+- React
+- Node
+- Express
+- Promised Mongo
+
+
 ## Features
 
 * Optional [Access Control](docs/USER_ACCOUNTS.md)
@@ -15,4 +23,28 @@ MakerSpace is a conference room management solution which leverages socket.io to
 * Table finder to search for appropriate tables
 * Table explorer to visualize schema of table and first 1000 rows
 
-## Requirements
+
+
+## To start
+
+Run npm install
+Run npm start
+In a browser, go to localhost:4000
+
+
+
+## Contribution Guidelines
+
+- Create a new issue describing your update
+- Fork the repo and create a branch named issue#___, where ___ is the issue number
+- When ready, put in a pull request to master in this repo.
+
+
+
+## Authors
+
+Ashley Smith
+Burton Cooke
+Caleb Anderson
+Carlo DiLorenzo
+Jennifer Hakala

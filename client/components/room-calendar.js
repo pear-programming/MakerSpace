@@ -6,7 +6,7 @@ export default class RoomCalendar extends React.Component {
   componentDidMount() {
     console.log("running componentDidMount:", this.props.events)
     const { calendar } = this.refs;
-  
+
     $(calendar).fullCalendar({
       events: this.props.events,
       dayClick: function(date, jsEvent, view) {
@@ -15,11 +15,17 @@ export default class RoomCalendar extends React.Component {
       allDay: false,
       minTime: "09:00:00",
       maxTime: "21:00:00",
-      height: "auto"
+      height: "auto",
+      header: {
+        left: "",
+        right: "",
+        center: "title"
+      }
     });
     
     $(calendar).fullCalendar( 'changeView', this.props.view ); 
   }
+
 
   componentWillUnmount() {
     const { calendar} = this.refs 
@@ -29,10 +35,8 @@ export default class RoomCalendar extends React.Component {
   }
 
   render() {
-
     return (
       <div ref="calendar"></div>
     );
   }
 }
-

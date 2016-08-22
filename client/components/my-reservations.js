@@ -103,7 +103,7 @@ export default class ReservationList extends Component {
       <div className="reservationList col-md-12 col-sm-6"> 
         {this.state.user ? 
           <div>
-            <h3> Your Reservations</h3> 
+            <h4> Your Reservations</h4> 
             <div className="table-responsive">
             <table className="myTable">
               <tr>
