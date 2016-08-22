@@ -306,19 +306,19 @@ app.get('/timeSlots', function(req, res) {
 //endpoints for calendar asset-serving
 
 
-app.get('/lib/moment.min.js', function(req, res){
+app.get('*/lib/moment.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/moment/min/moment.min.js') );
 })
-app.get('/lib/jquery.min.js', function(req, res){
+app.get('*/lib/jquery.min.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/jquery/dist/jquery.min.js') );
 })
-app.get('/fullcalendar/fullcalendar.js', function(req, res){
+app.get('*/fullcalendar/fullcalendar.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/fullcalendar/dist/fullcalendar.js') );
 })
-app.get('/fullcalendar/fullcalendar.css', function(req, res){
+app.get('*/fullcalendar/fullcalendar.css', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/fullcalendar/dist/fullcalendar.css') );
 })
-app.get('/socket.io/socket.io.js', function(req, res){
+app.get('*/socket.io/socket.io.js', function(req, res){
   res.sendFile( path.join(__dirname,  '..', 'node_modules/socket.io-client/socket.io.js') );
 })
 // Wild card route for client side routing.

@@ -272,7 +272,7 @@ export default class TabletDisplay extends Component {
             <h1 className="tabletTitle">{room.roomName} </h1>
             <span className="available">Open</span>
             <div className="tabletFooter">
-             <button className="bookBtn" onClick={this.bookNow.bind(this)}>BOOK NOW</button>
+             <button className="bookBtn" onClick={this.confirm.bind(this)}>BOOK NOW</button>
               <BookNowConfirm 
                 showConfirm={this.state.showConfirm}
                 closeConfirm={this.closeConfirm.bind(this)}
@@ -298,7 +298,7 @@ export default class TabletDisplay extends Component {
         :
         null
         }
-        
+
       </div>
     )
   }
