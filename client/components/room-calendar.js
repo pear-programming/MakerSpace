@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 export default class RoomCalendar extends React.Component {
 
   componentDidMount() {
+    console.log("running componentDidMount:", this.props.events)
     const { calendar } = this.refs;
 
     $(calendar).fullCalendar({
@@ -24,8 +25,8 @@ export default class RoomCalendar extends React.Component {
         center: 'title'
       }
     });
-
-    $(calendar).fullCalendar('changeView', this.props.view);
+    
+    $(calendar).fullCalendar( 'changeView', this.props.view ); 
   }
 
   componentWillUnmount() {

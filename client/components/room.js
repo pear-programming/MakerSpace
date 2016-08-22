@@ -49,6 +49,7 @@ export default class Room extends Component {
   }
 
   componentWillMount() {
+    
     checkStatus()
     .then(userData => {
       this.setState(

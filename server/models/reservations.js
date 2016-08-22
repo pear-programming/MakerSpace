@@ -22,7 +22,6 @@ Reservation.create = function(reservationData) {
     reservationData.startTime = new Date(Date.parse(reservationData.startTime));
     reservationData.endTime = new Date(Date.parse(reservationData.endTime));
     reservationData.roomId = db.ObjectId(reservationData.roomId);
-    // reservationData.userId = db.ObjectId(reservationData.userId);
   }
 
   return db.collection('reservations').insert(reservationData)//reservations
@@ -93,19 +92,28 @@ Reservation.findByUserId = function(userId) {
 }
 
 Reservation.updateReservation = function(resId, newInfo) {
-  if(typeof resId==='string'){
-    resId = db.ObjectId(resId)
+
+
+  if(typeof newInfo.startTime === 'string') {
+    newInfo.startTime = new Date(Date.parse(newInfo.startTime));
+    newInfo.endTime = new Date(Date.parse(newInfo.endTime));
+    newInfo.roomId = db.ObjectId(newInfo.roomId);
   }
 
-  return db.collection('reservations').update(
-    {"_id" : resId },
-    { "$set" : newInfo }
-  )
-  .then(updatedRes => {
-    // console.log('updatedRes:', updatedRes)
-    return db.collection('reservations').find({"_id":resId})
+  return db.collection('reservations').remove({_id: db.ObjectId(resId)})
+  .then(x => {
+
+    var withoutId = Object.assign(newInfo)
+    delete withoutId._id;
+
+    return db.collection('reservations').insert(withoutId)
+    .then(data => {
+
+      return data;
+    })
+    .catch(err => console.log("error:", err))
   })
-  .catch(err => console.log('err in updateExisting: ', err))
+
 }
 
 Reservation.makeSlots = function(reservationData) {

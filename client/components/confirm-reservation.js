@@ -12,7 +12,8 @@ export default class Conflict extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.showConfirm} onHide={() => this.props.closeConfirm(event, false)}>
+      <Modal show={this.props.showConfirm} onHide={(event) => this.props.closeConfirm(event,false)}>
+
         <Modal.Header closeButton>
         <div className="verifyTitleContainer">
           <Modal.Title><span className="roomTitle">Confirm Reservation</span></Modal.Title>

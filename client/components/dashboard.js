@@ -44,7 +44,6 @@ export default class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    console.log('ran componentWillMount');
     Promise.all([checkStatus(), fetchRooms(), fetchTimeSlots(), fetchReservations()])
     .then(data => {
       timeSlots = data[2].data;
@@ -60,16 +59,15 @@ export default class Dashboard extends React.Component {
     });
   }
 
-  close(event) {
-    event.preventDefault();
+  close() {
+    // event.preventDefault();
     roomPlaceHolder = true;
     this.setState({ showModal: false});
   }
 
   closeVerify(shouldCloseModal) {
-    // console.log("inside closeVerify")
-    if (shouldCloseModal) {
-      this.confirmBooking();
+    if(shouldCloseModal) { 
+      this.confirmBooking();  
     }
     else {
       this.setState({showVerify: false});
@@ -225,7 +223,19 @@ export default class Dashboard extends React.Component {
         endTime: reservation.endTime.toUTCString()
       }));
 
-      socket.emit('newReservation', newReservation);
+      console.log("showing user data before send:", user)
+
+       var resToEmit = {
+        title: reservation.roomName,
+        userName: user.name,
+        start: Date.parse(reservation.startTime),
+        end: Date.parse(reservation.endTime),
+        allDay: false,
+        color: this.state.currentRoom.roomColor,
+        resId: data.data
+      };
+
+      socket.emit('newReservation', resToEmit);
       this.addToTimeslots();
 
       goToDate = Date.parse(reservation.startTime);
@@ -316,6 +326,7 @@ export default class Dashboard extends React.Component {
               reRenderCalendar={reRenderCalendar}
               resetReRender={this.resetReRender.bind(this)}
             />
+
 
         </div>
 
