@@ -223,7 +223,19 @@ export default class Dashboard extends React.Component {
         endTime: reservation.endTime.toUTCString()
       }));
 
-      socket.emit('newReservation', newReservation);
+      console.log("showing user data before send:", user)
+
+       var resToEmit = {
+        title: reservation.roomName,
+        userName: user.name,
+        start: Date.parse(reservation.startTime),
+        end: Date.parse(reservation.endTime),
+        allDay: false,
+        color: this.state.currentRoom.roomColor,
+        resId: data.data
+      };
+
+      socket.emit('newReservation', resToEmit);
       this.addToTimeslots();
 
       goToDate = Date.parse(reservation.startTime);

@@ -98,12 +98,32 @@ export default class TabletDisplay extends Component {
   }
 
   updateCalendar(newRes) {
+    console.log("got new reservation from calendar:", newRes);
+    var resCopy = this.state.reservations.slice();
+    var startToString = new Date(newRes.startTime).toUTCString();
+    var endToString = new Date(newRes.endTime).toUTCString();
+    var formattedRes = {
+
+      userName: newRes.userName,
+      roomName: newRes.title,
+      startTime: startToString,
+      endTime: endToString,
+      _id: newRes.resId,
+      color: newRes.color
+    }
+    resCopy.push(formattedRes)
+
+
+
     delete newRes.color;
     delete newRes.resId;
-    console.log('new reservation', newRes);
+    newRes.title = newRes.userName
     var newevents = this.state.events.concat(newRes);
     this.setState({ events: null });
-    this.setState({ events: newevents });
+    this.setState({ 
+      events: newevents,
+      reservations: resCopy
+     });
     console.log('new events list', newevents);
   }
 
