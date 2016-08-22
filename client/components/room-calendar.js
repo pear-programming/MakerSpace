@@ -8,32 +8,30 @@ export default class RoomCalendar extends React.Component {
 
     $(calendar).fullCalendar({
       events: this.props.events,
-      eventClick: function(event) {
-        alert("clicked event!")
+      eventClick(event) {
+        alert('clicked event!');
       },
-      dayClick: function(date, jsEvent, view) {
-          alert('Clicked empty space!', date);
+      dayClick(date, jsEvent, view) {
+        alert('Clicked empty space!', date);
       },
       allDay: false,
-      minTime: "09:00:00",
-      maxTime: "21:00:00",
-      height: "auto",
+      minTime: '09:00:00',
+      maxTime: '21:00:00',
+      height: 'auto',
       header: {
-        left: "",
-        right: "",
-        center: "title"
+        left: '',
+        right: '',
+        center: 'title'
       }
     });
 
-    $(calendar).fullCalendar( 'changeView', this.props.view );
-
-
-}
+    $(calendar).fullCalendar('changeView', this.props.view);
+  }
 
   componentWillUnmount() {
-    const { calendar} = this.refs
+    const { calendar} = this.refs;
 
-    $(calendar).fullCalendar('destroy')
+    $(calendar).fullCalendar('destroy');
   }
 
   render() {

@@ -8,18 +8,17 @@ import RoomDisplays from './components/room-displays';
 import TabletList from './components/tablet-list';
 
 export default class Routes extends React.Component {
-  render(){
-
+  render() {
     return (
       <Router history={browserHistory}>
         <Route path='/' component={App}>
           <IndexRoute component={SplashPage} />
           <Route path='analytics' component={RoomDisplays} />
           <Route path=':roomName/display' component={TabletDisplay} />
-          <Route path='calendar' component={Dashboard} /> 
-          <Route path='tablet-list' component={TabletList} /> 
+          <Route path='calendar' component={Dashboard} />
+          <Route path='tablet-list' component={TabletList} />
         </Route>
       </Router>
-    )
+    );
   }
 }
