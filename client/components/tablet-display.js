@@ -5,7 +5,7 @@ import {fetchRooms, changeStatus, getRoomReservations, addReservation} from '../
 import {updateReservation} from '../models/reservations';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
-import _ from 'lodash'
+import _ from 'lodash';
 import RoomCalendar from './room-calendar';
 import BookNowConfirm from './book-now-confirm'
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -13,23 +13,23 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 function formatEvents(resArray) {
   return resArray.map(res => {
-    var start = new Date(res.startTime).getTime()
-    var end = new Date(res.endTime).getTime()
+    var start = new Date(res.startTime).getTime();
+    var end = new Date(res.endTime).getTime();
     return {
       title: res.userName,
       start: start,
       end: end,
       allDay: false,
-      showConfirm: true
     }
   })
+
 }
 
 var nextOpenSlots = [new Date(Date.now()).toUTCString()];
 
 export default class TabletDisplay extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     // dummy data for testing
     this.state = {
@@ -37,8 +37,7 @@ export default class TabletDisplay extends Component {
       reservations: [{}],
       nextRes: {},
       events: null
-    }
-
+    };
   }
 
   componentWillMount() {
@@ -46,68 +45,85 @@ export default class TabletDisplay extends Component {
     // we also need to start the socket listen event for room status change
 
     var url = window.location.href.split('/');
-    var currentRoom = url[url.length-2];
-    currentRoom = decodeURIComponent(currentRoom)
+    var currentRoom = url[url.length - 2];
+    currentRoom = decodeURIComponent(currentRoom);
 
-    socket.on('updatedRooms', this.updateState.bind(this))
-    socket.on('checkStatus', (data) => console.log('checck for changes', data))
+    socket.on('updatedRooms', this.updateState.bind(this));
+    socket.on('checkStatus', (data) => console.log('checck for changes', data));
     socket.on('checkingChanges', (newRes) => {
       let date = new Date();
       let time = date.getTime();
-    })
+    });
+    socket.on('updateCalendar', (newRes) => {
+      console.log(newRes, this.state.currentRoom);
+      if (newRes.title === this.state.currentRoom.roomName) {
+        this.updateCalendar.call(this, newRes);
+      }
+    });
     fetchRooms()
-    .then(rooms=>{
-      let room = rooms.data.find( room =>room.roomName === currentRoom)
-      this.setState({currentRoom: room})
-      return room
+    .then(rooms => {
+      let room = rooms.data.find(room => room.roomName === currentRoom);
+      this.setState({currentRoom: room});
+      return room;
     })
     .then(room => {
-      this.setState({ currentRoom: room })
-      return getRoomReservations(room.roomName)
+      this.setState({ currentRoom: room });
+      return getRoomReservations(room.roomName);
     })
     .then(reservations => {
-      let timeDiffs = []
-      if(reservations.data !== "no reservations currently exist for this room") {
-        //if there are reservations do this....
+      let timeDiffs = [];
+      if (reservations.data !== 'no reservations currently exist for this room') {
+        // if there are reservations do this....
         reservations.data.forEach(reservation => {
-          let now = new Date()
-          let startTime = new Date(reservation.startTime)
-          timeDiffs.push({difference : now - startTime, startTime: startTime})
-        })
-        //finds largest negative number which is the next reservation start time
-        let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
-        let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
-        let events = formatEvents(reservations.data)
 
+          let now = new Date();
+          let startTime = new Date(reservation.startTime);
+          timeDiffs.push({difference: now - startTime, startTime});
+        });
+        // finds largest negative number which is the next reservation start time
+        let nextRes = _.sortBy(timeDiffs, 'difference').reverse();
+        let future = nextRes.filter(timeObject => timeObject.difference < 0)[0];
+        let events = formatEvents(reservations.data);
         this.setState({
           reservations: reservations.data,
           nextRes: new Date(future.startTime),
-          events: events
-        })
-
-      } else {  //no current reservations
-        this.setState({reservations: null, nextRes: null, events: null})
+          events
+        });
+      } else {  // no current reservations
+        this.setState({reservations: null, nextRes: null, events: null});
       }
-    })
-    //start timer that checks room status 10 seconds
-    this.checkForChanges.call(this)
+    });
+    // start timer that checks room status 10 seconds
+    this.checkForChanges.call(this);
   }
+
+  updateCalendar(newRes) {
+    delete newRes.color;
+    delete newRes.resId;
+    console.log('new reservation', newRes);
+    var newevents = this.state.events.concat(newRes);
+    this.setState({ events: null });
+    this.setState({ events: newevents });
+    console.log('new events list', newevents);
+  }
+
   checkForChanges() {
     var url = window.location.href.split('/');
-    var currentRoom = url[url.length-2];
-    currentRoom = decodeURIComponent(currentRoom)
+    var currentRoom = url[url.length - 2];
+    currentRoom = decodeURIComponent(currentRoom);
     setInterval(() => {
       fetchRooms()
-      .then(rooms=>{
-        console.log('checking changes')
-        const room = rooms.data.find(findRoom)
+      .then(rooms => {
+        console.log('checking changes');
+        const room = rooms.data.find(findRoom);
         function findRoom(findThisRoom) {
           return findThisRoom.roomName === currentRoom;
         }
-        this.setState({currentRoom: room})
-      })
-    }, 5000)
+        this.setState({currentRoom: room});
+      });
+    }, 5000);
   }
+
 
 
   confirm() {
@@ -235,31 +251,31 @@ export default class TabletDisplay extends Component {
 
   updateState(room) {
     var url = window.location.href.split('/');
-    var currentRoom = url[url.length-2];
-    const roomz = room.rooms.rooms.find(findRoom)
+    var currentRoom = url[url.length - 2];
+    const roomz = room.rooms.rooms.find(findRoom);
 
     function findRoom(findThisRoom) {
       return findThisRoom.roomName === currentRoom;
     }
-    this.setState({currentRoom: roomz})
+    this.setState({currentRoom: roomz});
   }
   componentWillUnmount() {
-     socket.off('updatedRooms');
+    socket.off('updatedRooms');
   }
   render() {
-    var background = document.querySelector('body')
-    const room = this.state.currentRoom
+    var background = document.querySelector('body');
+    const room = this.state.currentRoom;
     let image;
-    if(room.isAvailable){
+    if (room.isAvailable) {
       image = {
-        borderLeft: "50px solid green",
-        borderRight: "50px solid green"
-      }
+        borderLeft: '50px solid green',
+        borderRight: '50px solid green'
+      };
     } else {
       image = {
-        borderLeft: "50px solid red",
-        borderRight: "50px solid red"
-      }
+        borderLeft: '50px solid red',
+        borderRight: '50px solid red'
+      };
     }
     return (
 
@@ -267,7 +283,7 @@ export default class TabletDisplay extends Component {
         <div style={image} >
           <img src={room.image} className="tabletImage" />
         </div>
-     { room.isAvailable ?
+     {room.isAvailable ?
           <div className="tabletDisplayOpen tabletBlock" >
             <h1 className="tabletTitle">{room.roomName} </h1>
             <span className="available">Open</span>
@@ -291,15 +307,16 @@ export default class TabletDisplay extends Component {
           </div>
         }
 
-        { this.state.events ?
+        {this.state.events ?
+
         <div className="roomCalendar" >
-           <RoomCalendar events={this.state.events} view="agendaDay"  />
+           <RoomCalendar events={this.state.events} view="agendaDay" />
         </div>
         :
         null
         }
 
       </div>
-    )
+    );
   }
 }

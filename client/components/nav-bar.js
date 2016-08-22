@@ -1,24 +1,24 @@
 import React, {Component} from 'react';
 import { browserHistory, Link } from 'react-router';
 import { Button, Navbar, NavItem, MenuItem, Nav, NavDropdown, Image } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 import { checkStatus, logout } from '../models/auth';
 
 export default class NavBar extends Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
       user: null
-    }
+    };
   }
 
   componentWillMount() {
     checkStatus()
     .then(userData => {
-      console.log('userData', userData)
-      this.setState({ user: userData.data })
-    })
+      console.log('userData', userData);
+      this.setState({ user: userData.data });
+    });
   }
 
   render() {
@@ -30,7 +30,7 @@ export default class NavBar extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
 
-        { this.state.user ?
+        {this.state.user ?
           <Nav pullRight>
             <Image className="profilePicture" src={this.state.user.avatar_url} />
             <NavDropdown title={`Welcome ${this.state.user.name}`} id="basic-nav-dropdown">

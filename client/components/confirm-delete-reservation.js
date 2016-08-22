@@ -1,8 +1,8 @@
 import React from 'react';
 import NavBar from './nav-bar';
 import { checkStatus } from '../models/auth';
-import { fetchReservations , fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
-import { formatTime } from '../helpers.js'
+import { fetchReservations, fetchTimeSlots, fetchRooms, addReservation} from '../models/rooms';
+import { formatTime } from '../helpers.js';
 import Calendar from './calendar';
 import Room from './room';
 import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -10,20 +10,15 @@ import { Popover, Button, Tooltip, Modal, FormGroup, FormControl, ControlLabel, 
 
 export default class ConfirmDelete extends React.Component {
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      showConfirmDelete : false
-    }
+      showConfirmDelete: false
+    };
   }
 
-
-
   render() {
-    // console.log('ConfirmDelete - this.props: ', this.props)
-    // this.props --> {showConfirmDelete: false}
-
     return (
       <Modal show={this.props.showConfirmDelete} onHide={() => this.props.closeConfirmDelete(false)}>
         <Modal.Header closeButton>
@@ -43,6 +38,6 @@ export default class ConfirmDelete extends React.Component {
           </div>
         </Modal.Body>
       </Modal>
-    )
+    );
   }
 }

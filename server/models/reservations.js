@@ -5,7 +5,7 @@ var Reservation = module.exports
 //reservations
 
 Reservation.findByRoomId = function(Id) {
-  return db.reservations.find({id: id})
+  return db.collection('reservations').find({id: id})
   .then((reservations) => {
   return reservations
   })
@@ -13,7 +13,7 @@ Reservation.findByRoomId = function(Id) {
 
 
 Reservation.deleteIt = function() {
-  return db.reservations.remove({roomName: "Turing"})
+  return db.collection('reservations').remove({roomName: "Turing"})
 }
 
 Reservation.create = function(reservationData) { 
@@ -24,7 +24,7 @@ Reservation.create = function(reservationData) {
     reservationData.roomId = db.ObjectId(reservationData.roomId);
   }
 
-  return db.reservations.insert(reservationData)//reservations
+  return db.collection('reservations').insert(reservationData)//reservations
   .then((data) => {
     console.log("successfully inserted reservation!:", data._id)
     return data._id;
@@ -38,7 +38,7 @@ Reservation.delete = function(reservationId){
   }
   else if (typeof reservationId._id === "string"){
     reservationId._id = db.ObjectId(reservationId._id)
-      return db.reservations.remove(reservationId)//reservations
+      return db.collection('reservations').remove(reservationId)//reservations
       .then((data) => {
         console.log("successfully canceled reservation!:", data)
         return data;
@@ -46,7 +46,7 @@ Reservation.delete = function(reservationId){
 
   }
   else {
-  return db.reservations.remove(db.ObjectId(reservationId))//reservations
+  return db.collection('reservations').remove(db.ObjectId(reservationId))//reservations
     .then((data) => {
       console.log("successfully canceled reservation from string!:", data)
       return "success";
@@ -57,14 +57,14 @@ Reservation.delete = function(reservationId){
 
 
 Reservation.findAllReservations = function() {
-  return db.reservations.find({})
+  return db.collection('reservations').find({})
   .then(reservationsData => {
     return reservationsData;
   })
 }
 
 Reservation.findByName = function(name) {
-  return db.rooms.find({roomName: name})
+  return db.collection('rooms').find({roomName: name})
   .then(room => {
     if(room[0]){
       console.log('room[0]._id: ', room[0]._id)
@@ -74,7 +74,7 @@ Reservation.findByName = function(name) {
     }
   })
   .then(id => {
-    return db.reservations.find({roomId: id})
+    return db.collection('reservations').find({roomId: id})
   })
   .then(roomReservationData => {
     if(roomReservationData[0]) {
@@ -88,7 +88,7 @@ Reservation.findByName = function(name) {
 }
 
 Reservation.findByUserId = function(userId) {
-  return db.reservations.find({userId: userId})
+  return db.collection('reservations').find({userId: userId})
 }
 
 Reservation.updateReservation = function(resId, newInfo) {

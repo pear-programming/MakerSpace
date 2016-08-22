@@ -12,7 +12,7 @@ Check.update = function() {
   var resv;
   var roomsToClose = [];
   var bookedRooms = [];
-  
+
   return Reservation.findAllReservations()
   .then(reservationsData => {
     resv = reservationsData
@@ -27,7 +27,7 @@ Check.update = function() {
       var resEnd = x.endTime.getTime() + 18000000;
       var currRoom = rooms.find(findRoom)
 
-      function findRoom(findThisRoom) { 
+      function findRoom(findThisRoom) {
         return findThisRoom.roomName === x.roomName;
       }
 
@@ -46,7 +46,7 @@ Check.update = function() {
 
     openRooms.forEach( room => {
       var currentRoom = rooms.find(findRoom)
-      function findRoom(findThisRoom) { 
+      function findRoom(findThisRoom) {
         return findThisRoom.roomName === room;
       }
       if(currentRoom.isAvailable === false) {

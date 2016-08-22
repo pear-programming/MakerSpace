@@ -9,15 +9,15 @@ import _ from 'lodash';
 
 function formatEvents(resArray) {
   return resArray.map(res => {
-    var start = new Date(res.startTime).getTime()
-    var end = new Date(res.endTime).getTime()
+    var start = new Date(res.startTime).getTime();
+    var end = new Date(res.endTime).getTime();
     return {
       title: res.userName,
-      start: start,
-      end: end,
+      start,
+      end,
       allDay: false
-    }
-  })
+    };
+  });
 }
 
 let timeSlots = [];
@@ -25,10 +25,10 @@ let goToDate = null;
 
 export default class Room extends Component {
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
-    let currentTime = new Date(Date.now())
+    let currentTime = new Date(Date.now());
 
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -38,13 +38,13 @@ export default class Room extends Component {
       events: [],
       currentRoom: {},
       nextRes: {},
-      startTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 ),
-      endTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 30 ),
-      nextFourSlots:[],
+      startTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0),
+      endTime: new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 30),
+      nextFourSlots: [],
       reRenderCalendar: false,
       user: null,
       userId: null,
-      userEmail: null,
+      userEmail: null
     };
   }
 
@@ -54,73 +54,73 @@ export default class Room extends Component {
     .then(userData => {
       this.setState(
         {
-        user: userData.data.name,
-        userId: userData.data.uid,
-        userEmail: userData.data.email,
-        })
-    })
+          user: userData.data.name,
+          userId: userData.data.uid,
+          userEmail: userData.data.email
+        });
+    });
   }
 
   mapTimeSlotsByDay(time) {
     var timeSlotsForDay = timeSlots.filter((timeSlot) => {
       var startTime = Date.parse(timeSlot.startTime);
-      if(startTime === time.getTime()){
+      if (startTime === time.getTime()) {
       }
-      return startTime >= time.getTime() && startTime < (time.getTime() + 43200000)
-    })
+      return startTime >= time.getTime() && startTime < (time.getTime() + 43200000);
+    });
     var openSlots = timeSlotsForDay.filter(
       slot => !slot.reservations.filter(
         res => res.roomId === this.props.roomInfo._id
       ).length
     )
     .filter(slot => {
-      return Date.parse(slot.startTime) + 18000000 > Date.now()
-    })
-    this.props.roomInfo.openSlots = openSlots
+      return Date.parse(slot.startTime) + 18000000 > Date.now();
+    });
+    this.props.roomInfo.openSlots = openSlots;
   }
 
-  getInfo(name){
+  getInfo(name) {
     fetchTimeSlots()
     .then(slots => {
       getRoomReservations(name).then(reservations => {
-        timeSlots = slots.data
-        let timeDiffs = []
-        if(reservations.data !== "no reservations currently exist for this room") {
+        timeSlots = slots.data;
+        let timeDiffs = [];
+        if (reservations.data !== 'no reservations currently exist for this room') {
           reservations.data.forEach(reservation => {
-            let now = new Date()
-            let startTime = new Date(reservation.startTime)
+            let now = new Date();
+            let startTime = new Date(reservation.startTime);
             timeDiffs.push({
-              difference : now - startTime, startTime: startTime
-            })
-          })
-          let currentTime = new Date(Date.now())
+              difference: now - startTime, startTime
+            });
+          });
+          let currentTime = new Date(Date.now());
           this.mapTimeSlotsByDay(new Date(
-            currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0 )
-          )
+            currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 4, 0)
+          );
           var nextFourSlots = this.getTimeSlotInfo(this.props.roomInfo.openSlots[0].startTime, this.props.roomInfo);
-          let nextRes = _.sortBy(timeDiffs, 'difference').reverse()
-          let future = nextRes.filter(timeObject => timeObject.difference < 0)[0]
-          let events = formatEvents(reservations.data)
+          let nextRes = _.sortBy(timeDiffs, 'difference').reverse();
+          let future = nextRes.filter(timeObject => timeObject.difference < 0)[0];
+          let events = formatEvents(reservations.data);
           this.setState({
-             reservations: reservations.data,
-             nextRes: new Date(future.startTime),
-             events: events,
-             showModal: true,
-             nextFourSlots: nextFourSlots,
-             startTime: new Date(this.props.roomInfo.openSlots[0].startTime),
-             endTime: new Date(Date.parse(this.props.roomInfo.openSlots[0].startTime) + 1800000)
-           })
+            reservations: reservations.data,
+            nextRes: new Date(future.startTime),
+            events,
+            showModal: true,
+            nextFourSlots,
+            startTime: new Date(this.props.roomInfo.openSlots[0].startTime),
+            endTime: new Date(Date.parse(this.props.roomInfo.openSlots[0].startTime) + 1800000)
+          });
         }
-        else {  //no current reservations
+        else {  // no current reservations
           this.setState({
             reservations: null,
             nextRes: null,
             events: null,
             showModal: true
-          })
+          });
         }
-      })
-    })
+      });
+    });
   }
 
   close() {
@@ -130,44 +130,44 @@ export default class Room extends Component {
   }
   open(time) {
     var roomsWithTimeSlotInfo = this.mapTimeSlotsByDay(time);
-    var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0]
+    var currentRoom = roomsWithTimeSlotInfo.filter(room => room.openSlots.length)[0];
     var nextFourSlots = this.getTimeSlotInfo(currentRoom.openSlots[0].startTime, currentRoom);
     goToDate = time.getTime();
 
     this.setState({
       showModal: true,
-      roomsWithTimeSlotInfo: roomsWithTimeSlotInfo,
-      currentRoom: currentRoom,
+      roomsWithTimeSlotInfo,
+      currentRoom,
       startTime: new Date(currentRoom.openSlots[0].startTime),
       endTime: new Date(currentRoom.openSlots[0].endTime),
-      nextFourSlots: nextFourSlots
+      nextFourSlots
     });
   }
   formatTime(time) {
-    var hours = new Date(Date.parse(time) + 18000000).getHours()
+    var hours = new Date(Date.parse(time) + 18000000).getHours();
     var amPm;
-    if(hours > 12) {
-      hours = hours - 12
-      amPm = 'pm'
+    if (hours > 12) {
+      hours = hours - 12;
+      amPm = 'pm';
     }
-    else if(hours === 12) {
-      amPm = 'pm'
+    else if (hours === 12) {
+      amPm = 'pm';
     }
     else {
-      amPm = 'am'
+      amPm = 'am';
     }
-    return hours.toString() + ":" + (new Date(time).getMinutes().toString() + "0").slice(0,2) + amPm;
+    return hours.toString() + ':' + (new Date(time).getMinutes().toString() + '0').slice(0, 2) + amPm;
   }
 
   getTimeSlotInfo(time, room) {
-    var slots = room.openSlots
+    var slots = room.openSlots;
     var thirtyMin = 1800000;
     var nextSlots = [];
     var index = slots.indexOf(slots.filter(slot => Date.parse(slot.endTime) === Date.parse(time) + thirtyMin)[0]);
     nextSlots.push(new Date(Date.parse(time) + thirtyMin).toUTCString());
-    for(var i = 1; index + i < slots.length && i < 4; i++) {
-      if(Date.parse(slots[index + i].endTime) === Date.parse(slots[index].endTime) + thirtyMin * i) {
-        nextSlots.push(new Date(Date.parse(time) + thirtyMin * (i + 1)).toUTCString())
+    for (var i = 1; index + i < slots.length && i < 4; i++) {
+      if (Date.parse(slots[index + i].endTime) === Date.parse(slots[index].endTime) + thirtyMin * i) {
+        nextSlots.push(new Date(Date.parse(time) + thirtyMin * (i + 1)).toUTCString());
       }
       else {
         return nextSlots;
@@ -176,19 +176,19 @@ export default class Room extends Component {
     return nextSlots;
   }
 
-  changeStartTime(event){
+  changeStartTime(event) {
     $('.selectEndTime option').prop('selected', function() {
-        return this.defaultSelected;
+      return this.defaultSelected;
     });
-    var nextSlots = this.getTimeSlotInfo(event.target.value, this.props.roomInfo)
-    console.log("got next slots from getTimeSlotInfo:", nextSlots);
+    var nextSlots = this.getTimeSlotInfo(event.target.value, this.props.roomInfo);
+    console.log('got next slots from getTimeSlotInfo:', nextSlots);
     this.setState({
       nextFourSlots: nextSlots,
       startTime: new Date(event.target.value),
       endTime: new Date(Date.parse(event.target.value) + 1800000)
     });
   }
-  changeEndTime(event){
+  changeEndTime(event) {
     this.setState({
       endTime: new Date(event.target.value)
     });
@@ -203,64 +203,65 @@ export default class Room extends Component {
       userName: this.state.user,
       userId: this.state.userId,
       userEmail: this.state.userEmail
-    }
+    };
     addReservation(reservation)
     .then(data => {
       var events = this.state.events.slice();
-      events.push({
+      const newReservation = {
         title: reservation.roomName,
         start: Date.parse(reservation.startTime),
         end: Date.parse(reservation.endTime),
         allDay: false,
         color: this.state.currentRoom.roomColor
-      })
-      goToDate = Date.parse(reservation.startTime)
+      };
+      events.push(newReservation);
+      socket.emit('newReservation', newReservation);
+      goToDate = Date.parse(reservation.startTime);
       this.setState({
         showModal: false,
-        events: events,
+        events,
         reRenderCalendar: true
-      })
-    })
+      });
+    });
   }
 
   renderCalendar() {
-
     return (<Calendar key={0}
       events={this.state.events}
       open={this.open.bind(this)}
       goToDate={goToDate}
       />
-  )}
+  );}
 
   render() {
     const room = this.props.roomInfo;
 
-    var title = {float: 'left'}
-    var info = {float: 'right'}
+    var title = {float: 'left'};
+    var info = {float: 'right'};
 
     return (
       <div>
-        <Row className="row" id={room.roomName.replace(" ", "")} onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}>
+        <Row className="row" id={room.roomName.replace(' ', '')} onMouseEnter={(e) => this.props.updateWindow(e.target.id)}>
           <div>
           <Col md={6} className="eachRoom">
             <div id={room.roomName}
-            onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
+              onMouseEnter={(e) => this.props.updateWindow(e.target.id)}
             >{room.roomName}</div>
           </Col>
 
           <Col md={6}>
-            { room.isAvailable
+            {room.isAvailable
               ?
               <div className="opened" id={room.roomName}
-                onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
-                onClick={(e)=>this.getInfo(e.target.id)}>
-                ⚪ Book Now 
+                onMouseEnter={(e) => this.props.updateWindow(e.target.id)}
+                onClick={(e) => this.getInfo(e.target.id)}>
+                ⚪ Book Now
               </div>
               :
               <div className="booked" id={room.roomName}
-                onMouseEnter={ (e)=> this.props.updateWindow(e.target.id)}
-                onClick={(e)=>this.getInfo(e.target.id)}>
-                🕒 Reserved  
+                onMouseEnter={(e) => this.props.updateWindow(e.target.id)}
+                onClick={(e) => this.getInfo(e.target.id)}>
+                🕒 Reserved
               </div>
               }
           </Col>
@@ -294,8 +295,8 @@ export default class Room extends Component {
                 <label>Start Time</label>
                 {this.props.roomInfo.openSlots ?
                   <select name="select1" onChange={this.changeStartTime.bind(this)}>
-                    { this.props.roomInfo.openSlots.map(slot => {
-                      return(
+                    {this.props.roomInfo.openSlots.map(slot => {
+                      return (
                         <option className="changeStartTimes" value={slot.startTime}>
                           {this.formatTime(slot.startTime)}
                         </option>
@@ -307,8 +308,8 @@ export default class Room extends Component {
               <div className="endTime">
                 <label>End Time</label>
                 <select name="select2" onChange={this.changeEndTime.bind(this)}>
-                  { this.state.nextFourSlots.map(slot => {
-                    return(
+                  {this.state.nextFourSlots.map(slot => {
+                    return (
                       <option className="changeEndTimes" value={slot}>
                         {this.formatTime(slot)}
                       </option>
@@ -318,24 +319,24 @@ export default class Room extends Component {
               </select>
             </div>
             <div className="roomInf">
-              <p>Capacity: {room.capacity ? room.capacity : null }</p>
-              <p>Projector: { room.projector ? "Yes" : "No" }</p>
-              <p>Whiteboard: {room.whiteBoard ? "Yes": "No" }</p>
-              <p>TV: {room.tv ? "Yes": "No" }</p>
-              <p>AirPlay: {room.airPlay ? "Yes": "No" }</p>
-              <p>Hammock: {room.hammock ? "Yes": "No" }</p>
+              <p>Capacity: {room.capacity ? room.capacity : null}</p>
+              <p>Projector: {room.projector ? 'Yes' : 'No'}</p>
+              <p>Whiteboard: {room.whiteBoard ? 'Yes' : 'No'}</p>
+              <p>TV: {room.tv ? 'Yes' : 'No'}</p>
+              <p>AirPlay: {room.airPlay ? 'Yes' : 'No'}</p>
+              <p>Hammock: {room.hammock ? 'Yes' : 'No'}</p>
             </div>
             <button onClick={this.submitBooking.bind(this)} className="scheduleBtn">
               Book Today
             </button>
           </div>
               <div className="roomCalendarDay" >
-                <RoomCalendar events={this.state.events} view="agendaDay"/>
+                <RoomCalendar events={this.state.events} view="agendaDay" />
               </div>
 
           </Modal.Body>
         </Modal>
       </div>
-    )
+    );
   }
 }
