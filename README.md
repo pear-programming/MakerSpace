@@ -15,32 +15,32 @@ MakerSpace is a conference room management solution which leverages socket.io to
 ## Features
 
 
-* Calendar of all current reservations by week
+Calendar of all current reservations by week:
 ![Screenshot](app_screenshots/calendar.png)
 
 
-* Dashboard with map, list of rooms and current availabilities
+Dashboard with map, list of rooms and current availabilities:
 ![Screenshot](app_screenshots/dashboard.png)
  
 
-* Modal with daily calendar and ability to make reservation by room
+Modal with daily calendar and ability to make reservation by room:
 ![Screenshot](app_screenshots/reserve-by-room.png)
 
 
-* Tablet display for all rooms showing current availability
+Tablet display for all rooms showing current availability:
 ![Screenshot](app_screenshots/tablet_view.png)
 
 
-* D3 display of room and user analytics
+D3 display of room and user analytics:
 ![Screenshot](app_screenshots/analytics.png)
 ![Screenshot](app_screenshots/analytics2.png)
 
 
-* Authentication through MakerPass for use by MakerSquare student and staff
+Authentication through MakerPass for use by MakerSquare student and staff:
 ![Screenshot](app_screenshots/MakerPass_login.png)
 
 
-* Deployed on Heroku at maker-space.herokuapp.com (note must have makersquare email to log in)
+Deployed on Heroku at maker-space.herokuapp.com (note must have makersquare email to log in):
 ![Screenshot](app_screenshots/splash_page.png)
 
 
