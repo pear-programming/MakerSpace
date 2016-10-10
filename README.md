@@ -47,14 +47,14 @@ MakerSpace is a conference room management solution which leverages socket.io to
 
 - Create a new issue describing your update
 - Fork the repo and create a branch named issue#___, where ___ is the issue number
-- When ready, put in a pull request to master in this repo.
+- Put in a pull request to master in this repo.
 
 
 
 ## Authors
 
-Ashley Smith
-Burton Cooke
-Caleb Anderson
-Carlo DiLorenzo
-Jennifer Hakala
+- Ashley Smith
+- Burton Cooke
+- Caleb Anderson
+- Carlo DiLorenzo
+- Jennifer Hakala
